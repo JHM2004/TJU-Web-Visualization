@@ -42,16 +42,13 @@
             background-size: 100% 100% !important;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 1;
-            /* 初始透明度为0 */
-            transition: opacity 1s ease;
-            /* 添加透明度过渡效果 */
+            opacity: 0;
+            /* 移除透明度过渡效果 */
             pointer-events: none;
         }
 
         .background-image-container.visible {
-            opacity: 1 !important;
-            /* 将可见时的透明度从0.15降低到0.08 */
+            opacity: 1 !important; /* 改为完全不透明 */
         }
 
         .node circle:hover {
@@ -77,11 +74,14 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
         }
 
-        button {
-            display: block;
-            margin: 5px;
+        .main-btn {
+            width: 120px;
             padding: 8px 16px;
             background: #4CAF50;
             color: white;
@@ -91,28 +91,35 @@
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .main-btn:hover {
             background: #45a049;
         }
 
-        button:nth-child(2),
-        button:nth-child(3),
-        button:nth-child(4) {
-            background: #FFA500;
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
         }
 
-        button:nth-child(2):hover,
-        button:nth-child(3):hover,
-        button:nth-child(4):hover {
+        .nav-buttons button {
+            width: 120px;
+            padding: 8px 16px;
+            background: #FFA500;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-buttons button:hover {
             background: #FF8C00;
         }
 
-        button:last-child {
-            background: #4CAF50; /* 背景 */
-        }
-
-        button:last-child:hover {
-            background: #45a049;  /* 悬停效果 */
+        .nav-buttons button.active {
+            background: #FF6347;
+            font-weight: bold;
         }
 
         .help-tips {
@@ -141,12 +148,18 @@
 <body>
     <div id="background-container" class="background-image-container"></div>
     <div class="controls">
-        <button onclick="toggleFullscreen()">全屏显示</button>
-        <button onclick="resetZoom()">重置视图</button>
-        <button onclick="expandAll()">展开所有</button>
-        <button onclick="collapseAll()">收起所有</button>
-        <button onclick="window.location.href='./生物分类.html'">生物分类</button>
-        <button onclick="window.location.href='./生物演化史2.html'">生物演化史2</button>
+        <button onclick="toggleFullscreen()" class="main-btn">全屏显示</button>
+        <button onclick="resetZoom()" class="main-btn">重置视图</button>
+        <button onclick="expandAll()" class="main-btn">展开所有</button>
+        <button onclick="collapseAll()" class="main-btn">收起所有</button>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='./生物分类.html'">生物分类</button>
+            <button onclick="window.location.href='./生物演化史.html'">生物演化史</button>
+            <button onclick="window.location.href='./生物演化史2.html'" class="active">生物演化史2</button>
+            <button onclick="window.location.href='./生物演化史3.html'">生物演化史3</button>
+            <button onclick="window.location.href='./生物演化史4.html'">生物演化史4</button>
+            <button onclick="window.location.href='./生物演化史5.html'">生物演化史5</button>
+        </div>
     </div>
 
     <div id="container">
@@ -1305,12 +1318,12 @@
                     background-position: center;
                     background-repeat: no-repeat;
                     opacity: 0;
-                    transition: opacity 0.3s ease;
+                    /* 移除透明度过渡效果 */
                     pointer-events: none;
                 }
 
                 .background-image-container.visible {
-                    opacity: 0.08 !important;
+                    opacity: 1 !important; /* 改为完全不透明 */
                 }
 
                 /* 修改body样式 */
@@ -1356,12 +1369,12 @@
                 background-position: center;
                 background-repeat: no-repeat;
                 opacity: 0;
-                transition: opacity 0.3s ease;
+                /* 移除透明度过渡效果 */
                 pointer-events: none;
             }
 
             .background-image-container.visible {
-                opacity: 0.08 !important;
+                opacity: 1 !important; /* 改为完全不透明 */
             }
 
             /* 修改body样式 */
@@ -1459,7 +1472,7 @@
             if (document.fullscreenElement) {
                 fullscreenButton.textContent = '退出全屏';
             } else {
-                fullscreenButton.textContent = '全��显示';
+                fullscreenButton.textContent = '全屏显示';
             }
         }
 

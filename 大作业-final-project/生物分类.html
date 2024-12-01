@@ -117,16 +117,20 @@
             background: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            padding: 8px 15px;
+            padding: 10px 20px;
             border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s ease;
             backdrop-filter: blur(5px);
-            
+            width: 160px;
+            text-align: center;
         }
-        .control-btn-jump {
-            background-color: #2196f3;
+
+        /* 激活状态的按钮样式 */
+        .control-btn.active {
+            background: #2196f3;
+            transform: scale(1.05);
         }
 
         .control-btn:hover {
@@ -223,7 +227,7 @@
         <div class="info-panel">
             <img id="species-image" src="" alt="Species Image" style="display: none;">
             <div id="species-description" class="description">
-                <h1 style="font-size: 3em; text-align: center; margin-top: 50px;">生物演化史</h1>
+                <h1 style="font-size: 3em; text-align: center; margin-top: 50px;"> 生 物 分 类 </h1>
             </div>
         </div>
     </div>
@@ -234,11 +238,23 @@
         <button id="exitFullscreen" class="control-btn" style="display: none;">
             <span>退出全屏</span>
         </button>
-        <button id="goToEvolution" class="control-btn control-btn-jump">
+        <button class="control-btn active" onclick="window.location.href='./生物分类.html'">
+            <span>生物分类</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./生物演化史.html'">
             <span>生物演化史</span>
         </button>
-        <button id="goToEvolution2" class="control-btn control-btn-jump">
+        <button class="control-btn" onclick="window.location.href='./生物演化史2.html'">
             <span>生物演化史2</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./生物演化史3.html'">
+            <span>生物演化史3</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./生物演化史4.html'">
+            <span>生物演化史4</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./生物演化史5.html'">
+            <span>生物演化史5</span>
         </button>
     </div>
 
@@ -371,7 +387,7 @@
                             src: "./static/陆地植物.jpg",
                             description_more: "",
                             children: [
-                                { name: "苔藓植物", time: "4.5亿年前", description: "最早的陆地植物", src: "./static/苔藓植物.jpg", description_more: "" },
+                                { name: "苔藓植物", time: "4.5亿年前", description: "最早的陆地植物", src: "./static/苔���植物.jpg", description_more: "" },
                                 { name: "蕨类植物", time: "4亿年前", description: "有维管组织的无种子植物", src: "./static/蕨类植物.jpg", description_more: "" },
                                 { name: "裸子植物", time: "3.5亿年前", description: "最早的种子植物", src: "./static/裸子植物.jpg", description_more: "" },
                                 { name: "被子植物", time: "1.4亿年前", description: "开花植物", src: "./static/被子植物.jpg", description_more: "" },
@@ -1040,16 +1056,6 @@
             currentSelectedNode = null;
             currentSelectedIndex = -1;
         }
-    });
-
-    // 在脚本末尾添加新按钮的点击事件处理
-    document.getElementById('goToEvolution').addEventListener('click', function() {
-        window.location.href = './生物演化史.html';
-    });
-
-    // 在脚本末尾添加新按钮的点击事件处理
-    document.getElementById('goToEvolution2').addEventListener('click', function() {
-        window.location.href = './生物演化史2.html';
     });
 </script>
 </body>

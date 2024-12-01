@@ -111,7 +111,7 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 16px;
             transition: background-color 0.3s;
             width: 140px;
             text-align: center;
@@ -119,6 +119,11 @@
 
         .control-button:hover {
             background-color: #45a049;
+        }
+
+        .control-button.active {
+            background-color: #2E7D32;
+            font-weight: bold;
         }
 
         img:hover {
@@ -131,8 +136,12 @@
 <body>
     <div class="control-buttons">
         <button class="control-button" id="fullscreenBtn">全屏显示</button>
-        <button class="control-button" onclick="window.location.href='./生物演化史.html'">生物演化史</button>
         <button class="control-button" onclick="window.location.href='./生物分类.html'">生物分类</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史.html'">生物演化史</button>
+        <button class="control-button active" onclick="window.location.href='./生物演化史2.html'">生物演化史2</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史3.html'">生物演化史3</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史4.html'">生物演化史4</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史5.html'">生物演化史5</button>
     </div>
     <div class="time-filter">
         <select id="era-select">
