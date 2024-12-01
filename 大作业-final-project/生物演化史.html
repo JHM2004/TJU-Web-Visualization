@@ -108,11 +108,11 @@
         }
 
         button:last-child {
-            background: #2196F3;
+            background: #4CAF50; /* 背景 */
         }
 
         button:last-child:hover {
-            background: #1976D2;
+            background: #45a049;  /* 悬停效果 */
         }
 
         .help-tips {
@@ -145,10 +145,22 @@
         <button onclick="resetZoom()">重置视图</button>
         <button onclick="expandAll()">展开所有</button>
         <button onclick="collapseAll()">收起所有</button>
-        <button onclick="window.location.href='./生物分类.html'">查看生物分类</button>
+        <button onclick="window.location.href='./生物分类.html'">生物分类</button>
+        <button onclick="window.location.href='./生物演化史2.html'">生物演化史2</button>
+    </div>
+
+    <div id="container">
+        <div id="graph"></div>
+        <div id="magnifier"></div>
     </div>
 
     <script>
+        // 在script标签的开始处添加以下代码
+        document.addEventListener('contextmenu', function(event) {
+            // 阻止默认的右键菜单
+            event.preventDefault();
+        }, false);
+
         // 设置画布尺寸
         let width = window.innerWidth;
         let height = window.innerHeight;
@@ -241,11 +253,11 @@
         const simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(d => d.id).distance(100)) // 弹簧力
             .force("charge", d3.forceManyBody().strength(-300)) // 节点间的斥力
-            .force("collide", d3.forceCollide().radius(50)) // 防止节点重叠的碰撞力
+            .force("collide", d3.forceCollide().radius(50)) // 防止节点重叠的碰撞
             .force("center", d3.forceCenter(0, 0).strength(0.1)) // 添加中心力
             .force("radial", d3.forceRadial(d => d.depth * 180, 0, 0).strength(0.8)); // 修改径向力的中心点
 
-        // 创建层次结构并初始化折叠状态
+        // 创层次结构并初始化折叠状态
         let root = d3.hierarchy(treeData);
 
         // 初始时折叠所有子节点
@@ -276,7 +288,7 @@
             update(d);
         }
 
-        // 定义颜色映射
+        // 定义颜映射
         const colorMap = {
             "生命起源": "#000000",  // 黑色
             "冥古宙": "#FF0000",    // 红色
@@ -342,7 +354,7 @@
                         if (d.isDragging) {
                             return `translate(${d.x},${d.y})`;
                         }
-                        // 否则用��导向计算的位置
+                        // 否则用导向计算的位置
                         return `translate(${d.x},${d.y})`;
                     });
 
@@ -407,7 +419,7 @@
             nodeEnter.append("text")
                 .attr("dy", ".31em")
                 .attr("x", d => {
-                    // 计算点相对于中心点的角度
+                    // 计算点相对于中心点的度
                     const dx = d.x - width / 2;
                     const dy = d.y - height / 2;
                     const angle = Math.atan2(dy, dx) * 180 / Math.PI;
@@ -534,7 +546,7 @@
                 .on("drag", dragged)
                 .on("end", dragended);
 
-            // 确保更新后的节点也有拖拽功能
+            // 确保更新后的节点也有拖拽能
             const nodeUpdate2 = node.merge(nodeEnter)
                 .call(dragHandler);
         }
@@ -942,7 +954,7 @@
         document.addEventListener('keydown', (event) => {
             const key = event.key.toLowerCase();
 
-            // 防止按键事件影响输入框
+            // 防止按键事件影输入框
             if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
                 return;
             }
@@ -1129,21 +1141,56 @@
 
         document.head.appendChild(infoPanelStyle);
 
-        // 在节点创建部分添加鼠标事件
-        // 在nodeEnter的定义中添加以下事件处理
-        nodeEnter
-            .on("mouseover", showNodeInfo)
-            .on("mouseout", hideNodeInfo);
+        // 添加一个变量来跟踪当前锁定的节点
+        let lockedNode = null;
 
-        // 添加显示和隐藏节点信息的函数
-        function showNodeInfo(event, d) {
-            console.log('showNodeInfo triggered', d); // 调试日志
+        // 修改nodeEnter的事件绑定
+        nodeEnter
+            .attr('data-id', d => d.id) // 添加data-id属性以便后续查找
+            .on("mouseover", showNodeInfo)
+            .on("mouseout", (event, d) => {
+                if (!lockedNode || lockedNode === d) {
+                    hideNodeInfo(event, d);
+                }
+            })
+            .on("contextmenu", (event, d) => {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                if (lockedNode === d) {
+                    // 解除锁定
+                    lockedNode = null;
+                    hideNodeInfo(event, d);
+                } else {
+                    // 如果之前有锁定的节点，重置其样式
+                    if (lockedNode) {
+                        d3.select(findNodeElement(lockedNode))
+                            .select('circle')
+                            .transition()
+                            .duration(200)
+                            .attr('r', 12)
+                            .style('filter', null);
+                    }
+                    
+                    // 锁定新节点
+                    lockedNode = d;
+                    // 重新触发显示效果，标记为锁定状态
+                    showNodeInfo(event, d, true);
+                }
+            });
+
+        // 修改showNodeInfo函数，添加一个参数来标识是否是锁定状态
+        function showNodeInfo(event, d, isLocked = false) {
+            console.log('showNodeInfo triggered', d);
             event.stopPropagation();
+
+            // 如果有锁定的节点且不是当前节点，且不是锁定操作，则不显示新信息
+            if (lockedNode && lockedNode !== d && !isLocked) {
+                return;
+            }
 
             const infoContent = document.querySelector('.info-content');
             const backgroundContainer = document.getElementById('background-container');
-
-            console.log('Background container:', backgroundContainer); // 调试
 
             let html = '';
 
@@ -1161,12 +1208,8 @@
 
             infoContent.innerHTML = html || '<p>该节点没有额外信息</p>';
 
-            // 处理背景图片
             if (d.data.src) {
                 const imagePath = d.data.src;
-                console.log('Setting background image:', imagePath);
-
-                // 设置背景图片样式
                 backgroundContainer.style.cssText = `
                     background-image: url('${imagePath}');
                     background-size: 100% 100% !important;
@@ -1181,16 +1224,14 @@
                     width: 100vw;
                     height: 100vh;
                 `;
-
-                // 确保visible类被添加
                 requestAnimationFrame(() => {
                     backgroundContainer.classList.add('visible');
-                    console.log('Added visible class');
                 });
             }
 
             // 高亮当前节点
-            d3.select(event.currentTarget)
+            const currentNode = d3.select(event.currentTarget || findNodeElement(d));
+            currentNode
                 .select('circle')
                 .transition()
                 .duration(200)
@@ -1198,31 +1239,41 @@
                 .style('filter', 'drop-shadow(0 0 5px rgba(0,0,0,0.3))');
         }
 
+        // 添加一个辅助函数来根据数据找到对应的节点元素
+        function findNodeElement(d) {
+            return document.querySelector(`.node[data-id="${d.id}"]`);
+        }
+
+        // 修改hideNodeInfo函数
         function hideNodeInfo(event, d) {
-            console.log('hideNodeInfo triggered'); // 调试日志
+            // 如果有锁定的节点，不执行隐藏操作
+            if (lockedNode) {
+                // 如果有锁定节点，保持其显示状态
+                showNodeInfo({ currentTarget: findNodeElement(lockedNode), stopPropagation: () => {} }, lockedNode, true);
+                return;
+            }
 
             const infoContent = document.querySelector('.info-content');
             const backgroundContainer = document.getElementById('background-container');
 
             infoContent.innerHTML = '<p>将鼠标悬停在节点上查看详细信息</p>';
 
-            // 移除visible类
-            if (backgroundContainer) {
-                backgroundContainer.classList.remove('visible');
-                // 等待过渡画完成后清除背景
-                setTimeout(() => {
-                    if (!backgroundContainer.classList.contains('visible')) {
-                        backgroundContainer.style.backgroundImage = 'none';
-                    }
-                }, 300);
-            }
+            backgroundContainer.classList.remove('visible');
+            setTimeout(() => {
+                if (!backgroundContainer.classList.contains('visible')) {
+                    backgroundContainer.style.backgroundImage = 'none';
+                }
+            }, 300);
 
-            d3.select(event.currentTarget)
-                .select('circle')
-                .transition()
-                .duration(200)
-                .attr('r', 12)
-                .style('filter', null);
+            // 只有在没有锁定节点时才重置节点样式
+            if (!lockedNode) {
+                d3.select(event.currentTarget)
+                    .select('circle')
+                    .transition()
+                    .duration(200)
+                    .attr('r', 12)
+                    .style('filter', null);
+            }
         }
 
         // 1. 首先确保背景容器正确创建
@@ -1408,9 +1459,21 @@
             if (document.fullscreenElement) {
                 fullscreenButton.textContent = '退出全屏';
             } else {
-                fullscreenButton.textContent = '全屏显示';
+                fullscreenButton.textContent = '全��显示';
             }
         }
+
+        // 添加样式
+        const contextMenuStyle = document.createElement('style');
+        contextMenuStyle.textContent = `
+            .node {
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+        `;
+        document.head.appendChild(contextMenuStyle);
     </script>
 </body>
 

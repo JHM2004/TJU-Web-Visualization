@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生物演化史2</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font: 18px sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1px;
+        }
+
+        #timeline {
+            margin: 20px;
+        }
+
+        .time-filter {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #era-select {
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            min-width: 150px;
+        }
+
+        #era-select:hover {
+            border-color: #888;
+        }
+
+        #era-select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+
+        .node-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .tooltip {
+            position: absolute;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            pointer-events: none;
+            display: none;
+            max-width: 700px;
+            font-size: 25px;
+        }
+
+        .tooltip img {
+            width: 700px;
+            height: 700px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .tooltip-text {
+            margin-top: 16px;
+            line-height: 1.5;
+        }
+
+        .tooltip strong {
+            font-size: 25px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            width: 140px;
+            text-align: center;
+        }
+
+        .control-button:hover {
+            background-color: #45a049;
+        }
+
+        img:hover {
+            transform: scale(1.5);
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+    <div class="control-buttons">
+        <button class="control-button" id="fullscreenBtn">全屏显示</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史.html'">生物演化史</button>
+        <button class="control-button" onclick="window.location.href='./生物分类.html'">生物分类</button>
+    </div>
+    <div class="time-filter">
+        <select id="era-select">
+            <option value="all">全部时期</option>
+            <option value="冥古宙">冥古宙</option>
+            <option value="太古宙">太古宙</option>
+            <option value="元古宙">元古宙</option>
+            <option value="显生宙">显生宙</option>
+            <option value="中生代">中生代</option>
+            <option value="新生代">新生代</option>
+            <option value="第四纪">第四纪</option>
+        </select>
+    </div>
+    <div id="tree"></div>
+    <div class="tooltip"></div>
+
+    <script src="./生物演化史数据.js"></script>
+    <script>
+        // 设置画布尺寸
+        const width = window.innerWidth - 50;
+        let height = 800; // 初始高度
+        const margin = {top: 20, right: 90, bottom: 20, left: 90};
+
+        // 创建SVG容器
+        const svg = d3.select("#tree")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // 创建树形布局
+        const tree = d3.tree()
+            .size([height - margin.top - margin.bottom, width - margin.left - margin.right]);
+
+        // 创建工具提示div
+        const tooltip = d3.select(".tooltip");
+
+        // 加载数据并渲染树
+        function renderTree(data, filter = 'all') {
+            // 清除现有内容
+            svg.selectAll("*").remove();
+
+            // 过滤数据
+            let filteredData = JSON.parse(JSON.stringify(data));
+            if (filter !== 'all') {
+                filteredData.children = filteredData.children.filter(d => d.time === filter);
+            }
+
+            // 创建层次结构
+            const root = d3.hierarchy(filteredData);
+            
+            // 计算需要的高度
+            const nodeCount = root.descendants().length;
+            const minHeightPerNode = 40; // 每个节点的最小高度
+            const calculatedHeight = nodeCount * minHeightPerNode;
+            
+            // 更新高度
+            let svgHeight;
+            switch(filter) {
+                case 'all':
+                    svgHeight = Math.max(height * 8, calculatedHeight);
+                    break;
+                case '显生宙':
+                    svgHeight = Math.max(height * 3, calculatedHeight);
+                    break;
+                case '新生代':
+                case '中生代':
+                    svgHeight = Math.max(height * 2, calculatedHeight);
+                    break;
+                default:
+                    svgHeight = Math.max(height, calculatedHeight);
+            }
+            
+            // 更新树形布局
+            const tree = d3.tree()
+                .size([svgHeight - margin.top - margin.bottom, 
+                    filter === 'all' ? 
+                        width - margin.left - margin.right : 
+                        (width - margin.left - margin.right) * 0.6
+                ]);
+            
+            // 调整 SVG 容器高度
+            d3.select("#tree svg")
+                .attr("height", svgHeight);
+            
+            // 计算节点位置
+            tree(root);
+
+            // 调整连接线的绘制
+            const links = svg.selectAll(".link")
+                .data(root.links())
+                .enter()
+                .append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkHorizontal()
+                    .x(d => d.y)
+                    .y(d => d.x));
+
+            // 调整节点组的位置
+            const nodes = svg.selectAll(".node")
+                .data(root.descendants())
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.y},${d.x})`);
+
+            // 添加节点圆圈
+            nodes.append("circle")
+                .attr("r", 5);
+
+            // 添加图片
+            nodes.append("image")
+                .attr("xlink:href", d => d.data.src)
+                .attr("class", "node-image")
+                .attr("x", -15)
+                .attr("y", -15)
+                .attr("width", 30)
+                .attr("height", 30);
+
+            // 添加文本标签
+            nodes.append("text")
+                .attr("dy", ".35em")
+                .attr("x", d => d.children ? -40 : 40)
+                .attr("text-anchor", d => d.children ? "end" : "start")
+                .text(d => d.data.name);
+
+            // 添加交互事件
+            nodes.on("mouseover", function(event, d) {
+                const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+                const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                
+                tooltip.style("display", "block")
+                    .html(`
+                        <strong>${d.data.name}</strong>
+                        ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
+                        <div class="tooltip-text">
+                            ${d.data.time ? '<br>时间: ' + d.data.time : ''}
+                            ${d.data.description ? '<br>描述: ' + d.data.description : ''}
+                        </div>
+                    `)
+                    .style("left", (event.clientX + scrollX + 10) + "px")
+                    .style("top", (event.clientY + scrollY - 10) + "px");
+            })
+            .on("mousemove", function(event) {
+                const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+                const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                
+                // 获取tooltip的尺寸
+                const tooltipElement = tooltip.node();
+                const tooltipRect = tooltipElement.getBoundingClientRect();
+                
+                // 计算最大位置（考虑滚动）
+                const maxX = window.innerWidth + scrollX - tooltipRect.width - 20;
+                const maxY = window.innerHeight + scrollY - tooltipRect.height - 20;
+                
+                // 计算新位置（考虑滚动）
+                const left = Math.min(event.clientX + scrollX + 10, maxX);
+                const top = Math.min(event.clientY + scrollY - 10, maxY);
+                
+                tooltip
+                    .style("left", left + "px")
+                    .style("top", top + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.style("display", "none");
+            });
+        }
+
+        // 添加下拉框事件监听
+        d3.select("#era-select").on("change", function() {
+            const selectedEra = this.value;
+            renderTree(treeData, selectedEra);
+        });
+
+        // 初始渲染
+        renderTree(treeData);
+
+        // 修改为:
+        function getTreeLayout(filter) {
+            let dynamicHeight;
+            // 为不同时期设置特殊的高度倍数
+            switch(filter) {
+                case 'all':
+                    dynamicHeight = height * 8;
+                    break;
+                case '显生宙':
+                    dynamicHeight = height * 3;
+                    break;
+                case '新生代':
+                case '中生代':
+                    dynamicHeight = height * 2;
+                    break;
+                default:
+                    dynamicHeight = height;
+            }
+            
+            const dynamicWidth = filter === 'all' ? 
+                width - margin.left - margin.right : 
+                (width - margin.left - margin.right) * 0.6;
+            
+            return d3.tree()
+                .size([dynamicHeight - margin.top - margin.bottom, dynamicWidth]);
+        }
+
+        // 添加全屏功能
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                // 进入全屏
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+                fullscreenBtn.textContent = '退出全屏';
+            } else {
+                // 退出全屏
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '全屏显示';
+            }
+        });
+
+        // 监听全屏变化事件
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                fullscreenBtn.textContent = '全屏显示';
+            } else {
+                fullscreenBtn.textContent = '退出全屏';
+            }
+        });
+    </script>
+</body>
+</html>
