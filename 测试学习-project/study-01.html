@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 导入d3.js-->
+    <script src="./d3.js"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body> 
+ <!-- 添加 SVG 容器 -->
+ <svg width="960" height="600"></svg>
+
+<script>
+
+// 定义画布的宽度和高度
+// 获取浏览器窗口的宽高
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+// 在设置SVG尺寸后，添加标题
+var svg = d3.select("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// 添加标题（使用独立的类名）
+svg.append("text")
+    .attr("class", "title")  // 添加类名以区分
+    .attr("x", width / 2)
+    .attr("y", 50)  // 距离顶部50像素
+    .attr("text-anchor", "middle")  // 文字居中对齐
+    .style("font-size", "24px")     // 字体大小
+    .style("font-weight", "bold")   // 字体加粗
+    .style("font-family", "Microsoft YaHei")  // 使用微软雅黑字体
+    .text("中国省份邻接关系图");
+
+
+var color = d3.scale.category20();
+
+// 节点 (省份数据)
+var nodes = [
+    { name: "北京" }, { name: "天津" }, { name: "河北" }, { name: "山西" },
+    { name: "内蒙古" }, { name: "辽宁" }, { name: "吉林" }, { name: "黑龙江" },
+    { name: "上海" }, { name: "江苏" }, { name: "浙江" }, { name: "安徽" },
+    { name: "福建" }, { name: "江西" }, { name: "山东" }, { name: "河南" },
+    { name: "湖北" }, { name: "湖南" }, { name: "广东" }, { name: "广西" },
+    { name: "海南" }, { name: "重庆" }, { name: "四川" }, { name: "贵州" },
+    { name: "云南" }, { name: "西藏" }, { name: "陕西" }, { name: "甘肃" },
+    { name: "青海" }, { name: "宁夏" }, { name: "新疆" }, { name: "香港" },
+    { name: "澳门" }, { name: "台湾" }
+];
+
+// 边 (相邻省份关系)
+var edges = [
+    // 北京相邻
+    {source: 0, target: 1}, {source: 0, target: 2}, 
+    // 天津相邻
+    {source: 1, target: 2},
+    // 河北相邻
+    {source: 2, target: 3}, {source: 2, target: 4}, {source: 2, target: 14}, {source: 2, target: 15},
+    // 山西相邻
+    {source: 3, target: 4}, {source: 3, target: 15}, {source: 3, target: 26},
+    // 内蒙古相邻
+    {source: 4, target: 5}, {source: 4, target: 6}, {source: 4, target: 27}, {source: 4, target: 29}, {source: 4, target: 30},
+    // 辽宁相邻
+    {source: 5, target: 6},
+    // 吉林相邻
+    {source: 6, target: 7},
+    // 上海相邻
+    {source: 8, target: 9}, {source: 8, target: 10},
+    // 江苏相邻
+    {source: 9, target: 10}, {source: 9, target: 11}, {source: 9, target: 14},
+    // 浙江相邻
+    {source: 10, target: 11}, {source: 10, target: 12}, {source: 10, target: 13},
+    // 安徽相邻
+    {source: 11, target: 13}, {source: 11, target: 14}, {source: 11, target: 15}, {source: 11, target: 16},
+    // 福建相邻
+    {source: 12, target: 13}, {source: 12, target: 18},
+    // 江西相邻
+    {source: 13, target: 16}, {source: 13, target: 17}, {source: 13, target: 18},
+    // 山东相邻
+    {source: 14, target: 15},
+    // 河南相邻
+    {source: 15, target: 16}, {source: 15, target: 26},
+    // 湖北相邻
+    {source: 16, target: 17}, {source: 16, target: 21}, {source: 16, target: 22},
+    // 湖南相邻
+    {source: 17, target: 18}, {source: 17, target: 19}, {source: 17, target: 23},
+    // 广东相邻
+    {source: 18, target: 19}, {source: 18, target: 20},
+    // 广西相邻
+    {source: 19, target: 23}, {source: 19, target: 24},
+    // 重庆相邻
+    {source: 21, target: 22}, {source: 21, target: 23},
+    // 四川相邻
+    {source: 22, target: 23}, {source: 22, target: 24}, {source: 22, target: 25}, {source: 22, target: 26},
+    // 贵州相邻
+    {source: 23, target: 24},
+    // 云南相邻
+    {source: 24, target: 25},
+    // 西藏相邻
+    {source: 25, target: 29}, {source: 25, target: 30},
+    // 陕西相邻
+    {source: 26, target: 27}, {source: 26, target: 28}, {source: 26, target: 29},
+    // 甘肃相邻
+    {source: 27, target: 28}, {source: 27, target: 29}, {source: 27, target: 30},
+    // 青海相邻
+    {source: 28, target: 29}, {source: 28, target: 30},
+    // 宁夏相邻
+    {source: 29, target: 30},
+    // 香港相邻关系 (index: 31)
+    {source: 31, target: 18},  // 香港-广东
+    // 澳门相邻关系 (index: 32)
+    {source: 32, target: 18},  // 澳门-广东
+    // 台湾相邻关系 (index: 33)
+    {source: 33, target: 12},  // 台湾-福建（隔海相望）
+    // 香港和澳门的相邻关系
+    {source: 31, target: 32},  // 香港-澳门
+];
+
+// 修改连线的定义部分
+var svg_edges = svg.selectAll("line")
+    .data(edges)
+    .enter()
+    .append("line")
+    .style("stroke", "#ccc") 
+    .style("stroke-width", 1)
+    // .style("stroke-opacity", 0.6);  // 设置固定的透明度
+
+
+// 修改force布局的参数
+var force = d3.layout.force()
+    .nodes(nodes)
+    .links(edges)
+    .size([width, height])
+    .linkDistance(function(d) {
+        // 根据屏幕宽度调整连线长度
+        var baseDist = Math.min(width, height) / 10;
+        return baseDist + Math.random() * baseDist * 0.5;
+    })
+    .charge(function() {
+        // 根据屏幕大小调整电荷力
+        return Math.min(width, height) > 768 ? -400 : -200;
+    })
+    .gravity(0.1)  // 添加重力
+    .linkStrength(0.3);
+
+// 修改节点大小
+var svg_nodes = svg.selectAll("circle")
+    .data(nodes)
+    .enter()
+    .append("circle")
+    .attr("r", function() {
+        // 根据屏幕大小调整节点半径
+        return Math.min(width, height) > 768 ? 10 : 6;
+    })
+    .style("fill", function(d,i){
+        return color(i%20);
+    })
+    .call(force.drag);
+
+// 修改文字大小和位置
+var svg_texts = svg.selectAll("text.node-text")
+    .data(nodes)
+    .enter()
+    .append("text")
+    .attr("class", "node-text")
+    .style("fill", "black")
+    .style("font-size", function() {
+        // 根据屏幕大小调整字体大小
+        return Math.min(width, height) > 768 ? "12px" : "10px";
+    })
+    .attr("dx", function() {
+        // 根据屏幕大小调整文字位置
+        return Math.min(width, height) > 768 ? 20 : 12;
+    })
+    .attr("dy", 8)
+    .text(function(d){
+        return d.name;
+    });
+
+
+//力学作用生效
+force.start(); 
+force.on("tick", function(){ //对于每一个时间间隔
+    //更新连线坐标
+     svg_edges.attr("x1",function(d){ return d.source.x; })
+        .attr("y1",function(d){ return d.source.y; })
+        .attr("x2",function(d){ return d.target.x; })
+        .attr("y2",function(d){ return d.target.y; })
+        .style("stroke-width", function(d) {
+            // 只保留线宽的动态变化，移除透明度变化
+            var deltaX = d.source.x - d.target.x;
+            var deltaY = d.source.y - d.target.y;
+            var dist = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+            return Math.max(1, 3 * (1 - dist/300));
+        });
+
+    //更新节点坐标
+    svg_nodes.attr("cx",function(d){ return d.x; })
+        .attr("cy",function(d){ return d.y; });
+    //更新文字坐标
+    svg_texts.attr("x", function(d){ return d.x; })
+       .attr("y", function(d){ return d.y; });
+ });
+// 修改标题大小
+svg.select(".title")
+    .style("font-size", function() {
+        // 根据屏幕大小调整标题大小
+        return Math.min(width, height) > 768 ? "24px" : "18px";
+    })
+    .attr("y", function() {
+        // 根据屏幕大小调整标题位置
+        return Math.min(width, height) > 768 ? 50 : 30;
+    });
+
+// 修改窗口大小改变时的响应
+window.addEventListener('resize', function() {
+    // 更新宽度和高度
+    width = window.innerWidth;
+    height = window.innerHeight;
+    
+    // 更新SVG尺寸
+    svg.attr("width", width)
+       .attr("height", height);
+    
+    // 更新标题位置和大小
+    svg.select(".title")
+        .attr("x", width / 2)  // 更新x位置到新的中心点
+        .attr("y", function() {
+            // 根据屏幕大小调整标题位置
+            return Math.min(width, height) > 768 ? 50 : 30;
+        })
+        .style("font-size", function() {
+            // 根据屏幕大小调整标题大小
+            return Math.min(width, height) > 768 ? "24px" : "18px";
+        });
+    
+    // 更新力导向图大小并重新开始
+    force.size([width, height]).resume();
+});
+</script>
+</body> 
+</html>

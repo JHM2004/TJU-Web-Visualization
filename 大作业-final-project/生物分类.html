@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 生 物 分 类 </title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+         body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            background-color: #f0f0f0;
+            user-select: none;
+        }
+        
+        path {
+            stroke: #fff;
+            stroke-width: 1px;
+            fill-opacity: 0.8;
+        }
+
+        path:hover {
+            opacity: 0.9;
+            cursor: pointer;
+        }
+
+        text {
+            font-size: 15px;
+            font-weight: bold;
+            fill: #fff;
+            pointer-events: none;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+
+        .depth-1 text {
+            font-size: 19px;
+        }
+        
+        .depth-2 text {
+            font-size: 17px;
+        }
+        
+        .depth-3 text {
+            font-size: 16px;
+        }
+
+        .center-text {
+            font-size: 22px;
+            font-weight: bold;
+            fill: #ffffff;
+            paint-order: stroke;
+            stroke: #000000;
+            stroke-width: 1px;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+            pointer-events: none; /* 防止文字影响鼠标事件 */
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+
+        .center-text {
+            paint-order: stroke;
+            stroke: #000000;
+            stroke-width: 1px;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+        }
+
+        .circle-text {
+            cursor: default;
+        }
+
+        #background-container {
+            display: none;
+        }
+
+        svg {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            min-width: 300px;
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            transition: transform 0.1s linear;
+        }
+
+        svg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(240, 240, 240, 0.3);
+        }
+
+        /* 按钮容器样式 */
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* 按钮样式 */
+        .control-btn {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            
+        }
+        .control-btn-jump {
+            background-color: #2196f3;
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 0, 0, 0.9);
+            transform: scale(1.05);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 添加内容容器样式 */
+        .content-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        /* 修改右侧信息面板样式 */
+        .info-panel {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .info-panel.fixed {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .info-image.fixed {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .info-panel img {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+        }
+
+        .info-panel .description {
+            padding: 25px;
+            line-height: 1.8;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 16px;
+        }
+
+        .control-tips {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #ff4444;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.5;
+            z-index: 1000;
+            text-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* 添加白色文字阴影提高可读性 */
+        }
+    </style>
+</head>
+<body>
+    <div class="control-tips">
+        按住 Q 键逆时针旋转<br>
+        按住 E 键顺时针旋转<br>
+        W键/↑键 同层逆时针移动<br>
+        S键/↓键 同层顺时针移动<br>
+        A键/←键 向圆心移动<br>
+        D键/→键 向外圈移动
+    </div>
+    <div class="content-container">
+        <svg width="1000" height="1000"></svg>
+        <div class="info-panel">
+            <img id="species-image" src="" alt="Species Image" style="display: none;">
+            <div id="species-description" class="description">
+                <h1 style="font-size: 3em; text-align: center; margin-top: 50px;">生物演化史</h1>
+            </div>
+        </div>
+    </div>
+    <div class="control-buttons">
+        <button id="enterFullscreen" class="control-btn">
+            <span>进入全屏</span>
+        </button>
+        <button id="exitFullscreen" class="control-btn" style="display: none;">
+            <span>退出全屏</span>
+        </button>
+        <button id="goToEvolution" class="control-btn control-btn-jump">
+            <span>生物演化史</span>
+        </button>
+    </div>
+
+    <script>
+        // 数据结构
+        const data = {
+    name: "生命起源",
+    time: "35亿年前",
+    description: "地球上最早的生命形式",
+    src: "./static/生命起源.jpg",
+    description_more: "",
+    children: [
+        {
+            name: "原核生物",
+            time: "35-20亿年前",
+            description: "最原始的单细胞生物",
+            src: "./static/原核生物.png",
+            description_more: "原核生物是单细胞生物，没有真正的细胞核，只有原始的核质结构。它们通过简单的分裂方式繁殖，没有复杂的细胞器。原核生物包括细菌和古菌，是地球上最早的生命形式。",
+            children: [
+                {
+                    name: "细菌界",
+                    time: "35亿年前至今",
+                    description: "包括大多数细菌",
+                    src: "./static/细菌界.jpg",
+                    description_more: "",
+                    children: [
+                        { name: "蓝细菌", time: "27亿年前", description: "能进行光合作用的细菌", src: "./static/蓝细菌.png", description_more: "" },
+                        { name: "放线菌", time: "20亿年前", description: "具有丝状体的细菌", src: "./static/放线菌.jpg", description_more: "" },
+                        { name: "螺旋菌", time: "20亿年前", description: "螺旋形的细菌", src: "./static/螺旋.jpg", description_more: "" },
+                        {
+                            name: "革兰氏阳性细菌",
+                            time: "18亿年前",
+                            description: "细胞壁厚，常见于土壤和植物体内。",
+                            src: "./static/革兰氏阳性细菌.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "链球菌", time: "12亿年前", description: "有链状排列的细菌", src: "./static/链球菌.jpg", description_more: "" },
+                                { name: "葡萄球菌", time: "11亿年前", description: "有葡萄状排列的细菌", src: "./static/葡萄球菌.jpg", description_more: "" }
+                            ]
+                        },
+                        {
+                            name: "革兰氏阴性细菌",
+                            time: "18亿年前",
+                            description: "细胞壁较薄，常见于动物体内。",
+                            src: "./static/革兰氏阴性细菌.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "大肠杆菌", time: "10亿年前", description: "常见于人类道的细菌", src: "./static/大肠杆菌.jpg", description_more: "" },
+                                { name: "沙门氏菌", time: "8亿年前", description: "引起食物中毒的细菌", src: "./static/沙门氏菌.jpg", description_more: "" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "古菌界",
+                    time: "35亿年前至今",
+                    description: "在极端环境中生存的微生物",
+                    src: "./static/古菌界.jpg",
+                    description_more: "",
+                    children: [
+                        { name: "嗜热古菌", time: "30亿年前", description: "在高温环境中生存", src: "./static/嗜热古菌.jpg", description_more: "" },
+                        { name: "嗜盐古菌", time: "25亿年前", description: "在高盐环境中生存", src: "./static/嗜盐古菌.jpg", description_more: "" },
+                        {
+                            name: "甲烷古菌",
+                            time: "20亿年前",
+                            description: "主要产甲烷的古菌",
+                            src: "./static/甲烷古菌.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "产甲烷古菌", time: "18亿年前", description: "在厌氧条件下生存", src: "./static/产甲烷古菌.jpg", description_more: "" },
+                                { name: "好氧甲烷古菌", time: "15亿年前", description: "在氧气存在下生存", src: "./static/好氧甲烷古菌.jpg", description_more: "" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            name: "真核生物",
+            time: "20亿年前",
+            description: "具有细胞核的生物",
+            src: "./static/真核生物.jpg",
+            description_more: "",
+            children: [
+                {
+                    name: "原生生物",
+                    time: "15亿年前",
+                    description: "单细胞真核生物",
+                    src: "./static/原生生物.jpg",
+                    description_more: "",
+                    children: [
+                        { name: "变形虫", time: "10亿年前", description: "能够改变形状的单细胞生物", src: "./static/变形虫.png", description_more: "" },
+                        { name: "草履虫", time: "10亿年前", description: "具有纤毛的单细胞生物", src: "./static/草履虫.jpg", description_more: "" },
+                        {
+                            name: "水绵",
+                            time: "9亿年前",
+                            description: "多细胞的水生生物",
+                            src: "./static/水绵.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "理想水绵", time: "8亿年前", description: "常见于淡水中的水绵", src: "./static/理想水绵.png", description_more: "" },
+                                { name: "须状水绵", time: "7亿年前", description: "呈须漂浮在水中的生物", src: "./static/须状水绵.jpg", description_more: "" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "植物界",
+                    time: "10亿年前",
+                    description: "能进行光合作用的多细胞生物",
+                    src: "./static/植物界.jpg",
+                    description_more: "",
+                    children: [
+                        {
+                            name: "藻类植物",
+                            time: "10亿年前",
+                            description: "水生植物",
+                            src: "./static/藻类植物.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "绿藻", time: "8亿年", description: "含有叶绿素的水生植物", src: "./static/绿藻.jpg", description_more: "" },
+                                { name: "褐藻", time: "8亿年前", description: "海洋中的大型藻类", src: "./static/褐藻.jpg", description_more: "" },
+                                { name: "红藻", time: "7亿年前", description: "深海水域生长的水生植物", src: "./static/红藻.jpg", description_more: "" }
+                            ]
+                        },
+                        {
+                            name: "陆地植物",
+                            time: "4.7亿年前",
+                            description: "适应陆地生活的植物",
+                            src: "./static/陆地植物.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "苔藓植物", time: "4.5亿年前", description: "最早的陆地植物", src: "./static/苔藓植物.jpg", description_more: "" },
+                                { name: "蕨类植物", time: "4亿年前", description: "有维管组织的无种子植物", src: "./static/蕨类植物.jpg", description_more: "" },
+                                { name: "裸子植物", time: "3.5亿年前", description: "最早的种子植物", src: "./static/裸子植物.jpg", description_more: "" },
+                                { name: "被子植物", time: "1.4亿年前", description: "开花植物", src: "./static/被子植物.jpg", description_more: "" },
+                                {
+                                    name: "单子叶植物",
+                                    time: "1.2亿年前",
+                                    description: "一类具有单子叶特征的被子植物",
+                                    src: "./static/单子叶植物.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "禾本科", time: "1亿年前", description: "包括稻、麦等重要粮食作物", src: "./static/禾本科.jpg", description_more: "" },
+                                        { name: "兰科", time: "9000万年前", description: "包括许多观赏性植物", src: "./static/兰科.jpg", description_more: "" }
+                                    ]
+                                },
+                                {
+                                    name: "双子叶植物",
+                                    time: "1.2亿年前",
+                                    description: "另一类具有双子叶征的被子植物",
+                                    src: "./static/双子叶植物.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "豆科", time: "9000万年前", description: "包括大豆、豌豆等作物", src: "./static/豆科.jpg", description_more: "" },
+                                        { name: "蔷薇科", time: "8000万年前", description: "包括苹果、樱桃等果树", src: "./static/蔷薇科.jpg", description_more: "" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: "动物界",
+                    time: "6亿年前",
+                    description: "多细胞异养生物",
+                    src: "./static/动物界.png",
+                    description_more: "",
+                    children: [
+                        {
+                            name: "无脊椎动物",
+                            time: "6亿年前",
+                            description: "没有脊椎的动物",
+                            src: "./static/无脊椎动物.png",
+                            description_more: "",
+                            children: [
+                                { name: "海绵动物", time: "6亿年前", description: "最原始的多细胞动物", src: "./static/海绵动物.jpg", description_more: "" },
+                                { name: "腔肠动物", time: "5.5亿年前", description: "具有辐射对称的动物", src: "./static/腔肠动物.jpg", description_more: "" },
+                                { name: "扁形动物", time: "5亿年前", description: "具有双侧对称的原始动物", src: "./static/扁形动物.jpg", description_more: "" },
+                                { name: "节动物", time: "5亿年前", description: "包括昆虫、蜘蛛等", src: "./static/节动物.jpg", description_more: "" },
+                                { name: "软体动物", time: "5亿年前", description: "包括贝类、章鱼等", src: "./static/软体动物.jpg", description_more: "" },
+                                {
+                                    name: "棘皮动物",
+                                    time: "5亿年前",
+                                    description: "具有五辐射对称的海洋动物",
+                                    src: "./static/棘皮动物.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "海星", time: "4亿年前", description: "以五个或更多的臂组成", src: "./static/海星.jpg", description_more: "" },
+                                        { name: "海胆", time: "4亿年前", description: "外壳坚硬，生活在海底", src: "./static/海胆.jpg", description_more: "" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "脊椎动物",
+                            time: "5.3亿年前",
+                            description: "具有脊椎的动物",
+                            src: "./static/脊椎动物.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "鱼类", time: "5亿年前", description: "最早的脊椎动物", src: "./static/鱼类.jpg", description_more: "" },
+                                { name: "两栖类", time: "3.7亿年前", description: "最早登陆的脊椎动物", src: "./static/两栖类.jpg", description_more: "" },
+                                { name: "爬行类", time: "3.1亿年前", description: "完全适应陆地生活的动物", src: "./static/爬行类.jpg", description_more: "" },
+                                { name: "鸟类", time: "1.5亿年前", description: "会飞的恐龙后裔", src: "./static/鸟类.jpg", description_more: "" },
+                                { name: "哺乳", time: "2.2亿年前", description: "恒和哺乳的脊椎动物", src: "./static/哺乳类.jpg", description_more: "" },
+                                {
+                                    name: "单孔类",
+                                    time: "2亿年前",
+                                    description: "卵生的哺乳动物",
+                                    src: "./static/单孔类.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "鸭嘴兽", time: "1.5亿年前", description: "一种能产卵的哺乳动物", src: "./static/鸭嘴兽.jpg", description_more: "" },
+                                        { name: "针鼹", time: "1.5亿年前", description: "皮肤有刺的哺乳动物", src: "./static/针鼹.jpg", description_more: "" }
+                                    ]
+                                },
+                                {
+                                    name: "有袋类",
+                                    time: "1.7亿年前",
+                                    description: "以育儿袋养育幼崽的哺乳动物",
+                                    src: "./static/有袋类.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "袋鼠", time: "5000万年前", description: "典型的有袋类动物", src: "./static/袋鼠.jpg", description_more: "" },
+                                        { name: "考拉", time: "6000万年前", description: "生活在澳大利亚的袋动物", src: "./static/考拉.jpg", description_more: "" }
+                                    ]
+                                },
+                                {
+                                    name: "胎盘类",
+                                    time: "1.6亿年前",
+                                    description: "以胎盘养育幼崽的哺乳动物",
+                                    src: "./static/胎盘类.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "灵长类", time: "6500万年前", description: "包括人类及其近亲", src: "./static/灵长类.jpg", description_more: "" },
+                                        { name: "食肉类", time: "6000万年前", description: "包括犬、猫等", src: "./static/食肉类.jpg", description_more: "" },
+                                        { name: "草食类", time: "6000万年前", description: "包括马、牛等", src: "./static/草食类.png", description_more: "" }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            name: "真菌界",
+                            time: "10亿年前",
+                            description: "异养的真核生物",
+                            src: "./static/真菌界.jpg",
+                            description_more: "",
+                            children: [
+                                { name: "子囊菌", time: "5亿年前", description: "包括酵母、青霉等", src: "./static/子囊菌.jpg", description_more: "" },
+                                { name: "担子菌", time: "3亿年前", description: "包括蘑菇等大型真菌", src: "./static/担子菌.jpg", description_more: "" },
+                                {
+                                    name: "霉菌",
+                                    time: "4亿年前",
+                                    description: "在腐败物质上生长的真菌",
+                                    src: "./static/霉菌.jpg",
+                                    description_more: "",
+                                    children: [
+                                        { name: "青霉", time: "4亿年前", description: "常见于食物表面的霉菌", src: "./static/青霉.jpg", description_more: "" },
+                                        { name: "黑霉", time: "4亿年前", description: "常见于腐烂食物上的霉菌", src: "./static/黑霉.jpg", description_more: "" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+};
+
+
+    // 1. 定义常量
+    const width = 1000;
+    const height = 1000;
+    const radius = Math.min(width, height) / 2.0;
+    let currentRotation = 0;
+    let dragStartRotation = 0;
+    let dragStartAngle = 0;
+    let isDragging = false;
+    let rotationSpeed = 2;    // 每次旋转的角度
+    let isRotating = false;   // 是否正在旋转
+    let rotationInterval;     // 存储轮转定时器
+    let rotationIntervalQ;    // Q键的旋转定时器
+    let rotationIntervalE;    // E键的旋转定时器
+
+    // 2. 创建颜色生成函数
+    const color = d => {
+        // 检查节点所属分支
+        let node = d;
+        while (node.parent) {
+            // 检查动物界 - 修改为橙色系
+            if (node.data.name === "动物界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#FFA500", "#FF8C00"])(d.depth); // 使用不同深浅的橙色
+            }
+            // 其他分支保持原来的颜色
+            if (node.data.name === "古菌界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#4169E1", "#191970"])(d.depth);
+            }
+            if (node.data.name === "细菌界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#A9A9A9", "#404040"])(d.depth);
+            }
+            if (node.data.name === "植物界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#90EE90", "#006400"])(d.depth);
+            }
+            if (node.data.name === "原生生物") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#DEB887", "#8B4513"])(d.depth);
+            }
+            if (node.data.name === "真核生物") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#9932CC", "#4B0082"])(d.depth);
+            }
+            if (node.data.name === "原核生物") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#BA55D3", "#800080"])(d.depth);
+            }
+            node = node.parent;
+        }
+        // 其他节点的默认颜色
+        return d3.scaleLinear()
+            .domain([0, 5])
+            .range(["#FF8C00", "#FF4500"])(d.depth);
+    };
+
+    // 3. 创建SVG元素
+    const svg = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width/2},${height/2})`);
+
+    // 4. 创建分区布局
+    const partition = data => {
+        const root = d3.hierarchy(data)
+            .sum(d => 1)
+            .sort((a, b) => b.value - a.value);
+        return d3.partition()
+            .size([2 * Math.PI, radius])
+            .padding(0.005)
+            (root);
+    };
+
+    // 5. 创建弧生成器
+    const arc = d3.arc()
+        .startAngle(d => d.x0)
+        .endAngle(d => d.x1)
+        .padAngle(0.005)
+        .padRadius(radius / 2)
+        .innerRadius(d => d.y0)
+        .outerRadius(d => d.y1 - 1);
+
+    // 6. 处理数据
+    const root = partition(data);
+    root.each(d => d.current = d);
+
+    // 7. 创建路径
+    const path = svg.append("g")
+        .selectAll("path")
+        .data(root.descendants().slice(1))
+        .join("path")
+        .attr("fill", d => color(d))
+        .attr("fill-opacity", 0.8)
+        .attr("d", d => arc(d.current))
+        .attr("class", "node")
+        .attr("data-name", d => d.data.name)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", "1px");
+
+    // 8. 创建文本标签
+    const text = svg.append("g")
+        .attr("pointer-events", "none")
+        .selectAll("text")
+        .data(root.descendants().slice(1))
+        .join("text")
+        .attr("class", d => `depth-${d.depth}`)
+        .attr("transform", function(d) {
+            const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+            const y = (d.y0 + d.y1) / 2;
+            return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+        })
+        .attr("dy", ".35em")
+        .attr("text-anchor", "middle")
+        .text(d => d.data.name);
+
+    // 确保文字在最上层
+    text.raise();
+
+    // 确保先创建中心圆
+    const centerCircle = svg.append("circle")
+        .attr("r", 45)
+        .attr("fill", "#000000")
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", "1px");
+
+    // 然后在圆上方创建文字，并确保文字在最上层
+    const centerText = svg.append("text")
+        .attr("class", "center-text")
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle") // 添加垂直对齐
+        .attr("x", 0)  // 确保位置在中心
+        .attr("y", 0)  // 确保位置在中心
+        .attr("fill", "#ffffff")
+        .style("font-size", "20px")
+        .style("font-weight", "bold")
+        .text("生命起源");
+
+    // 确保文字在最上层
+    centerText.raise();
+
+    // 10. 添加拖拽功能
+    d3.select("body")
+        .style("cursor", "move")
+        .on("mousedown", dragstarted)
+        .on("mousemove", dragged);
+
+    // 将mouseup事件监听器添加到window对象
+    d3.select(window)
+        .on("mouseup", dragended)
+        .on("mouseleave", dragended);  // 添加mouseleave事件处理
+
+    function dragstarted(event) {
+        isDragging = true;
+        dragStartAngle = Math.atan2(event.pageY - height/2, event.pageX - width/2) * 180 / Math.PI;
+        dragStartRotation = currentRotation;
+    }
+
+    function dragged(event) {
+        if (!isDragging) return;
+        const currentAngle = Math.atan2(event.pageY - height/2, event.pageX - width/2) * 180 / Math.PI;
+        const deltaAngle = currentAngle - dragStartAngle;
+        currentRotation = dragStartRotation + deltaAngle;
+        svg.attr("transform", `translate(${width/2},${height/2}) rotate(${currentRotation})`);
+    }
+
+    function dragended() {
+        isDragging = false;
+    }
+
+    // 11. 修改鼠标悬停效果
+    path.on("mouseover", function(event, d) {
+        // 更新右侧信息面板
+        const infoPanel = d3.select(".info-panel");
+        
+        // 显示图片
+        d3.select("#species-image")
+            .attr("src", d.data.src || "")
+            .style("display", d.data.src ? "block" : "none");
+        
+        // 清除初始标题
+        d3.select("#species-description")
+            .style("text-align", "center")
+            .html(`
+                <strong style="font-size: 1.5em; margin-bottom: 15px; display: block;">${d.data.name}</strong>
+                <div style="margin: 12px 0; font-size: 1.1em;">
+                    <strong>时期:</strong> ${d.data.time}
+                </div>
+                <div style="margin: 12px 0; font-size: 1.1em;">
+                    <strong>简要描述:</strong> ${d.data.description}
+                </div>
+                ${d.data.description_more ? `
+                    <div style="margin: 12px 0; font-size: 1.1em;">
+                        <strong>详细描述:</strong> ${d.data.description_more}
+                    </div>
+                ` : ''}
+            `);
+
+        // 显示信息面板
+        infoPanel
+            .style("opacity", "1")
+            .style("visibility", "visible");
+    })
+    .on("mouseout", function() {
+        if (!isFixed) {
+            // 恢复初始显示状态
+            d3.select("#species-image").style("display", "none");
+            d3.select("#species-description")
+                .html('<h1 style="font-size: 3em; text-align: center; margin-top: 50px;"> 生 物 分 类 </h1>');
+        }
+    });
+
+    // 12. 添加平滑过渡效果
+    svg.style("transition", "transform 0.1s");
+
+    // 在脚本开始处添加预加载函数
+    function preloadImages(data) {
+        function traverse(node) {
+            if (node.src) {
+                const img = new Image();
+                img.src = node.src;
+            }
+            if (node.children) {
+                node.children.forEach(traverse);
+            }
+        }
+        traverse(data);
+    }
+
+    // 在数据加载后调用
+    preloadImages(data);
+
+    // 在脚本末尾添加全屏控制代码
+    const enterFullscreenBtn = document.getElementById('enterFullscreen');
+    const exitFullscreenBtn = document.getElementById('exitFullscreen');
+
+    // 进入全屏
+    enterFullscreenBtn.addEventListener('click', function() {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+        }
+    });
+
+    // 退出全屏
+    exitFullscreenBtn.addEventListener('click', function() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    });
+
+    // 监听全屏状态变化
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    function handleFullscreenChange() {
+        if (document.fullscreenElement || 
+            document.webkitFullscreenElement || 
+            document.mozFullScreenElement ||
+            document.msFullscreenElement) {
+            // 进入全屏
+            enterFullscreenBtn.style.display = 'none';
+            exitFullscreenBtn.style.display = 'block';
+        } else {
+            // 退出全屏
+            enterFullscreenBtn.style.display = 'block';
+            exitFullscreenBtn.style.display = 'none';
+        }
+        // 更新 SVG 尺寸
+        updateDimensions();
+    }
+
+    // 确保按钮在初始状态下正示
+    if (document.fullscreenElement) {
+        enterFullscreenBtn.style.display = 'none';
+        exitFullscreenBtn.style.display = 'block';
+    } else {
+        enterFullscreenBtn.style.display = 'block';
+        exitFullscreenBtn.style.display = 'none';
+    }
+
+    let isFixed = false;
+
+    function handleNodeClick(event, d) {
+        // 阻止事件冒泡
+        event.stopPropagation();
+        
+        const infoPanel = document.querySelector('.info-panel');
+        const infoImage = document.querySelector('.info-image');
+        
+        if (!isFixed) {
+            // 固定面板
+            infoPanel.classList.add('fixed');
+            infoImage.classList.add('fixed');
+            isFixed = true;
+        } else {
+            // 取消固定
+            infoPanel.classList.remove('fixed');
+            infoImage.classList.remove('fixed');
+            isFixed = false;
+        }
+
+        // 更新信息面板内容
+        updateInfoPanel(d);
+    }
+
+    // 添加点击空白处取消固定的功能
+    document.addEventListener('click', (event) => {
+        const infoPanel = document.querySelector('.info-panel');
+        const infoImage = document.querySelector('.info-image');
+        
+        // 如果点击的不是节点也不是信息面板，则取消固定
+        if (isFixed && !event.target.closest('.node') && !event.target.closest('.info-panel')) {
+            infoPanel.classList.remove('fixed');
+            infoImage.classList.remove('fixed');
+            isFixed = false;
+        }
+    });
+
+    // 添加键盘事件监听
+    document.addEventListener('keydown', function(event) {
+        switch(event.key.toLowerCase()) {
+            case 'q':
+                if (!rotationIntervalQ) {
+                    rotationIntervalQ = setInterval(() => {
+                        currentRotation -= rotationSpeed;
+                        updateRotation();
+                    }, 16);
+                }
+                break;
+            case 'e':
+                if (!rotationIntervalE) {
+                    rotationIntervalE = setInterval(() => {
+                        currentRotation += rotationSpeed;
+                        updateRotation();
+                    }, 16);
+                }
+                break;
+            
+            // 添加方向键和WASD的控制逻辑
+            case 'w':
+            case 'arrowup':
+                event.preventDefault();
+                navigateNodes('ccw'); // 逆时针
+                break;
+            case 's':
+            case 'arrowdown':
+                event.preventDefault();
+                navigateNodes('cw');  // 顺时针
+                break;
+            case 'a':
+            case 'arrowleft':
+                event.preventDefault();
+                navigateNodes('in');  // 向内
+                break;
+            case 'd':
+            case 'arrowright':
+                event.preventDefault();
+                navigateNodes('out'); // 向外
+                break;
+        }
+    });
+
+    // 监听按键释放
+    document.addEventListener('keyup', function(event) {
+        switch(event.key.toLowerCase()) {
+            case 'q':
+                if (rotationIntervalQ) {
+                    clearInterval(rotationIntervalQ);
+                    rotationIntervalQ = null;
+                }
+                break;
+            case 'e':
+                if (rotationIntervalE) {
+                    clearInterval(rotationIntervalE);
+                    rotationIntervalE = null;
+                }
+                break;
+        }
+    });
+
+    // 更新旋转角度
+    function updateRotation() {
+        const svg = document.querySelector('svg');
+        if (svg) {
+            svg.style.transform = `rotate(${currentRotation}deg)`;
+        }
+    }
+
+    // 修改原有的SVG创建代码，确保svg变量可以被访问
+    const svg2 = d3.select('#tree-container')
+        .append('svg')
+        .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
+        .style('transform-origin', 'center'); // 添加旋转中心点
+
+    // 添加当前选中节点的追踪
+    let currentSelectedNode = null;
+    let currentSelectedIndex = -1;
+
+    // 修改提示文字
+    document.querySelector('.control-tips').innerHTML = `
+        按住 Q 键逆时针旋转<br>
+        按住 E 键顺时针旋转<br>
+        W键/↑键 同层逆时针移动<br>
+        S键/↓键 同层顺时针移动<br>
+        A键/←键 向圆心移动<br>
+        D键/→键 向外圈移动
+    `;
+
+    // 添加节点导航函数
+    function navigateNodes(direction) {
+        const nodes = root.descendants().slice(1);
+        
+        // 如果没有选中节点，选择最外圈的第一个节点
+        if (currentSelectedIndex === -1) {
+            currentSelectedIndex = 0;
+            currentSelectedNode = nodes[0];
+        } else {
+            const currentDepth = currentSelectedNode.depth;
+            
+            switch(direction) {
+                case 'in': // A键 - 向内圈移动
+                    const innerNodes = nodes.filter(n => 
+                        n.depth < currentSelectedNode.depth && 
+                        n.x0 <= currentSelectedNode.x1 && 
+                        n.x1 >= currentSelectedNode.x0
+                    );
+                    if (innerNodes.length > 0) {
+                        currentSelectedNode = innerNodes.reduce((prev, curr) => 
+                            (curr.depth > prev.depth) ? curr : prev
+                        );
+                    }
+                    break;
+                    
+                case 'out': // D键 - 向外圈移动
+                    const outerNodes = nodes.filter(n => 
+                        n.depth > currentSelectedNode.depth && 
+                        n.x0 <= currentSelectedNode.x1 && 
+                        n.x1 >= currentSelectedNode.x0
+                    );
+                    if (outerNodes.length > 0) {
+                        currentSelectedNode = outerNodes.reduce((prev, curr) => 
+                            (curr.depth < prev.depth) ? curr : prev
+                        );
+                    }
+                    break;
+                    
+                case 'ccw': // W键 - 同层逆时针移动
+                    const sameDepthNodesCCW = nodes.filter(n => n.depth === currentDepth);
+                    const currentIndex = sameDepthNodesCCW.findIndex(n => n === currentSelectedNode);
+                    currentSelectedNode = sameDepthNodesCCW[(currentIndex - 1 + sameDepthNodesCCW.length) % sameDepthNodesCCW.length];
+                    break;
+                    
+                case 'cw': // S键 - 同层顺时针移动
+                    const sameDepthNodesCW = nodes.filter(n => n.depth === currentDepth);
+                    const currentIndexCW = sameDepthNodesCW.findIndex(n => n === currentSelectedNode);
+                    currentSelectedNode = sameDepthNodesCW[(currentIndexCW + 1) % sameDepthNodesCW.length];
+                    break;
+            }
+        }
+        
+        // 更新当前选中节点的索引
+        currentSelectedIndex = nodes.findIndex(n => n === currentSelectedNode);
+        
+        // 重置所有节点颜色并将当前节点设为黑色
+        path.attr("fill", d => d === currentSelectedNode ? "#000000" : color(d))
+            .attr("fill-opacity", 0.8);
+        
+        // 只更新右侧信息面板
+        updateInfoPanel(currentSelectedNode);
+    }
+
+    // 新增更新右侧信息面板的函数
+    function updateInfoPanel(node) {
+        const infoPanel = d3.select(".info-panel");
+        
+        // 更新图片
+        if (node.data.src) {
+            d3.select("#species-image")
+                .attr("src", node.data.src)
+                .style("display", "block");
+        } else {
+            d3.select("#species-image")
+                .style("display", "none");
+        }
+
+        // 更新描述文字
+        if (node.data.description_more) {
+            d3.select("#species-description")
+                .html(node.data.description_more)
+                .style("display", "block");
+        } else {
+            d3.select("#species-description")
+                .html(node.data.description) // 如果没有详细描述，使用基本描述
+                .style("display", "block");
+        }
+
+        // 显示信息面板
+        infoPanel
+            .style("opacity", "1")
+            .style("visibility", "visible");
+    }
+
+    // 添加点击其他区域时重置所有节点颜色的能
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.node')) {
+            // 重置所有节点的颜色
+            path.attr("fill", d => color(d))
+                .attr("fill-opacity", 0.8);
+            currentSelectedNode = null;
+            currentSelectedIndex = -1;
+        }
+    });
+
+    // 在脚本末尾添加新按钮的点击事件处理
+    document.getElementById('goToEvolution').addEventListener('click', function() {
+        window.location.href = './生物演化史.html';
+    });
+</script>
+</body>
+</html>
