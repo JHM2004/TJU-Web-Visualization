@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>生物演化史2</title>
+    <title>生物演化史-Tree-2D</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
         .node circle {
@@ -34,6 +34,16 @@
             padding: 10px;
             border-radius: 4px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 180px;
+        }
+
+        .filter-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
         }
 
         #era-select {
@@ -43,7 +53,7 @@
             border: 1px solid #ccc;
             background-color: white;
             cursor: pointer;
-            min-width: 150px;
+            width: 100%;
         }
 
         #era-select:hover {
@@ -105,7 +115,11 @@
         }
 
         .control-button {
-            padding: 10px 15px;
+            width: 100% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 10px 15px !important;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -113,7 +127,6 @@
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s;
-            width: 140px;
             text-align: center;
         }
 
@@ -131,19 +144,24 @@
             transition: transform 0.3s ease;
             z-index: 100;
         }
+
+        .button-arrow {
+            margin-left: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="control-buttons">
         <button class="control-button" id="fullscreenBtn">全屏显示</button>
-        <button class="control-button" onclick="window.location.href='./生物分类.html'">生物分类</button>
-        <button class="control-button" onclick="window.location.href='./生物演化史.html'">生物演化史</button>
-        <button class="control-button active" onclick="window.location.href='./生物演化史2.html'">生物演化史2</button>
-        <button class="control-button" onclick="window.location.href='./生物演化史3.html'">生物演化史3</button>
-        <button class="control-button" onclick="window.location.href='./生物演化史4.html'">生物演化史4</button>
-        <button class="control-button" onclick="window.location.href='./生物演化史5.html'">生物演化史5</button>
+        <button class="control-button" onclick="window.location.href='./生物分类-太阳爆发图-2D.html'">生物分类-太阳爆发图-2D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-力导向-2D.html'">生物演化史-力导向-2D</button>
+        <button class="control-button active" onclick="window.location.href='./生物演化史-Tree-2D.html'">生物演化史-Tree-2D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'">生物演化史-DNA双螺旋-3D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
     </div>
     <div class="time-filter">
+        <div class="filter-title">Tidy Tree</div>
         <select id="era-select">
             <option value="all">全部时期</option>
             <option value="冥古宙">冥古宙</option>
@@ -154,6 +172,10 @@
             <option value="新生代">新生代</option>
             <option value="第四纪">第四纪</option>
         </select>
+        <button class="control-button" onclick="window.location.href='./radial_tidy_tree.html'">
+            <span>Radial Tidy Tree</span>
+            <span class="button-arrow">→</span>
+        </button>
     </div>
     <div id="tree"></div>
     <div class="tooltip"></div>
@@ -184,7 +206,7 @@
         let fixedTooltip = null;
         let fixedPosition = null;
 
-        // 加载数据并渲染树
+        // 加载数并渲染树
         function renderTree(data, filter = 'all') {
             // 清除现有内容
             svg.selectAll("*").remove();
@@ -278,7 +300,46 @@
                 const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
                 const scrollY = window.pageYOffset || document.documentElement.scrollTop;
                 
-                // 先显示tooltip以获取其尺寸
+                // 获取视窗尺寸
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                const MARGIN = {
+                    TOP: 50,
+                    RIGHT: 100,
+                    BOTTOM: 100,
+                    LEFT: 50
+                };
+                
+                const tooltipWidth = 700;
+                const tooltipHeight = 800;
+                
+                // 检查鼠标位置，决定tooltip显示在左侧还是右侧
+                let tooltipX;
+                if (event.clientX > viewportWidth / 2) {
+                    // 鼠标在右半边，tooltip显示在左侧
+                    tooltipX = event.clientX + scrollX - tooltipWidth - 20;
+                } else {
+                    // 鼠标在左半边，tooltip显示在右侧
+                    tooltipX = event.clientX + scrollX + 20;
+                }
+                
+                let tooltipY = event.clientY + scrollY + 20;
+                
+                // 边界检查
+                if (tooltipX + tooltipWidth > viewportWidth + scrollX - MARGIN.RIGHT) {
+                    tooltipX = viewportWidth + scrollX - tooltipWidth - MARGIN.RIGHT;
+                }
+                if (tooltipX < scrollX + MARGIN.LEFT) {
+                    tooltipX = scrollX + MARGIN.LEFT;
+                }
+                if (tooltipY + tooltipHeight > viewportHeight + scrollY - MARGIN.BOTTOM) {
+                    tooltipY = viewportHeight + scrollY - tooltipHeight - MARGIN.BOTTOM;
+                }
+                if (tooltipY < scrollY + MARGIN.TOP) {
+                    tooltipY = scrollY + MARGIN.TOP;
+                }
+                
                 tooltip.style("display", "block")
                     .html(`
                         <strong>${d.data.name}</strong>
@@ -287,38 +348,12 @@
                             ${d.data.time ? '<br>时间: ' + d.data.time : ''}
                             ${d.data.description ? '<br>描述: ' + d.data.description : ''}
                         </div>
-                    `);
-                
-                // 获取tooltip的尺寸
-                const tooltipHeight = tooltip.node().getBoundingClientRect().height;
-                const tooltipWidth = tooltip.node().getBoundingClientRect().width;
-                
-                // 计算位置，确保tooltip完全在视窗内
-                let left = event.clientX + scrollX + 10;
-                let top = event.clientY + scrollY - 10;
-                
-                // 检查右边界
-                if (left + tooltipWidth > window.innerWidth + scrollX) {
-                    left = window.innerWidth + scrollX - tooltipWidth - 10;
-                }
-                
-                // 检查下边界
-                if (top + tooltipHeight > window.innerHeight + scrollY) {
-                    top = window.innerHeight + scrollY - tooltipHeight - 10;
-                }
-                
-                // 检查上边界
-                if (top < scrollY) {
-                    top = scrollY + 10;
-                }
-                
-                // 应用计算后的位置
-                tooltip.style("left", left + "px")
-                       .style("top", top + "px");
+                    `)
+                    .style("left", tooltipX + "px")
+                    .style("top", tooltipY + "px");
 
-                // 如果这个节点是固定的，更新固定位置
                 if (fixedTooltip === d) {
-                    fixedPosition = { left, top };
+                    fixedPosition = { left: tooltipX, top: tooltipY };
                 }
             })
             .on("mouseout", function(event, d) {
@@ -344,19 +379,50 @@
                 
                 const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
                 const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
                 
-                // 如果点击的是当前固定的节点，取消固定
+                const MARGIN = {
+                    TOP: 50,
+                    RIGHT: 100,
+                    BOTTOM: 100,
+                    LEFT: 50
+                };
+                
+                const tooltipWidth = 700;
+                const tooltipHeight = 800;
+                
+                // 检查鼠标位置，决定tooltip显示在左侧还是右侧
+                let tooltipX;
+                if (event.clientX > viewportWidth / 2) {
+                    tooltipX = event.clientX + scrollX - tooltipWidth - 20;
+                } else {
+                    tooltipX = event.clientX + scrollX + 20;
+                }
+                
+                let tooltipY = event.clientY + scrollY + 20;
+                
+                // 边界检查
+                if (tooltipX + tooltipWidth > viewportWidth + scrollX - MARGIN.RIGHT) {
+                    tooltipX = viewportWidth + scrollX - tooltipWidth - MARGIN.RIGHT;
+                }
+                if (tooltipX < scrollX + MARGIN.LEFT) {
+                    tooltipX = scrollX + MARGIN.LEFT;
+                }
+                if (tooltipY + tooltipHeight > viewportHeight + scrollY - MARGIN.BOTTOM) {
+                    tooltipY = viewportHeight + scrollY - tooltipHeight - MARGIN.BOTTOM;
+                }
+                if (tooltipY < scrollY + MARGIN.TOP) {
+                    tooltipY = scrollY + MARGIN.TOP;
+                }
+                
                 if (fixedTooltip === d) {
                     fixedTooltip = null;
                     fixedPosition = null;
                     tooltip.style("display", "none");
                 } else {
-                    // 设置新的固定节点和位置
                     fixedTooltip = d;
-                    fixedPosition = {
-                        left: event.clientX + scrollX + 10,
-                        top: event.clientY + scrollY - 10
-                    };
+                    fixedPosition = { left: tooltipX, top: tooltipY };
                     
                     tooltip.style("display", "block")
                         .html(`
@@ -367,8 +433,8 @@
                                 ${d.data.description ? '<br>描述: ' + d.data.description : ''}
                             </div>
                         `)
-                        .style("left", fixedPosition.left + "px")
-                        .style("top", fixedPosition.top + "px");
+                        .style("left", tooltipX + "px")
+                        .style("top", tooltipY + "px");
                 }
             });
         }

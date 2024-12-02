@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>生物演化史5</title>
+    <title>生物演化史-星空图-3D</title>
     <style>
         body { margin: 0; overflow: hidden; }
         #info {
@@ -53,19 +53,21 @@
             bottom: 10px;
             background: rgba(0,0,0,0.7);
             color: #00ff88;
-            padding: 15px 20px;
+            padding: 10px 20px;
             border-radius: 5px;
             font-family: Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 18px;
             backdrop-filter: blur(5px);
             box-shadow: 0 0 10px rgba(0,255,0,0.2);
             user-select: none;
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
         #controls-panel {
             position: absolute;
-            top: 20px;
+            top: 420px;
             right: 20px;
             background: rgba(0,0,0,0.7);
             padding: 15px;
@@ -85,45 +87,94 @@
 
         .control-group label {
             width: 70px;
-            font-size: 16px;
+            font-size: 18px;
+            white-space: nowrap;
         }
 
-        .control-group input[type="range"] {
-            width: 100px;
-            -webkit-appearance: none;
-            background: transparent;
-        }
-
-        .control-group input[type="range"]::-webkit-slider-runnable-track {
-            width: 100%;
-            height: 4px;
-            background: rgba(0,255,136,0.3);
-            border-radius: 2px;
-            cursor: pointer;
-        }
-
-        .control-group input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 16px;
-            width: 16px;
-            border-radius: 50%;
+        .control-group button {
             background: #00ff88;
+            border: none;
+            color: black;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
             cursor: pointer;
-            margin-top: -6px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .control-group button:hover {
+            background: #00cc6a;
         }
 
         .control-group span {
             min-width: 30px;
             text-align: center;
+            font-size: 18px;
         }
 
-        .color-legend {
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid rgba(0,255,136,0.3);
+        #navigation-panel {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
         }
 
-        .color-item {
+        .nav-button {
+            background: rgba(0,0,0,0.7);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-width: fit-content;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background: rgba(0,255,136,0.2);
+        }
+
+        #fullscreen-btn {
+            background: rgba(0,0,0,0.7);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        #fullscreen-btn:hover {
+            background: rgba(0,255,136,0.2);
+        }
+        .nav-button.active {
+            background: rgba(0,255,136,0.4);
+        }
+
+        #legend {
+            position: absolute;
+            left: 10px;
+            bottom: 120px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+
+        .legend-item {
             display: flex;
             align-items: center;
             margin: 5px 0;
@@ -136,169 +187,81 @@
             border-radius: 3px;
         }
 
-        /* 添加按钮样式 */
-        .control-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(0,255,136,0.3);
-        }
-
-        .control-button {
-            background: rgba(0,255,136,0.2);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            padding: 5px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.3s;
-            flex: 1;
-        }
-
-        .control-button:hover {
-            background: rgba(0,255,136,0.3);
-        }
-
-        /* 添加全屏按钮样式 */
-        .fullscreen-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0,255,136,0.3);
-        }
-
-        .fullscreen-button {
-            background: rgba(0,255,136,0.2);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            font-size: 16px;
-            text-decoration: none;
-            width: 100%;
-        }
-
-        .fullscreen-button:hover {
-            background: rgba(0,255,136,0.3);
-        }
-
-        /* 添加导航按钮样式 */
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(0,255,136,0.3);
-        }
-
-        .nav-button {
-            background: rgba(0,255,136,0.2);
-            border: 1px solid #00ff88;
-            color: #00ff88;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            text-decoration: none;
-            width: 85%;
-        }
-
-        .nav-button:hover {
-            background: rgba(0,255,136,0.3);
-        }
-
-        /* 当前页面的按钮样式 */
-        .nav-button.active {
-            background: rgba(0,255,136,0.4);
-        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="./生物演化史数据.js"></script>
 </head>
 <body>
+    <div id="navigation-panel">
+        <button id="fullscreen-btn" onclick="toggleFullScreen()">全屏</button>
+        <a href="./生物分类-太阳爆发图-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
+        <a href="./生物演化史-力导向-2D.html" class="nav-button">生物演化史-力导向-2D</a>
+        <a href="./生物演化史-Tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
+        <a href="./生物演化史-DNA双螺旋-3D.html" class="nav-button">生物演化史-DNA双螺旋-3D</a>
+        <a href="./生物演化史-星空图-3D.html" class="nav-button active">生物演化史-星空图-3D</a>
+        <a href="./生物演化史-Tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
+    </div>
     <div id="info">生物演化史</div>
     <div id="details"></div>
     <div id="controls-info">
-        <div class="color-legend">
-            <div class="color-item">
-                <div class="color-box" style="background: #FF0000;"></div>
-                <span>冥古宙</span>
-            </div>
-            <div class="color-item">
-                <div class="color-box" style="background: #FF7F00;"></div>
-                <span>太古宙</span>
-            </div>
-            <div class="color-item">
-                <div class="color-box" style="background: #FFFF00;"></div>
-                <span>元古宙</span>
-            </div>
-            <div class="color-item">
-                <div class="color-box" style="background: #00FF00;"></div>
-                <span>显生宙</span>
-            </div>
-            <div class="color-item">
-                <div class="color-box" style="background: #00FFFF;"></div>
-                <span>中生代</span>
-            </div>
-            <div class="color-item">
-                <div class="color-box" style="background: #0000FF;"></div>
-                <span>新生代</span>
-            </div>
-            <div class="color-item">
-                <div class="color-box" style="background: #8B00FF;"></div>
-                <span>第四纪</span>
-            </div>
-        </div>
-        按 W/S/A/D/ 键进行上下左右移动<br>
-        使用鼠标滚轮缩放<br>
-        使用鼠标左键旋转视角
+        <div>鼠标滚轮缩放</div>
+        <div>鼠标左键拖动</div>
+        <div>按 Q/E 键进行顺/逆时针旋转视角</div>
     </div>
     <div id="controls-panel">
-        <div class="fullscreen-buttons">
-            <button class="fullscreen-button" onclick="toggleFullScreen()">全屏</button>
-            <button class="fullscreen-button" onclick="exitFullScreen()">退出全屏</button>
-        </div>
-        <div class="nav-buttons">
-            <a href="./生物分类.html" class="nav-button">生物分类</a>
-            <a href="./生物演化史.html" class="nav-button">生物演化史 1</a>
-            <a href="./生物演化史2.html" class="nav-button">生物演化史 2</a>
-            <a href="./生物演化史3.html" class="nav-button">生物演化史 3</a>
-            <a href="./生物演化史4.html" class="nav-button">生物演化史 4</a>
-            <a href="./生物演化史5.html" class="nav-button active">生物演化史 5</a>
-        </div>
         <div class="control-group">
             <label>高度差</label>
-            <input type="range" id="heightStep" min="1" max="500" value="200" step="5">
-            <span id="heightStep-value">200</span>
+            <button onclick="adjustParameter('heightStep', -5)">-</button>
+            <span id="heightStep-value">25</span>
+            <button onclick="adjustParameter('heightStep', 5)">+</button>
         </div>
         <div class="control-group">
             <label>线长度</label>
-            <input type="range" id="radius" min="1" max="2000" value="325" step="5">
-            <span id="radius-value">325</span>
+            <button onclick="adjustParameter('radius', -5)">-</button>
+            <span id="radius-value">255</span>
+            <button onclick="adjustParameter('radius', 5)">+</button>
         </div>
         <div class="control-group">
             <label>垂直间距</label>
-            <input type="range" id="levelHeight" min="1" max="850" value="31" step="5">
-            <span id="levelHeight-value">31</span>
+            <button onclick="adjustParameter('levelHeight', -2)">-</button>
+            <span id="levelHeight-value">25</span>
+            <button onclick="adjustParameter('levelHeight', 2)">+</button>
         </div>
-        <div class="control-buttons">
-            <button class="control-button" onclick="undoLastChange()">撤销</button>
-            <button class="control-button" onclick="resetToDefault()">重置</button>
+    </div>
+    <div id="legend">
+        <div class="legend-item">
+            <div class="color-box" style="background: #FF0000;"></div>
+            <span>冥古宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #FF7F00;"></div>
+            <span>太古宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #FFFF00;"></div>
+            <span>元古宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #00FF00;"></div>
+            <span>显生宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #00FFFF;"></div>
+            <span>中生代</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #0000FF;"></div>
+            <span>新生代</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #8B00FF;"></div>
+            <span>第四纪</span>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="./生物演化史数据.js"></script>
+    <script src="./生物演化史据.js"></script>
     <script>
         let scene, camera, renderer, controls;
         let dnaPoints = [];
@@ -308,111 +271,44 @@
         // 添加键盘控制状态
         const keyState = {
             q: false,
-            e: false,
-            w: false,
-            s: false,
-            a: false,
-            d: false
+            e: false
         };
 
         // 添加键盘事件监听
         window.addEventListener('keydown', (event) => {
             switch(event.key.toLowerCase()) {
-                case 'q': keyState.q = true; break;
-                case 'e': keyState.e = true; break;
-                case 'w': keyState.w = true; break;
-                case 's': keyState.s = true; break;
-                case 'a': keyState.a = true; break;
-                case 'd': keyState.d = true; break;
+                case 'q':
+                    keyState.q = true;
+                    break;
+                case 'e':
+                    keyState.e = true;
+                    break;
             }
         });
 
         window.addEventListener('keyup', (event) => {
             switch(event.key.toLowerCase()) {
-                case 'q': keyState.q = false; break;
-                case 'e': keyState.e = false; break;
-                case 'w': keyState.w = false; break;
-                case 's': keyState.s = false; break;
-                case 'a': keyState.a = false; break;
-                case 'd': keyState.d = false; break;
+                case 'q':
+                    keyState.q = false;
+                    break;
+                case 'e':
+                    keyState.e = false;
+                    break;
             }
         });
 
-        // 修改默认参数
-        const defaultParameters = {
-            heightStep: 200,
-            radius: 325,
-            levelHeight: 31
+        // 修改初始参数
+        let networkParameters = {
+            heightStep: 25,     // 高度差
+            radius: 255,        // 线长度
+            levelHeight: 25     // 垂直间距
         };
 
-        let networkParameters = {...defaultParameters};
-        let parametersHistory = [];
-
-        // 更新初始化滑块函数
-        function initializeSliders() {
-            const sliders = ['heightStep', 'radius', 'levelHeight'];
-            
-            sliders.forEach(param => {
-                const slider = document.getElementById(param);
-                const valueDisplay = document.getElementById(`${param}-value`);
-                
-                slider.addEventListener('input', function() {
-                    // 保存当前状态到历史记录
-                    parametersHistory.push({...networkParameters});
-                    if (parametersHistory.length > 20) {
-                        parametersHistory.shift();
-                    }
-                    
-                    const value = parseFloat(this.value);
-                    valueDisplay.textContent = value;
-                    networkParameters[param] = value;
-                    
-                    // 重新创建网络
-                    scene.remove(networkGroup);
-                    networkGroup = createNetworkVisualization();
-                });
-            });
-        }
-
-        // 撤销功能
-        function undoLastChange() {
-            if (parametersHistory.length > 0) {
-                networkParameters = parametersHistory.pop();
-                updateSlidersFromParameters();
-                updateVisualization();
-            }
-        }
-
-        // 重置功能
-        function resetToDefault() {
-            networkParameters = {...defaultParameters};
-            updateSlidersFromParameters();
-            updateVisualization();
-        }
-
-        // 更新滑块显示值
-        function updateSlidersFromParameters() {
-            Object.keys(networkParameters).forEach(param => {
-                const slider = document.getElementById(param);
-                const valueDisplay = document.getElementById(`${param}-value`);
-                if (slider && valueDisplay) {
-                    slider.value = networkParameters[param];
-                    valueDisplay.textContent = networkParameters[param];
-                }
-            });
-        }
-
-        // 更新可视化
-        function updateVisualization() {
-            // 更新节点大小
-            networkGroup.children.forEach(child => {
-                if (child instanceof THREE.Mesh) {
-                    child.scale.set(networkParameters.nodeSize, networkParameters.nodeSize, networkParameters.nodeSize);
-                } else if (child instanceof THREE.Line) {
-                    child.material.opacity = networkParameters.lineOpacity / 100;
-                }
-            });
-            
+        // 添加参数调节函数
+        function adjustParameter(param, delta) {
+            networkParameters[param] += delta;
+            // 更新显示的值
+            document.getElementById(`${param}-value`).textContent = networkParameters[param];
             // 重新创建网络
             scene.remove(networkGroup);
             networkGroup = createNetworkVisualization();
@@ -423,8 +319,8 @@
             scene.background = new THREE.Color(0x000000);
             
             camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
-            camera.position.set(-2170, 847, 792);
-            camera.lookAt(-47, -62, -43);
+            camera.position.set(120, 270, 500);
+            camera.lookAt(0, 0, 0);
             
             renderer = new THREE.WebGLRenderer({ antialias: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -432,11 +328,8 @@
             
             controls = new THREE.OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
-            controls.maxDistance = 6000;
-            controls.minDistance = 10;
-            controls.screenSpacePanning = true;
-            controls.target = new THREE.Vector3(0, 0, 0);
-            controls.zoomToCursor = true;
+            controls.maxDistance = 3000;
+            controls.minDistance = 50;
             
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
             scene.add(ambientLight);
@@ -462,7 +355,6 @@
                 composer.addPass(bloomPass);
             }
             
-            initializeSliders();
             animate();
         }
 
@@ -478,9 +370,9 @@
 
             const starsVertices = [];
             for(let i = 0; i < 15000; i++) {
-                const x = (Math.random() - 0.5) * 8000;
-                const y = (Math.random() - 0.5) * 8000;
-                const z = (Math.random() - 0.5) * 8000;
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
                 starsVertices.push(x, y, z);
             }
 
@@ -495,9 +387,9 @@
             
             const brightStarsVertices = [];
             for(let i = 0; i < 1000; i++) {
-                const x = (Math.random() - 0.5) * 6000;
-                const y = (Math.random() - 0.5) * 6000;
-                const z = (Math.random() - 0.5) * 6000;
+                const x = (Math.random() - 0.5) * 1000;
+                const y = (Math.random() - 0.5) * 1000;
+                const z = (Math.random() - 0.5) * 1000;
                 brightStarsVertices.push(x, y, z);
             }
             
@@ -520,9 +412,9 @@
             ];
             
             for(let i = 0; i < 500; i++) {
-                const x = (Math.random() - 0.5) * 7000;
-                const y = (Math.random() - 0.5) * 7000;
-                const z = (Math.random() - 0.5) * 7000;
+                const x = (Math.random() - 0.5) * 1500;
+                const y = (Math.random() - 0.5) * 1500;
+                const z = (Math.random() - 0.5) * 1500;
                 coloredStarsVertices.push(x, y, z);
                 
                 const color = starColors[Math.floor(Math.random() * starColors.length)];
@@ -554,7 +446,7 @@
         function createNetworkVisualization() {
             const networkGroup = new THREE.Group();
             
-            // 为每个类别定义基准角度（弧度制）
+            // 为每个类别定义基准��度（弧度制）
             const categoryBaseAngles = {
                 '冥古宙': 0,           // 0度
                 '太古宙': Math.PI/3,   // 60度
@@ -567,13 +459,13 @@
 
             // 使用参数计算高度偏移
             const categoryHeightOffset = {
-                '冥古宙': networkParameters.heightStep * 2,
-                '太古宙': networkParameters.heightStep * 3.3,
-                '元古宙': networkParameters.heightStep * 4.6,
-                '显生宙': networkParameters.heightStep * 5.9,
-                '中生代': networkParameters.heightStep * 7.2,
-                '新生代': networkParameters.heightStep * 8.5,
-                '第四纪': networkParameters.heightStep * 9.8
+                '冥古宙': 0,
+                '太古宙': networkParameters.heightStep,
+                '元古宙': networkParameters.heightStep * 2,
+                '显生宙': networkParameters.heightStep * 3,
+                '中生代': networkParameters.heightStep * 4,
+                '新生代': networkParameters.heightStep * 5,
+                '第四纪': networkParameters.heightStep * 6
             };
 
             // 使用彩虹色系定义地质年代颜色映射
@@ -625,8 +517,8 @@
             }
             
             // 修改createNodes函数的颜色逻辑
-            function createNodes(data, position = new THREE.Vector3(0, -500, 0), level = 0, angle = 0, parentColor, baseAngle = null) {
-                const nodeGeometry = new THREE.SphereGeometry(10, 32, 32);
+            function createNodes(data, position = new THREE.Vector3(), level = 0, angle = 0, parentColor, baseAngle = null) {
+                const nodeGeometry = new THREE.SphereGeometry(2.5, 32, 32);
                 let color;
                 
                 if (level === 1) {
@@ -658,12 +550,12 @@
                     const childCount = data.children.length;
                     const radius = networkParameters.radius - level * 6;
                     
-                    // 修改角度计算逻辑
+                    // 修改角计算逻辑
                     let angleStep;
                     let startAngle;
                     
                     if (level === 0) {
-                        // 第一层的子节点使用定义的基准角度
+                        // 第一层的子节点使用预定义的基准角度
                         angleStep = (Math.PI * 2) / childCount;
                         startAngle = 0;
                     } else if (level === 1) {
@@ -716,7 +608,7 @@
             }
             
             // 从根节点开始创建整个网络
-            createNodes(treeData, new THREE.Vector3(0, -700, 0));
+            createNodes(treeData);
             
             // 只保留节点的呼吸效果，移除线条动画
             function animateNetwork() {
@@ -741,45 +633,17 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            // 处理键盘旋转和移动
+            // 处理键盘旋转
             const rotationSpeed = 0.02;
-            const moveSpeed = 30;
-            
-            if (keyState.d) {
+            if (keyState.q) {
                 camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed);
             }
-            if (keyState.a) {
-                camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), -rotationSpeed);
-            }
-            
-            // 添加WSAD移动控制
-            if (keyState.w) {
-                camera.position.y += moveSpeed;
-            }
-            if (keyState.s) {
-                camera.position.y -= moveSpeed;
-            }
             if (keyState.e) {
-                camera.position.x -= moveSpeed;
-            }
-            if (keyState.q) {
-                camera.position.x += moveSpeed;
+                camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), -rotationSpeed);
             }
             
             camera.lookAt(scene.position);
             controls.update();
-
-            // // 输出相机信息到控制台
-            // console.log('Camera Position:', {
-            //     x: Math.round(camera.position.x),
-            //     y: Math.round(camera.position.y),
-            //     z: Math.round(camera.position.z)
-            // });
-            // console.log('Camera Rotation:', {
-            //     x: Math.round(camera.rotation.x * 180 / Math.PI), // 转换为角度
-            //     y: Math.round(camera.rotation.y * 180 / Math.PI),
-            //     z: Math.round(camera.rotation.z * 180 / Math.PI)
-            // });
             
             // 渲染场景
             if (composer) {
@@ -878,34 +742,17 @@
             }
         }
 
-        // 添加全屏控制函数
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
                     console.log(`Error attempting to enable full-screen mode: ${err.message}`);
                 });
-            }
-        }
-
-        function exitFullScreen() {
-            if (document.fullscreenElement) {
-                document.exitFullscreen().catch(err => {
-                    console.log(`Error attempting to exit full-screen mode: ${err.message}`);
-                });
-            }
-        }
-
-        // 监听全屏变化
-        document.addEventListener('fullscreenchange', () => {
-            // 可以在这里添加全屏状态变化时的处理逻辑
-            if (document.fullscreenElement) {
-                // 进入全屏时的处理
-                onWindowResize();
             } else {
-                // 退出全屏时的处理
-                onWindowResize();
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
             }
-        });
+        }
 
         init();
     </script>

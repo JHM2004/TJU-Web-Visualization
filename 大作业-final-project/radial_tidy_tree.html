@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生物演化史放射状树形图</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+        
+        .node circle {
+            fill: #fff;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+        
+        .node text {
+            font: 12px sans-serif;
+        }
+        
+        .link {
+            fill: none;
+            stroke: #555;
+            stroke-width: 1px;
+        }
+
+        .tooltip {
+            position: absolute;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 12px;
+            max-width: 300px;
+            box-shadow: 0 2px 4px rgb(0,0,0);
+        }
+        .tooltip img {
+            object-fit: contain;
+            border-radius: 4px;
+            background: white;
+        }
+
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 200px;
+        }
+
+        .header h1 {
+            text-align: center;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background: #5cb85c;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #4cae4c;
+        }
+
+        .nav-link::after {
+            content: "→";
+            margin-left: auto;
+        }
+
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-button {
+            width: 100% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 10px 15px !important;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .control-button:hover {
+            background-color: #45a049;
+        }
+
+        .control-button.active {
+            background-color: #2E7D32;
+            font-weight: bold;
+        }
+
+        .keyboard-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 14px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Radial Tidy Tree</h1>
+        <a href="./生物演化史-Tree-2D.html" class="nav-link">Tidy Tree</a>
+    </div>
+    <div class="control-buttons">
+        <button class="control-button" id="fullscreenBtn">全屏显示</button>
+        <button class="control-button" onclick="window.location.href='./生物分类-太阳爆发图-2D.html'">生物分类-太阳爆发图-2D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-力导向-2D.html'">生物演化史-力导向-2D</button>
+        <button class="control-button active" onclick="window.location.href='./生物演化史-Tree-2D.html'">生物演化史-Tree-2D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'">生物演化史-DNA双螺旋-3D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
+        <button class="control-button" onclick="window.location.href='./生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
+    </div>
+    <div class="keyboard-hint">
+        使用 'Q' 键逆时针旋转，'E' 键顺时针旋转
+    </div>
+    <script src="./生物演化史数据.js"></script>
+    <script>
+        // 在SVG创建之前添加旋转角度变量
+        let currentRotation = 0;
+        const rotationStep = 5; // 每次旋转5度
+        
+        // 获取窗口尺寸
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // 创建SVG容器
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+        // 添加一个专门用于缩放的组
+        const g = svg.append("g");
+
+        // 创建放射状树形图布局
+        const radius = Math.min(width, height) / 1;
+        
+        const tree = d3.tree()
+            .size([2 * Math.PI, radius])
+            .separation((a, b) => {
+                return (a.parent == b.parent ? 2 : 3) / a.depth;
+            });
+
+        // 创建层级数据
+        const root = d3.hierarchy(treeData);
+        const treeData2 = tree(root);
+
+        // 创建工具提示
+        const tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        // 绘制连接线
+        g.selectAll(".link")
+            .data(treeData2.links())
+            .join("path")
+            .attr("class", "link")
+            .attr("d", d3.linkRadial()
+                .angle(d => d.x)
+                .radius(d => d.y));
+
+        // 创建节点组
+        const node = g.selectAll(".node")
+            .data(treeData2.descendants())
+            .join("g")
+            .attr("class", "node")
+            .attr("transform", d => `
+                translate(${d3.pointRadial(d.x, d.y)})
+            `);
+
+        // 创建一个显示tooltip的函数
+        const showTooltip = (event, d) => {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            
+            let tooltipContent = '';
+            
+            // 修改图片样式，确保完整显示
+            if (d.data.src) {
+                tooltipContent += `<img src="${d.data.src}" style="width: 200px; height: 200px; display: block; margin-bottom: 10px; object-fit: contain;"><br>`;
+            }
+            
+            tooltipContent += `名称: ${d.data.name}`;
+            if (d.data.time) tooltipContent += `<br>时间: ${d.data.time}`;
+            if (d.data.description) tooltipContent += `<br>描述: ${d.data.description}`;
+            
+            tooltip.html(tooltipContent)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        };
+
+        // 创建一个隐藏tooltip的函数
+        const hideTooltip = () => {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        };
+
+        // 添加图片
+        node.append("image")
+            .attr("xlink:href", d => d.data.src || '')
+            .attr("x", 8)
+            .attr("y", -12)
+            .attr("width", 24)
+            .attr("height", 24)
+            .attr("transform", d => {
+                const angle = (d.x * 180 / Math.PI - 90);
+                return `rotate(${angle})`;
+            })
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip);
+
+        // 添加节点圆圈
+        node.append("circle")
+            .attr("r", 4)
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip);
+
+        // 添加文本标签
+        node.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", 40)
+            .attr("text-anchor", "start")
+            .attr("transform", d => {
+                const angle = (d.x * 180 / Math.PI - 90);
+                return `rotate(${angle})`;
+            })
+            .text(d => d.data.name)
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip)
+            .clone(true).lower()
+            .attr("stroke", "white")
+            .attr("stroke-width", 3);
+
+        // 修改缩放行为
+        const zoom = d3.zoom()
+            .scaleExtent([0.2, 5])
+            .on("zoom", (event) => {
+                g.attr("transform", `${event.transform} rotate(${currentRotation})`);
+            });
+
+        // 设置初始缩放和旋转
+        svg.call(zoom)
+           .call(zoom.transform, d3.zoomIdentity.scale(0.5));
+
+        // 添加键盘事件监听
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'q') {
+                // 逆时针旋转
+                currentRotation -= rotationStep;
+                g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
+            } else if (event.key === 'e') {
+                // 顺时针旋转
+                currentRotation += rotationStep;
+                g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
+            }
+        });
+
+        // 添加全屏功能
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                // 进入全屏
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+                fullscreenBtn.textContent = '退出全屏';
+            } else {
+                // 退出全屏
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '全屏显示';
+            }
+        });
+
+        // 监听全屏变化事件
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                fullscreenBtn.textContent = '全屏显示';
+            } else {
+                fullscreenBtn.textContent = '退出全屏';
+            }
+        });
+    </script>
+</body>
+</html>

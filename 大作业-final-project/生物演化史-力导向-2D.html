@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生物演化史</title>
+    <title>生物演化史-力导向-2D</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="生物演化史数据.js"></script>
     <style>
@@ -78,32 +78,12 @@
             flex-direction: column;
             align-items: flex-end;
             gap: 10px;
+            width: 240px; /* 设置容器宽度与按钮一致 */
         }
 
         .main-btn {
-            width: 120px;
-            padding: 8px 16px;
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .main-btn:hover {
-            background: #45a049;
-        }
-
-        .nav-buttons {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            margin-top: 10px;
-        }
-
-        .nav-buttons button {
-            width: 120px;
+            min-width: 120px;
+            width: auto;
             padding: 8px 16px;
             background: #FFA500;
             color: white;
@@ -111,15 +91,65 @@
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
         }
 
-        .nav-buttons button:hover {
+        .main-btn:hover {
             background: #FF8C00;
         }
 
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 0px;
+            width: 100%; /* 确保容器占满父元素宽度 */
+        }
+
+        .nav-buttons button,
+        .main-btn,
+        .controls button:first-child {
+            width: 240px; /* 统一设置固定宽度，以最长的按钮文本为准 */
+            padding: 8px 16px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .nav-buttons button {
+            background: #4CAF50;
+        }
+
+        .nav-buttons button:hover {
+            background: #45a049;
+        }
+
         .nav-buttons button.active {
-            background: #FF6347;
+            background: #2E7D32;
             font-weight: bold;
+        }
+
+        .main-btn {
+            background: #FFA500;
+        }
+
+        .main-btn:hover {
+            background: #FF8C00;
+        }
+
+        .controls button:first-child {
+            background: #4CAF50;
+        }
+
+        .controls button:first-child:hover {
+            background: #45a049;
         }
 
         .help-tips {
@@ -142,24 +172,70 @@
         .node circle {
             cursor: pointer;
         }
+
+        /* 修改全屏按钮的样式，添加文字居中 */
+        .controls button:first-child {
+            min-width: 120px;
+            width: 240px; /* 设置与其他按钮相同的宽度 */
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .controls button:first-child:hover {
+            background: #45a049;
+        }
+
+        /* 保持其他导航按钮的样式不变 */
+        .nav-buttons button {
+            min-width: 120px;
+            width: 240px; /* 确保所有按钮宽度一致 */
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .nav-buttons button:hover {
+            background: #45a049;
+        }
+
+        .nav-buttons button.active {
+            background: #2E7D32;
+            font-weight: bold;
+        }
     </style>
 </head>
 
 <body>
     <div id="background-container" class="background-image-container"></div>
     <div class="controls">
-        <button onclick="toggleFullscreen()" class="main-btn">全屏显示</button>
-        <button onclick="resetZoom()" class="main-btn">重置视图</button>
+        <button onclick="toggleFullscreen()" class="nav-buttons button">全屏显示</button>
+        <div class="nav-buttons">
+            <button onclick="window.location.href='./生物分类-太阳爆发图-2D.html'">生物分类-太阳爆发图-2D</button>
+            <button onclick="window.location.href='./生物演化史-力导向-2D.html'">生物演化史-力导向-2D</button>
+            <button onclick="window.location.href='./生物演化史-Tree-2D.html'" class="active">生物演化史-Tree-2D</button>
+            <button onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'">生物演化史-DNA双螺旋-3D</button>
+            <button onclick="window.location.href='./生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
+            <button onclick="window.location.href='./生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
+        </div>
         <button onclick="expandAll()" class="main-btn">展开所有</button>
         <button onclick="collapseAll()" class="main-btn">收起所有</button>
-        <div class="nav-buttons">
-            <button onclick="window.location.href='./生物分类.html'">生物分类</button>
-            <button onclick="window.location.href='./生物演化史.html'">生物演化史</button>
-            <button onclick="window.location.href='./生物演化史2.html'" class="active">生物演化史2</button>
-            <button onclick="window.location.href='./生物演化史3.html'">生物演化史3</button>
-            <button onclick="window.location.href='./生物演化史4.html'">生物演化史4</button>
-            <button onclick="window.location.href='./生物演化史5.html'">生物演化史5</button>
-        </div>
+        <button onclick="resetZoom()" class="main-btn">重置视图</button>
     </div>
 
     <div id="container">
@@ -355,7 +431,7 @@
             simulation.nodes(nodes);
             simulation.force("link").links(links);
 
-            // 重启模拟
+            // 重启拟
             simulation.alpha(1).restart();
 
             // 修改力导向更新时的处理
@@ -1002,7 +1078,7 @@
             );
         });
 
-        // 添加平滑移动效果
+        // 添加平滑动效果
         let moveInterval = null;
         let activeKeys = new Set();
 
