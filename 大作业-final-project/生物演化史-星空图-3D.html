@@ -67,8 +67,8 @@
         }
         #controls-panel {
             position: absolute;
-            top: 420px;
-            right: 20px;
+            top: 480px;
+            right: 32px;
             background: rgba(0,0,0,0.7);
             padding: 15px;
             border-radius: 10px;
@@ -201,6 +201,7 @@
         <a href="./生物演化史-DNA双螺旋-3D.html" class="nav-button">生物演化史-DNA双螺旋-3D</a>
         <a href="./生物演化史-星空图-3D.html" class="nav-button active">生物演化史-星空图-3D</a>
         <a href="./生物演化史-Tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
+        <a href="./生物演化史-可视化大屏-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
     </div>
     <div id="info">生物演化史</div>
     <div id="details"></div>
@@ -446,7 +447,7 @@
         function createNetworkVisualization() {
             const networkGroup = new THREE.Group();
             
-            // 为每个类别定义基准��度（弧度制）
+            // 为每个类别定义基准度（弧度制）
             const categoryBaseAngles = {
                 '冥古宙': 0,           // 0度
                 '太古宙': Math.PI/3,   // 60度
