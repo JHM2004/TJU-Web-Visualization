@@ -180,6 +180,10 @@
         // 创建工具提示div
         const tooltip = d3.select(".tooltip");
 
+        // 在script标签内添加一个变量来跟踪固定显示的tooltip
+        let fixedTooltip = null;
+        let fixedPosition = null;
+
         // 加载数据并渲染树
         function renderTree(data, filter = 'all') {
             // 清除现有内容
@@ -274,6 +278,7 @@
                 const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
                 const scrollY = window.pageYOffset || document.documentElement.scrollTop;
                 
+                // 先显示tooltip以获取其尺寸
                 tooltip.style("display", "block")
                     .html(`
                         <strong>${d.data.name}</strong>
@@ -282,32 +287,89 @@
                             ${d.data.time ? '<br>时间: ' + d.data.time : ''}
                             ${d.data.description ? '<br>描述: ' + d.data.description : ''}
                         </div>
-                    `)
-                    .style("left", (event.clientX + scrollX + 10) + "px")
-                    .style("top", (event.clientY + scrollY - 10) + "px");
+                    `);
+                
+                // 获取tooltip的尺寸
+                const tooltipHeight = tooltip.node().getBoundingClientRect().height;
+                const tooltipWidth = tooltip.node().getBoundingClientRect().width;
+                
+                // 计算位置，确保tooltip完全在视窗内
+                let left = event.clientX + scrollX + 10;
+                let top = event.clientY + scrollY - 10;
+                
+                // 检查右边界
+                if (left + tooltipWidth > window.innerWidth + scrollX) {
+                    left = window.innerWidth + scrollX - tooltipWidth - 10;
+                }
+                
+                // 检查下边界
+                if (top + tooltipHeight > window.innerHeight + scrollY) {
+                    top = window.innerHeight + scrollY - tooltipHeight - 10;
+                }
+                
+                // 检查上边界
+                if (top < scrollY) {
+                    top = scrollY + 10;
+                }
+                
+                // 应用计算后的位置
+                tooltip.style("left", left + "px")
+                       .style("top", top + "px");
+
+                // 如果这个节点是固定的，更新固定位置
+                if (fixedTooltip === d) {
+                    fixedPosition = { left, top };
+                }
             })
-            .on("mousemove", function(event) {
+            .on("mouseout", function(event, d) {
+                // 如果有固定的tooltip，保持显示在固定位置
+                if (fixedTooltip) {
+                    tooltip.style("display", "block")
+                        .html(`
+                            <strong>${fixedTooltip.data.name}</strong>
+                            ${fixedTooltip.data.src ? `<img src="${fixedTooltip.data.src}" alt="${fixedTooltip.data.name}">` : ''}
+                            <div class="tooltip-text">
+                                ${fixedTooltip.data.time ? '<br>时间: ' + fixedTooltip.data.time : ''}
+                                ${fixedTooltip.data.description ? '<br>描述: ' + fixedTooltip.data.description : ''}
+                            </div>
+                        `)
+                        .style("left", fixedPosition.left + "px")
+                        .style("top", fixedPosition.top + "px");
+                } else {
+                    tooltip.style("display", "none");
+                }
+            })
+            .on("contextmenu", function(event, d) {
+                event.preventDefault();
+                
                 const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
                 const scrollY = window.pageYOffset || document.documentElement.scrollTop;
                 
-                // 获取tooltip的尺寸
-                const tooltipElement = tooltip.node();
-                const tooltipRect = tooltipElement.getBoundingClientRect();
-                
-                // 计算最大位置（考虑滚动）
-                const maxX = window.innerWidth + scrollX - tooltipRect.width - 20;
-                const maxY = window.innerHeight + scrollY - tooltipRect.height - 20;
-                
-                // 计算新位置（考虑滚动）
-                const left = Math.min(event.clientX + scrollX + 10, maxX);
-                const top = Math.min(event.clientY + scrollY - 10, maxY);
-                
-                tooltip
-                    .style("left", left + "px")
-                    .style("top", top + "px");
-            })
-            .on("mouseout", function() {
-                tooltip.style("display", "none");
+                // 如果点击的是当前固定的节点，取消固定
+                if (fixedTooltip === d) {
+                    fixedTooltip = null;
+                    fixedPosition = null;
+                    tooltip.style("display", "none");
+                } else {
+                    // 设置新的固定节点和位置
+                    fixedTooltip = d;
+                    fixedPosition = {
+                        left: event.clientX + scrollX + 10,
+                        top: event.clientY + scrollY - 10
+                    };
+                    
+                    tooltip.style("display", "block")
+                        .html(`
+                            <strong>${d.data.name}</strong>
+                            ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
+                            <div class="tooltip-text">
+                                ${d.data.time ? '<br>时间: ' + d.data.time : ''}
+                                ${d.data.description ? '<br>描述: ' + d.data.description : ''}
+                            </div>
+                        `)
+                        .style("left", fixedPosition.left + "px")
+                        .style("top", fixedPosition.top + "px");
+                }
             });
         }
 
