@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>生物演化史-可视化大屏-3D</title>
+    <style>
+        body { margin: 0; }
+        #container { 
+            width: 100vw; 
+            height: 100vh;
+            position: relative;
+        }
+        .panel {
+            position: absolute;
+            background: rgba(13, 71, 161, 0.85);
+            color: white;
+            padding: 10px;
+            width: 250px;
+            top: 0;
+            bottom: 0;
+            overflow-y: auto;
+        }
+        #left-panel {
+            left: 0;
+        }
+        #right-panel {
+            right: 0;
+        }
+        .slider-container {
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        .slider-container label {
+            margin-right: 10px;
+            white-space: nowrap;
+            width: 80px;
+        }
+        .slider {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 5px;
+            background: #1976D2;
+            border-radius: 5px;
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #42A5F5;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 5px;
+            margin: 10px 0;
+        }
+        button {
+            background: #1976D2;
+            border: none;
+            color: white;
+            padding: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1565C0;
+        }
+        .guide-panel {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            background: rgba(53, 41, 219, 0.85);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 200px;
+        }
+        
+        .guide-panel h4 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .guide-panel p {
+            margin: 8px 0;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+        select {
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #0D47A1;
+            background-color: #1976D2;
+            color: white;
+            cursor: pointer;
+            width: 150px;
+            text-align: center;
+            text-align-last: center;
+            -moz-text-align-last: center;
+        }
+        select:hover {
+            background-color: #1565C0;
+        }
+        select option {
+            text-align: center;
+        }
+        /* 添加导航按钮样式 */
+        .nav-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #1976D2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .nav-button:hover {
+            background-color: #1565C0;
+        }
+
+        .nav-button.active {
+            background-color: #0D47A1;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="node-color-info" style="
+            position: absolute;
+            left: 10px;
+            bottom: 200px;
+            background: rgba(53, 41, 219, 0.85);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 200px;
+        ">
+            <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">地质年代</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #FF0000;
+                        border-radius: 50%;
+                    "></span>
+                    <span>冥古宙</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #FFA500;
+                        border-radius: 50%;
+                    "></span>
+                    <span>太古宙</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #FFFF00;
+                        border-radius: 50%;
+                    "></span>
+                    <span>元古宙</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #00FF00;
+                        border-radius: 50%;
+                    "></span>
+                    <span>显生宙</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #00FFFF;
+                        border-radius: 50%;
+                    "></span>
+                    <span>中生代</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #0000FF;
+                        border-radius: 50%;
+                    "></span>
+                    <span>新生代</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px;">
+                    <span style="
+                        display: inline-block;
+                        width: 14px;
+                        height: 14px;
+                        background: #800080;
+                        border-radius: 50%;
+                    "></span>
+                    <span>第四纪</span>
+                </div>
+            </div>
+        </div>
+        <div id="graph-stats" style="
+            position: absolute;
+            left: 10px;
+            bottom: 350px;
+            background: rgba(53, 41, 219, 0.85);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 200px;
+        ">
+            <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">网格图属性</h4>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">节点数目: <span id="node-count"></span></p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">关系数目: <span id="link-count"></span></p>
+        </div>
+        <div class="guide-panel" style="
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            background: rgba(53, 41, 219, 0.85);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 200px;
+        ">
+            <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">操作指南</h4>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">W/S: 上/下转动视角</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">A/D: 左/右转动视角</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标拖拽: 自由旋转</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标滚轮: 缩放</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">点击节点: 显示详细信息</p>
+        </div>
+        <div id="left-panel" class="panel" style="
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 250px;
+            background: rgba(53, 41, 219, 0.85);
+            color: white;
+            padding: 15px;
+            overflow-y: auto;
+        ">
+            <h3 style="margin: 0 0 15px 0; font-size: 20px;">节点属性</h3>
+            <div id="node-info" style="
+                min-height: 450px;
+                border: 2px solid rgba(255, 255, 255, 0.2);
+                border-radius: 8px;
+                padding: 5px;
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+                margin-bottom: 20px;
+                position: relative;
+            ">
+                <!-- 添加装饰性边角 -->
+                <div style="
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    width: 30px;
+                    height: 30px;
+                    border-left: 2px solid rgba(79, 195, 247, 0.5);
+                    border-top: 2px solid rgba(79, 195, 247, 0.5);
+                "></div>
+                <div style="
+                    position: absolute;
+                    top: 20px;
+                    right: 20px;
+                    width: 30px;
+                    height: 30px;
+                    border-right: 2px solid rgba(79, 195, 247, 0.5);
+                    border-top: 2px solid rgba(79, 195, 247, 0.5);
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 20px;
+                    left: 20px;
+                    width: 30px;
+                    height: 30px;
+                    border-left: 2px solid rgba(79, 195, 247, 0.5);
+                    border-bottom: 2px solid rgba(79, 195, 247, 0.5);
+                "></div>
+                <div style="
+                    position: absolute;
+                    bottom: 20px;
+                    right: 20px;
+                    width: 30px;
+                    height: 30px;
+                    border-right: 2px solid rgba(79, 195, 247, 0.5);
+                    border-bottom: 2px solid rgba(79, 195, 247, 0.5);
+                "></div>
+
+                <!-- 中心提示文本 -->
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    text-align: center;
+                    width: 80%;
+                ">
+                    <div style="
+                        font-size: 16px;
+                        color: rgba(79, 195, 247, 0.8);
+                        margin-bottom: 10px;
+                    ">
+                        悬停在节点上以查看详细信息
+                    </div>
+                    <!-- 添加装饰性分隔线 -->
+                    <div style="
+                        width: 60%;
+                        height: 2px;
+                        background: linear-gradient(to right, transparent, rgba(79, 195, 247, 0.5), transparent);
+                        margin: 10px auto;
+                    "></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="right-panel" class="panel">
+            <h3>网络设置</h3>
+            <div class="slider-container">
+                <label>引力强度</label>
+                <input type="range" class="slider" id="gravity" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>斥力强度</label>
+                <input type="range" class="slider" id="repulsion" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>连接强度</label>
+                <input type="range" class="slider" id="linkStrength" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>节点大小</label>
+                <input type="range" class="slider" id="nodeSize" min="1" max="20" value="5">
+            </div>
+            
+            <div class="button-group">
+                <button id="reset">重置视图</button>
+                <button id="center">居中</button>
+                <button id="zoomIn">放大</button>
+                <button id="zoomOut">缩小</button>
+            </div>
+            
+            <div class="slider-container">
+                <label>背景颜色</label>
+                <input type="color" id="bgColor" value="#3529DB">
+            </div>
+            <div class="slider-container">
+                <label>背景透明度</label>
+                <input type="range" class="slider" id="bgOpacity" min="0" max="1" step="0.1" value="0.85">
+            </div>
+            <div class="slider-container">
+                <label>3D分布强度</label>
+                <input type="range" class="slider" id="3dForce" min="0" max="100" value="50">
+            </div>
+            <h3>轴向斥力</h3>
+            <div class="slider-container">
+                <label>X轴斥力</label>
+                <input type="range" class="slider" id="xForce" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>Y轴斥力</label>
+                <input type="range" class="slider" id="yForce" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>Z轴斥力</label>
+                <input type="range" class="slider" id="zForce" min="0" max="100" value="50">
+            </div>
+            <div class="slider-container">
+                <label>边透明度</label>
+                <input type="range" class="slider" id="edgeOpacity" min="0" max="1" step="0.01" value="0.5">
+            </div>
+            <div class="slider-container">
+                <label>边类型</label>
+                <select id="edgeType">
+                    <option value="line">直线</option>
+                    <option value="curve">曲线</option>
+                    <option value="arrow">箭头</option>
+                </select>
+            </div>
+            <div class="slider-container">
+                <label>布局类型</label>
+                <select id="layoutType">
+                    <option value="force">力导向布局</option>
+                    <option value="tree">树形布局</option>
+                    <option value="sphere">球形布局</option>
+                    <option value="circle">圆形布局</option>
+                </select>
+            </div>
+            <div class="slider-container">
+                <label>天空盒选择</label>
+                <select id="skyboxSelect">
+                    <option value="none" selected>无</option>
+                    <option value="outer_space">外太空</option>
+                    <option value="space_2">近地轨道</option>
+                    <option value="snow_mountain">雪山</option>
+                    <option value="taikong">太空</option>
+                </select>
+            </div>
+            <!-- 在右侧面板的最下方添加导航按钮组 -->
+            <div style="margin-top: 20px;">
+                <button id="fullscreen" class="nav-button">全屏显示</button>
+                <button onclick="window.location.href='./生物类-太阳爆发图-2D.html'" class="nav-button">生物分类-太阳爆发图-2D</button>
+                <button onclick="window.location.href='./生物演化史-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
+                <button onclick="window.location.href='./生物演化史-Tree-2D.html'" class="nav-button">生物演化史-Tree-2D</button>
+                <button onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'" class="nav-button">生物演化史-DNA双螺旋-3D</button>
+                <button onclick="window.location.href='./生物演化史-星空图-3D.html'" class="nav-button">生物演化史-星空图-3D</button>
+                <button onclick="window.location.href='./生物演化史-Tree-3D.html'" class="nav-button">生物演化史-Tree-3D</button>
+                <button class="nav-button active">生物演化史-可视化大屏-3D</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
+    <script src="./生物演化史数据.js"></script>
+    <script>
+        let scene, camera, renderer, graph;
+let nodes = [], links = [];
+let simulation;
+let controls;
+let selectionCircle;
+let selectedNode;
+
+// 添加地质年代的颜色映射
+const eraColors = {
+    '冥古宙': '#FF0000',   // 红色
+    '太古宙': '#FF7F00',   // 橙色
+    '元古宙': '#FFFF00',   // 黄色
+    '显生宙': '#00FF00',   // 绿色
+    '中生代': '#00FFFF',   // 青色
+    '新生代': '#0000FF',   // 蓝色
+    '第四纪': '#8B00FF'    // 紫色
+};
+
+function init() {
+    // 初始化射线追踪器和鼠标位置
+    window.raycaster = new THREE.Raycaster();
+    window.mouse = new THREE.Vector2();
+    window.hoveredNode = null;
+
+    // 初始化Three.js场景
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000000); // 设置黑色背景
+
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+    camera.position.set(0, 0, 1000);
+    camera.lookAt(0, 0, 0);
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.getElementById('container').appendChild(renderer.domElement);
+
+    // 添加 OrbitControls
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 100;
+    controls.maxDistance = 5000;
+
+    // 创建节点和连接
+    processData(treeData);
+
+    // 初始化节点3D位置
+    nodes.forEach(node => {
+        node.x = Math.random() * 500 - 250;
+        node.y = Math.random() * 500 - 250;
+        node.z = Math.random() * 500 - 250;
+    });
+
+    // 使用自定义3D力导向
+    simulation = d3.forceSimulation(nodes)
+        .force("link", d3.forceLink(links).id(d => d.id).distance(100).strength(1))
+        .force("charge", d3.forceManyBody().strength(-300))
+        .force("center", createCenter3D(0, 0, 0).strength(0.1))
+        .force("collision", d3.forceCollide().radius(20))
+        .force("3d", create3DForce(1))
+        .force("axis", createAxisForce())
+        .on("tick", updatePositions);
+
+    // 立即设置初始轴向力
+    simulation.force("axis")
+        .setXStrength(0)
+        .setYStrength(0)
+        .setZStrength(0);
+
+    // 创建Three.js象
+    createGraphObjects();
+
+    // 添加事件监听器
+    addEventListeners();
+
+    // 开始动画循环
+    animate();
+
+    // 添加键盘控制
+    addKeyboardControls();
+
+    // 创建更大范围的星空背景
+    const starsGeometry = new THREE.BufferGeometry();
+    const starsMaterial = new THREE.PointsMaterial({
+        color: 0xffffff,
+        size: 1,
+        sizeAttenuation: false
+    });
+
+    const starVertices = [];
+    for (let i = 0; i < 10000; i++) {
+        const x = THREE.MathUtils.randFloatSpread(10000);
+        const y = THREE.MathUtils.randFloatSpread(10000);
+        const z = THREE.MathUtils.randFloatSpread(10000);
+        starVertices.push(x, y, z);
+    }
+
+    starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    // 将 RGB 值转换为十六进制颜色代码
+    const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+        const hex = x.toString(16);
+        return hex.length === 1 ? '0' + hex : hex;
+    }).join('');
+
+    // 设置初始背景色（可以加在init函数中）
+    const initialColor = rgbToHex(53, 41, 219); // RGB(53, 41, 219) 转换为十六进制
+    document.getElementById('bgColor').value = initialColor;
+    renderer.setClearColor(new THREE.Color(initialColor));
+    document.querySelectorAll('.panel').forEach(panel => {
+        panel.style.backgroundColor = `rgba(53, 41, 219, 0.85)`;
+    });
+}
+
+function processData(data, parent = null, inheritedColor = null) {
+    const node = {
+        id: data.name,
+        name: data.name,
+        time: data.time || "",
+        description: data.description || "",
+        src: data.src,
+        size: 5
+    };
+    
+    // 根据节点的时期设置颜色，优先使用节点自身的颜色
+    node.color = inheritedColor;
+    for (const era in eraColors) {
+        if (node.time.includes(era)) {
+            node.color = eraColors[era];
+            break;
+        }
+    }
+    
+    nodes.push(node);
+    
+    if (parent) {
+        links.push({
+            source: parent.id,
+            target: node.id
+        });
+    }
+    
+    if (data.children) {
+        data.children.forEach(child => {
+            // 递归处理子节点，传递颜色
+            processData(child, node, node.color);
+        });
+    }
+}
+
+function createGraphObjects() {
+    nodes.forEach(node => {
+        const geometry = new THREE.SphereGeometry(node.size);
+        const material = new THREE.MeshBasicMaterial({ 
+            color: new THREE.Color(node.color || 0x00ff00) // 默认颜色
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        node.object = sphere;
+        scene.add(sphere);
+    });
+    
+    // 修改创建连接线的部分
+    links.forEach(link => {
+        link.object = createEdge('line'); // 默认使用直线
+        scene.add(link.object);
+    });
+    
+    // 添加光源使3D效果更明显
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 1);
+    pointLight.position.set(100, 100, 100);
+    scene.add(pointLight);
+}
+
+function updatePositions() {
+    // 更新节点位置
+    nodes.forEach(node => {
+        if (node.object) {
+            node.object.position.x += (node.x - node.object.position.x) * 0.1;
+            node.object.position.y += (node.y - node.object.position.y) * 0.1;
+            node.object.position.z += (node.z - node.object.position.z) * 0.1;
+        }
+    });
+    
+    // 更新连接线
+    links.forEach(link => {
+        const source = link.source;
+        const target = link.target;
+        
+        if (link.object.type === 'ArrowHelper') {
+            // 更新箭头
+            const direction = new THREE.Vector3(
+                target.x - source.x,
+                target.y - source.y,
+                target.z - source.z
+            ).normalize();
+            
+            link.object.position.set(source.x, source.y, source.z);
+            link.object.setDirection(direction);
+            link.object.setLength(
+                Math.sqrt(
+                    Math.pow(target.x - source.x, 2) +
+                    Math.pow(target.y - source.y, 2) +
+                    Math.pow(target.z - source.z, 2)
+                )
+            );
+        } else if (link.object.isCurve) {
+            // 更新曲线
+            const midPoint = new THREE.Vector3(
+                (source.x + target.x) / 2,
+                (source.y + target.y) / 2,
+                (source.z + target.z) / 2
+            );
+            
+            // 将中点向上偏移以创建弧度
+            const offset = 30; // 控制曲线的弧度
+            midPoint.y += offset;
+            
+            // 创建曲线
+            const curve = new THREE.QuadraticBezierCurve3(
+                new THREE.Vector3(source.x, source.y, source.z),
+                midPoint,
+                new THREE.Vector3(target.x, target.y, target.z)
+            );
+            
+            // 成曲线上的点
+            const points = curve.getPoints(50);
+            const positions = new Float32Array(points.length * 3);
+            
+            points.forEach((point, i) => {
+                positions[i * 3] = point.x;
+                positions[i * 3 + 1] = point.y;
+                positions[i * 3 + 2] = point.z;
+            });
+            
+            // 更新几何体
+            link.object.geometry.setAttribute('position', 
+                new THREE.BufferAttribute(positions, 3));
+            link.object.geometry.attributes.position.needsUpdate = true;
+            
+        } else {
+            // 更新直线
+            const positions = new Float32Array([
+                source.x, source.y, source.z,
+                target.x, target.y, target.z
+            ]);
+            
+            link.object.geometry.setAttribute('position', 
+                new THREE.BufferAttribute(positions, 3));
+            link.object.geometry.attributes.position.needsUpdate = true;
+        }
+    });
+}
+
+function addEventListeners() {
+    // 修改引力
+    document.getElementById('gravity').addEventListener('input', (e) => {
+        const strength = (e.target.value - 50) / 50; // 将范围转换为 -1 到 1
+        simulation.force("center", createCenter3D(0, 0, 0).strength(Math.abs(strength)));
+        simulation.force("charge").strength(-300 * strength); // 调整电荷力
+        simulation.alpha(1).restart(); // 重要：重启模拟
+    });
+    
+    // 修改斥力控制
+    document.getElementById('repulsion').addEventListener('input', (e) => {
+        const strength = -(e.target.value * 10); // 扩大效果
+        simulation.force("charge").strength(strength);
+        simulation.alpha(1).restart();
+    });
+    
+    // 修改连接强度控制
+    document.getElementById('linkStrength').addEventListener('input', (e) => {
+        const strength = e.target.value / 50; // 调整范围
+        simulation.force("link").strength(strength);
+        simulation.alpha(1).restart();
+    });
+    
+    // 修改3D分布强度
+    document.getElementById('3dForce').addEventListener('input', (e) => {
+        const strength = e.target.value / 50;
+        // 更新3D力
+        simulation.force("3d", create3DForce(strength));
+        
+        // 调整其他力以配合3D效果
+        simulation.force("charge").strength(-300 * strength);
+        simulation.force("link").distance(100 + strength * 50);
+        
+        // 重启模拟
+        simulation.alpha(1).restart();
+    });
+
+    // X轴斥力控制
+    document.getElementById('xForce').addEventListener('input', (e) => {
+        const strength = (e.target.value - 50) / 25; // 增加力的范围
+        console.log('X轴力度:', strength); // 添加调试信息
+        simulation.force("axis").setXStrength(strength);
+        simulation.alpha(1).restart();
+    });
+
+    // Y轴斥力控制
+    document.getElementById('yForce').addEventListener('input', (e) => {
+        const strength = (e.target.value - 50) / 25;
+        console.log('Y轴力度:', strength);
+        simulation.force("axis").setYStrength(strength);
+        simulation.alpha(1).restart();
+    });
+
+    // Z轴斥力控制
+    document.getElementById('zForce').addEventListener('input', (e) => {
+        const strength = (e.target.value - 50) / 25;
+        console.log('Z轴力度:', strength);
+        simulation.force("axis").setZStrength(strength);
+        simulation.alpha(1).restart();
+    });
+
+    // 边透明度控制
+    document.getElementById('edgeOpacity').addEventListener('input', (e) => {
+        const opacity = parseFloat(e.target.value);
+        links.forEach(link => {
+            if (link.object) {
+                link.object.material.opacity = opacity;
+            }
+        });
+        renderer.render(scene, camera);
+    });
+
+    // 背景颜色控制
+    document.getElementById('bgColor').addEventListener('input', (e) => {
+        const color = e.target.value;
+        // 更新当前RGB值
+        currentBgColor.r = parseInt(color.substr(1,2), 16);
+        currentBgColor.g = parseInt(color.substr(3,2), 16);
+        currentBgColor.b = parseInt(color.substr(5,2), 16);
+        
+        // 只更新面板背景，不更改天空盒
+        updatePanelBackground();
+    });
+
+    // 修改重置视图按钮的事件监听
+    document.getElementById('reset').addEventListener('click', () => {
+        // 重置所有滑动条到默认值
+        document.getElementById('gravity').value = 50;
+        document.getElementById('repulsion').value = 50;
+        document.getElementById('linkStrength').value = 50;
+        document.getElementById('3dForce').value = 50;
+        document.getElementById('nodeSize').value = 5;
+        document.getElementById('bgColor').value = '#000000';
+        
+        // 重置相机位置
+        camera.position.set(0, 0, 1000);
+        camera.lookAt(0, 0, 0);
+        
+        // 重置控制器
+        controls.reset();
+        
+        // 重置力导向图参数
+        simulation
+            .force("link", d3.forceLink(links).id(d => d.id).distance(100).strength(1))
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("center", createCenter3D(0, 0, 0).strength(0.1))
+            .force("collision", d3.forceCollide().radius(20))
+            .force("3d", create3DForce(1.5))
+            .force("axis", createAxisForce());
+        
+        // 重置节点位置到中心
+        nodes.forEach(node => {
+            node.x = Math.random() * 200 - 100; // 增大初始布范围
+            node.y = Math.random() * 200 - 100;
+            node.z = Math.random() * 200 - 100;
+            node.vx = 0;
+            node.vy = 0;
+            node.vz = 0;
+            
+            // 重置节点大小
+            if (node.object) {
+                node.object.scale.set(1, 1, 1);
+                node.size = 5;
+                const geometry = new THREE.SphereGeometry(node.size);
+                node.object.geometry = geometry;
+            }
+        });
+        
+        // 重置场景背景色
+        scene.background = new THREE.Color(0x000000);
+        
+        // 重置轴向力滑块
+        document.getElementById('xForce').value = 50;
+        document.getElementById('yForce').value = 50;
+        document.getElementById('zForce').value = 50;
+        
+        // 重置轴向力
+        simulation.force("axis")
+            .setXStrength(0)
+            .setYStrength(0)
+            .setZStrength(0);
+        
+        // 重启模拟
+        simulation.alpha(1).restart();
+        
+        // 更新渲染
+        renderer.render(scene, camera);
+        
+        // 强制更新一次位置
+        updatePositions();
+        
+        // 重置背景颜色
+        renderer.setClearColor(new THREE.Color(0x000000));
+    });
+
+    // 添节点大小控制
+    document.getElementById('nodeSize').addEventListener('input', (e) => {
+        const size = parseFloat(e.target.value);
+        nodes.forEach(node => {
+            if (node.object) {
+                // 更新节点大小属性
+                node.size = size;
+                // 创建新的球体几何体
+                const newGeometry = new THREE.SphereGeometry(size);
+                // 更新网格的几何体
+                node.object.geometry.dispose(); // 清理旧的几何体
+                node.object.geometry = newGeometry;
+            }
+        });
+        // 更新渲染
+        renderer.render(scene, camera);
+    });
+
+    // 添加边类型切换事件
+    document.getElementById('edgeType').addEventListener('change', (e) => {
+        const type = e.target.value;
+        links.forEach(link => {
+            // 移除旧的边
+            scene.remove(link.object);
+            // 创建新的边
+            link.object = createEdge(type);
+            scene.add(link.object);
+        });
+        // 强制更新一次位置
+        updatePositions();
+    });
+
+    // 布局类型切换事监听
+    document.getElementById('layoutType').addEventListener('change', (e) => {
+        const type = e.target.value;
+        applyLayout(type);
+    });
+
+    // 修改全屏功能的代码
+    const fullscreenBtn = document.getElementById('fullscreen');
+
+    fullscreenBtn.addEventListener('click', () => {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            fullscreenBtn.textContent = '退出全屏';
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '全屏显示';
+            }
+        }
+    });
+
+    // 监听全屏变化事件，处理用户按 Esc 键退出全屏的情况
+    document.addEventListener('fullscreenchange', () => {
+        if (!document.fullscreenElement) {
+            fullscreenBtn.textContent = '全屏显示';
+        }
+    });
+
+    document.getElementById('skyboxSelect').addEventListener('change', (e) => {
+        const selectedSkybox = e.target.value;
+        if (selectedSkybox === 'none') {
+            scene.background = new THREE.Color(0x000000); // 设置为黑色背景
+        } else if (selectedSkybox === 'outer_space') {
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/outer_space/right.png',
+                './static-other/Skybox_Texture/outer_space/left.png',
+                './static-other/Skybox_Texture/outer_space/up.png',
+                './static-other/Skybox_Texture/outer_space/bottom.png',
+                './static-other/Skybox_Texture/outer_space/front.png',
+                './static-other/Skybox_Texture/outer_space/back.png'
+            ]);
+            scene.background = skyboxTexture;
+        } else if (selectedSkybox === 'space_2') {
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/近地轨道/left.png',
+                './static-other/Skybox_Texture/近地轨道/right.png',
+                './static-other/Skybox_Texture/近地轨道/up.png',
+                './static-other/Skybox_Texture/近地轨道/bottom.png',
+                './static-other/Skybox_Texture/近地轨道/front.png',
+                './static-other/Skybox_Texture/近地轨道/back.png'
+            ]);
+            scene.background = skyboxTexture;
+        } else if (selectedSkybox === 'snow_mountain') {  // 新增处理逻辑
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/snow_mountain/right.jpg',
+                './static-other/Skybox_Texture/snow_mountain/left.jpg',
+                './static-other/Skybox_Texture/snow_mountain/back.jpg',
+                './static-other/Skybox_Texture/snow_mountain/front.jpg',
+                './static-other/Skybox_Texture/snow_mountain/bottom.jpg',
+                './static-other/Skybox_Texture/snow_mountain/up.jpg'
+            ]);
+            scene.background = skyboxTexture;
+        } else if (selectedSkybox === 'taikong') {  // 添加新的天空盒处理
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/taikong/right.jpg',
+                './static-other/Skybox_Texture/taikong/left.jpg',
+                './static-other/Skybox_Texture/taikong/up.jpg',
+                './static-other/Skybox_Texture/taikong/bottom.jpg',
+                './static-other/Skybox_Texture/taikong/front.jpg',
+                './static-other/Skybox_Texture/taikong/back.jpg'
+            ]);
+            scene.background = skyboxTexture;
+        }
+    });
+}
+
+function animate() {
+    requestAnimationFrame(animate);
+    controls.update();
+    
+    if (selectionCircle) {
+        selectionCircle.lookAt(camera.position);
+    }
+    
+    renderer.render(scene, camera);
+}
+
+// 窗口大小改变时更新渲染器大小
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// 初始化应用
+init();
+updateGraphStats();
+
+function createCenter3D(x, y, z) {
+    let strengthValue = 0.1;
+    
+    const force = function(alpha) {
+        nodes.forEach(node => {
+            node.vx += (x - node.x) * alpha * strengthValue;
+            node.vy += (y - node.y) * alpha * strengthValue;
+            node.vz += (z - node.z) * alpha * strengthValue;
+        });
+    };
+    
+    force.strength = function(strength) {
+        strengthValue = strength;
+        return force;
+    };
+    
+    return force;
+}
+
+function create3DForce(strength = 1) {
+    return function(alpha) {
+        nodes.forEach(node => {
+            // 增加Z轴方向的力度
+            const zForce = (Math.random() - 0.5) * strength * 20; // 增大Z轴力度
+            
+            // 根据节点前位置添加不同方向的力
+            node.vx += (Math.random() - 0.5) * alpha * strength * 10;
+            node.vy += (Math.random() - 0.5) * alpha * strength * 10;
+            node.vz += zForce * alpha;
+            
+            // 添加一个向外扩展的力
+            const distance = Math.sqrt(node.x * node.x + node.y * node.y + node.z * node.z);
+            if (distance > 0) {
+                const factor = strength * alpha * 5;
+                node.vx += (node.x / distance) * factor;
+                node.vy += (node.y / distance) * factor;
+                node.vz += (node.z / distance) * factor;
+            }
+        });
+    };
+}
+
+// 添加轴向力控制
+function createAxisForce() {
+    let xStrength = 1;
+    let yStrength = 1;
+    let zStrength = 1;
+
+    const force = function(alpha) {
+        nodes.forEach(node => {
+            // 增加力的强度
+            const xForce = (Math.random() - 0.5) * xStrength * 20; // 增加到20
+            const yForce = (Math.random() - 0.5) * yStrength * 20;
+            const zForce = (Math.random() - 0.5) * zStrength * 20;
+            
+            // 添加基于位置的力
+            const distance = Math.sqrt(node.x * node.x + node.y * node.y + node.z * node.z);
+            if (distance > 0) {
+                node.vx += xForce * alpha + (node.x / distance) * xStrength * alpha * 10;
+                node.vy += yForce * alpha + (node.y / distance) * yStrength * alpha * 10;
+                node.vz += zForce * alpha + (node.z / distance) * zStrength * alpha * 10;
+            }
+        });
+    };
+
+    // 设置各轴的力度
+    force.setXStrength = function(strength) {
+        xStrength = strength;
+        return force;
+    };
+    force.setYStrength = function(strength) {
+        yStrength = strength;
+        return force;
+    };
+    force.setZStrength = function(strength) {
+        zStrength = strength;
+        return force;
+    };
+
+    return force;
+}
+
+// 添加键盘控制相关代码
+function addKeyboardControls() {
+    const rotationSpeed = 0.05; // 调整旋转速度
+    
+    document.addEventListener('keydown', (event) => {
+        switch(event.key.toLowerCase()) {
+            case 'w': // 向上旋转
+                camera.position.y = camera.position.y * Math.cos(rotationSpeed) - camera.position.z * Math.sin(rotationSpeed);
+                camera.position.z = camera.position.y * Math.sin(rotationSpeed) + camera.position.z * Math.cos(rotationSpeed);
+                break;
+            case 's': // 向下旋转
+                camera.position.y = camera.position.y * Math.cos(-rotationSpeed) - camera.position.z * Math.sin(-rotationSpeed);
+                camera.position.z = camera.position.y * Math.sin(-rotationSpeed) + camera.position.z * Math.cos(-rotationSpeed);
+                break;
+            case 'a': // 向左旋转
+                camera.position.x = camera.position.x * Math.cos(rotationSpeed) + camera.position.z * Math.sin(rotationSpeed);
+                camera.position.z = -camera.position.x * Math.sin(rotationSpeed) + camera.position.z * Math.cos(rotationSpeed);
+                break;
+            case 'd': // 向右旋转
+                camera.position.x = camera.position.x * Math.cos(-rotationSpeed) + camera.position.z * Math.sin(-rotationSpeed);
+                camera.position.z = -camera.position.x * Math.sin(-rotationSpeed) + camera.position.z * Math.cos(-rotationSpeed);
+                break;
+        }
+        
+        // 确保相机始终看向原点
+        camera.lookAt(0, 0, 0);
+        // 更新制器
+        controls.update();
+    });
+}
+
+// 添加创边的函数
+function createEdge(type) {
+    switch(type) {
+        case 'arrow':
+            // 创建箭头
+            const arrowHelper = new THREE.ArrowHelper(
+                new THREE.Vector3(1, 0, 0),
+                new THREE.Vector3(0, 0, 0),
+                1,
+                0xffffff,
+                0.2,
+                0.1
+            );
+            return arrowHelper;
+            
+        case 'curve':
+            // 创建曲线
+            const points = new Float32Array(150); // 增加点数以使曲线更平滑
+            const curveGeometry = new THREE.BufferGeometry();
+            curveGeometry.setAttribute('position', new THREE.BufferAttribute(points, 3));
+            const curveMaterial = new THREE.LineBasicMaterial({
+                color: 0xffffff,
+                opacity: 0.5,
+                transparent: true
+            });
+            const curveLine = new THREE.Line(curveGeometry, curveMaterial);
+            curveLine.isCurve = true; // 添加标记以在更新时区分
+            return curveLine;
+            
+        case 'line':
+        default:
+            const lineGeometry = new THREE.BufferGeometry();
+            const lineMaterial = new THREE.LineBasicMaterial({ 
+                color: 0xffffff,
+                opacity: 0.5,
+                transparent: true 
+            });
+            return new THREE.Line(lineGeometry, lineMaterial);
+    }
+}
+
+// 添加布局应用函数
+function applyLayout(type) {
+    switch(type) {
+        case 'tree':
+            // 树形布局
+            nodes.forEach((node, i) => {
+                const level = getNodeLevel(node);
+                node.x = level * 200 - 500; // X轴表示层级
+                node.y = i * 50 - (nodes.length * 25); // Y轴均匀分布
+                node.z = 0; // Z轴保持在同一平面
+            });
+            break;
+            
+        case 'sphere':
+            // 球形布局
+            const radius = 500;
+            nodes.forEach((node, i) => {
+                const phi = Math.acos(-1 + (2 * i) / nodes.length);
+                const theta = Math.sqrt(nodes.length * Math.PI) * phi;
+                node.x = radius * Math.cos(theta) * Math.sin(phi);
+                node.y = radius * Math.sin(theta) * Math.sin(phi);
+                node.z = radius * Math.cos(phi);
+            });
+            break;
+            
+        case 'circle':
+            // 圆形布局
+            const circleRadius = 500;
+            nodes.forEach((node, i) => {
+                const angle = (i / nodes.length) * Math.PI * 2;
+                node.x = circleRadius * Math.cos(angle);
+                node.y = circleRadius * Math.sin(angle);
+                node.z = 0;
+            });
+            break;
+            
+        case 'force':
+        default:
+            // 重置为力导向布局
+            nodes.forEach(node => {
+                node.x = Math.random() * 500 - 250;
+                node.y = Math.random() * 500 - 250;
+                node.z = Math.random() * 500 - 250;
+            });
+            break;
+    }
+    
+    // 重启模拟
+    simulation.alpha(1).restart();
+    
+    // 强制更新一位置
+    updatePositions();
+}
+
+// 获取节点在树中的层级
+function getNodeLevel(node) {
+    let level = 0;
+    let currentNode = node;
+    
+    // 通过遍历links来确定节点的层级
+    while (true) {
+        const parentLink = links.find(link => link.target.id === currentNode.id);
+        if (!parentLink) break;
+        currentNode = parentLink.source;
+        level++;
+    }
+    
+    return level;
+}
+
+// 修改背景颜色和透明度的控制
+let currentBgColor = { r: 53, g: 41, b: 219 }; // 初始RGB值
+let currentBgOpacity = 0.85; // 初始透明度
+
+// 背景颜色改变事件
+document.getElementById('bgColor').addEventListener('input', (e) => {
+    const color = e.target.value;
+    // 更新当前RGB值
+    currentBgColor.r = parseInt(color.substr(1,2), 16);
+    currentBgColor.g = parseInt(color.substr(3,2), 16);
+    currentBgColor.b = parseInt(color.substr(5,2), 16);
+    
+    updatePanelBackground();
+});
+
+// 透明度改变事件
+document.getElementById('bgOpacity').addEventListener('input', (e) => {
+    currentBgOpacity = parseFloat(e.target.value);
+    updatePanelBackground();
+});
+
+// 更新面板背景
+function updatePanelBackground() {
+    const panelBgColor = `rgba(${currentBgColor.r}, ${currentBgColor.g}, ${currentBgColor.b}, ${currentBgOpacity})`;
+    document.querySelectorAll('.panel').forEach(panel => {
+        panel.style.backgroundColor = panelBgColor;
+    });
+    // 同时更新操作指南板
+    document.querySelector('.guide-panel').style.backgroundColor = panelBgColor;
+}
+
+// 初始化时调用一次
+updatePanelBackground();
+
+    // 移除悬浮信息面板的创建
+    // const tooltip = document.createElement('div');
+    // tooltip.style.cssText = `
+    //     position: absolute;
+    //     background: rgba(0, 0, 0, 0.8);
+    //     color: white;
+    //     padding: 10px;
+    //     border-radius: 5px;
+    //     font-size: 14px;
+    //     pointer-events: none;
+    //     display: none;
+    //     z-index: 1000;
+    //     max-width: 200px;
+    // `;
+    // document.body.appendChild(tooltip);
+
+    // 修改点击事件处理
+    renderer.domElement.addEventListener('click', (event) => {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        raycaster.setFromCamera(mouse, camera);
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        let clickedNode = false;
+        
+        for (const intersect of intersects) {
+            const nodeData = nodes.find(n => n.object === intersect.object);
+            if (nodeData) {
+                clickedNode = true;
+                selectedNode = nodeData;
+
+                // 更新左侧面板息
+                updateNodeInfo(nodeData);
+
+                // 处理选中圈
+                if (selectionCircle) {
+                    scene.remove(selectionCircle);
+                }
+
+                const circleGeometry = new THREE.RingGeometry(nodeData.size + 2, nodeData.size + 3, 32);
+                const circleMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0xffff00, 
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                selectionCircle = new THREE.Mesh(circleGeometry, circleMaterial);
+                selectionCircle.position.copy(nodeData.object.position);
+                selectionCircle.lookAt(camera.position);
+                scene.add(selectionCircle);
+                break;
+            }
+        }
+
+        // 点击空处不做任何操作
+        if (!clickedNode) {
+            // 保持选中圈和详细信息不变
+        }
+    });
+
+    // 确保 updateNodeInfo 函数存在
+    function updateNodeInfo(nodeData) {
+        const nodeInfoDiv = document.getElementById('node-info');
+        if (!nodeData) {
+            nodeInfoDiv.innerHTML = `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    text-align: center;
+                    width: 80%;
+                ">
+                    <div style="
+                        font-size: 16px;
+                        color: rgba(79, 195, 247, 0.8);
+                        margin-bottom: 10px;
+                    ">
+                        点击节点以查看详细信息
+                    </div>
+                    <div style="
+                        width: 60%;
+                        height: 2px;
+                        background: linear-gradient(to right, transparent, rgba(79, 195, 247, 0.5), transparent);
+                        margin: 10px auto;
+                    "></div>
+                </div>`;
+            return;
+        }
+
+        nodeInfoDiv.innerHTML = `
+            <div style="padding: 15px;">
+                <h2 style="color: #4FC3F7; margin-bottom: 15px;">${nodeData.name}</h2>
+                ${nodeData.time ? `
+                    <div style="margin: 10px 0;">
+                        <strong style="color: #4FC3F7;">时期：</strong>
+                        <span>${nodeData.time}</span>
+                    </div>
+                ` : ''}
+                ${nodeData.src ? `
+                    <div style="margin: 15px 0;">
+                        <img src="${nodeData.src}" style="width: 100%; border-radius: 5px;">
+                    </div>
+                ` : ''}
+                ${nodeData.description ? `
+                    <div style="margin: 10px 0;">
+                        <strong style="color: #4FC3F7;">描述：</strong>
+                        <p style="margin-top: 5px; line-height: 1.5;">${nodeData.description}</p>
+                    </div>
+                ` : ''}
+            </div>`;
+    }
+
+    function updateGraphStats() {
+        document.getElementById('node-count').textContent = nodes.length;
+        document.getElementById('link-count').textContent = links.length;
+    }
+    </script>
+</body>
+</html>
