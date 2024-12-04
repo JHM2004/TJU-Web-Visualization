@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>天气数据分析</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .chart-container {
+            width: 960px;
+            margin: 0 auto;
+        }
+        .histogram {
+            margin: 20px 0;
+        }
+        .bar {
+            fill: steelblue;
+            opacity: 0.8;
+        }
+        .bar:hover {
+            opacity: 1;
+        }
+        .axis-label {
+            font-size: 12px;
+        }
+        .title {
+            font-size: 16px;
+            text-anchor: middle;
+        }
+        .tooltip {
+            position: absolute;
+            padding: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 12px;
+        }
+        .controls {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .control-button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .control-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="chart-container" id="charts"></div>
+    <div class="controls" id="controls"></div>
+
+    <script>
+        // 定义要分析的字段
+        const fields = [
+            {name: 'windSpeed', title: '风速分布'},
+            {name: 'moonPhase', title: '月相分布'},
+            {name: 'dewPoint', title: '露点分布'},
+            {name: 'humidity', title: '湿度分布'},
+            {name: 'uvIndex', title: '紫外线指数分布'},
+            {name: 'windBearing', title: '风向分布'},
+            {name: 'temperatureMin', title: '最低温度分布'},
+            {name: 'temperatureMax', title: '最高温度分布'}
+        ];
+
+        let currentHistogram = null;
+        let globalData = null;  // 存储全局数据
+
+        // 设置图表尺寸
+        const margin = {top: 40, right: 30, bottom: 40, left: 50};
+        const width = 480 - margin.left - margin.right;
+        const height = 300 - margin.top - margin.bottom;
+
+        // 加载数据
+        d3.json("./weather_data.json").then(data => {
+            globalData = data;  // 保存数据到全局变量
+            
+            // 创建控制按钮
+            fields.forEach((field, i) => {
+                d3.select("#controls")
+                    .append("button")
+                    .attr("class", "control-button")
+                    .text(field.title)
+                    .on("click", () => switchHistogram(i));  // 简化调用
+            });
+
+            // 显示第一个直方图
+            switchHistogram(0);
+        });
+
+        function switchHistogram(index) {
+            const field = fields[index];
+            
+            // 清除现有图表
+            d3.select("#charts").selectAll("svg").remove();
+            
+            // 获取当前字段的数据
+            const values = globalData.map(d => d[field.name]);
+            
+            // 创建SVG
+            const svg = d3.select("#charts")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+
+            // 创建直方图数据
+            const histogram = d3.histogram()
+                .domain(d3.extent(values))
+                .thresholds(10);
+
+            const bins = histogram(values);
+
+            // 创建比例尺
+            const x = d3.scaleLinear()
+                .domain([bins[0].x0, bins[bins.length - 1].x1])
+                .range([0, width]);
+
+            const y = d3.scaleLinear()
+                .domain([0, d3.max(bins, d => d.length)])
+                .range([height, 0]);
+
+            // 创建提示框
+            const tooltip = d3.select("body")
+                .append("div")
+                .attr("class", "tooltip")
+                .style("opacity", 0);
+
+            // 绘制柱状图（带动画）
+            svg.selectAll("rect")
+                .data(bins)
+                .enter()
+                .append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.x0))
+                .attr("width", d => Math.max(0, x(d.x1) - x(d.x0) - 1))
+                .attr("y", height)  // 开始时的位置
+                .attr("height", 0)  // 开始时的高度
+                .transition()  // 添加过渡动画
+                .duration(1000)
+                .attr("y", d => y(d.length))
+                .attr("height", d => height - y(d.length));
+
+            // 添加交互效果
+            svg.selectAll("rect")
+                .on("mouseover", function(event, d) {
+                    d3.select(this)
+                        .style("fill", "purple");
+                    
+                    tooltip.style("opacity", 1)
+                        .html(`${d.length} 天`)
+                        .style("left", (event.pageX - 25) + "px")
+                        .style("top", (y(d.length) + margin.top - 30) + "px");
+                })
+                .on("mouseout", function() {
+                    d3.select(this)
+                        .style("fill", "steelblue");
+                    
+                    tooltip.style("opacity", 0);
+                });
+
+            // 添加x轴
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x));
+
+            // 添加y轴
+            svg.append("g")
+                .call(d3.axisLeft(y));
+
+            // 添加标题
+            svg.append("text")
+                .attr("class", "title")
+                .attr("x", width / 2)
+                .attr("y", -margin.top / 2)
+                .text(field.title);
+
+            // 添加x轴标签
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("text-anchor", "middle")
+                .attr("x", width / 2)
+                .attr("y", height + margin.bottom)
+                .text("数值范围");
+
+            // 添加y轴标签
+            svg.append("text")
+                .attr("class", "axis-label")
+                .attr("text-anchor", "middle")
+                .attr("transform", "rotate(-90)")
+                .attr("x", -height / 2)
+                .attr("y", -margin.left + 15)
+                .text("频数");
+
+            // 整体淡入动画
+            d3.select("#charts").select("svg")
+                .transition()
+                .duration(500)
+                .style("opacity", 1);
+
+            currentHistogram = svg;
+        }
+    </script>
+</body>
+</html>
