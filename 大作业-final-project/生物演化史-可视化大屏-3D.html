@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>生物演化史可视化</title>
+    <title>生物演化史-可视化大屏-3D</title>
     <style>
         body { margin: 0; }
         #container { 
@@ -147,78 +147,93 @@
             width: 200px;
         ">
             <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">地质年代</h4>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="display: flex; align-items: center; gap: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #FF0000;
                         border-radius: 50%;
                     "></span>
                     <span>冥古宙</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #FFA500;
                         border-radius: 50%;
                     "></span>
                     <span>太古宙</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #FFFF00;
                         border-radius: 50%;
                     "></span>
                     <span>元古宙</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #00FF00;
                         border-radius: 50%;
                     "></span>
                     <span>显生宙</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #00FFFF;
                         border-radius: 50%;
                     "></span>
                     <span>中生代</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #0000FF;
                         border-radius: 50%;
                     "></span>
                     <span>新生代</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 8px;">
+                <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
-                        width: 15px;
-                        height: 15px;
+                        width: 14px;
+                        height: 14px;
                         background: #800080;
                         border-radius: 50%;
                     "></span>
                     <span>第四纪</span>
                 </div>
             </div>
+        </div>
+        <div id="graph-stats" style="
+            position: absolute;
+            left: 10px;
+            bottom: 350px;
+            background: rgba(53, 41, 219, 0.85);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            width: 200px;
+        ">
+            <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">网格图属性</h4>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">节点数目: <span id="node-count"></span></p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">关系数目: <span id="link-count"></span></p>
         </div>
         <div class="guide-panel" style="
             position: absolute;
@@ -236,6 +251,7 @@
             <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">A/D: 左/右转动视角</p>
             <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标拖拽: 自由旋转</p>
             <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标滚轮: 缩放</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">点击节点: 显示详细信息</p>
         </div>
         <div id="left-panel" class="panel" style="
             position: absolute;
@@ -399,7 +415,7 @@
             <!-- 在右侧面板的最下方添加导航按钮组 -->
             <div style="margin-top: 20px;">
                 <button id="fullscreen" class="nav-button">全屏显示</button>
-                <button onclick="window.location.href='./生物分类-太阳爆发图-2D.html'" class="nav-button">生物分类-太阳爆发图-2D</button>
+                <button onclick="window.location.href='./生物类-太阳爆发图-2D.html'" class="nav-button">生物分类-太阳爆发图-2D</button>
                 <button onclick="window.location.href='./生物演化史-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
                 <button onclick="window.location.href='./生物演化史-Tree-2D.html'" class="nav-button">生物演化史-Tree-2D</button>
                 <button onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'" class="nav-button">生物演化史-DNA双螺旋-3D</button>
@@ -419,6 +435,8 @@
 let nodes = [], links = [];
 let simulation;
 let controls;
+let selectionCircle;
+let selectedNode;
 
 // 添加地质年代的颜色映射
 const eraColors = {
@@ -495,7 +513,7 @@ function init() {
     // 添加键盘控制
     addKeyboardControls();
 
-    // 创建更大围的星空背景
+    // 创建更大范围的星空背景
     const starsGeometry = new THREE.BufferGeometry();
     const starsMaterial = new THREE.PointsMaterial({
         color: 0xffffff,
@@ -515,7 +533,7 @@ function init() {
 
     const stars = new THREE.Points(starsGeometry, starsMaterial);
     scene.add(stars);
-    
+
     // 将 RGB 值转换为十六进制颜色代码
     const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
         const hex = x.toString(16);
@@ -644,7 +662,7 @@ function updatePositions() {
                 new THREE.Vector3(target.x, target.y, target.z)
             );
             
-            // 生成曲线上的点
+            // 成曲线上的点
             const points = curve.getPoints(50);
             const positions = new Float32Array(points.length * 3);
             
@@ -898,6 +916,11 @@ function addEventListeners() {
 function animate() {
     requestAnimationFrame(animate);
     controls.update();
+    
+    if (selectionCircle) {
+        selectionCircle.lookAt(camera.position);
+    }
+    
     renderer.render(scene, camera);
 }
 
@@ -910,6 +933,7 @@ window.addEventListener('resize', () => {
 
 // 初始化应用
 init();
+updateGraphStats();
 
 function createCenter3D(x, y, z) {
     let strengthValue = 0.1;
@@ -1019,12 +1043,12 @@ function addKeyboardControls() {
         
         // 确保相机始终看向原点
         camera.lookAt(0, 0, 0);
-        // 更新控制器
+        // 更新���制器
         controls.update();
     });
 }
 
-// 添加创建边的函数
+// 添加创边的函数
 function createEdge(type) {
     switch(type) {
         case 'arrow':
@@ -1162,7 +1186,7 @@ function updatePanelBackground() {
     document.querySelectorAll('.panel').forEach(panel => {
         panel.style.backgroundColor = panelBgColor;
     });
-    // 同时更新操作指南面板
+    // 同时更新操作指南板
     document.querySelector('.guide-panel').style.backgroundColor = panelBgColor;
 }
 
@@ -1185,199 +1209,108 @@ updatePanelBackground();
     // `;
     // document.body.appendChild(tooltip);
 
-    // 修改鼠标移动事件监听
-    renderer.domElement.addEventListener('mousemove', (event) => {
+    // 修改点击事件处理
+    renderer.domElement.addEventListener('click', (event) => {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
         const intersects = raycaster.intersectObjects(scene.children);
 
-        let foundNode = false;
+        let clickedNode = false;
         
         for (const intersect of intersects) {
             const nodeData = nodes.find(n => n.object === intersect.object);
             if (nodeData) {
-                foundNode = true;
-                // 更新左侧面板内容，添加图片显示
-                const nodeInfoDiv = document.getElementById('node-info');
-                nodeInfoDiv.innerHTML = `
-                    <div class="info-container" style="
-                        border: 2px solid rgba(255, 255, 255, 0.2);
-                        border-radius: 8px;
-                        padding: 15px;
-                        background: rgba(255, 255, 255, 0.05);
-                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-                    ">
-                        <strong style="
-                            font-size: 18px;
-                            margin-bottom: 10px;
-                            display: block;
-                            color: #4FC3F7;
-                            text-shadow: 0 0 5px rgba(79, 195, 247, 0.5);
-                        ">
-                            ${nodeData.name}
-                        </strong>
-                        ${nodeData.time ? `
-                            <div style="
-                                margin: 5px 0;
-                                padding: 5px;
-                                border-left: 3px solid #4FC3F7;
-                                background: rgba(79, 195, 247, 0.1);
-                            ">
-                                时期: ${nodeData.time}
-                            </div>
-                        ` : ''}
-                        ${nodeData.src ? `
-                            <div style="
-                                margin: 10px 0;
-                                padding: 5px;
-                                border: 1px solid rgba(255, 255, 255, 0.1);
-                                border-radius: 5px;
-                                background: rgba(0, 0, 0, 0.2);
-                            ">
-                                <img src="${nodeData.src}" 
-                                    style="
-                                        max-width: 100%;
-                                        height: auto;
-                                        border-radius: 5px;
-                                        display: block;
-                                        margin: 0 auto;
-                                    "
-                                    alt="${nodeData.name}">
-                            </div>
-                        ` : ''}
-                        ${nodeData.description ? `
-                            <div style="
-                                margin: 10px 0;
-                                padding: 10px;
-                                border-radius: 5px;
-                                background: rgba(255, 255, 255, 0.05);
-                                line-height: 1.4;
-                                border-left: 3px solid #4FC3F7;
-                            ">
-                                <span style="color: #4FC3F7;">描述:</span><br>
-                                ${nodeData.description}
-                            </div>
-                        ` : ''}
-                    </div>
-                `;
-                
-                // 更新节点颜色信息
-                const colorDetailsDiv = document.getElementById('color-details');
-                colorDetailsDiv.innerHTML = `
-                    <div style="margin-top: 5px;">
-                        <span style="color: #4FC3F7;">颜色:</span> ${nodeData.color || '未知'}
-                    </div>
-                `;
-                
-                if (hoveredNode !== nodeData) {
-                    if (hoveredNode && hoveredNode.object) {
-                        hoveredNode.object.material.color.setStyle(hoveredNode.color || '#00ff00');
-                        hoveredNode.object.material.opacity = 1;
-                    }
-                    
-                    nodeData.object.material.color.setHex(0xffff00);
-                    nodeData.object.material.opacity = 0.8;
-                    hoveredNode = nodeData;
+                clickedNode = true;
+                selectedNode = nodeData;
+
+                // 更新左侧面板息
+                updateNodeInfo(nodeData);
+
+                // 处理选中圈
+                if (selectionCircle) {
+                    scene.remove(selectionCircle);
                 }
+
+                const circleGeometry = new THREE.RingGeometry(nodeData.size + 2, nodeData.size + 3, 32);
+                const circleMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0xffff00, 
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                selectionCircle = new THREE.Mesh(circleGeometry, circleMaterial);
+                selectionCircle.position.copy(nodeData.object.position);
+                selectionCircle.lookAt(camera.position);
+                scene.add(selectionCircle);
                 break;
             }
         }
 
-        if (!foundNode) {
-            const nodeInfoDiv = document.getElementById('node-info');
-            nodeInfoDiv.innerHTML = `
-                <div class="info-container" style="
-                    height: 200px;
-                    border: 2px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 8px;
-                    padding: 20px;
-                    background: rgba(255, 255, 255, 0.05);
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center;
-                    position: relative;
-                ">
-                    <div style="
-                        position: absolute;
-                        top: 10px;
-                        left: 10px;
-                        width: 20px;
-                        height: 20px;
-                        border-left: 2px solid rgba(79, 195, 247, 0.5);
-                        border-top: 2px solid rgba(79, 195, 247, 0.5);
-                    "></div>
-                    <div style="
-                        position: absolute;
-                        top: 10px;
-                        right: 10px;
-                        width: 20px;
-                        height: 20px;
-                        border-right: 2px solid rgba(79, 195, 247, 0.5);
-                        border-top: 2px solid rgba(79, 195, 247, 0.5);
-                    "></div>
-                    <div style="
-                        position: absolute;
-                        bottom: 10px;
-                        left: 10px;
-                        width: 20px;
-                        height: 20px;
-                        border-left: 2px solid rgba(79, 195, 247, 0.5);
-                        border-bottom: 2px solid rgba(79, 195, 247, 0.5);
-                    "></div>
-                    <div style="
-                        position: absolute;
-                        bottom: 10px;
-                        right: 10px;
-                        width: 20px;
-                        height: 20px;
-                        border-right: 2px solid rgba(79, 195, 247, 0.5);
-                        border-bottom: 2px solid rgba(79, 195, 247, 0.5);
-                    "></div>
-                    <i class="fas fa-info-circle" style="
-                        font-size: 24px;
-                        color: #4FC3F7;
-                        margin-bottom: 10px;
-                    "></i>
-                    <p style="
-                        font-size: 16px;
-                        color: #4FC3F7;
-                        margin: 10px 0;
-                    ">
-                        悬停在节点上以查看详细信息
-                    </p>
-                    <div style="
-                        width: 50px;
-                        height: 2px;
-                        background: linear-gradient(to right, transparent, #4FC3F7, transparent);
-                        margin: 10px 0;
-                    "></div>
-                </div>
-            `;
-            // 重置节点颜色信息
-            const colorDetailsDiv = document.getElementById('color-details');
-            colorDetailsDiv.innerHTML = '悬停在节点上以查看颜色信息';
-            
-            if (hoveredNode && hoveredNode.object) {
-                hoveredNode.object.material.color.setStyle(hoveredNode.color || '#00ff00');
-                hoveredNode.object.material.opacity = 1;
-                hoveredNode = null;
-            }
+        // 点击空白处不做任何操作
+        if (!clickedNode) {
+            // 保持选中圈和详细信息不变
         }
     });
 
-    // 移除鼠标离开场景的处理
-    // renderer.domElement.addEventListener('mouseleave', () => {
-    //     tooltip.style.display = 'none';
-    //     if (hoveredNode && hoveredNode.object) {
-    //         hoveredNode.object.material.color.setStyle(hoveredNode.color || '#00ff00');
-    //         hoveredNode.object.material.opacity = 1;
-    //         hoveredNode = null;
-    //     }
-    // });
+    // 确保 updateNodeInfo 函数存在
+    function updateNodeInfo(nodeData) {
+        const nodeInfoDiv = document.getElementById('node-info');
+        if (!nodeData) {
+            nodeInfoDiv.innerHTML = `
+                <div style="
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    text-align: center;
+                    width: 80%;
+                ">
+                    <div style="
+                        font-size: 16px;
+                        color: rgba(79, 195, 247, 0.8);
+                        margin-bottom: 10px;
+                    ">
+                        点击节点以查看详细信息
+                    </div>
+                    <div style="
+                        width: 60%;
+                        height: 2px;
+                        background: linear-gradient(to right, transparent, rgba(79, 195, 247, 0.5), transparent);
+                        margin: 10px auto;
+                    "></div>
+                </div>`;
+            return;
+        }
+
+        nodeInfoDiv.innerHTML = `
+            <div style="padding: 15px;">
+                <h2 style="color: #4FC3F7; margin-bottom: 15px;">${nodeData.name}</h2>
+                ${nodeData.time ? `
+                    <div style="margin: 10px 0;">
+                        <strong style="color: #4FC3F7;">时期：</strong>
+                        <span>${nodeData.time}</span>
+                    </div>
+                ` : ''}
+                ${nodeData.src ? `
+                    <div style="margin: 15px 0;">
+                        <img src="${nodeData.src}" style="width: 100%; border-radius: 5px;">
+                    </div>
+                ` : ''}
+                ${nodeData.description ? `
+                    <div style="margin: 10px 0;">
+                        <strong style="color: #4FC3F7;">描述：</strong>
+                        <p style="margin-top: 5px; line-height: 1.5;">${nodeData.description}</p>
+                    </div>
+                ` : ''}
+            </div>`;
+    }
+
+    function updateGraphStats() {
+        document.getElementById('node-count').textContent = nodes.length;
+        document.getElementById('link-count').textContent = links.length;
+    }
     </script>
 </body>
 </html>
