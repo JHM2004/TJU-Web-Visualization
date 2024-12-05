@@ -23,7 +23,7 @@
             color: white;
             padding: 20px;
             border-radius: 10px;
-            width: 540px;
+            width: 340px;
             display: none;
             backdrop-filter: blur(5px);
             font-family: Arial, sans-serif;
@@ -40,8 +40,8 @@
             font-size: 16px;
         }
         #details img {
-            width: 500px;
-            height: 500px;
+            width: 300px;
+            height: 300px;
             margin-left: 0;
             border-radius: 5px;
             margin-top: 10px;
@@ -656,14 +656,14 @@
             scene.add(highlightCircle);
         }
 
+        let isInfoDisplayed = false; // 添加标志位
+
         window.addEventListener('click', onMouseClick);
 
         function onMouseClick(event) {
-            // 更新鼠标位置
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-            // 使用射线检测
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
 
@@ -671,19 +671,21 @@
                 const selectedObject = intersects[0].object;
                 const nodePosition = selectedObject.position;
 
-                // 计算从节点到原点的方向向量
+                // 显示新节点的信息
+                const nodeData = selectedObject.userData;
+                showEventDetails(nodeData);
+                
                 const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
-                
-                // 计算相机的目标位置：在节点位置的基础上，沿着到原点的方向偏移一定距离
                 targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
-                
-                // 让相机看向节点
                 targetLookAt.copy(nodePosition);
-
-                // 创建或更新圈
                 createHighlightCircle(nodePosition);
 
                 isTransitioning = true;
+                isInfoDisplayed = true;
+            } else {
+                // 点击空白处时隐藏信息
+                hideEventDetails();
+                isInfoDisplayed = false;
             }
         }
 
@@ -726,8 +728,9 @@
         }
 
 
-        let debounceTimer;
         function onMouseMove(event) {
+            if (isInfoDisplayed) return; // 如果有固定显示的信息，不执行鼠标移动的交互效果
+
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             

@@ -23,11 +23,12 @@
             color: white;
             padding: 20px;
             border-radius: 10px;
-            width: 540px;
+            width: 340px;
             display: none;
             backdrop-filter: blur(5px);
             font-family: Arial, sans-serif;
             box-shadow: 0 0 20px rgba(0,255,0,0.2);
+            pointer-events: none;
         }
         #details h3 {
             margin: 0 0 10px 0;
@@ -40,12 +41,13 @@
             font-size: 16px;
         }
         #details img {
-            width: 500px;
-            height: 500px;
+            width: 300px;
+            height: 300px;
             margin-left: 0;
             border-radius: 5px;
             margin-top: 10px;
             box-shadow: 0 0 15px rgba(0,255,0,0.3);
+            pointer-events: none;
         }
         #controls-info {
             position: absolute;
@@ -393,7 +395,7 @@
             updateVisualization();
         }
 
-        // 更新滑块显示值
+        // 新滑块显示值
         function updateSlidersFromParameters() {
             Object.keys(networkParameters).forEach(param => {
                 const slider = document.getElementById(param);
@@ -670,7 +672,7 @@
                     let startAngle;
                     
                     if (level === 0) {
-                        // 第一层的子节点使用定义的基准角度
+                        // 第一层的子节点使用定义的基角度
                         angleStep = (Math.PI * 2) / childCount;
                         startAngle = 0;
                     } else if (level === 1) {
@@ -776,14 +778,14 @@
                 
                 // 将环放置在节点位置
                 highlightRing.position.copy(clickedNode.position);
-                // 让环始终面向相机
                 highlightRing.lookAt(camera.position);
                 scene.add(highlightRing);
                 
                 // 计算相机新位置
                 const nodePosition = clickedNode.position.clone();
-                const cameraOffset = new THREE.Vector3(200, 100, 200); // 相机偏移量
-                const newCameraPosition = nodePosition.clone().add(cameraOffset);
+                const directionToRoot = new THREE.Vector3(0, 0, 0).sub(nodePosition).normalize();
+                const distance = 500;
+                const newCameraPosition = nodePosition.clone().add(directionToRoot.multiplyScalar(-distance));
                 
                 // 使用TWEEN进行平滑过渡
                 new TWEEN.Tween(camera.position)
@@ -791,20 +793,22 @@
                     .easing(TWEEN.Easing.Quadratic.InOut)
                     .start();
                     
-                // 更新控制器目标点
                 new TWEEN.Tween(controls.target)
-                    .to(nodePosition, 1000)
+                    .to({x: 0, y: 0, z: 0}, 1000)
                     .easing(TWEEN.Easing.Quadratic.InOut)
                     .start();
                 
                 selectedNode = clickedNode;
+                
+                // 显示节点信息
+                showEventDetails(clickedNode.userData);
             }
         }
 
         function animate() {
             requestAnimationFrame(animate);
             
-            // 处理键盘旋转和移动
+            // 处理���盘旋转和移动
             const rotationSpeed = 0.02;
             const moveSpeed = 30;
             
@@ -839,7 +843,7 @@
             //     z: Math.round(camera.position.z)
             // });
             // console.log('Camera Rotation:', {
-            //     x: Math.round(camera.rotation.x * 180 / Math.PI), // 转换为角度
+            //     x: Math.round(camera.rotation.x * 180 / Math.PI), // 转换为角
             //     y: Math.round(camera.rotation.y * 180 / Math.PI),
             //     z: Math.round(camera.rotation.z * 180 / Math.PI)
             // });
@@ -875,9 +879,6 @@
                 selectedObject.material.emissiveIntensity = 1;
                 selectedObject.scale.set(1.5, 1.5, 1.5);
                 
-                const nodeData = selectedObject.userData;
-                showEventDetails(nodeData);
-                
                 networkGroup.children.forEach(child => {
                     if (child instanceof THREE.Line) {
                         const linePositions = child.geometry.attributes.position.array;
@@ -897,7 +898,7 @@
                 });
             } else {
                 networkGroup.children.forEach(child => {
-                    if (child instanceof THREE.Mesh) {
+                    if (child instanceof THREE.Mesh && child !== selectedNode) {
                         child.material.emissiveIntensity = 0.5;
                         child.scale.set(1, 1, 1);
                     } else if (child instanceof THREE.Line) {
@@ -905,7 +906,6 @@
                         child.material.color.copy(child.userData.originalColor);
                     }
                 });
-                hideEventDetails();
             }
         }
 
@@ -967,7 +967,7 @@
 
         // 监听全屏变化
         document.addEventListener('fullscreenchange', () => {
-            // 可以在这里添加全屏状态变化时的处理逻辑
+            // 可以在这里添加全屏状态变化时的处理逻
             if (document.fullscreenElement) {
                 // 进入全屏时的处理
                 onWindowResize();
