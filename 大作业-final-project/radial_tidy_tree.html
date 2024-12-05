@@ -129,6 +129,36 @@
             font-size: 14px;
             color: #333;
         }
+
+        .time-filter {
+            display: none;
+        }
+
+        .bottom-time-filter {
+            position: fixed;
+            bottom: 10px;
+            left: 79%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+        }
+
+        .bottom-time-filter #timeSlider {
+            width: 100%;
+        }
+
+        .bottom-time-filter #timeDisplay {
+            display: block;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -145,6 +175,10 @@
         <button class="control-button" onclick="window.location.href='./生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
         <button class="control-button" onclick="window.location.href='./生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
         <button class="control-button" onclick="window.location.href='./生物演化史-可视化大屏-3D.html'">生物演化史-可视化大屏-3D</button>
+    </div>
+    <div class="bottom-time-filter">
+        <input type="range" id="timeSlider" min="1" max="50" value="50">
+        <span id="timeDisplay">显示所有时期</span>
     </div>
     <div class="keyboard-hint">
         使用 'Q' 键逆时针旋转，'E' 键顺时针旋转
@@ -220,7 +254,7 @@
             }
             
             tooltipContent += `名称: ${d.data.name}`;
-            if (d.data.time) tooltipContent += `<br>时间: ${d.data.time}`;
+            if (d.data.time) tooltipContent += `<br>间: ${d.data.time}`;
             if (d.data.description) tooltipContent += `<br>描述: ${d.data.description}`;
             
             tooltip.html(tooltipContent)
@@ -295,7 +329,7 @@
             }
         });
 
-        // 添加全屏功能
+        // 加全屏功能
         const fullscreenBtn = document.getElementById('fullscreenBtn');
         
         fullscreenBtn.addEventListener('click', function() {
@@ -319,6 +353,81 @@
             } else {
                 fullscreenBtn.textContent = '退出全屏';
             }
+        });
+
+        // 添加时间处理函数
+        function parseTime(timeStr) {
+            if (!timeStr) return 0;
+            // 处理"亿年前"格式
+            const match = timeStr.match(/(\d+(?:\.\d+)?)\s*亿年前/);
+            if (match) {
+                return parseFloat(match[1]);
+            }
+            return 0;
+        }
+
+        function updateView(threshold) {
+    // 更新连接线
+    g.selectAll(".link")
+        .style("opacity", d => {
+            const sourceTime = parseTime(d.source.data.time);
+            const targetTime = parseTime(d.target.data.time);
+            return (sourceTime <= threshold && targetTime <= threshold) ? 1 : 0.1;
+        })
+        .style("display", d => {
+            const sourceTime = parseTime(d.source.data.time);
+            const targetTime = parseTime(d.target.data.time);
+            return (sourceTime <= threshold && targetTime <= threshold) ? "block" : "none";
+        });
+
+    // 更新节点组
+    g.selectAll(".node")
+        .style("opacity", d => {
+            let shouldShow = threshold === 50;
+            if (!shouldShow) {
+                let current = d;
+                shouldShow = true;
+                while (current && shouldShow) {
+                    const time = parseTime(current.data.time);
+                    shouldShow = time <= threshold;
+                    current = current.parent;
+                }
+            }
+            return shouldShow ? 1 : 0.1;
+        })
+        .style("display", d => {
+            let shouldShow = threshold === 50;
+            if (!shouldShow) {
+                let current = d;
+                shouldShow = true;
+                while (current && shouldShow) {
+                    const time = parseTime(current.data.time);
+                    shouldShow = time <= threshold;
+                    current = current.parent;
+                }
+            }
+            return shouldShow ? "block" : "none";
+        });
+}
+
+        // 添加滑块事件监听
+        const timeSlider = document.getElementById('timeSlider');
+        const timeDisplay = document.getElementById('timeDisplay');
+
+        timeSlider.addEventListener('input', (event) => {
+            const value = event.target.value;
+            const threshold = value;
+            
+            // 只修改最左侧的显示文本,其他保持不变
+            if (value == 50) {
+                timeDisplay.textContent = "显示所有时期";
+            } else if (value == 1) {
+                timeDisplay.textContent = "显示近1亿年";
+            } else {
+                timeDisplay.textContent = `显示 ${value} 亿年前及之后`;
+            }
+            
+            updateView(threshold);
         });
     </script>
 </body>

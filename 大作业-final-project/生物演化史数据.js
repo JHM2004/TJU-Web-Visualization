@@ -1,17 +1,19 @@
 treeData = {
-    "name": "生命起源",
+    "name": "生命起源史",
+    "time": "137.98亿年前",
     "src": "./static-2/生命起源.jpg",
     "children": [
         {
             "name": "冥古宙",
-            "time": "冥古宙",
+            "time": "45.4亿年前",
             "children": [
                 {
                     "name": "宇宙诞生",
-                    "time": "137.98±0.37亿年前",
+                    "time": "137.98亿年前",
                     "children": [
                         {
                             "name": "宇宙背景",
+                            "time": "137.98亿年前",
                             "description": "宇宙诞生标志着时间、空间和物质的起源。",
                             "src": "./static-2/宇宙背景.jpg"
                         }
@@ -24,6 +26,7 @@ treeData = {
                     "children": [
                         {
                             "name": "银河系形成",
+                            "time": "130-80亿年前",
                             "description": "银河系在一个巨大的气体和尘埃云中逐渐形成。",
                             "src": "./static-2/银河系形成.jpg"
                         }
@@ -36,6 +39,7 @@ treeData = {
                     "children": [
                         {
                             "name": "太阳系形成",
+                            "time": "45.7亿年前",
                             "description": "太阳在一个坍缩的氢分子云内形成，标志着太阳系的诞生。",
                             "src": "./static-2/太阳系形成.jpg"
                         }
@@ -48,6 +52,7 @@ treeData = {
                     "children": [
                         {
                             "name": "地球诞生",
+                            "time": "45.7亿年前",
                             "description": "地球从环绕早期太阳旋转的吸积盘中形成。",
                             "src": "./static-2/地球诞生.jpg"
                         }
@@ -60,6 +65,7 @@ treeData = {
                     "children": [
                         {
                             "name": "大碰撞假说",
+                            "time": "45.33亿年前",
                             "description": "原始地球与忒伊亚相撞，产生月球，同时导致地球自转轴倾斜。",
                             "src": "./static-2/大碰撞假说.jpg"
                         }
@@ -72,6 +78,7 @@ treeData = {
                     "children": [
                         {
                             "name": "地壳形成过程",
+                            "time": "44亿年前",
                             "description": "地球表面温度降低，地壳开始凝固形成。",
                             "src": "./static-2/地壳形成过程.jpg"
                         }
@@ -80,10 +87,11 @@ treeData = {
                 },
                 {
                     "name": "大气与海洋形成",
-                    "time": "42-40亿年前",
+                    "time": "42亿年前",
                     "children": [
                         {
                             "name": "大气圈与海洋",
+                            "time": "42亿年前",
                             "description": "地球表面温度进一步降低，大气与海洋形成。",
                             "src": "./static-2/大气圈与海洋.jpg"
                         }
@@ -101,6 +109,7 @@ treeData = {
                     "children": [
                         {
                             "name": "重轰炸事件",
+                            "time": "39亿年前",
                             "description": "地球、月球、火星及金星受到小行星及彗星（微行星）撞击的高峰期。",
                             "src": "./static-2/重轰炸事件.jpg"
                         }
@@ -112,36 +121,53 @@ treeData = {
         },
         {
             "name": "太古宙",
-            "time": "太古宙",
+            "time": "40亿年前",
             "children": [
                 {
-                    "name": "最后共同祖先",
+                    "name": "共同祖先",
                     "time": "38-35亿年前",
                     "children": [
                         {
                             "name": "原核生物出现",
+                            "time": "35亿年前",
                             "description": "最后共同祖先（原核生物）在古太古代出现，属于单细胞生物，分化出细菌及古细菌。",
                             "src": "./static-2/原核生物出现.jpg"
                         },
                         {
                             "name": "细胞结构出现",
+                            "time": "35-30亿年前",
                             "description": "早期原核生物都是化能生物，以二氧化碳为碳源及氧化无机物来抽取能量。",
                             "src": "./static-2/细胞结构出现.jpg"
+                        },
+                        {
+                            "name": "蓝菌出现",
+                            "time": "35亿年前",
+                            "children": [
+                                {
+                                    "name": "光合作用蓝菌",
+                                    "time": "34亿年前",
+                                    "description": "能进行光合作用的蓝菌出现，以水为还原剂，并排出氧，导致海洋中铁氧化，产生铁矿石。",
+                                    "src": "./static-2/光合作用蓝菌.jpg"
+                                }
+                            ],
+                            "src": "./static-2/蓝菌出现.jpg"
                         }
                     ],
                     "src": "./static-2/最后共同祖先.jpg"
                 },
                 {
                     "name": "细菌演化光合作用",
-                    "time": "33亿年前",
+                    "time": "34-29亿年前",
                     "children": [
                         {
                             "name": "光合作用原始模式",
+                            "time": "33亿年前",
                             "description": "细菌发展了光合作用的原始模式，最初不会产生氧，通过电化学梯度产生三磷酸腺苷（ATP）。",
                             "src": "./static-2/光合作用原始模式.jpg"
                         },
                         {
                             "name": "能量转换过程",
+                            "time": "33亿年前",
                             "description": "原核生物演化了糖酵解，从如葡萄糖的有机物释出能量，产生了现今所有生物都用到的ATP分子。",
                             "src": "./static-2/能量转换过程.jpg"
                         }
@@ -154,35 +180,27 @@ treeData = {
                     "children": [
                         {
                             "name": "叠层岩出现",
+                            "time": "28-25亿年前",
                             "description": "微生物开始造岩，叠层岩出现，这是由微生物活动形成的特定类型的沉积岩。",
                             "src": "./static-2/叠层岩出现.jpg"
                         }
                     ],
                     "src": "./static-2/微生物造岩.jpg"
                 },
-                {
-                    "name": "蓝菌出现",
-                    "time": "28-25亿年前",
-                    "children": [
-                        {
-                            "name": "光合作用蓝菌",
-                            "description": "能进行光合作用的蓝菌出现，以水为还原剂，并排出氧，导致海洋中铁氧化，产生铁矿石。",
-                            "src": "./static-2/光合作用蓝菌.jpg"
-                        }
-                    ],
-                    "src": "./static-2/蓝菌出现.jpg"
-                },
+                
                 {
                     "name": "大氧化事件",
                     "time": "26-25亿年前",
                     "children": [
                         {
                             "name": "大气氧浓度上升",
+                            "time": "25-23亿年前",
                             "description": "大氧化事件导致大气中氧气浓度上升，对厌氧细菌有毒，促进了生物演化。",
                             "src": "./static-2/大气氧浓度上升.jpg"
                         },
                         {
                             "name": "海洋氧化",
+                            "time": "25-23亿年前",
                             "description": "海洋中的铁被氧化，形成大规模的条带状铁建造（BIF）。",
                             "src": "./static-2/海洋氧化.jpg"
                         }
@@ -194,7 +212,7 @@ treeData = {
         },
         {
             "name": "元古宙",
-            "time": "元古宙",
+            "time": "25亿年前",
             "children": [
                 {
                     "name": "好氧细菌出现",
@@ -202,11 +220,13 @@ treeData = {
                     "children": [
                         {
                             "name": "细菌演化",
+                            "time": "25-23亿年前",
                             "description": "一些细菌演化到有能力去使用氧来有效地从有机物中抽取能量。",
                             "src": "./static-2/细菌演化.jpg"
                         },
                         {
                             "name": "能量代谢",
+                            "time": "25-23亿年前",
                             "description": "几乎所有好氧细菌都用相同的三羧酸循环及氧化磷酸化来使用氧；厌氧细菌大量灭绝。",
                             "src": "./static-2/能量代谢.jpg"
                         }
@@ -219,6 +239,7 @@ treeData = {
                     "children": [
                         {
                             "name": "大气变化",
+                            "time": "25-23亿年前",
                             "description": "由于大氧化事件，大气中的还原性气体基本耗尽，海洋和地壳中的铁元素与氧气反应，形成大量红色的石英砂岩和赤铁矿。",
                             "src": "./static-2/大气变化.jpg"
                         }
@@ -231,6 +252,7 @@ treeData = {
                     "children": [
                         {
                             "name": "气候变化",
+                            "time": "23-20.5亿年前",
                             "description": "由于大氧化事件，甲烷被氧气消耗殆尽，地表热量以长波辐射形式散逸到太空，造成地表温度骤降，地球表面第一次被冰雪覆盖。",
                             "src": "./static-2/气候变化.jpg"
                         }
@@ -243,6 +265,7 @@ treeData = {
                     "children": [
                         {
                             "name": "真核生物起源",
+                            "time": "16.5亿年前",
                             "description": "复杂的细胞出现，包括有细胞器的真核生物，最接近的可能源自古细菌。大部分有细胞器的可能从共生细菌衍生而来。",
                             "src": "./static-2/真核生物起源.jpg"
                         }
@@ -255,6 +278,7 @@ treeData = {
                     "children": [
                         {
                             "name": "真核藻类",
+                            "time": "15-14亿年前",
                             "description": "多细胞生物出现，首先是生活在海洋中的真核藻类。",
                             "src": "./static-2/真核藻类.jpg"
                         }
@@ -267,6 +291,7 @@ treeData = {
                     "children": [
                         {
                             "name": "演化加速",
+                            "time": "12亿年前",
                             "description": "有性生殖的出现引发更快的演化，大部分生命在海洋及湖中出现，一些蓝菌已经生活在湿润的泥土中。",
                             "src": "./static-2/演化加速.jpg"
                         }
@@ -279,6 +304,7 @@ treeData = {
                     "children": [
                         {
                             "name": "沉积作用",
+                            "time": "12-10亿年前",
                             "description": "叠层岩达到高峰，这是由微生物活动形成的特定类型的沉积岩。",
                             "src": "./static-2/沉积作用.jpg"
                         }
@@ -291,6 +317,7 @@ treeData = {
                     "children": [
                         {
                             "name": "氧气累积",
+                            "time": "10-7.2亿年前",
                             "description": "氧气的累积使臭氧层可以形成，臭氧层可阻挡太阳的有害辐射，使生命可以在陆地上发展。",
                             "src": "./static-2/氧气累积.jpg"
                         }
@@ -303,6 +330,7 @@ treeData = {
                     "children": [
                         {
                             "name": "极端冰期",
+                            "time": "7.2-6.35亿年前",
                             "description": "根据雪球地球假说，成冰纪的冰河时期非常严重，连海洋亦完全结冰，只有在热带的海水仍保持是液态。",
                             "src": "./static-2/极端冰期.jpg"
                         }
@@ -315,6 +343,7 @@ treeData = {
                     "children": [
                         {
                             "name": "动物演化",
+                            "time": "6.65亿年前",
                             "description": "多细胞动物在海洋出现，有研究显示最早的动物生活在湖泊的环境中。",
                             "src": "./static-2/动物演化.jpg"
                         }
@@ -327,6 +356,7 @@ treeData = {
                     "children": [
                         {
                             "name": "潘诺西亚大陆",
+                            "time": "6亿年前",
                             "description": "第二个超级大陆潘诺西亚形成于6亿年前并于5.4亿年前分裂。",
                             "src": "./static-2/潘诺西亚大陆.jpg"
                         }
@@ -339,6 +369,7 @@ treeData = {
                     "children": [
                         {
                             "name": "生物群落更迭",
+                            "time": "5.41亿年前",
                             "description": "5.41亿年前发生埃迪卡拉纪末期灭绝事件，复杂的多细胞动物埃迪卡拉生物群出现，主要是刺胞动物，其次是多孔动物等。",
                             "src": "./static-2/生物群落更迭.jpg"
                         }
@@ -350,7 +381,7 @@ treeData = {
         },
         {
             "name": "显生宙",
-            "time": "显生宙",
+            "time": "5.7亿年前",
             "children": [
                 {
                     "name": "寒武纪大爆发",
@@ -358,6 +389,7 @@ treeData = {
                     "children": [
                         {
                             "name": "三叶虫",
+                            "time": "5.5亿年前",
                             "classification": "节肢动物",
                             "description": "寒武纪时期种类最多的门，以三叶虫为主的节肢动物。",
                             "src": "./static-2/三叶虫.jpg"
@@ -371,6 +403,7 @@ treeData = {
                     "children": [
                         {
                             "name": "无颌鱼类",
+                            "time": "5.2亿年前",
                             "description": "最早的脊椎动物，没有下腭且骨架由软骨构成。",
                             "src": "./static-2/无颌鱼类.jpg"
                         }
@@ -383,6 +416,7 @@ treeData = {
                     "children": [
                         {
                             "name": "古杯动物门",
+                            "time": "5.0亿年前",
                             "description": "古杯动物是已知地球上最早的造礁动物，外形和化石形态多呈杯状。",
                             "src": "./static-2/古杯动物门.jpg"
                         }
@@ -395,6 +429,7 @@ treeData = {
                     "children": [
                         {
                             "name": "生物集群灭绝",
+                            "time": "4.85亿年前",
                             "description": "约49%的属在这次事件中消失。",
                             "src": "./static-2/生物集群灭绝.jpg"
                         }
@@ -407,11 +442,13 @@ treeData = {
                     "children": [
                         {
                             "name": "属级分类单元动物",
+                            "time": "4.85亿年前",
                             "description": "动物增长了超过3倍，古生代演化动物群开始逐渐替代寒武纪演化动物群。",
                             "src": "./static-2/属级分类单元动物.jpg"
                         },
                         {
                             "name": "钙藻",
+                            "time": "4.85亿年前",
                             "description": "导致浮游生物出现了爆发式的增长，浮游生态系统建立。",
                             "src": "./static-2/钙藻.jpg"
                         }
@@ -424,6 +461,7 @@ treeData = {
                     "children": [
                         {
                             "name": "甲胄鱼类",
+                            "time": "4.8亿年前",
                             "description": "有颌下门的祖先。",
                             "src": "./static-2/甲胄鱼类.jpg"
                         }
@@ -436,11 +474,13 @@ treeData = {
                     "children": [
                         {
                             "name": "绿藻演化",
+                            "time": "4.72亿年前",
                             "description": "第一批原始植物从绿藻演化而来，开始向陆地迁移。",
                             "src": "./static-2/绿藻演化.jpg"
                         },
                         {
                             "name": "真菌",
+                            "time": "4亿年前",
                             "description": "可能与植物共生，地衣是共生的例证。",
                             "src": "./static-2/真菌.jpg"
                         }
@@ -453,6 +493,7 @@ treeData = {
                     "children": [
                         {
                             "name": "有颌鱼类",
+                            "time": "4亿年前",
                             "description": "标志着鱼类的进一步演化和发展。",
                             "src": "./static-2/有颌鱼类.jpg"
                         }
@@ -465,6 +506,7 @@ treeData = {
                     "children": [
                         {
                             "name": "大规模物种灭绝",
+                            "time": "4.45-4.43亿年前",
                             "description": "约85%的物种从地球上永远消失。",
                             "src": "./static-2/大规模物种灭绝.jpg"
                         }
@@ -477,6 +519,7 @@ treeData = {
                     "children": [
                         {
                             "name": "裸蕨植物",
+                            "time": "4.4-4亿年前",
                             "description": "标志着植物开始在陆地上占据主导地位。",
                             "src": "./static-2/裸蕨植物.jpg"
                         }
@@ -489,6 +532,7 @@ treeData = {
                     "children": [
                         {
                             "name": "多足亚门",
+                            "time": "4.3-4.2亿年前",
                             "description": "最早的有多足亚门（马陆及蜈蚣），及后有蝎子。",
                             "src": "./static-2/多足亚门.jpg"
                         }
@@ -496,11 +540,18 @@ treeData = {
                     "src": "./static-2/节肢动物外骨骼出现.jpg"
                 },
                 {
+                    "name": "肉鳍鱼类",
+                            "time": "4.23亿年前",
+                            "description": "肉鳍鱼最早出现在距今4.23亿年前的 志留纪 晚期，在 石炭纪 和 二叠纪 时期兴盛并成为 淡水生态系统 的 顶级物种，但在 二叠纪末大灭绝 中受到重创，大部分于距今6500万年前的 晚白垩纪 绝种。",
+                            "src": "./static-2/肉鳍鱼类.jpg"
+                },
+                {
                     "name": "野火现象出现",
                     "time": "4.05亿年前",
                     "children": [
                         {
                             "name": "野火",
+                            "time": "4.05亿年前",
                             "description": "标志着地球大气中氧气浓度的增加，足以支持野火的发生。",
                             "src": "./static-2/野火.jpg"
                         }
@@ -513,6 +564,7 @@ treeData = {
                     "children": [
                         {
                             "name": "无翅膀昆虫",
+                            "time": "4亿年前",
                             "description": "包括蠹鱼、跳虫及缨尾虫。",
                             "src": "./static-2/无翅膀昆虫.jpg"
                         }
@@ -525,6 +577,7 @@ treeData = {
                     "children": [
                         {
                             "name": "木质素和根系",
+                            "time": "3.87亿年前",
                             "description": "植物演化出木本植物，具有木质素和发达的根系。",
                             "src": "./static-2/木质素和根系.jpg"
                         }
@@ -537,6 +590,7 @@ treeData = {
                     "children": [
                         {
                             "name": "种子蕨门",
+                            "time": "3.76亿年前",
                             "description": "最原始的种子植物，叶片类似真蕨类，种子生长在叶片上。",
                             "src": "./static-2/种子蕨门.jpg"
                         }
@@ -549,6 +603,7 @@ treeData = {
                     "children": [
                         {
                             "name": "Kellwasser灭绝事件",
+                            "time": "3.76-3.59亿年前",
                             "description": "严重影响了海洋生态系统。",
                             "src": "./static-2/Kellwasser灭绝事件.jpg"
                         }
@@ -560,7 +615,8 @@ treeData = {
                     "time": "3.75-3.65亿年前",
                     "children": [
                         {
-                            "name": "肉鳍鱼类",
+                            "name": "肉鳍鱼类演化",
+                            "time": "3.75-3.65亿年前",
                             "description": "一些淡水的肉鳍鱼类发展了支撑结构并成为四足总纲。",
                             "src": "./static-2/肉鳍鱼类.jpg"
                         }
@@ -573,6 +629,7 @@ treeData = {
                     "children": [
                         {
                             "name": "盾皮鱼类灭绝",
+                            "time": "3.59亿年前",
                             "description": "严重影响了陆地和淡水生态系统。",
                             "src": "./static-2/盾皮鱼类灭绝.jpg"
                         }
@@ -585,6 +642,7 @@ treeData = {
                     "children": [
                         {
                             "name": "软骨鱼类",
+                            "time": "3.59-2.51亿年前",
                             "description": "软骨鱼类在这一时期达到鼎盛。",
                             "src": "./static-2/软骨鱼类.jpg"
                         }
@@ -597,6 +655,7 @@ treeData = {
                     "children": [
                         {
                             "name": "冰川作用",
+                            "time": "3.5-2.5亿年前",
                             "description": "大规模的冰川作用，大冰盖分布于古南纬60°以内的今南非、阿根廷等地。",
                             "src": "./static-2/冰川作用.jpg"
                         }
@@ -609,6 +668,7 @@ treeData = {
                     "children": [
                         {
                             "name": "离片锥目和爬行形类",
+                            "time": "3.4-3.3亿年前",
                             "description": "标志着陆地脊椎动物的进一步演化。",
                             "src": "./static-2/离片锥目和爬行形类.jpg"
                         }
@@ -621,6 +681,7 @@ treeData = {
                     "children": [
                         {
                             "name": "飞行昆虫",
+                            "time": "3.25亿年前",
                             "description": "出现了多个目，如古网翅目、疏翅目、透翅目及原直翅目。",
                             "src": "./static-2/飞行昆虫.jpg"
                         }
@@ -633,6 +694,7 @@ treeData = {
                     "children": [
                         {
                             "name": "羊膜动物",
+                            "time": "3.1亿年前",
                             "description": "爬行形类的一支演化出羊膜卵，产生了能在地上繁殖的羊膜动物。",
                             "src": "./static-2/羊膜动物.jpg"
                         }
@@ -645,6 +707,7 @@ treeData = {
                     "children": [
                         {
                             "name": "雨林崩溃",
+                            "time": "3.06-3.00亿年前",
                             "description": "地球气候开始动荡，干湿季节变得鲜明，冰川导致雨林迅速萎缩分隔成孤立的小块。",
                             "src": "./static-2/雨林崩溃.jpg"
                         }
@@ -657,6 +720,7 @@ treeData = {
                     "children": [
                         {
                             "name": "巨脉蜻蜓",
+                            "time": "3.05亿年前",
                             "description": "最大的昆虫，翅膀展开长达75厘米。",
                             "src": "./static-2/巨脉蜻蜓.jpg"
                         }
@@ -669,6 +733,7 @@ treeData = {
                     "children": [
                         {
                             "name": "盘古大陆",
+                            "time": "3亿年前",
                             "description": "地球上的大洲最近的闭合，维持了1亿年左右。",
                             "src": "./static-2/盘古大陆.jpg"
                         }
@@ -681,6 +746,7 @@ treeData = {
                     "children": [
                         {
                             "name": "合弓纲",
+                            "time": "3-2.51亿年前",
                             "description": "羊膜动物的一支合弓纲占据了陆地生态系统的主导。",
                             "src": "./static-2/合弓纲.jpg"
                         }
@@ -693,6 +759,7 @@ treeData = {
                     "children": [
                         {
                             "name": "植物群落更替",
+                            "time": "2.99亿年前",
                             "description": "石炭纪雨林崩溃事件导致石松类衰落，种子蕨和裸子植物兴起。",
                             "src": "./static-2/植物群落更替.jpg"
                         }
@@ -705,6 +772,7 @@ treeData = {
                     "children": [
                         {
                             "name": "兽孔目",
+                            "time": "2.75亿年前",
                             "description": "使合弓纲脱离了蜥蜴的样貌，标志着哺乳动物的早期演化。",
                             "src": "./static-2/兽孔目.jpg"
                         }
@@ -717,6 +785,7 @@ treeData = {
                     "children": [
                         {
                             "name": "主龙形下纲",
+                            "time": "2.65亿年前",
                             "description": "最初的主龙形下纲动物出现，是恐龙和鸟类的早期祖先。",
                             "src": "./static-2/主龙形下纲.jpg"
                         }
@@ -729,6 +798,7 @@ treeData = {
                     "children": [
                         {
                             "name": "恐头兽亚目灭绝",
+                            "time": "2.6亿年前",
                             "description": "导致繁盛一时的恐头兽亚目灭绝，其他兽孔目和副爬行动物占据了陆地生态位。",
                             "src": "./static-2/恐头兽亚目灭绝.jpg"
                         }
@@ -741,16 +811,19 @@ treeData = {
                     "children": [
                         {
                             "name": "最严重的生物集群灭绝",
+                            "time": "2.51亿年前",
                             "description": "灭绝了约90%的物种，是显生宙五次大灭绝事件中最严重的一次。",
                             "src": "./static-2/最严重的生物集群灭绝.jpg"
                         },
                         {
                             "name": "水龙兽",
+                            "time": "2亿年前",
                             "description": "灭绝过后，水龙兽成为地表最常见的动物。",
                             "src": "./static-2/水龙兽.jpg"
                         },
                         {
                             "name": "主龙类",
+                            "time": "2.52亿年前",
                             "description": "主龙类开始演化出许多分支，包括恐龙和鸟类的直接祖先。",
                             "src": "./static-2/主龙类.jpg"
                         }
@@ -762,7 +835,7 @@ treeData = {
         },
         {
             "name": "中生代",
-            "time": "中生代",
+            "time": "2.30亿年前",
             "children": [
                 {
                     "name": "主龙类及裸子植物分化",
@@ -1036,7 +1109,7 @@ treeData = {
         },
         {
             "name": "新生代",
-            "time": "新生代",
+            "time": "6500万年前",
             "children": [
                 {
                     "name": "白垩纪-第三纪灭绝事件",
@@ -1324,7 +1397,7 @@ treeData = {
         },
         {
             "name": "第四纪",
-            "time": "第四纪",
+            "time": "258万年前",
             "children": [
                 {
                     "name": "智人出现",
@@ -1468,12 +1541,12 @@ treeData = {
                     "src": "./static-2/尼安德特人出现.jpg"
                 },
                 {
-                    "name": "最后的冰河时期",
-                    "time": "公元前7万年前",
+                    "name": "最后的冰河时期-末次冰期",
+                    "time": "7-1.15万年前",
                     "children": [
                         {
                             "name": "威斯康辛冰期",
-                            "time": "公元前7万年前",
+                            "time": "7万年前",
                             "description": "最近的冰河时期，威斯康辛冰期开始。",
                             "src": "./static-2/威斯康辛冰期.jpg"
                         },

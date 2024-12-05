@@ -158,6 +158,209 @@
             }
         });
 
+        let currentTimeIndex = 0;
+        let isPlaying = false;
+        let playDirection = 1; // 1 for forward, -1 for backward
+
+        let lastUpdateTime = 0;
+        const UPDATE_INTERVAL = 1000; // 每1秒更新一次，可以根据需要调整这个值
+
+        let playSpeed = 1; // 默认速度为1倍
+
+        function createTimeControls() {
+            const controlsContainer = document.createElement('div');
+            controlsContainer.style.position = 'absolute';
+            controlsContainer.style.bottom = '20px';
+            controlsContainer.style.right = '20px';
+            controlsContainer.style.zIndex = '1000';
+            controlsContainer.style.display = 'flex';
+            controlsContainer.style.flexDirection = 'column';
+            controlsContainer.style.gap = '15px';
+            controlsContainer.style.padding = '20px';
+            controlsContainer.style.background = 'rgba(0,0,0,0.7)';
+            controlsContainer.style.borderRadius = '10px';
+            controlsContainer.style.backdropFilter = 'blur(5px)';
+            controlsContainer.style.boxShadow = '0 0 20px rgba(0,255,0,0.2)';
+
+            // 添加标题
+            const title = document.createElement('div');
+            title.innerText = '时间旅行模式';
+            title.style.color = '#00ff88';
+            title.style.fontSize = '28px';
+            title.style.fontWeight = 'bold';
+            title.style.textAlign = 'center';
+            title.style.marginBottom = '15px';
+            title.style.textShadow = '0 0 10px rgba(0,255,136,0.5)';
+            
+            controlsContainer.appendChild(title);
+
+            const buttonStyle = `
+                padding: 15px 30px;
+                font-size: 20px;
+                background: rgba(0, 255, 136, 0.2);
+                border: 2px solid #00ff88;
+                color: #00ff88;
+                border-radius: 5px;
+                cursor: pointer;
+                font-family: Arial, sans-serif;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(5px);
+            `;
+
+            // 创建按钮容器
+            const buttonsContainer = document.createElement('div');
+            buttonsContainer.style.display = 'flex';
+            buttonsContainer.style.gap = '15px';
+
+            const playButton = document.createElement('button');
+            playButton.innerText = '播放';
+            playButton.style.cssText = buttonStyle;
+            playButton.onmouseover = () => {
+                playButton.style.background = 'rgba(0, 255, 136, 0.4)';
+                playButton.style.transform = 'scale(1.05)';
+            };
+            playButton.onmouseout = () => {
+                playButton.style.background = 'rgba(0, 255, 136, 0.2)';
+                playButton.style.transform = 'scale(1)';
+            };
+            playButton.onclick = () => {
+                isPlaying = !isPlaying;
+                playButton.innerText = isPlaying ? '暂停' : '播放';
+            };
+
+            const forwardButton = document.createElement('button');
+            forwardButton.innerText = '前进';
+            forwardButton.style.cssText = buttonStyle;
+            forwardButton.onmouseover = () => {
+                forwardButton.style.background = 'rgba(0, 255, 136, 0.4)';
+                forwardButton.style.transform = 'scale(1.05)';
+            };
+            forwardButton.onmouseout = () => {
+                forwardButton.style.background = 'rgba(0, 255, 136, 0.2)';
+                forwardButton.style.transform = 'scale(1)';
+            };
+            forwardButton.onclick = () => {
+                playDirection = 1;
+                isPlaying = true;
+                playButton.innerText = '暂停';
+            };
+
+            const backwardButton = document.createElement('button');
+            backwardButton.innerText = '倒退';
+            backwardButton.style.cssText = buttonStyle;
+            backwardButton.onmouseover = () => {
+                backwardButton.style.background = 'rgba(0, 255, 136, 0.4)';
+                backwardButton.style.transform = 'scale(1.05)';
+            };
+            backwardButton.onmouseout = () => {
+                backwardButton.style.background = 'rgba(0, 255, 136, 0.2)';
+                backwardButton.style.transform = 'scale(1)';
+            };
+            backwardButton.onclick = () => {
+                playDirection = -1;
+                isPlaying = true;
+                playButton.innerText = '暂停';
+            };
+
+            // 创建速度控制容器
+            const speedControlContainer = document.createElement('div');
+            speedControlContainer.style.display = 'flex';
+            speedControlContainer.style.flexDirection = 'column';
+            speedControlContainer.style.gap = '10px';
+            speedControlContainer.style.marginTop = '10px';
+
+            // 创建速度显示标签
+            const speedLabel = document.createElement('div');
+            speedLabel.style.color = '#00ff88';
+            speedLabel.style.fontSize = '16px';
+            speedLabel.style.textAlign = 'center';
+            speedLabel.innerText = '播放速度: 1x';
+
+            // 创建速度��动条
+            const speedSlider = document.createElement('input');
+            speedSlider.type = 'range';
+            speedSlider.min = '1';
+            speedSlider.max = '5';
+            speedSlider.value = '1';
+            speedSlider.step = '1';
+            speedSlider.style.width = '100%';
+            speedSlider.style.accentColor = '#00ff88';
+            
+            // 自定义滑动条样式
+            speedSlider.style.cssText += `
+                -webkit-appearance: none;
+                width: 100%;
+                height: 8px;
+                border-radius: 4px;
+                background: rgba(0, 255, 136, 0.2);
+                outline: none;
+                cursor: pointer;
+            `;
+
+            // 滑动条thumb样式
+            const thumbStyle = `
+                speedSlider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: #00ff88;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                }
+                speedSlider::-webkit-slider-thumb:hover {
+                    transform: scale(1.2);
+                    box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+                }
+            `;
+
+            // 添加样式到文档
+            const styleSheet = document.createElement('style');
+            styleSheet.textContent = thumbStyle;
+            document.head.appendChild(styleSheet);
+
+            // 监听滑动条变化
+            speedSlider.oninput = () => {
+                playSpeed = parseInt(speedSlider.value);
+                speedLabel.innerText = `播放速度: ${playSpeed}x`;
+            };
+
+            // 添加所有元素容器
+            buttonsContainer.appendChild(backwardButton);
+            buttonsContainer.appendChild(playButton);
+            buttonsContainer.appendChild(forwardButton);
+            
+            speedControlContainer.appendChild(speedLabel);
+            speedControlContainer.appendChild(speedSlider);
+
+            controlsContainer.appendChild(buttonsContainer);
+            controlsContainer.appendChild(speedControlContainer);
+            
+            document.body.appendChild(controlsContainer);
+        }
+
+        function updateTimeline() {
+            const currentTime = Date.now();
+            
+            if (isPlaying && currentTime - lastUpdateTime >= UPDATE_INTERVAL / playSpeed) {
+                currentTimeIndex += playDirection;
+                if (currentTimeIndex < 0) currentTimeIndex = 0;
+                if (currentTimeIndex >= timelineObjects.children.length) currentTimeIndex = timelineObjects.children.length - 1;
+
+                timelineObjects.children.forEach((object, index) => {
+                    object.visible = index <= currentTimeIndex;
+                });
+
+                const currentObject = timelineObjects.children[currentTimeIndex];
+                if (currentObject && currentObject.userData && currentObject.userData.name) {
+                    showEventDetails(currentObject.userData);
+                }
+                
+                lastUpdateTime = currentTime;
+            }
+        }
+
         function init() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x000000);
@@ -199,6 +402,8 @@
                 );
                 composer.addPass(bloomPass);
             }
+            
+            createTimeControls();
             
             animate();
         }
@@ -383,6 +588,8 @@
                 function flattenEvents(events) {
                     let result = [];
                     function recurse(event) {
+                        if (!event || !event.name) return; // 跳过 undefined 和没有名称的节点
+
                         let timeValue = 0;
                         if (event.time) {
                             const timeStr = event.time;
@@ -404,7 +611,8 @@
                     }
                     
                     events.forEach(recurse);
-                    return result.sort((a, b) => b.timeValue - a.timeValue);
+                    // 过滤掉所有 undefined 和没有名称的节点
+                    return result.filter(event => event && event.name).sort((a, b) => b.timeValue - a.timeValue);
                 }
                 
                 const sortedEvents = flattenEvents(events);
@@ -412,6 +620,8 @@
                 const heightPerEvent = totalHeight / sortedEvents.length;
                 
                 sortedEvents.forEach((event, index) => {
+                    if (!event) return; // 再次检查并跳过无效节点
+
                     const geometry = new THREE.SphereGeometry(1.2, 32, 32);
                     const material = new THREE.MeshPhongMaterial({ 
                         color: getEventColor(event.timeValue),
@@ -501,6 +711,7 @@
 
         function animate() {
             requestAnimationFrame(animate);
+            updateTimeline();
             
             timelineObjects.children.forEach(object => {
                 if (object.type === 'Mesh') {

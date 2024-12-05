@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 生 物 分 类 </title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./生物分类数据.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
          body {
             margin: 0;
@@ -167,7 +169,7 @@
 
         .info-panel.fixed {
             position: fixed;
-            right: 20px;
+            right: 0px;
             top: 50%;
             transform: translateY(-50%);
             background: white;
@@ -210,6 +212,130 @@
             line-height: 1.5;
             z-index: 1000;
             text-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* 添加白色文字阴影提高可读性 */
+        }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #searchInput {
+            width: 90%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: rgba(255, 255, 0, 0.3);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .search-history-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* 添加清空历史按钮的样式 */
+        .clear-history {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 12px;
+            margin-left: auto; /* 确保按钮在右侧 */
+        }
+
+        .clear-history:hover {
+            color: #ff4444;
+        }
+
+        /* 更新放大镜样式 */
+        #magnifier {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 250px;
+            height: 250px;
+            border: 3px solid rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            pointer-events: none; /* 防止放大镜阻挡鼠标事件 */
+        }
+
+        #magnifierCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
         }
     </style>
 </head>
@@ -261,274 +387,16 @@
         </button>
     </div>
 
-    <script>
-        // 数据结构
-        const data = {
-    name: "生命起源",
-    time: "35亿年前",
-    description: "地球上最早的生命形式",
-    src: "./static/生命起源.jpg",
-    description_more: "",
-    children: [
-        {
-            name: "原核生物",
-            time: "35-20亿年前",
-            description: "最原始的单细胞生物",
-            src: "./static/原核生物.png",
-            description_more: "原核生物是单细胞生物，没有真正的细胞核，只有原始的核质结构。它们通过简单的分裂方式繁殖，没有复杂的细胞器。原核生物包括细菌和古菌，是地球上最早的生命形式。",
-            children: [
-                {
-                    name: "细菌界",
-                    time: "35亿年前至今",
-                    description: "包括大多数细菌",
-                    src: "./static/细菌界.jpg",
-                    description_more: "",
-                    children: [
-                        { name: "蓝细菌", time: "27亿年前", description: "能进行光合作用的细菌", src: "./static/蓝细菌.png", description_more: "" },
-                        { name: "放线菌", time: "20亿年前", description: "具有丝状体的细菌", src: "./static/放线菌.jpg", description_more: "" },
-                        { name: "螺旋菌", time: "20亿年前", description: "螺旋形的细菌", src: "./static/螺旋.jpg", description_more: "" },
-                        {
-                            name: "革兰氏阳性细菌",
-                            time: "18亿年前",
-                            description: "细胞壁厚，常见于土壤和植物体内。",
-                            src: "./static/革兰氏阳性细菌.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "链球菌", time: "12亿年前", description: "有链状排列的细菌", src: "./static/链球菌.jpg", description_more: "" },
-                                { name: "葡萄球菌", time: "11亿年前", description: "有葡萄状排列的细菌", src: "./static/葡萄球菌.jpg", description_more: "" }
-                            ]
-                        },
-                        {
-                            name: "革兰氏阴性细菌",
-                            time: "18亿年前",
-                            description: "细胞壁较薄，常见于动物体内。",
-                            src: "./static/革兰氏阴性细菌.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "大肠杆菌", time: "10亿年前", description: "常见于人类道的细菌", src: "./static/大肠杆菌.jpg", description_more: "" },
-                                { name: "沙门氏菌", time: "8亿年前", description: "引起食物中毒的细菌", src: "./static/沙门氏菌.jpg", description_more: "" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "古菌界",
-                    time: "35亿年前至今",
-                    description: "在极端环境中生存的微生物",
-                    src: "./static/古菌界.jpg",
-                    description_more: "",
-                    children: [
-                        { name: "嗜热古菌", time: "30亿年前", description: "在高温环境中生存", src: "./static/嗜热古菌.jpg", description_more: "" },
-                        { name: "嗜盐古菌", time: "25亿年前", description: "在高盐环境中生存", src: "./static/嗜盐古菌.jpg", description_more: "" },
-                        {
-                            name: "甲烷古菌",
-                            time: "20亿年前",
-                            description: "主要产甲烷的古菌",
-                            src: "./static/甲烷古菌.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "产甲烷古菌", time: "18亿年前", description: "在厌氧条件下生存", src: "./static/产甲烷古菌.jpg", description_more: "" },
-                                { name: "好氧甲烷古菌", time: "15亿年前", description: "在氧气存在下生存", src: "./static/好氧甲烷古菌.jpg", description_more: "" }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            name: "真核生物",
-            time: "20亿年前",
-            description: "具有细胞核的生物",
-            src: "./static/真核生物.jpg",
-            description_more: "",
-            children: [
-                {
-                    name: "原生生物",
-                    time: "15亿年前",
-                    description: "单细胞真核生物",
-                    src: "./static/原生生物.jpg",
-                    description_more: "",
-                    children: [
-                        { name: "变形虫", time: "10亿年前", description: "能够改变形状的单细胞生物", src: "./static/变形虫.png", description_more: "" },
-                        { name: "草履虫", time: "10亿年前", description: "具有纤毛的单细胞生物", src: "./static/草履虫.jpg", description_more: "" },
-                        {
-                            name: "水绵",
-                            time: "9亿年前",
-                            description: "多细胞的水生生物",
-                            src: "./static/水绵.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "理想水绵", time: "8亿年前", description: "常见于淡水中的水绵", src: "./static/理想水绵.png", description_more: "" },
-                                { name: "须状水绵", time: "7亿年前", description: "呈须漂浮在水中的生物", src: "./static/须状水绵.jpg", description_more: "" }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "植物界",
-                    time: "10亿年前",
-                    description: "能进行光合作用的多细胞生物",
-                    src: "./static/植物界.jpg",
-                    description_more: "",
-                    children: [
-                        {
-                            name: "藻类植物",
-                            time: "10亿年前",
-                            description: "水生植物",
-                            src: "./static/藻类植物.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "绿藻", time: "8亿年", description: "含有叶绿素的水生植物", src: "./static/绿藻.jpg", description_more: "" },
-                                { name: "褐藻", time: "8亿年前", description: "海洋中的大型藻类", src: "./static/褐藻.jpg", description_more: "" },
-                                { name: "红藻", time: "7亿年前", description: "深海水域生长的水生植物", src: "./static/红藻.jpg", description_more: "" }
-                            ]
-                        },
-                        {
-                            name: "陆地植物",
-                            time: "4.7亿年前",
-                            description: "适应陆地生活的植物",
-                            src: "./static/陆地植物.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "苔藓植物", time: "4.5亿年前", description: "最早的陆地植物", src: "./static/苔���植物.jpg", description_more: "" },
-                                { name: "蕨类植物", time: "4亿年前", description: "有维管组织的无种子植物", src: "./static/蕨类植物.jpg", description_more: "" },
-                                { name: "裸子植物", time: "3.5亿年前", description: "最早的种子植物", src: "./static/裸子植物.jpg", description_more: "" },
-                                { name: "被子植物", time: "1.4亿年前", description: "开花植物", src: "./static/被子植物.jpg", description_more: "" },
-                                {
-                                    name: "单子叶植物",
-                                    time: "1.2亿年前",
-                                    description: "一类具有单子叶特征的被子植物",
-                                    src: "./static/单子叶植物.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "禾本科", time: "1亿年前", description: "包括稻、麦等重要粮食作物", src: "./static/禾本科.jpg", description_more: "" },
-                                        { name: "兰科", time: "9000万年前", description: "包括许多观赏性植物", src: "./static/兰科.jpg", description_more: "" }
-                                    ]
-                                },
-                                {
-                                    name: "双子叶植物",
-                                    time: "1.2亿年前",
-                                    description: "另一类具有双子叶征的被子植物",
-                                    src: "./static/双子叶植物.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "豆科", time: "9000万年前", description: "包括大豆、豌豆等作物", src: "./static/豆科.jpg", description_more: "" },
-                                        { name: "蔷薇科", time: "8000万年前", description: "包括苹果、樱桃等果树", src: "./static/蔷薇科.jpg", description_more: "" }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    name: "动物界",
-                    time: "6亿年前",
-                    description: "多细胞异养生物",
-                    src: "./static/动物界.png",
-                    description_more: "",
-                    children: [
-                        {
-                            name: "无脊椎动物",
-                            time: "6亿年前",
-                            description: "没有脊椎的动物",
-                            src: "./static/无脊椎动物.png",
-                            description_more: "",
-                            children: [
-                                { name: "海绵动物", time: "6亿年前", description: "最原始的多细胞动物", src: "./static/海绵动物.jpg", description_more: "" },
-                                { name: "腔肠动物", time: "5.5亿年前", description: "具有辐射对称的动物", src: "./static/腔肠动物.jpg", description_more: "" },
-                                { name: "扁形动物", time: "5亿年前", description: "具有双侧对称的原始动物", src: "./static/扁形动物.jpg", description_more: "" },
-                                { name: "节动物", time: "5亿年前", description: "包括昆虫、蜘蛛等", src: "./static/节动物.jpg", description_more: "" },
-                                { name: "软体动物", time: "5亿年前", description: "包括贝类、章鱼等", src: "./static/软体动物.jpg", description_more: "" },
-                                {
-                                    name: "棘皮动物",
-                                    time: "5亿年前",
-                                    description: "具有五辐射对称的海洋动物",
-                                    src: "./static/棘皮动物.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "海星", time: "4亿年前", description: "以五个或更多的臂组成", src: "./static/海星.jpg", description_more: "" },
-                                        { name: "海胆", time: "4亿年前", description: "外壳坚硬，生活在海底", src: "./static/海胆.jpg", description_more: "" }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            name: "脊椎动物",
-                            time: "5.3亿年前",
-                            description: "具有脊椎的动物",
-                            src: "./static/脊椎动物.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "鱼类", time: "5亿年前", description: "最早的脊椎动物", src: "./static/鱼类.jpg", description_more: "" },
-                                { name: "两栖类", time: "3.7亿年前", description: "最早登陆的脊椎动物", src: "./static/两栖类.jpg", description_more: "" },
-                                { name: "爬行类", time: "3.1亿年前", description: "完全适应陆地生活的动物", src: "./static/爬行类.jpg", description_more: "" },
-                                { name: "鸟类", time: "1.5亿年前", description: "会飞的恐龙后裔", src: "./static/鸟类.jpg", description_more: "" },
-                                { name: "哺乳", time: "2.2亿年前", description: "恒和哺乳的脊椎动物", src: "./static/哺乳类.jpg", description_more: "" },
-                                {
-                                    name: "单孔类",
-                                    time: "2亿年前",
-                                    description: "卵生的哺乳动物",
-                                    src: "./static/单孔类.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "鸭嘴兽", time: "1.5亿年前", description: "一种能产卵的哺乳动物", src: "./static/鸭嘴兽.jpg", description_more: "" },
-                                        { name: "针鼹", time: "1.5亿年前", description: "皮肤有刺的哺乳动物", src: "./static/针鼹.jpg", description_more: "" }
-                                    ]
-                                },
-                                {
-                                    name: "有袋类",
-                                    time: "1.7亿年前",
-                                    description: "以育儿袋养育幼崽的哺乳动物",
-                                    src: "./static/有袋类.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "袋鼠", time: "5000万年前", description: "典型的有袋类动物", src: "./static/袋鼠.jpg", description_more: "" },
-                                        { name: "考拉", time: "6000万年前", description: "生活在澳大利亚的袋动物", src: "./static/考拉.jpg", description_more: "" }
-                                    ]
-                                },
-                                {
-                                    name: "胎盘类",
-                                    time: "1.6亿年前",
-                                    description: "以胎盘养育幼崽的哺乳动物",
-                                    src: "./static/胎盘类.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "灵长类", time: "6500万年前", description: "包括人类及其近亲", src: "./static/灵长类.jpg", description_more: "" },
-                                        { name: "食肉类", time: "6000万年前", description: "包括犬、猫等", src: "./static/食肉类.jpg", description_more: "" },
-                                        { name: "草食类", time: "6000万年前", description: "包括马、牛等", src: "./static/草食类.png", description_more: "" }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            name: "真菌界",
-                            time: "10亿年前",
-                            description: "异养的真核生物",
-                            src: "./static/真菌界.jpg",
-                            description_more: "",
-                            children: [
-                                { name: "子囊菌", time: "5亿年前", description: "包括酵母、青霉等", src: "./static/子囊菌.jpg", description_more: "" },
-                                { name: "担子菌", time: "3亿年前", description: "包括蘑菇等大型真菌", src: "./static/担子菌.jpg", description_more: "" },
-                                {
-                                    name: "霉菌",
-                                    time: "4亿年前",
-                                    description: "在腐败物质上生长的真菌",
-                                    src: "./static/霉菌.jpg",
-                                    description_more: "",
-                                    children: [
-                                        { name: "青霉", time: "4亿年前", description: "常见于食物表面的霉菌", src: "./static/青霉.jpg", description_more: "" },
-                                        { name: "黑霉", time: "4亿年前", description: "常见于腐烂食物上的霉菌", src: "./static/黑霉.jpg", description_more: "" }
-                                    ]
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
-};
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="搜索生物名称...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
 
+    <div id="magnifier">
+        <canvas id="magnifierCanvas"></canvas>
+    </div>
+
+    <script>
 
     // 1. 定义常量
     const width = 1000;
@@ -654,7 +522,7 @@
         .attr("text-anchor", "middle")
         .text(d => d.data.name);
 
-    // 确保文字在最上层
+    // 确文在最上层
     text.raise();
 
     // 确保先创建中心圆
@@ -668,13 +536,13 @@
     const centerText = svg.append("text")
         .attr("class", "center-text")
         .attr("text-anchor", "middle")
-        .attr("dominant-baseline", "middle") // 添加垂直对齐
+        .attr("dominant-baseline", "middle") // 添加垂直齐
         .attr("x", 0)  // 确保位置在中心
         .attr("y", 0)  // 确保位置在中心
         .attr("fill", "#ffffff")
         .style("font-size", "20px")
         .style("font-weight", "bold")
-        .text("生命起源");
+        .text("生物分类");
 
     // 确保文字在最上层
     centerText.raise();
@@ -685,7 +553,7 @@
         .on("mousedown", dragstarted)
         .on("mousemove", dragged);
 
-    // 将mouseup事件监听器添加到window对象
+    // 将mouseup事件监听器添加到window象
     d3.select(window)
         .on("mouseup", dragended)
         .on("mouseleave", dragended);  // 添加mouseleave事件处理
@@ -708,7 +576,7 @@
         isDragging = false;
     }
 
-    // 11. 修改鼠标悬停效果
+    // 11. 修改鼠标悬停效
     path.on("mouseover", function(event, d) {
         // 更新右侧信息面板
         const infoPanel = d3.select(".info-panel");
@@ -753,7 +621,7 @@
     // 12. 添加平滑过渡效果
     svg.style("transition", "transform 0.1s");
 
-    // 在脚本开始处添加预加载函数
+    // 在脚本开始处添加预加载数
     function preloadImages(data) {
         function traverse(node) {
             if (node.src) {
@@ -767,7 +635,7 @@
         traverse(data);
     }
 
-    // 在数据加载后调用
+    // 数据加载后调用
     preloadImages(data);
 
     // 在脚本末尾添加全屏控制代码
@@ -849,7 +717,7 @@
             isFixed = false;
         }
 
-        // 更新信息面板内容
+        // 更新信息面内容
         updateInfoPanel(d);
     }
 
@@ -928,7 +796,7 @@
         }
     });
 
-    // 更新旋转角度
+    // 更转角度
     function updateRotation() {
         const svg = document.querySelector('svg');
         if (svg) {
@@ -936,7 +804,7 @@
         }
     }
 
-    // 修改原有的SVG创建代码，确保svg变量可以被访问
+    // 修改原有的SVG��建代码，确保svg变量可被访问
     const svg2 = d3.select('#tree-container')
         .append('svg')
         .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
@@ -1023,7 +891,7 @@
     function updateInfoPanel(node) {
         const infoPanel = d3.select(".info-panel");
         
-        // 更新图片
+        // 更新片
         if (node.data.src) {
             d3.select("#species-image")
                 .attr("src", node.data.src)
@@ -1058,6 +926,345 @@
                 .attr("fill-opacity", 0.8);
             currentSelectedNode = null;
             currentSelectedIndex = -1;
+        }
+    });
+
+    // 在 script 标签中添加搜索相关函数
+    function getAllNodes(data) {
+        let nodes = [];
+        
+        function traverse(node, path = []) {
+            const currentPath = [...path, node.name];
+            nodes.push({
+                name: node.name,
+                path: currentPath,
+                data: node
+            });
+            
+            if (node.children) {
+                node.children.forEach(child => traverse(child, currentPath));
+            }
+        }
+        
+        traverse(data);
+        return nodes;
+    }
+
+    // 初始化搜索功能
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const allNodes = getAllNodes(data);
+
+    let activeHighlight = null;
+
+    // 修改搜索历史相关的代码
+    const MAX_HISTORY_ITEMS = 5; // 最大历史记录数
+    let searchHistory = []; // 存储搜索历史
+
+    // 修改添加搜索历史的函数
+    function addToSearchHistory(item) {
+        // 检查是否已存在相项
+        const existingIndex = searchHistory.findIndex(historyItem => historyItem.name === item.name);
+        
+        if (existingIndex !== -1) {
+            // 如果存在，将其移到开头
+            searchHistory.splice(existingIndex, 1);
+        }
+        
+        // 添新项到开头
+        searchHistory.unshift({
+            name: item.name,
+            path: item.path,
+            data: item.data
+        });
+        
+        // 限制历史记录数量
+        if (searchHistory.length > MAX_HISTORY_ITEMS) {
+            searchHistory.pop();
+        }
+
+        // 可以选择将历史记录保存到 localStorage
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    }
+
+    // 修改显示搜索历史的函数
+    function showSearchHistory() {
+        searchResults.innerHTML = '';
+        
+        // 如果有搜索历史则显示
+        if (searchHistory.length > 0) {
+            searchResults.style.display = 'block';
+            
+            // 添加历史记录标题和清空按钮
+            const historyTitle = document.createElement('div');
+            historyTitle.className = 'search-history-title';
+            
+            const titleText = document.createElement('span');
+            titleText.textContent = '搜索历史';
+            
+            const clearButton = document.createElement('button');
+            clearButton.className = 'clear-history';
+            clearButton.textContent = '清空历史';
+            clearButton.onclick = clearSearchHistory;
+            
+            historyTitle.appendChild(titleText);
+            historyTitle.appendChild(clearButton);
+            searchResults.appendChild(historyTitle);
+            
+            // 显示历史记录项
+            searchHistory.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.textContent = item.path.join(' > ');
+                
+                div.addEventListener('click', () => {
+                    handleSearchResultClick(item);
+                });
+                
+                searchResults.appendChild(div);
+            });
+        }
+    }
+
+    // 添加清空搜索历史的函数
+    function clearSearchHistory() {
+        searchHistory = [];
+        localStorage.removeItem('searchHistory');
+        searchResults.style.display = 'none';
+        
+        // 阻止事件冒泡，防止触发搜索框的点击事件
+        event.stopPropagation();
+    }
+
+    // 修改搜索结果点击处理函数
+    function handleSearchResultClick(match) {
+        // 查找完整的节点数据
+        const targetNode = root.descendants().find(d => d.data.name === match.name);
+        if (!targetNode) return;
+
+        // 高亮显示找到的节点
+        path.attr("fill", d => {
+            if (d.data.name === match.name) {
+                activeHighlight = d;
+                return "#FFD700"; // 高亮颜色
+            }
+            return color(d);
+        }).attr("fill-opacity", d => d.data.name === match.name ? 1 : 0.8);
+        
+        // 更新信息面板
+        updateInfoPanel(targetNode);
+        
+        // 添加到搜索历史
+        addToSearchHistory({
+            name: match.name,
+            path: getNodePath(targetNode),
+            data: targetNode
+        });
+        
+        // 清空搜索框和结果
+        searchInput.value = '';
+        searchResults.style.display = 'none';
+        
+        // 自动旋转到目节点
+        const targetAngle = ((targetNode.x0 + targetNode.x1) / 2 * 180 / Math.PI) - 90;
+        currentRotation = -targetAngle;
+        updateRotation();
+    }
+
+    // 添加获取节点路径的辅助函数
+    function getNodePath(node) {
+        const path = [];
+        let current = node;
+        while (current) {
+            path.unshift(current.data.name);
+            current = current.parent;
+        }
+        return path;
+    }
+
+    // 在页面加载时恢复搜索历史
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedHistory = localStorage.getItem('searchHistory');
+        if (savedHistory) {
+            try {
+                searchHistory = JSON.parse(savedHistory);
+            } catch (e) {
+                console.error('Failed to parse search history:', e);
+                searchHistory = [];
+            }
+        }
+    });
+
+    // 修改搜索输入事件处理
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        // 清除之前的高亮
+        if (activeHighlight) {
+            path.attr("fill", d => color(d))
+                .attr("fill-opacity", 0.8);
+            activeHighlight = null;
+        }
+        
+        if (searchTerm.length < 1) {
+            showSearchHistory(); // 显示搜索历史
+            return;
+        }
+        
+        // 搜索节点
+        const matches = root.descendants()
+            .filter(node => node.data.name.toLowerCase().includes(searchTerm))
+            .map(node => ({
+                name: node.data.name,
+                path: getNodePath(node),
+                data: node
+            }));
+        
+        searchResults.innerHTML = '';
+        searchResults.style.display = matches.length ? 'block' : 'none';
+        
+        matches.forEach(match => {
+            const div = document.createElement('div');
+            div.className = 'search-result-item';
+            div.textContent = match.path.join(' > ');
+            
+            div.addEventListener('click', () => {
+                handleSearchResultClick(match);
+            });
+            
+            searchResults.appendChild(div);
+        });
+    });
+
+    // 添加搜索框焦点事件
+    searchInput.addEventListener('focus', function() {
+        if (!this.value) {
+            showSearchHistory();
+        }
+    });
+
+    // 修改搜索相关事件监听
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.querySelector('.search-container');
+        const searchResults = document.getElementById('searchResults');
+        
+        // 如果点击的不是搜索框相关的元素，则隐藏搜索结果
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    // 防止搜索结果框的点击事件冒泡到document
+    searchResults.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // 修改搜索框点击事件，阻止冒泡
+    searchInput.addEventListener('click', function(event) {
+        event.stopPropagation();
+        if (!this.value) {
+            showSearchHistory();
+        }
+    });
+
+    // 修改放大镜相关代码
+    const magnifier = document.getElementById('magnifier');
+    const canvas = document.getElementById('magnifierCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 创建离屏canvas用于双缓冲
+    const offscreenCanvas = document.createElement('canvas');
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+
+    // 设置两个canvas的实际尺寸
+    canvas.width = canvas.height = 250;
+    offscreenCanvas.width = offscreenCanvas.height = 250;
+
+    // 增大放大倍数
+    const ZOOM = 2.5;
+
+    // 防抖函数
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // 更新放大镜内容
+    function updateMagnifier(e) {
+        const svgElement = document.querySelector('svg');
+        if (!svgElement) return;
+
+        // 获取SVG的位置和尺寸
+        const svgRect = svgElement.getBoundingClientRect();
+        const mouseX = e.clientX - svgRect.left;
+        const mouseY = e.clientY - svgRect.top;
+
+        // 清除离屏canvas
+        offscreenCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+        
+        // 创建圆形裁剪区域
+        offscreenCtx.save();
+        offscreenCtx.beginPath();
+        offscreenCtx.arc(offscreenCanvas.width / 2, offscreenCanvas.height / 2, offscreenCanvas.width / 2, 0, Math.PI * 2);
+        offscreenCtx.clip();
+
+        // 将SVG转换为图片
+        const svgString = new XMLSerializer().serializeToString(svgElement);
+        const img = new Image();
+        const blob = new Blob([svgString], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+
+        img.onload = () => {
+            // 计算缩放和位置
+            const scale = ZOOM;
+            const dx = offscreenCanvas.width / 2 - mouseX * scale;
+            const dy = offscreenCanvas.height / 2 - mouseY * scale;
+
+            // 在离屏canvas上绘制
+            offscreenCtx.drawImage(img, dx, dy, svgRect.width * scale, svgRect.height * scale);
+            offscreenCtx.restore();
+
+            // 将离屏canvas的内容复制到显示canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(offscreenCanvas, 0, 0);
+
+            URL.revokeObjectURL(url);
+        };
+
+        img.src = url;
+    }
+
+    // 使用防抖处理更新
+    const debouncedUpdate = debounce(updateMagnifier, 16); // 约60fps
+
+    // 控制放大镜的显示和隐藏
+    let magnifierVisible = false;
+    const toggleMagnifier = document.createElement('button');
+    toggleMagnifier.className = 'control-btn';
+    toggleMagnifier.innerHTML = '<span>显示放大镜</span>';
+    toggleMagnifier.onclick = function() {
+        magnifierVisible = !magnifierVisible;
+        magnifier.style.display = magnifierVisible ? 'block' : 'none';
+        this.innerHTML = `<span>${magnifierVisible ? '隐藏' : '显示'}放大镜</span>`;
+    };
+
+    // 将按钮添加到控按钮容器
+    document.querySelector('.control-buttons').appendChild(toggleMagnifier);
+
+    // 初始隐藏放大镜
+    magnifier.style.display = 'none';
+
+    // 优化的鼠标移动事件处理
+    document.addEventListener('mousemove', (e) => {
+        if (magnifierVisible) {
+            requestAnimationFrame(() => debouncedUpdate(e));
         }
     });
 </script>
