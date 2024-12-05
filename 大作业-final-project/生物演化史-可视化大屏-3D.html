@@ -137,17 +137,18 @@
     <div id="container">
         <div id="node-color-info" style="
             position: absolute;
-            left: 10px;
-            bottom: 200px;
+            left: 20px;
+            bottom: 319px;
             background: rgba(53, 41, 219, 0.85);
             color: white;
             padding: 15px 20px;
             border-radius: 5px;
             z-index: 1000;
             width: 200px;
+            margin-bottom: 10px;
         ">
             <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">地质年代</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 15px;">
                 <div style="display: flex; align-items: center; gap: 4px;">
                     <span style="
                         display: inline-block;
@@ -222,26 +223,27 @@
         </div>
         <div id="graph-stats" style="
             position: absolute;
-            left: 10px;
-            bottom: 350px;
+            left: 20px;
+            bottom: 196px;
             background: rgba(53, 41, 219, 0.85);
             color: white;
             padding: 15px 20px;
             border-radius: 5px;
             z-index: 1000;
             width: 200px;
+            margin-bottom: 10px;
         ">
             <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">网格图属性</h4>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">节点数目: <span id="node-count"></span></p>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">关系数目: <span id="link-count"></span></p>
+            <p style="margin: 8px 0; font-size: 16px; line-height: 1.24;">节点数目: <span id="node-count"></span></p>
+            <p style="margin: 8px 0; font-size: 16px; line-height: 1.24;">关系数目: <span id="link-count"></span></p>
         </div>
         <div class="guide-panel" style="
             position: absolute;
-            left: 10px;
+            left: 20px;
             bottom: 10px;
             background: rgba(53, 41, 219, 0.85);
             color: white;
-            padding: 15px 20px;
+            padding: 10px 20px;
             border-radius: 5px;
             z-index: 1000;
             width: 200px;
@@ -372,7 +374,7 @@
             </div>
             <div class="slider-container">
                 <label>背景透明度</label>
-                <input type="range" class="slider" id="bgOpacity" min="0" max="1" step="0.1" value="0.85">
+                <input type="range" class="slider" id="bgOpacity" min="0" max="1" step="0.1" value="0.5">
             </div>
             <div class="slider-container">
                 <label>3D分布强度</label>
@@ -412,6 +414,16 @@
                     <option value="circle">圆形布局</option>
                 </select>
             </div>
+            <div class="slider-container">
+                <label>天空盒选择</label>
+                <select id="skyboxSelect">
+                    <option value="none" selected>无</option>
+                    <option value="taikong">太空</option>
+                    <option value="outer_space">外太空</option>
+                    <option value="space_2">近地轨道</option>
+                    <option value="snow_mountain">雪山</option>
+                </select>
+            </div>
             <!-- 在右侧面板的最下方添加导航按钮组 -->
             <div style="margin-top: 20px;">
                 <button id="fullscreen" class="nav-button">全屏显示</button>
@@ -441,7 +453,7 @@ let selectedNode;
 // 添加地质年代的颜色映射
 const eraColors = {
     '冥古宙': '#FF0000',   // 红色
-    '太古宙': '#FF7F00',   // 橙色
+    '太古宙': '#FF7F00',   // 橙��
     '元古宙': '#FFFF00',   // 黄色
     '显生宙': '#00FF00',   // 绿色
     '中生代': '#00FFFF',   // 青色
@@ -766,19 +778,13 @@ function addEventListeners() {
     // 背景颜色控制
     document.getElementById('bgColor').addEventListener('input', (e) => {
         const color = e.target.value;
-        // 设置渲染器背景色
-        renderer.setClearColor(new THREE.Color(color));
+        // 更新当前RGB值
+        currentBgColor.r = parseInt(color.substr(1,2), 16);
+        currentBgColor.g = parseInt(color.substr(3,2), 16);
+        currentBgColor.b = parseInt(color.substr(5,2), 16);
         
-        // 将十六进制颜色转换为 RGB，并添加透明度
-        const r = parseInt(color.substr(1,2), 16);
-        const g = parseInt(color.substr(3,2), 16);
-        const b = parseInt(color.substr(5,2), 16);
-        
-        // 设置面板背景色（保持一定透明度）
-        const panelBgColor = `rgba(${r}, ${g}, ${b}, 0.85)`;
-        document.querySelectorAll('.panel').forEach(panel => {
-            panel.style.backgroundColor = panelBgColor;
-        });
+        // 只更新面板背景，不更改天空盒
+        updatePanelBackground();
     });
 
     // 修改重置视图按钮的事件监听
@@ -852,7 +858,7 @@ function addEventListeners() {
         renderer.setClearColor(new THREE.Color(0x000000));
     });
 
-    // 添加节点大小控制
+    // 添节点大小控制
     document.getElementById('nodeSize').addEventListener('input', (e) => {
         const size = parseFloat(e.target.value);
         nodes.forEach(node => {
@@ -911,6 +917,57 @@ function addEventListeners() {
             fullscreenBtn.textContent = '全屏显示';
         }
     });
+
+    document.getElementById('skyboxSelect').addEventListener('change', (e) => {
+        const selectedSkybox = e.target.value;
+        if (selectedSkybox === 'none') {
+            scene.background = new THREE.Color(0x000000); // 设置为黑色背景
+        } else if (selectedSkybox === 'outer_space') {
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/outer_space/right.png',
+                './static-other/Skybox_Texture/outer_space/left.png',
+                './static-other/Skybox_Texture/outer_space/up.png',
+                './static-other/Skybox_Texture/outer_space/bottom.png',
+                './static-other/Skybox_Texture/outer_space/front.png',
+                './static-other/Skybox_Texture/outer_space/back.png'
+            ]);
+            scene.background = skyboxTexture;
+        } else if (selectedSkybox === 'space_2') {
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/近地轨道/left.png',
+                './static-other/Skybox_Texture/近地轨道/right.png',
+                './static-other/Skybox_Texture/近地轨道/up.png',
+                './static-other/Skybox_Texture/近地轨道/bottom.png',
+                './static-other/Skybox_Texture/近地轨道/front.png',
+                './static-other/Skybox_Texture/近地轨道/back.png'
+            ]);
+            scene.background = skyboxTexture;
+        } else if (selectedSkybox === 'snow_mountain') {  // 新增处理逻辑
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/snow_mountain/right.jpg',
+                './static-other/Skybox_Texture/snow_mountain/left.jpg',
+                './static-other/Skybox_Texture/snow_mountain/back.jpg',
+                './static-other/Skybox_Texture/snow_mountain/front.jpg',
+                './static-other/Skybox_Texture/snow_mountain/bottom.jpg',
+                './static-other/Skybox_Texture/snow_mountain/up.jpg'
+            ]);
+            scene.background = skyboxTexture;
+        } else if (selectedSkybox === 'taikong') {  // 添加新的天空盒处理
+            const loader = new THREE.CubeTextureLoader();
+            const skyboxTexture = loader.load([
+                './static-other/Skybox_Texture/taikong/right.jpg',
+                './static-other/Skybox_Texture/taikong/left.jpg',
+                './static-other/Skybox_Texture/taikong/up.jpg',
+                './static-other/Skybox_Texture/taikong/bottom.jpg',
+                './static-other/Skybox_Texture/taikong/front.jpg',
+                './static-other/Skybox_Texture/taikong/back.jpg'
+            ]);
+            scene.background = skyboxTexture;
+        }
+    });
 }
 
 function animate() {
@@ -960,7 +1017,7 @@ function create3DForce(strength = 1) {
             // 增加Z轴方向的力度
             const zForce = (Math.random() - 0.5) * strength * 20; // 增大Z轴力度
             
-            // 根据节点当前位置添加不同方向的力
+            // 根据节点前位置添加不同方向的力
             node.vx += (Math.random() - 0.5) * alpha * strength * 10;
             node.vy += (Math.random() - 0.5) * alpha * strength * 10;
             node.vz += zForce * alpha;
@@ -1043,7 +1100,7 @@ function addKeyboardControls() {
         
         // 确保相机始终看向原点
         camera.lookAt(0, 0, 0);
-        // 更新���制器
+        // 更新制器
         controls.update();
     });
 }
@@ -1161,7 +1218,7 @@ function getNodeLevel(node) {
 
 // 修改背景颜色和透明度的控制
 let currentBgColor = { r: 53, g: 41, b: 219 }; // 初始RGB值
-let currentBgOpacity = 0.85; // 初始透明度
+let currentBgOpacity = 0.5; // 将 0.85 改为 0.5
 
 // 背景颜色改变事件
 document.getElementById('bgColor').addEventListener('input', (e) => {
@@ -1186,8 +1243,10 @@ function updatePanelBackground() {
     document.querySelectorAll('.panel').forEach(panel => {
         panel.style.backgroundColor = panelBgColor;
     });
-    // 同时更新操作指南板
-    document.querySelector('.guide-panel').style.backgroundColor = panelBgColor;
+    // 更新所有面板背景颜色
+    document.querySelectorAll('.guide-panel, #node-color-info, #graph-stats').forEach(panel => {
+        panel.style.backgroundColor = panelBgColor;
+    });
 }
 
 // 初始化时调用一次
@@ -1248,7 +1307,7 @@ updatePanelBackground();
             }
         }
 
-        // 点击空白处不做任何操作
+        // 点击空处不做任何操作
         if (!clickedNode) {
             // 保持选中圈和详细信息不变
         }
