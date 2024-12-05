@@ -164,7 +164,7 @@
         #legend {
             position: absolute;
             left: 10px;
-            bottom: 120px;
+            bottom: 145px;
             background: rgba(0,0,0,0.7);
             padding: 15px;
             border-radius: 10px;
@@ -208,6 +208,7 @@
     <div id="controls-info">
         <div>鼠标滚轮缩放</div>
         <div>鼠标左键拖动</div>
+        <div>鼠标点击节点聚焦</div>
         <div>按 Q/E 键进行顺/逆时针旋转视角</div>
     </div>
     <div id="controls-panel">
@@ -631,9 +632,64 @@
             return networkGroup;
         }
 
+        let targetPosition = new THREE.Vector3();
+        let targetLookAt = new THREE.Vector3();
+        let isTransitioning = false;
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        let highlightCircle;
+
+        // 创建圈的函数
+        function createHighlightCircle(position) {
+            if (highlightCircle) {
+                scene.remove(highlightCircle);
+            }
+
+            const ringGeometry = new THREE.RingGeometry(5, 5.5, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide });
+            highlightCircle = new THREE.Mesh(ringGeometry, ringMaterial);
+
+            highlightCircle.position.copy(position);
+            highlightCircle.rotation.x = -Math.PI / 2; // 将圈放置在节点的水平面上
+            scene.add(highlightCircle);
+        }
+
+        window.addEventListener('click', onMouseClick);
+
+        function onMouseClick(event) {
+            // 更新鼠标位置
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // 使用射线检测
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
+
+            if (intersects.length > 0) {
+                const selectedObject = intersects[0].object;
+                const nodePosition = selectedObject.position;
+
+                // 计算从节点到原点的方向向量
+                const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                
+                // 计算相机的目标位置：在节点位置的基础上，沿着到原点的方向偏移一定距离
+                targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                
+                // 让相机看向节点
+                targetLookAt.copy(nodePosition);
+
+                // 创建或更新圈
+                createHighlightCircle(nodePosition);
+
+                isTransitioning = true;
+            }
+        }
+
         function animate() {
             requestAnimationFrame(animate);
-            
+
             // 处理键盘旋转
             const rotationSpeed = 0.02;
             if (keyState.q) {
@@ -642,10 +698,25 @@
             if (keyState.e) {
                 camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), -rotationSpeed);
             }
-            
-            camera.lookAt(scene.position);
-            controls.update();
-            
+
+            // 平滑过渡相机位置和视角
+            if (isTransitioning) {
+                camera.position.lerp(targetPosition, 0.05);
+                controls.target.lerp(targetLookAt, 0.05);
+                controls.enableDamping = false;
+
+                if (camera.position.distanceTo(targetPosition) < 1) {
+                    isTransitioning = false;
+                    controls.target.copy(targetLookAt);
+                    controls.enableDamping = true;
+                    controls.update();
+                }
+            } else {
+                controls.update();
+            }
+
+            camera.lookAt(controls.target);
+
             // 渲染场景
             if (composer) {
                 composer.render();
@@ -654,8 +725,6 @@
             }
         }
 
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
 
         let debounceTimer;
         function onMouseMove(event) {

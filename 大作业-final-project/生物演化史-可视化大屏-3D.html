@@ -138,7 +138,7 @@
         <div id="node-color-info" style="
             position: absolute;
             left: 20px;
-            bottom: 319px;
+            bottom: 269px;
             background: rgba(53, 41, 219, 0.85);
             color: white;
             padding: 15px 20px;
@@ -224,7 +224,7 @@
         <div id="graph-stats" style="
             position: absolute;
             left: 20px;
-            bottom: 196px;
+            bottom: 143px;
             background: rgba(53, 41, 219, 0.85);
             color: white;
             padding: 15px 20px;
@@ -249,11 +249,9 @@
             width: 200px;
         ">
             <h4 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">操作指南</h4>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">W/S: 上/下转动视角</p>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">A/D: 左/右转动视角</p>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标拖拽: 自由旋转</p>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标滚轮: 缩放</p>
-            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">点击节点: 显示详细信息</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">W/S/A/D: 上/下/左/右转动视角</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">鼠标拖拽/滚轮: 旋转视角/缩放</p>
+            <p style="margin: 8px 0; font-size: 14px; line-height: 1.4;">点击节点: 聚焦并显示详细信息</p>
         </div>
         <div id="left-panel" class="panel" style="
             position: absolute;
@@ -266,9 +264,9 @@
             padding: 15px;
             overflow-y: auto;
         ">
-            <h3 style="margin: 0 0 15px 0; font-size: 20px;">节点属性</h3>
+            <h3 style="margin: 0 0 8px 0; font-size: 20px; text-align: center;">节点属性</h3>
             <div id="node-info" style="
-                min-height: 450px;
+                height: 400px;
                 border: 2px solid rgba(255, 255, 255, 0.2);
                 border-radius: 8px;
                 padding: 5px;
@@ -276,6 +274,8 @@
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
                 margin-bottom: 20px;
                 position: relative;
+                z-index: 1000;
+                overflow-y: auto;
             ">
                 <!-- 添加装饰性边角 -->
                 <div style="
@@ -343,7 +343,7 @@
         </div>
         
         <div id="right-panel" class="panel">
-            <h3>网络设置</h3>
+            <h3 style="margin-top: 0px; margin-bottom: 0px; font-size: 20px;">网格设置</h3>
             <div class="slider-container">
                 <label>引力强度</label>
                 <input type="range" class="slider" id="gravity" min="0" max="100" value="50">
@@ -358,7 +358,7 @@
             </div>
             <div class="slider-container">
                 <label>节点大小</label>
-                <input type="range" class="slider" id="nodeSize" min="1" max="20" value="5">
+                <input type="range" class="slider" id="nodeSize" min="1" max="20" value="10">
             </div>
             
             <div class="button-group">
@@ -424,16 +424,16 @@
                     <option value="snow_mountain">雪山</option>
                 </select>
             </div>
-            <!-- 在右侧面板的最下方添加导航按钮组 -->
+            <!-- 在右侧面板的最下方添加导��按钮组 -->
             <div style="margin-top: 20px;">
                 <button id="fullscreen" class="nav-button">全屏显示</button>
                 <button onclick="window.location.href='./生物分类-太阳爆发图-2D.html'" class="nav-button">生物分类-太阳爆发图-2D</button>
-                <button onclick="window.location.href='./生物演化史-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
+                <button onclick="window.location.href='./生物演化-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
                 <button onclick="window.location.href='./生物演化史-Tree-2D.html'" class="nav-button">生物演化史-Tree-2D</button>
                 <button onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'" class="nav-button">生物演化史-DNA双螺旋-3D</button>
                 <button onclick="window.location.href='./生物演化史-星空图-3D.html'" class="nav-button">生物演化史-星空图-3D</button>
                 <button onclick="window.location.href='./生物演化史-Tree-3D.html'" class="nav-button">生物演化史-Tree-3D</button>
-                <button class="nav-button active">生物演化史-可视化大屏-3D</button>
+                <button class="nav-button active">生物化史-可视化大屏-3D</button>
             </div>
         </div>
     </div>
@@ -450,15 +450,15 @@ let controls;
 let selectionCircle;
 let selectedNode;
 
-// 添加地质年代的颜色映射
+// 添加地质年代的颜色射
 const eraColors = {
     '冥古宙': '#FF0000',   // 红色
-    '太古宙': '#FF7F00',   // 橙��
+    '太古宙': '#FF7F00',   // 橙
     '元古宙': '#FFFF00',   // 黄色
     '显生宙': '#00FF00',   // 绿色
     '中生代': '#00FFFF',   // 青色
     '新生代': '#0000FF',   // 蓝色
-    '第四纪': '#8B00FF'    // 紫色
+    '第四纪': '#800080'    // 紫色
 };
 
 function init() {
@@ -472,7 +472,7 @@ function init() {
     scene.background = new THREE.Color(0x000000); // 设置黑色背景
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
-    camera.position.set(0, 0, 1000);
+    camera.position.set(0, 0, 1600);
     camera.lookAt(0, 0, 0);
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -487,14 +487,15 @@ function init() {
     controls.minDistance = 100;
     controls.maxDistance = 5000;
 
-    // 创建节点和连接
+    // 创节点和连接
     processData(treeData);
 
-    // 初始化节点3D位置
+    // 初始节点3D置
     nodes.forEach(node => {
         node.x = Math.random() * 500 - 250;
         node.y = Math.random() * 500 - 250;
         node.z = Math.random() * 500 - 250;
+        node.size = 10;
     });
 
     // 使用自定义3D力导向
@@ -507,7 +508,7 @@ function init() {
         .force("axis", createAxisForce())
         .on("tick", updatePositions);
 
-    // 立即设置初始轴向力
+    // 立即设初始轴向力
     simulation.force("axis")
         .setXStrength(0)
         .setYStrength(0)
@@ -552,7 +553,7 @@ function init() {
         return hex.length === 1 ? '0' + hex : hex;
     }).join('');
 
-    // 设置初始背景色（可以加在init函数中）
+    // 设置初始背景色（可加在init函数中）
     const initialColor = rgbToHex(53, 41, 219); // RGB(53, 41, 219) 转换为十六进制
     document.getElementById('bgColor').value = initialColor;
     renderer.setClearColor(new THREE.Color(initialColor));
@@ -561,7 +562,7 @@ function init() {
     });
 }
 
-function processData(data, parent = null, inheritedColor = null) {
+function processData(data, parent = null) {
     const node = {
         id: data.name,
         name: data.name,
@@ -571,13 +572,40 @@ function processData(data, parent = null, inheritedColor = null) {
         size: 5
     };
     
-    // 根据节点的时期设置颜色，优先使用节点自身的颜色
-    node.color = inheritedColor;
-    for (const era in eraColors) {
-        if (node.time.includes(era)) {
-            node.color = eraColors[era];
-            break;
+    // 如果父节点有颜色，继承父节点的颜色
+    if (parent && parent.color && parent.color !== '#FFFFFF') {
+        node.color = parent.color;
+    } else {
+        // 检查当前节点或其任何祖先节是否包含关键词
+        let currentNode = data;
+        let color = '#FFFFFF';
+        
+        while (currentNode) {
+            if (currentNode.name.includes('冥古宙')) {
+                color = '#FF0000';  // 红色
+                break;
+            } else if (currentNode.name.includes('古宙')) {
+                color = '#FFA500';  // 橙色
+                break;
+            } else if (currentNode.name.includes('元古宙')) {
+                color = '#FFFF00';  // 黄色
+                break;
+            } else if (currentNode.name.includes('显生宙')) {
+                color = '#00FF00';  // 绿色
+                break;
+            } else if (currentNode.name.includes('中生代')) {
+                color = '#00FFFF';  // 青色
+                break;
+            } else if (currentNode.name.includes('新生代')) {
+                color = '#0000FF';  // 蓝色
+                break;
+            } else if (currentNode.name.includes('第四纪')) {
+                color = '#800080';  // 紫色
+                break;
+            }
+            currentNode = currentNode.parent;
         }
+        node.color = color;
     }
     
     nodes.push(node);
@@ -589,10 +617,11 @@ function processData(data, parent = null, inheritedColor = null) {
         });
     }
     
+    // 在递归之前，为子节点设置父节点引用
     if (data.children) {
         data.children.forEach(child => {
-            // 递归处理子节点，传递颜色
-            processData(child, node, node.color);
+            child.parent = data;  // 设置父节点引用
+            processData(child, node);
         });
     }
 }
@@ -624,7 +653,7 @@ function createGraphObjects() {
 }
 
 function updatePositions() {
-    // 更新节点位置
+    // 更节点位置
     nodes.forEach(node => {
         if (node.object) {
             node.object.position.x += (node.x - node.object.position.x) * 0.1;
@@ -663,18 +692,18 @@ function updatePositions() {
                 (source.z + target.z) / 2
             );
             
-            // 将中点向上偏移以创建弧度
+            // 将点向上偏移以创建弧度
             const offset = 30; // 控制曲线的弧度
             midPoint.y += offset;
             
-            // 创建曲线
+            // 创建曲
             const curve = new THREE.QuadraticBezierCurve3(
                 new THREE.Vector3(source.x, source.y, source.z),
                 midPoint,
                 new THREE.Vector3(target.x, target.y, target.z)
             );
             
-            // 成曲线上的点
+            // 成曲线的点
             const points = curve.getPoints(50);
             const positions = new Float32Array(points.length * 3);
             
@@ -706,7 +735,7 @@ function updatePositions() {
 function addEventListeners() {
     // 修改引力
     document.getElementById('gravity').addEventListener('input', (e) => {
-        const strength = (e.target.value - 50) / 50; // 将范围转换为 -1 到 1
+        const strength = (e.target.value - 50) / 50; // 将范围转换为 -1  1
         simulation.force("center", createCenter3D(0, 0, 0).strength(Math.abs(strength)));
         simulation.force("charge").strength(-300 * strength); // 调整电荷力
         simulation.alpha(1).restart(); // 重要：重启模拟
@@ -787,75 +816,30 @@ function addEventListeners() {
         updatePanelBackground();
     });
 
-    // 修改重置视图按钮的事件监听
+    // 重置视图按钮
     document.getElementById('reset').addEventListener('click', () => {
-        // 重置所有滑动条到默认值
-        document.getElementById('gravity').value = 50;
-        document.getElementById('repulsion').value = 50;
-        document.getElementById('linkStrength').value = 50;
-        document.getElementById('3dForce').value = 50;
-        document.getElementById('nodeSize').value = 5;
-        document.getElementById('bgColor').value = '#000000';
-        
-        // 重置相机位置
-        camera.position.set(0, 0, 1000);
+        camera.position.set(0, 0, 1600);
         camera.lookAt(0, 0, 0);
-        
-        // 重置控制器
         controls.reset();
-        
-        // 重置力导向图参数
-        simulation
-            .force("link", d3.forceLink(links).id(d => d.id).distance(100).strength(1))
-            .force("charge", d3.forceManyBody().strength(-300))
-            .force("center", createCenter3D(0, 0, 0).strength(0.1))
-            .force("collision", d3.forceCollide().radius(20))
-            .force("3d", create3DForce(1.5))
-            .force("axis", createAxisForce());
-        
-        // 重置节点位置到中心
-        nodes.forEach(node => {
-            node.x = Math.random() * 200 - 100; // 增大初始布范围
-            node.y = Math.random() * 200 - 100;
-            node.z = Math.random() * 200 - 100;
-            node.vx = 0;
-            node.vy = 0;
-            node.vz = 0;
-            
-            // 重置节点大小
-            if (node.object) {
-                node.object.scale.set(1, 1, 1);
-                node.size = 5;
-                const geometry = new THREE.SphereGeometry(node.size);
-                node.object.geometry = geometry;
-            }
-        });
-        
-        // 重置场景背景色
-        scene.background = new THREE.Color(0x000000);
-        
-        // 重置轴向力滑块
-        document.getElementById('xForce').value = 50;
-        document.getElementById('yForce').value = 50;
-        document.getElementById('zForce').value = 50;
-        
-        // 重置轴向力
-        simulation.force("axis")
-            .setXStrength(0)
-            .setYStrength(0)
-            .setZStrength(0);
-        
-        // 重启模拟
         simulation.alpha(1).restart();
-        
-        // 更新渲染
-        renderer.render(scene, camera);
-        
-        // 强制更新一次位置
-        updatePositions();
-        
-        // 重置背景颜色
-        renderer.setClearColor(new THREE.Color(0x000000));
+    });
+
+    // 居中按钮
+    document.getElementById('center').addEventListener('click', () => {
+        controls.target.set(0, 0, 0);
+        controls.update();
+    });
+
+    // 放大按钮
+    document.getElementById('zoomIn').addEventListener('click', () => {
+        camera.position.z -= 100; // 调整放大步长
+        controls.update();
+    });
+
+    // 缩小按钮
+    document.getElementById('zoomOut').addEventListener('click', () => {
+        camera.position.z += 100; // 调整缩小步长
+        controls.update();
     });
 
     // 添节点大小控制
@@ -988,7 +972,7 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// 初始化应用
+// 始化应用
 init();
 updateGraphStats();
 
@@ -1034,7 +1018,7 @@ function create3DForce(strength = 1) {
     };
 }
 
-// 添加轴向力控制
+// 添加轴向控制
 function createAxisForce() {
     let xStrength = 1;
     let yStrength = 1;
@@ -1074,7 +1058,7 @@ function createAxisForce() {
     return force;
 }
 
-// 添加键盘控制相关代码
+// 添加键盘控制相关码
 function addKeyboardControls() {
     const rotationSpeed = 0.05; // 调整旋转速度
     
@@ -1131,7 +1115,7 @@ function createEdge(type) {
                 transparent: true
             });
             const curveLine = new THREE.Line(curveGeometry, curveMaterial);
-            curveLine.isCurve = true; // 添加标记以在更新时区分
+            curveLine.isCurve = true; // 添加标记以在更新时分
             return curveLine;
             
         case 'line':
@@ -1200,7 +1184,7 @@ function applyLayout(type) {
     updatePositions();
 }
 
-// 获取节点在树中的层级
+// 获取节点在树中的级
 function getNodeLevel(node) {
     let level = 0;
     let currentNode = node;
@@ -1216,7 +1200,7 @@ function getNodeLevel(node) {
     return level;
 }
 
-// 修改背景颜色和透明度的控制
+// 修改背景颜色和透明度控制
 let currentBgColor = { r: 53, g: 41, b: 219 }; // 初始RGB值
 let currentBgOpacity = 0.5; // 将 0.85 改为 0.5
 
@@ -1252,42 +1236,26 @@ function updatePanelBackground() {
 // 初始化时调用一次
 updatePanelBackground();
 
-    // 移除悬浮信息面板的创建
-    // const tooltip = document.createElement('div');
-    // tooltip.style.cssText = `
-    //     position: absolute;
-    //     background: rgba(0, 0, 0, 0.8);
-    //     color: white;
-    //     padding: 10px;
-    //     border-radius: 5px;
-    //     font-size: 14px;
-    //     pointer-events: none;
-    //     display: none;
-    //     z-index: 1000;
-    //     max-width: 200px;
-    // `;
-    // document.body.appendChild(tooltip);
-
     // 修改点击事件处理
     renderer.domElement.addEventListener('click', (event) => {
+        event.preventDefault();
+        
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
         raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(scene.children);
+        const intersects = raycaster.intersectObjects(
+            nodes.map(node => node.object).filter(obj => obj),
+            false
+        );
 
-        let clickedNode = false;
-        
-        for (const intersect of intersects) {
-            const nodeData = nodes.find(n => n.object === intersect.object);
+        if (intersects.length > 0) {
+            const nodeData = nodes.find(n => n.object === intersects[0].object);
             if (nodeData) {
-                clickedNode = true;
                 selectedNode = nodeData;
-
-                // 更新左侧面板息
                 updateNodeInfo(nodeData);
 
-                // 处理选中圈
+                // 更新选中圈
                 if (selectionCircle) {
                     scene.remove(selectionCircle);
                 }
@@ -1303,21 +1271,87 @@ updatePanelBackground();
                 selectionCircle.position.copy(nodeData.object.position);
                 selectionCircle.lookAt(camera.position);
                 scene.add(selectionCircle);
-                break;
-            }
-        }
 
-        // 点击空处不做任何操作
-        if (!clickedNode) {
-            // 保持选中圈和详细信息不变
+                // 获取节点和根节点位置
+                const nodePosition = nodeData.object.position.clone();
+                const rootPosition = new THREE.Vector3(0, 0, 0); // 设根节点在原点
+
+                // 计算从根节点到当前节点的方向
+                const directionToRoot = new THREE.Vector3();
+                directionToRoot.subVectors(nodePosition, rootPosition).normalize();
+
+                // 计算相机目标位置（在节点后方）
+                const distance = 200; // 相机与节点的距离
+                const targetPosition = new THREE.Vector3();
+                targetPosition.copy(nodePosition).add(directionToRoot.multiplyScalar(distance));
+
+                // 保存起始状态
+                const startPosition = camera.position.clone();
+                const startRotation = camera.quaternion.clone();
+
+                // 计算目标旋转相机朝向根节点）
+                const targetQuaternion = new THREE.Quaternion();
+                const tempCamera = camera.clone();
+                tempCamera.position.copy(targetPosition);
+                tempCamera.lookAt(rootPosition);
+                targetQuaternion.copy(tempCamera.quaternion);
+
+                // 设置动画参数
+                const duration = 1000;
+                const startTime = Date.now();
+
+                // 动画函数
+                function animateCamera() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easeProgress = easeInOutQuad(progress);
+
+                    // 更新相机位置和旋转
+                    camera.position.lerpVectors(startPosition, targetPosition, easeProgress);
+                    camera.quaternion.slerpQuaternions(startRotation, targetQuaternion, easeProgress);
+
+                    // 更新控制器目标点为根节点位置
+                    controls.target.lerp(rootPosition, easeProgress);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(animateCamera);
+                    }
+
+                    controls.update();
+                }
+
+                animateCamera();
+            }
         }
     });
 
-    // 确保 updateNodeInfo 函数存在
+    // 缓动函数
+    function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    }
+
+    function updateGraphStats() {
+        document.getElementById('node-count').textContent = nodes.length;
+        document.getElementById('link-count').textContent = links.length;
+    }
+
+    // 添加更新节点信息的函数
     function updateNodeInfo(nodeData) {
-        const nodeInfoDiv = document.getElementById('node-info');
-        if (!nodeData) {
-            nodeInfoDiv.innerHTML = `
+        const nodeInfo = document.getElementById('node-info');
+        if (nodeData) {
+            let html = `
+                <div style="padding: 15px;">
+                    <h4 style="margin: 0 0 10px 0; color: ${nodeData.color};">
+                        ${nodeData.name}
+                    </h4>
+                    ${nodeData.time ? `<p style="margin: 5px 0;">时期: ${nodeData.time}</p>` : ''}
+                    ${nodeData.description ? `<p style="margin: 5px 0;">描述: ${nodeData.description}</p>` : ''}
+                    ${nodeData.src ? `<img src="${nodeData.src}" style="max-width: 100%; margin-top: 10px;">` : ''}
+                </div>
+            `;
+            nodeInfo.innerHTML = html;
+        } else {
+            nodeInfo.innerHTML = `
                 <div style="
                     position: absolute;
                     top: 50%;
@@ -1331,44 +1365,18 @@ updatePanelBackground();
                         color: rgba(79, 195, 247, 0.8);
                         margin-bottom: 10px;
                     ">
-                        点击节点以查看详细信息
+                        点击节点查看详细信息
                     </div>
                     <div style="
                         width: 60%;
                         height: 2px;
                         background: linear-gradient(to right, transparent, rgba(79, 195, 247, 0.5), transparent);
                         margin: 10px auto;
-                    "></div>
-                </div>`;
-            return;
+                    ">
+                    </div>
+                </div>
+            `;
         }
-
-        nodeInfoDiv.innerHTML = `
-            <div style="padding: 15px;">
-                <h2 style="color: #4FC3F7; margin-bottom: 15px;">${nodeData.name}</h2>
-                ${nodeData.time ? `
-                    <div style="margin: 10px 0;">
-                        <strong style="color: #4FC3F7;">时期：</strong>
-                        <span>${nodeData.time}</span>
-                    </div>
-                ` : ''}
-                ${nodeData.src ? `
-                    <div style="margin: 15px 0;">
-                        <img src="${nodeData.src}" style="width: 100%; border-radius: 5px;">
-                    </div>
-                ` : ''}
-                ${nodeData.description ? `
-                    <div style="margin: 10px 0;">
-                        <strong style="color: #4FC3F7;">描述：</strong>
-                        <p style="margin-top: 5px; line-height: 1.5;">${nodeData.description}</p>
-                    </div>
-                ` : ''}
-            </div>`;
-    }
-
-    function updateGraphStats() {
-        document.getElementById('node-count').textContent = nodes.length;
-        document.getElementById('link-count').textContent = links.length;
     }
     </script>
 </body>

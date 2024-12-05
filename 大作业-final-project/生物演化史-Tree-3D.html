@@ -189,7 +189,7 @@
             background: rgba(0,255,136,0.3);
         }
 
-        /* 添加导航按钮样式 */
+        /* 加导航按钮样式 */
         .nav-buttons {
             display: flex;
             flex-direction: column;
@@ -224,6 +224,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="./生物演化史数据.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
 </head>
 <body>
     <div id="info">生物演化史-Tree-3D</div>
@@ -261,7 +262,8 @@
         </div>
         按 W/S/A/D/ 键进行上下左右移动<br>
         使用鼠标滚轮缩放<br>
-        使用鼠标左键旋转视角
+        使用鼠标左键旋转视角<br>
+        鼠标点击节点聚焦
     </div>
     <div id="controls-panel">
         <div class="fullscreen-buttons">
@@ -419,6 +421,7 @@
             networkGroup = createNetworkVisualization();
         }
 
+        // 在init()函数中添加点击事件监听
         function init() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x000000);
@@ -465,6 +468,9 @@
             
             initializeSliders();
             animate();
+            
+            // 添加鼠标点击事件监听
+            renderer.domElement.addEventListener('click', onMouseClick);
         }
 
         function createStarField() {
@@ -739,6 +745,62 @@
             return networkGroup;
         }
 
+        // 添加以下新函数和变量
+        let selectedNode = null;
+        let highlightRing = null;
+
+        function onMouseClick(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
+            
+            if (intersects.length > 0) {
+                const clickedNode = intersects[0].object;
+                
+                // 移除旧的高亮环
+                if (highlightRing) {
+                    scene.remove(highlightRing);
+                }
+                
+                // 创建新的高亮环
+                const ringGeometry = new THREE.RingGeometry(15, 20, 32);
+                const ringMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xffff00,
+                    side: THREE.DoubleSide,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                highlightRing = new THREE.Mesh(ringGeometry, ringMaterial);
+                
+                // 将环放置在节点位置
+                highlightRing.position.copy(clickedNode.position);
+                // 让环始终面向相机
+                highlightRing.lookAt(camera.position);
+                scene.add(highlightRing);
+                
+                // 计算相机新位置
+                const nodePosition = clickedNode.position.clone();
+                const cameraOffset = new THREE.Vector3(200, 100, 200); // 相机偏移量
+                const newCameraPosition = nodePosition.clone().add(cameraOffset);
+                
+                // 使用TWEEN进行平滑过渡
+                new TWEEN.Tween(camera.position)
+                    .to(newCameraPosition, 1000)
+                    .easing(TWEEN.Easing.Quadratic.InOut)
+                    .start();
+                    
+                // 更新控制器目标点
+                new TWEEN.Tween(controls.target)
+                    .to(nodePosition, 1000)
+                    .easing(TWEEN.Easing.Quadratic.InOut)
+                    .start();
+                
+                selectedNode = clickedNode;
+            }
+        }
+
         function animate() {
             requestAnimationFrame(animate);
             
@@ -787,6 +849,13 @@
                 composer.render();
             } else {
                 renderer.render(scene, camera);
+            }
+            
+            TWEEN.update();
+            
+            if (highlightRing) {
+                // 让高亮环始终面向相机
+                highlightRing.lookAt(camera.position);
             }
         }
 
