@@ -94,8 +94,11 @@
         }
 
         .tooltip-text {
-            margin-top: 16px;
-            line-height: 1.5;
+            font-size: 14px;
+            line-height: 1.3;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 8px;
         }
 
         .tooltip strong {
@@ -140,9 +143,9 @@
         }
 
         img:hover {
-            transform: scale(1.5);
-            transition: transform 0.3s ease;
-            z-index: 100;
+            width: calc(100% - 100px);
+            height: calc(100% - 100px);
+            transition: all 0.3s ease;
         }
 
         .button-arrow {
@@ -196,7 +199,7 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // 创建树形布局
+        // 创建树��布局
         const tree = d3.tree()
             .size([height - margin.top - margin.bottom, width - margin.left - margin.right]);
 
@@ -215,7 +218,7 @@
             // 过滤数据
             let filteredData = JSON.parse(JSON.stringify(data));
             if (filter !== 'all') {
-                filteredData.children = filteredData.children.filter(d => d.time === filter);
+                filteredData.children = filteredData.children.filter(d => d.name === filter);
             }
 
             // 创建层次结构
@@ -346,7 +349,7 @@
                         <strong>${d.data.name}</strong>
                         ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
                         <div class="tooltip-text">
-                            ${d.data.time ? '<br>时间: ' + d.data.time : ''}
+                            ${d.data.name ? '<br>时间: ' + d.data.name : ''}
                             ${d.data.description ? '<br>描述: ' + d.data.description : ''}
                         </div>
                     `)
@@ -365,7 +368,7 @@
                             <strong>${fixedTooltip.data.name}</strong>
                             ${fixedTooltip.data.src ? `<img src="${fixedTooltip.data.src}" alt="${fixedTooltip.data.name}">` : ''}
                             <div class="tooltip-text">
-                                ${fixedTooltip.data.time ? '<br>时间: ' + fixedTooltip.data.time : ''}
+                                ${fixedTooltip.data.name ? '<br>时间: ' + fixedTooltip.data.name : ''}
                                 ${fixedTooltip.data.description ? '<br>描述: ' + fixedTooltip.data.description : ''}
                             </div>
                         `)
@@ -430,7 +433,7 @@
                             <strong>${d.data.name}</strong>
                             ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
                             <div class="tooltip-text">
-                                ${d.data.time ? '<br>时间: ' + d.data.time : ''}
+                                ${d.data.name ? '<br>时间: ' + d.data.name : ''}
                                 ${d.data.description ? '<br>描述: ' + d.data.description : ''}
                             </div>
                         `)
@@ -452,7 +455,7 @@
         // 修改为:
         function getTreeLayout(filter) {
             let dynamicHeight;
-            // 为不同时期设置特殊的高度倍数
+            // 为不��时期设置特殊的高度倍数
             switch(filter) {
                 case 'all':
                     dynamicHeight = height * 8;

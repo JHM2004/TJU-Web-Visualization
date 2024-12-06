@@ -137,14 +137,14 @@
         .bottom-time-filter {
             position: fixed;
             bottom: 10px;
-            left: 79%;
+            left: 67%;
             transform: translateX(-50%);
             background: white;
             padding: 15px 30px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 80%;
-            max-width: 700px;
+            width: 90%;
+            max-width: 1200px;
             text-align: center;
         }
 
@@ -177,7 +177,7 @@
         <button class="control-button" onclick="window.location.href='./生物演化史-可视化大屏-3D.html'">生物演化史-可视化大屏-3D</button>
     </div>
     <div class="bottom-time-filter">
-        <input type="range" id="timeSlider" min="1" max="50" value="50">
+        <input type="range" id="timeSlider" min="0" max="500000" value="500000">
         <span id="timeDisplay">显示所有时期</span>
     </div>
     <div class="keyboard-hint">
@@ -206,14 +206,21 @@
         // 创建放射状树形图布局
         const radius = Math.min(width, height) / 1;
         
+        // 在创建层级先设置节点ID
+        let nodeId = 0;
+        const root = d3.hierarchy(treeData);
+        root.descendants().forEach(d => {
+            d.id = nodeId++;
+        });
+
+        // 创建放射状树形图布局
         const tree = d3.tree()
             .size([2 * Math.PI, radius])
             .separation((a, b) => {
                 return (a.parent == b.parent ? 2 : 3) / a.depth;
             });
 
-        // 创建层级数据
-        const root = d3.hierarchy(treeData);
+        // 应用树形布局
         const treeData2 = tree(root);
 
         // 创建工具提示
@@ -240,7 +247,7 @@
                 translate(${d3.pointRadial(d.x, d.y)})
             `);
 
-        // 创建一个显示tooltip的函数
+        // 创建一个显示tooltip的函
         const showTooltip = (event, d) => {
             tooltip.transition()
                 .duration(200)
@@ -312,9 +319,11 @@
                 g.attr("transform", `${event.transform} rotate(${currentRotation})`);
             });
 
-        // 设置初始缩放和旋转
+        // 设置初始缩放和平移
         svg.call(zoom)
-           .call(zoom.transform, d3.zoomIdentity.scale(0.5));
+           .call(zoom.transform, d3.zoomIdentity
+                .translate(width * -0.23, height * -0.03) // 调整初始位置
+                .scale(0.45)); // 保持原有的缩放比例
 
         // 添加键盘事件监听
         document.addEventListener('keydown', (event) => {
@@ -346,7 +355,7 @@
             }
         });
 
-        // 监听全屏变化事件
+        // 监听全屏化事件
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
                 fullscreenBtn.textContent = '全屏显示';
@@ -355,79 +364,93 @@
             }
         });
 
-        // 添加时间处理函数
+        // 修改时间解析函数，统一转换为"万年"作为基本单位
         function parseTime(timeStr) {
             if (!timeStr) return 0;
+            
             // 处理"亿年前"格式
-            const match = timeStr.match(/(\d+(?:\.\d+)?)\s*亿年前/);
+            let match = timeStr.match(/(\d+(?:\.\d+)?)\s*亿年前/);
             if (match) {
-                return parseFloat(match[1]);
+                return parseFloat(match[1]) * 10000; // 转换为万年单位
             }
+            
+            // 处理"万年前"格式
+            match = timeStr.match(/(\d+(?:\.\d+)?)\s*万年前/);
+            if (match) {
+                return parseFloat(match[1]); // 已经是万年单位
+            }
+            
+            // 处理"百万年前"格式
+            match = timeStr.match(/(\d+(?:\.\d+)?)\s*百万年前/);
+            if (match) {
+                return parseFloat(match[1]) * 100; // 转换为万年单位
+            }
+            
             return 0;
         }
 
         function updateView(threshold) {
-    // 更新连接线
-    g.selectAll(".link")
-        .style("opacity", d => {
-            const sourceTime = parseTime(d.source.data.time);
-            const targetTime = parseTime(d.target.data.time);
-            return (sourceTime <= threshold && targetTime <= threshold) ? 1 : 0.1;
-        })
-        .style("display", d => {
-            const sourceTime = parseTime(d.source.data.time);
-            const targetTime = parseTime(d.target.data.time);
-            return (sourceTime <= threshold && targetTime <= threshold) ? "block" : "none";
-        });
-
-    // 更新节点组
-    g.selectAll(".node")
-        .style("opacity", d => {
-            let shouldShow = threshold === 50;
-            if (!shouldShow) {
-                let current = d;
-                shouldShow = true;
-                while (current && shouldShow) {
-                    const time = parseTime(current.data.time);
-                    shouldShow = time <= threshold;
-                    current = current.parent;
+            const visibleNodes = new Set();
+            
+            // 第一遍遍历：找出时间小于阈值的节点(表示更近的时间)
+            root.descendants().forEach(d => {
+                const time = parseTime(d.data.time);
+                if (time === 0 || time <= threshold) {
+                    visibleNodes.add(d.id);
+                    // 将必要的祖先节点加入可见集合
+                    let ancestor = d.parent;
+                    while (ancestor) {
+                        visibleNodes.add(ancestor.id);
+                        ancestor = ancestor.parent;
+                    }
                 }
-            }
-            return shouldShow ? 1 : 0.1;
-        })
-        .style("display", d => {
-            let shouldShow = threshold === 50;
-            if (!shouldShow) {
-                let current = d;
-                shouldShow = true;
-                while (current && shouldShow) {
-                    const time = parseTime(current.data.time);
-                    shouldShow = time <= threshold;
-                    current = current.parent;
-                }
-            }
-            return shouldShow ? "block" : "none";
-        });
-}
+            });
 
-        // 添加滑块事件监听
+            // 更新连接线和节点显示
+            g.selectAll(".link")
+                .style("display", d => {
+                    return (visibleNodes.has(d.source.id) && visibleNodes.has(d.target.id)) ? "block" : "none";
+                });
+
+            g.selectAll(".node")
+                .style("display", d => {
+                    return visibleNodes.has(d.id) ? "block" : "none";
+                });
+        }
+
+        // 修改初始化显示
+        updateView(500000); // 初始显示所有节点 (50亿年)
+
+        // 修改滑块初始值
         const timeSlider = document.getElementById('timeSlider');
-        const timeDisplay = document.getElementById('timeDisplay');
+        timeSlider.min = 0;     // 最小值为0
+        timeSlider.max = 500000; // 最大值为50亿年（转换为万年单位）
+        timeSlider.value = 500000; // 设置初始值为最大值
+        timeSlider.step = 1;    // 步长为1万年
 
+        const timeDisplay = document.getElementById('timeDisplay');
+        timeDisplay.textContent = "显示所有时期"; // 设置初始显示文本
+
+        // 修改滑块事件监听器
         timeSlider.addEventListener('input', (event) => {
-            const value = event.target.value;
-            const threshold = value;
+            const value = parseInt(event.target.value);
+            let displayText;
             
-            // 只修改最左侧的显示文本,其他保持不变
-            if (value == 50) {
-                timeDisplay.textContent = "显示所有时期";
-            } else if (value == 1) {
-                timeDisplay.textContent = "显示近1亿年";
+            if (value === 500000) {
+                displayText = "显示所有时期";
+            } else if (value >= 10000) {
+                // 大于1亿年的显示
+                displayText = `显示距今 ${(value/10000).toFixed(1)} 亿年前及更近时期`;
+            } else if (value >= 100) {
+                // 大于100万年的显示
+                displayText = `显示距今 ${(value/100).toFixed(1)} 百万年前及更近时期`;
             } else {
-                timeDisplay.textContent = `显示 ${value} 亿年前及之后`;
+                // 小于100万年的显示
+                displayText = `显示距今 ${value} 万年前及更近时期`;
             }
             
-            updateView(threshold);
+            timeDisplay.textContent = displayText;
+            updateView(value);
         });
     </script>
 </body>

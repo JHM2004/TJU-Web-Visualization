@@ -1150,57 +1150,9 @@ treeData = {
                     ],
                     "src": "./static-2/古食肉目出现.jpg"
                 },
-                {
-                    "name": "马由始祖马开始演化",
-                    "time": "5000万年前",
-                    "children": [
-                        {
-                            "name": "始祖马",
-                            "time": "5000万年前",
-                            "src": "./static-2/始祖马.jpg"
-                        },
-                        {
-                            "name": "游走鲸",
-                            "time": "5000万年前",
-                            "src": "./static-2/游走鲸.jpg"
-                        }
-                    ],
-                    "src": "./static-2/马由始祖马开始演化.jpg"
-                },
-                {
-                    "name": "灵长目分支",
-                    "time": "4000万年前",
-                    "children": [
-                        {
-                            "name": "原猴亚目",
-                            "time": "4000万年前",
-                            "src": "./static-2/原猴亚目.jpg"
-                        },
-                        {
-                            "name": "简鼻亚目",
-                            "time": "4000万年前",
-                            "src": "./static-2/简鼻亚目.jpg"
-                        }
-                    ],
-                    "src": "./static-2/灵长目分支.jpg"
-                },
-                {
-                    "name": "人类祖先的出现",
-                    "time": "500万年前",
-                    "children": [
-                        {
-                            "name": "乍得人猿",
-                            "time": "500万年前",
-                            "src": "./static-2/乍得人猿.jpg"
-                        },
-                        {
-                            "name": "千年人",
-                            "time": "500万年前",
-                            "src": "./static-2/千年人.jpg"
-                        }
-                    ],
-                    "src": "./static-2/人类祖先的出现.jpg"
-                },
+                
+                
+                
                 {
                     "name": "被子植物演化",
                     "time": "5500万年前",
@@ -1282,6 +1234,23 @@ treeData = {
                     "src": "./static-2/翼手目出现.jpg"
                 },
                 {
+                    "name": "马由始祖马开始演化",
+                    "time": "5000万年前",
+                    "children": [
+                        {
+                            "name": "始祖马",
+                            "time": "5000万年前",
+                            "src": "./static-2/始祖马.jpg"
+                        },
+                        {
+                            "name": "游走鲸",
+                            "time": "5000万年前",
+                            "src": "./static-2/游走鲸.jpg"
+                        }
+                    ],
+                    "src": "./static-2/马由始祖马开始演化.jpg"
+                },
+                {
                     "name": "细齿兽类演化",
                     "time": "5000万年前",
                     "children": [
@@ -1307,6 +1276,23 @@ treeData = {
                     "name": "始祖象出现",
                     "time": "4300万年前",
                     "src": "./static-2/始祖象出现.jpg"
+                },
+                {
+                    "name": "灵长目分支",
+                    "time": "4000万年前",
+                    "children": [
+                        {
+                            "name": "原猴亚目",
+                            "time": "4000万年前",
+                            "src": "./static-2/原猴亚目.jpg"
+                        },
+                        {
+                            "name": "简鼻亚目",
+                            "time": "4000万年前",
+                            "src": "./static-2/简鼻亚目.jpg"
+                        }
+                    ],
+                    "src": "./static-2/灵长目分支.jpg"
                 },
                 {
                     "name": "龙王鲸演化",
@@ -1376,6 +1362,23 @@ treeData = {
                     "name": "地中海干涸",
                     "time": "560万年前",
                     "src": "./static-2/地中海干涸.jpg"
+                },
+                {
+                    "name": "人类祖先的出现",
+                    "time": "500万年前",
+                    "children": [
+                        {
+                            "name": "乍得人猿",
+                            "time": "500万年前",
+                            "src": "./static-2/乍得人猿.jpg"
+                        },
+                        {
+                            "name": "千年人",
+                            "time": "500万年前",
+                            "src": "./static-2/千年人.jpg"
+                        }
+                    ],
+                    "src": "./static-2/人类祖先的出现.jpg"
                 },
                 {
                     "name": "地猿出现",
