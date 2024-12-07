@@ -1,82 +1,100 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>地球古地理</title>
     <style>
-        body { margin: 0; }
-        canvas { display: block; }
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+
         #info {
             position: absolute;
             top: 10px;
             left: 10px;
             color: white;
             font-family: Arial;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             padding: 10px;
             border-radius: 5px;
         }
+
         #rotateButton {
             position: absolute;
             top: 60px;
             left: 10px;
             padding: 8px 15px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             border: 1px solid white;
             border-radius: 5px;
             cursor: pointer;
         }
+
         #cloudsButton {
             position: absolute;
             top: 60px;
-            left: 140px; /* 调整这个值使按钮紧邻 rotateButton */
+            left: 140px;
+            /* 调整这个值使按钮紧邻 rotateButton */
             padding: 8px 15px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             border: 1px solid white;
             border-radius: 5px;
             cursor: pointer;
         }
+
         /* 两个按钮共用的悬停效果 */
         #rotateButton:hover,
         #cloudsButton:hover {
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
         }
+
         #websiteInfo {
             position: absolute;
             top: 10px;
             right: 10px;
             color: white;
             font-family: Arial;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             padding: 15px;
             border-radius: 5px;
             max-width: 300px;
             line-height: 1.6;
         }
+
         #websiteInfo h3 {
             margin-top: 0;
             margin-bottom: 10px;
             color: #4CAF50;
         }
+
         #websiteInfo a {
             color: #8BC34A;
             text-decoration: none;
         }
+
         #websiteInfo a:hover {
             text-decoration: underline;
         }
+
         #websiteInfo p {
             margin: 5px 0;
             font-size: 14px;
         }
+
         #timeSelect {
             position: absolute;
-            top: 110px; /* 调整回原来的位置 */
+            top: 110px;
+            /* 调整回原来的位置 */
             left: 10px;
             padding: 8px 15px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             border: 1px solid white;
             border-radius: 5px;
@@ -84,42 +102,50 @@
             font-family: Arial;
             min-width: 150px;
         }
+
         #timeSelect option {
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             color: white;
             padding: 8px;
         }
+
         #timeSelect:focus {
             outline: none;
             border-color: #4CAF50;
         }
+
         #controlInfo {
             position: absolute;
             bottom: 20px;
             left: 20px;
             color: white;
             font-family: Arial;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             padding: 10px;
             border-radius: 5px;
             line-height: 1.5;
         }
+
         #periodInfo {
             position: absolute;
             top: 150px;
             left: 10px;
             color: white;
             font-family: Arial;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             padding: 15px;
             border-radius: 5px;
             max-width: 300px;
             line-height: 1.6;
             font-size: 14px;
-            max-height: calc(100vh - 400px); /* 设置最大高度为视窗高度减去200px */
-            overflow-y: auto; /* 添加垂直滚动条 */
-            scrollbar-width: thin; /* Firefox的滚动条样式 */
-            scrollbar-color: rgba(255,255,255,0.3) transparent; /* Firefox的滚动条颜色 */
+            max-height: calc(100vh - 400px);
+            /* 设置最大高度为视窗高度减去200px */
+            overflow-y: auto;
+            /* 添加垂直滚动条 */
+            scrollbar-width: thin;
+            /* Firefox的滚动条样式 */
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+            /* Firefox的滚动条颜色 */
         }
 
         /* 添加以下样式来自定义 Webkit 浏览器(Chrome/Safari)的滚动条 */
@@ -132,19 +158,20 @@
         }
 
         #periodInfo::-webkit-scrollbar-thumb {
-            background-color: rgba(255,255,255,0.3);
+            background-color: rgba(255, 255, 255, 0.3);
             border-radius: 4px;
         }
 
         #periodInfo::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(255,255,255,0.5);
+            background-color: rgba(255, 255, 255, 0.5);
         }
 
         /* 添加导航按钮组样式 */
         #navButtons {
             position: fixed;
             right: 20px;
-            top: 60%;  /* 稍微调整位置 */
+            top: 60%;
+            /* 稍微调整位置 */
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
@@ -154,7 +181,7 @@
 
         .navButton {
             padding: 10px 15px;
-            background: rgba(0,0,0,0.7);
+            background: rgba(0, 0, 0, 0.7);
             color: white;
             border: 1px solid white;
             border-radius: 5px;
@@ -167,23 +194,43 @@
         }
 
         .navButton:hover {
-            background: rgba(0,0,0,0.9);
-            border-color: #4CAF50;  /* 添加绿色边框效果 */
-            transform: translateX(-5px);  /* 悬停时轻微左移 */
+            background: rgba(0, 0, 0, 0.9);
+            border-color: #4CAF50;
+            /* 添加绿色边框效果 */
+            transform: translateX(-5px);
+            /* 悬停时轻微左移 */
         }
 
         .navButton.active {
-            background: rgba(76,175,80,0.7);  /* 使用绿色背景 */
+            background: rgba(76, 175, 80, 0.7);
+            /* 使用绿色背景 */
             border-color: #4CAF50;
-            pointer-events: none;  /* 禁用当前页面的按钮点击 */
+            pointer-events: none;
+            /* 禁用当前页面的按钮点击 */
         }
 
         .navButton.active:hover {
-            transform: none;  /* 激活状态下取消悬停效果 */
+            transform: none;
+            /* 激活状态下取消悬停效果 */
         }
     </style>
 </head>
+
 <body>
+    <!-- 添加加载提示 -->
+    <div id="loadingText" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 36px;
+        font-family: Arial;
+        text-align: center;
+        z-index: 9999;
+    ">
+        地球模型加载中...
+    </div>
     <!-- 在body标签内添加导航按钮组 -->
     <div id="navButtons">
         <button id="fullscreen-btn" class="navButton">全屏显示</button>
@@ -197,7 +244,7 @@
         <a href="./地球古地理-3D.html" class="navButton active">地球古地理-3D</a>
         <a href="index.html" class="navButton">返回导航页</a>
     </div>
-    
+
     <div id="info">地球古地理-大陆漂移</div>
     <button id="rotateButton">停止自动旋转</button>
     <button id="cloudsButton">显示云层</button>
@@ -230,16 +277,16 @@
     <div id="websiteInfo">
         <h3>一些有趣的地球古地理重建网站</h3>
         <p><a href="https://dinosaurpictures.org/ancient-earth" target="_blank">Ancient Earth Globe</a><br>
-        交互式地球演化地图，可查看6亿年前至今的地球变化</p>
-        
+            交互式地球演化地图，可查看6亿年前至今的地球变化</p>
+
         <p><a href="http://www.scotese.com" target="_blank">PALEOMAP Project</a><br>
-        最著名的古地理重建项目，包含前寒武纪到现代的演化过程</p>
-        
+            最著名的古地理重建项目，包含前寒武纪到现代的演化过程</p>
+
         <p><a href="https://portal.gplates.org" target="_blank">GPlates Portal</a><br>
-        专业的板块构造重建工具和数据库</p>
-        
+            专业的板块构造重建工具和数据库</p>
+
         <p><a href="https://deeptimemaps.com" target="_blank">Deep Time Maps</a><br>
-        提供高质量古地理地图的专业网站</p>
+            提供高质量古地理地图的专业网站</p>
     </div>
     <div id="controlInfo">
         操作提示：<br>
@@ -254,7 +301,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script>
         let scene, camera, renderer, earth, controls, clouds;
-        
+
         function init() {
             scene = new THREE.Scene();
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -265,22 +312,26 @@
             // 创建地球
             const geometry = new THREE.SphereGeometry(5, 32, 32);
             const textureLoader = new THREE.TextureLoader();
-            
+
             // 创建纹理映射对象
             const textures = {};
-            
+
             // 定义时间点数组（只定义一次）
             const timePoints = [0, 20, 35, 50, 66, 90, 105, 120, 170, 200, 220, 240, 260, 280, 300, 340, 370, 400, 430, 450, 470, 540, 600, 750];
             let currentTimeIndex = 0;
-            
-            // 加载所有纹理
+            // 添加计数器来追踪纹理加载进度
+            let loadedTextures = 0;
+            const totalTextures = timePoints.length;
+
+            // 修改纹理加载部分
             timePoints.forEach(time => {
                 const fileName = time === 0 ? 'world.jpg' : `${time}.jpg`;
                 textureLoader.load(
                     `./static-other/World_Texture/${fileName}`,
-                    function(texture) {
+                    function (texture) {
                         textures[time] = texture;
-                        // 如果是现代地球纹理，立即应用并显示时期信息
+                        loadedTextures++;
+
                         if (time === 0) {
                             const material = new THREE.MeshPhongMaterial({
                                 map: texture,
@@ -289,8 +340,12 @@
                             });
                             earth = new THREE.Mesh(geometry, material);
                             scene.add(earth);
-                            // 初始化时显示当前时期信息
                             document.getElementById('periodInfo').innerHTML = periodInfos[0] || "";
+                        }
+
+                        // 当所有纹理都加载完成时，隐藏加载提示
+                        if (loadedTextures === totalTextures) {
+                            document.getElementById('loadingText').style.display = 'none';
                         }
                     }
                 );
@@ -340,7 +395,7 @@
             }
 
             // 修改选择框事件监听
-            document.getElementById('timeSelect').addEventListener('change', function() {
+            document.getElementById('timeSelect').addEventListener('change', function () {
                 const time = parseInt(this.value);
                 currentTimeIndex = timePoints.indexOf(time);
                 if (earth && textures[time]) {
@@ -354,9 +409,9 @@
             // 修改键盘事件监听部分
             let keyInterval;
 
-            document.addEventListener('keydown', function(event) {
+            document.addEventListener('keydown', function (event) {
                 if (event.repeat) return;
-                
+
                 const key = event.key.toLowerCase();
                 // 添加对方向键的支持
                 if (key === 'd' || key === 'a' || key === 'arrowright' || key === 'arrowleft') {
@@ -366,7 +421,7 @@
                     } else if ((key === 'd' || key === 'arrowright') && currentTimeIndex > 0) {
                         switchToTimeIndex(currentTimeIndex - 1);
                     }
-                    
+
                     // 设置延时后开始连续切换
                     keyInterval = setInterval(() => {
                         if ((key === 'a' || key === 'arrowleft') && currentTimeIndex < timePoints.length - 1) {
@@ -378,7 +433,7 @@
                 }
             });
 
-            document.addEventListener('keyup', function(event) {
+            document.addEventListener('keyup', function (event) {
                 const key = event.key.toLowerCase();
                 if (key === 'd' || key === 'a' || key === 'arrowright' || key === 'arrowleft') {
                     clearInterval(keyInterval);
@@ -387,11 +442,11 @@
 
             // 鼠标事件监听
             let mouseInterval;
-            renderer.domElement.addEventListener('contextmenu', function(event) {
+            renderer.domElement.addEventListener('contextmenu', function (event) {
                 event.preventDefault();
             });
 
-            renderer.domElement.addEventListener('mousedown', function(event) {
+            renderer.domElement.addEventListener('mousedown', function (event) {
                 event.preventDefault();
                 if (event.button === 0) { // 左键
                     mouseInterval = setInterval(() => {
@@ -408,12 +463,12 @@
                 }
             });
 
-            renderer.domElement.addEventListener('mouseup', function() {
+            renderer.domElement.addEventListener('mouseup', function () {
                 clearInterval(mouseInterval);
             });
 
             // 添加鼠标离开画布的事件处理
-            renderer.domElement.addEventListener('mouseleave', function() {
+            renderer.domElement.addEventListener('mouseleave', function () {
                 clearInterval(mouseInterval);
             });
 
@@ -443,7 +498,7 @@
             controls.autoRotateSpeed = 0.5;
 
             const rotateButton = document.getElementById('rotateButton');
-            rotateButton.addEventListener('click', function() {
+            rotateButton.addEventListener('click', function () {
                 controls.autoRotate = !controls.autoRotate;
                 this.textContent = controls.autoRotate ? '停止自动旋转' : '开始自动旋转';
             });
@@ -452,7 +507,7 @@
             const cloudsGeometry = new THREE.SphereGeometry(5.05, 32, 32);
             const cloudsTexture = new THREE.TextureLoader().load(
                 './static-other/World_Texture/fair-clouds.png', // 修正纹理路径
-                function(texture) {
+                function (texture) {
                     const cloudsMaterial = new THREE.MeshPhongMaterial({
                         map: texture,
                         transparent: true,
@@ -465,7 +520,7 @@
 
                     // 确保云层按钮可以正常工作
                     const cloudsButton = document.getElementById('cloudsButton');
-                    cloudsButton.addEventListener('click', function() {
+                    cloudsButton.addEventListener('click', function () {
                         if (clouds) {
                             clouds.visible = !clouds.visible;
                             this.textContent = clouds.visible ? '隐藏云层' : '显示云层';
@@ -473,7 +528,7 @@
                     });
                 },
                 undefined, // onProgress callback
-                function(error) { // onError callback
+                function (error) { // onError callback
                     console.error('云层纹理加载失败:', error);
                 }
             );
@@ -487,14 +542,14 @@
             });
 
             const starsVertices = [];
-            for(let i = 0; i < 10000; i++) {
+            for (let i = 0; i < 10000; i++) {
                 const x = THREE.MathUtils.randFloatSpread(2000);
                 const y = THREE.MathUtils.randFloatSpread(2000);
                 const z = THREE.MathUtils.randFloatSpread(2000);
                 starsVertices.push(x, y, z);
             }
 
-            starsGeometry.setAttribute('position', 
+            starsGeometry.setAttribute('position',
                 new THREE.Float32BufferAttribute(starsVertices, 3));
             const starField = new THREE.Points(starsGeometry, starsMaterial);
             scene.add(starField);
@@ -503,12 +558,12 @@
         function animate() {
             requestAnimationFrame(animate);
             controls.update();
-            
+
             // 添加云层自转
             if (clouds) {
                 clouds.rotation.y += 0.0003;
             }
-            
+
             renderer.render(scene, camera);
         }
 
@@ -523,7 +578,7 @@
         }
 
         // 添加全屏显示功能
-        document.getElementById('fullscreen-btn').addEventListener('click', function() {
+        document.getElementById('fullscreen-btn').addEventListener('click', function () {
             if (!document.fullscreenElement) {
                 // 进入全屏
                 if (document.documentElement.requestFullscreen) {
@@ -567,4 +622,5 @@
         }
     </script>
 </body>
+
 </html>
