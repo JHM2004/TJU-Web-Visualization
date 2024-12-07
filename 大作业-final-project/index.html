@@ -1,14 +1,891 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=./生物分类-太阳爆发图-2D.html">
-    <title>重定向到生物分类-太阳爆发图-2D</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生物演化史导航页</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .message {
+            position: fixed;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: red;
+            font-size: 1em;
+            text-align: center;
+            padding: 20px;
+            z-index: 1000;
+            white-space: nowrap;
+            letter-spacing: 0.2em;
+        }
+
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 10px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .switch-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .skybox-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .skybox-select {
+            padding: 8px 15px;
+            font-size: 1em;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            width: 200px;
+            max-width: 90vw;
+        }
+
+        .skybox-label {
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            font-size: 1em;
+        }
+
+        .swipe-hint {
+            position: fixed;
+            top: 25%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 1000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            animation: breathe 5s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* 修改跳转按钮样式 */
+        .redirect-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 30px 60px;
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 2.4em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .redirect-button:hover {
+            background-color: rgba(0, 98, 204, 0.9);
+            transform: scale(1.05);
+        }
+
+        /* 添加新的呼吸效果样式 */
+        .vr-hint {
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 1000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: breatheConstant 2s ease-in-out infinite;
+        }
+
+        @keyframes breatheConstant {
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        /* 修改立方体控制按钮样式 */
+        .cube-toggle {
+            padding: 8px 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* 修改移动端按钮样式调整 */
+        .redirect-button.mobile {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            bottom: 100px;
+            right: auto;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            background-color: rgba(0, 123, 255, 0.5);
+        }
+
+        /* 移动端消息提示样式 */
+        .mobile-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            z-index: 2000;
+            animation: fadeInOut 1s ease-in-out;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
 </head>
+
 <body>
-    <p>如果页面没有自动跳转，请<a href="./生物分类-太阳爆发图-2D.html">点击这里</a>。</p>
+    <div id="message" class="message">
+        请使用PC端(电脑)访问以获得最佳体验
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        window.location.href = "./生物分类-太阳爆发图-2D.html";
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        // 直接跳转的逻辑，为示按钮
+        if (!isMobileDevice()) {
+            // 创建跳转按钮
+            const redirectButton = document.createElement('button');
+            redirectButton.className = 'redirect-button';
+            redirectButton.textContent = '点击跳转到生物演化史首页';
+            redirectButton.onclick = function () {
+                window.location.href = "./生物分类-太阳爆发图-2D.html";
+            };
+            document.body.appendChild(redirectButton);
+        } else {
+            // 移动端添加按钮但显示提示信息
+            const redirectButton = document.createElement('button');
+            redirectButton.className = 'redirect-button mobile';
+            redirectButton.textContent = '点击跳转到生物演化史首页';
+            redirectButton.onclick = function () {
+                const message = document.createElement('div');
+                message.className = 'mobile-message';
+                message.textContent = '只有PC端才能进入首页~';
+                document.body.appendChild(message);
+                
+                // 1秒后移除消息
+                setTimeout(() => {
+                    message.remove();
+                }, 1000);
+            };
+            document.body.appendChild(redirectButton);
+        }
+
+        // 移除 else 判断，使得无论是 PC 还是移动端都显示 3D 场景
+        document.body.style.overflow = 'hidden';
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, { passive: false });
+
+        // 以下是原有的 Three.js 场景代码
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // 添加加载提示元素
+        const loadingDiv = document.createElement('div');
+        loadingDiv.className = 'loading';
+        loadingDiv.innerHTML = `
+            <div class="spinner"></div>
+            <div>正在加载天空盒资源...</div>
+        `;
+        document.body.appendChild(loadingDiv);
+
+        // 天空盒资源配置
+        const skyboxTextures = [
+            {
+                name: '海底世界',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/underwater.png'
+            },
+            {
+                name: '北极冰川',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/artic_ice.png'
+            },
+            {
+                name: '日落山丘',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/hills_art_sunset.png'
+            },
+            {
+                name: '赛博空间',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/cyberspace.png'
+            },
+            {
+                name: '森林',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/forest.png'
+            },
+            {
+                name: '森林日落',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/forest_sunset.png'
+            },
+            {
+                name: '夜晚森林',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/forest_night.png'
+            },
+            {
+                name: '城市',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/city.png'
+            },
+
+            {
+                name: '沙漠日落',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/desert_sunset.png'
+            },
+            {
+                name: '沙漠',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/desert.png'
+            },
+
+            {
+                name: '山丘艺术日落',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/hills_art_sunset.png'
+            },
+            {
+                name: '山丘艺术',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/hills_art.png'
+            },
+            {
+                name: '山脉艺术日落',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/mountains_art_sunset.png'
+            },
+            {
+                name: '山脉艺术',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/mountains_art.png'
+            },
+            {
+                name: '夜晚蘑菇',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/mushrooms_night.png'
+            },
+            {
+                name: '日落蘑菇',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/mushrooms_sunset.png'
+            },
+            {
+                name: '蘑菇',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/mushrooms.png'
+            },
+            {
+                name: '夜晚雪村',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/snow_village_night.png'
+            },
+            {
+                name: '太空',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/space.png'
+            },
+            {
+                name: '风暴',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/storm.png'
+            },
+
+            {
+                name: '夜晚场景1',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS003_Night.png'
+            },
+            {
+                name: '夜晚场景2',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS011_Night.png'
+            },
+            {
+                name: '夜晚场景3',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Night.png'
+            },
+            {
+                name: '日出场景1',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS011_Sunrise.png'
+            },
+            {
+                name: '日出场景2',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Sunrise.png'
+            },
+            {
+                name: '日落场景1',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS011_Sunset.png'
+            },
+            {
+                name: '日落场景2',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Sunset.png'
+            },
+            {
+                name: '日落场景3',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS015_Sunset.png'
+            },
+            {
+                name: '日落场景4',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS017_Sunset.png'
+            },
+            {
+                name: '日落场景5',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS020_Sunset.png'
+            },
+
+            {
+                name: '无阳光场景',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS015_Day_Sunless.png'
+            },
+            {
+                name: '白天场景1',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS013_Day.png'
+            },
+            {
+                name: '白天场景2',
+                type: 'equirectangular',
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Day.png'
+            },
+            {
+                name: '太空立方体',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/taikong/right.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/taikong/left.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/taikong/up.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/taikong/bottom.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/taikong/front.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/taikong/back.jpg'
+                ]
+            },
+            {
+                name: '外太空立方体',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/outer_space/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/outer_space/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/outer_space/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/outer_space/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/outer_space/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/outer_space/back.png'
+                ]
+            },
+            {
+                name: '近地轨道',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/近地轨道/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/近地轨道/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/近地轨道/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/近地轨道/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/近地轨道/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/近地轨道/back.png'
+                ]
+            },
+            {
+                name: '雪山',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/snow_mountain/right.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/snow_mountain/left.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/snow_mountain/back.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/snow_mountain/front.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/snow_mountain/bottom.jpg',
+                    './static-other/Skybox_Texture/立方体天空盒/snow_mountain/up.jpg'
+                ]
+            },
+            {
+                name: '绿色星云',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/back.png'
+                ]
+            },
+            {
+                name: '蓝色星云',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/blue_nebula/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/blue_nebula/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/blue_nebula/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/blue_nebula/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/blue_nebula/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/blue_nebula/back.png'
+                ]
+            },
+            {
+                name: '暗色星云',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/dark_nebula/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/dark_nebula/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/dark_nebula/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/dark_nebula/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/dark_nebula/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/dark_nebula/back.png'
+                ]
+            },
+            {
+                name: '紫色星云',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/purple_nebula/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/purple_nebula/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/purple_nebula/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/purple_nebula/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/purple_nebula/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/purple_nebula/back.png'
+                ]
+            },
+            {
+                name: '白天场景',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/day_cubemap/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/day_cubemap/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/day_cubemap/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/day_cubemap/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/day_cubemap/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/day_cubemap/back.png'
+                ]
+            },
+            {
+                name: '雨天场景',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/back.png'
+                ]
+            },
+            {
+                name: '夜晚场景1',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap/back.png'
+                ]
+            },
+            {
+                name: '夜晚场景2',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/back.png'
+                ]
+            },
+            {
+                name: '夜晚场景3',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/back.png'
+                ]
+            },
+            {
+                name: '日落场景1',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/back.png'
+                ]
+            },
+            {
+                name: '日落场景2',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/back.png'
+                ]
+            },
+            {
+                name: '日落场景3',
+                type: 'cubemap',
+                urls: [
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/left.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/up.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/bottom.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/front.png',
+                    './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/back.png'
+                ]
+            }
+        ];
+
+        // 修改控制界面的创建部分
+        const controlsDiv = document.createElement('div');
+        controlsDiv.className = 'skybox-controls';
+
+        const label = document.createElement('label');
+        label.className = 'skybox-label';
+        label.textContent = '选择场景背景';
+
+        const select = document.createElement('select');
+        select.className = 'skybox-select';
+
+        // 创建立方体控制按钮
+        const cubeToggleBtn = document.createElement('button');
+        cubeToggleBtn.className = 'cube-toggle';
+        cubeToggleBtn.textContent = '隐藏立方体';
+
+        // 添加选项
+        skyboxTextures.forEach((texture, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = texture.name;
+            select.appendChild(option);
+        });
+
+        // 添加所有控制元素到控制区域
+        controlsDiv.appendChild(label);
+        controlsDiv.appendChild(select);
+        controlsDiv.appendChild(cubeToggleBtn);  // 添加按钮到控制区域
+        document.body.appendChild(controlsDiv);
+
+        // 修改天空盒加载函数
+        function loadSkyboxTexture(textureConfig) {
+            loadingDiv.style.display = 'block';
+
+            const loadCallback = function() {
+                loadingDiv.style.display = 'none';
+
+                // 移除任何现有的提示
+                const existingHint = document.querySelector('.vr-hint');
+                if (existingHint) {
+                    existingHint.remove();
+                }
+
+                // 根据设备类型显示不同的提示
+                const vrHint = document.createElement('div');
+                vrHint.className = 'vr-hint';
+                if (isMobileDevice()) {
+                    vrHint.textContent = '左右滑动体验VR全景';
+                } else {
+                    vrHint.textContent = '点击并拖动体验VR全景';
+                }
+                document.body.appendChild(vrHint);
+            };
+
+            if (textureConfig.type === 'cubemap') {
+                const cubeTextureLoader = new THREE.CubeTextureLoader();
+                cubeTextureLoader.load(
+                    textureConfig.urls,
+                    function(cubeTexture) {
+                        scene.background = cubeTexture;
+                        loadCallback();
+                    },
+                    undefined,
+                    function(err) {
+                        loadingDiv.innerHTML = '天空盒资源加载失败，请刷新页面重试';
+                        console.error('天空加载错误:', err);
+                    }
+                );
+            } else {
+                const textureLoader = new THREE.TextureLoader();
+                textureLoader.load(
+                    textureConfig.url,
+                    function(texture) {
+                        texture.mapping = THREE.EquirectangularReflectionMapping;
+                        scene.background = texture;
+                        loadCallback();
+                    },
+                    undefined,
+                    function(err) {
+                        loadingDiv.innerHTML = '天空盒资源加载失败，请刷新页面重试';
+                        console.error('天空盒加载错误:', err);
+                    }
+                );
+            }
+        }
+
+        // 修改选择事件监听器
+        select.addEventListener('change', function (e) {
+            const selectedTexture = skyboxTextures[e.target.value];
+            loadSkyboxTexture(selectedTexture);
+        });
+
+        // 修改初始加载
+        loadSkyboxTexture(skyboxTextures[0]);
+
+        // 显示提示信息
+        const mobileMessage = document.createElement('div');
+        mobileMessage.style.cssText = `
+            position: fixed;
+            top: 5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: red;
+            padding: 20px;
+            text-align: center;
+            z-index: 1000;
+            font-size: 1.5em;
+        `;
+
+        // 创建一个旋转的方体
+        const geometry = new THREE.IcosahedronGeometry(1, 0);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x00ff00,
+            wireframe: true
+        });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        // 添加光源
+        const light = new THREE.PointLight(0xffffff, 1, 100);
+        light.position.set(10, 10, 10);
+        scene.add(light);
+
+        camera.position.z = 5;
+
+        // 添加触摸控制相关变量
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+
+        // 添加触摸事件监听器
+        document.addEventListener('touchstart', onTouchStart, false);
+        document.addEventListener('touchmove', onTouchMove, false);
+
+        function onTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+        }
+
+        function onTouchMove(event) {
+            event.preventDefault();
+
+            const touchX = event.touches[0].clientX;
+            const touchY = event.touches[0].clientY;
+
+            const deltaX = (touchX - touchStartX) * 0.01;
+            const deltaY = -(touchY - touchStartY) * 0.01;
+
+            currentRotationY += deltaX;
+            currentRotationX += deltaY;
+
+            // 限制垂直旋转角度
+            currentRotationX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, currentRotationX));
+
+            camera.position.x = 5 * Math.sin(currentRotationY) * Math.cos(currentRotationX);
+            camera.position.y = 5 * Math.sin(currentRotationX);
+            camera.position.z = 5 * Math.cos(currentRotationY) * Math.cos(currentRotationX);
+
+            camera.lookAt(scene.position);
+
+            touchStartX = touchX;
+            touchStartY = touchY;
+        }
+
+        // 添加鼠标控制相关变量
+        let isMouseDown = false;
+        let mouseStartX = 0;
+        let mouseStartY = 0;
+
+        // 添加鼠标事件监听器
+        document.addEventListener('mousedown', onMouseDown, false);
+        document.addEventListener('mousemove', onMouseMove, false);
+        document.addEventListener('mouseup', onMouseUp, false);
+
+        function onMouseDown(event) {
+            isMouseDown = true;
+            mouseStartX = event.clientX;
+            mouseStartY = event.clientY;
+        }
+
+        function onMouseUp() {
+            isMouseDown = false;
+        }
+
+        function onMouseMove(event) {
+            if (!isMouseDown) return;
+
+            const mouseX = event.clientX;
+            const mouseY = event.clientY;
+
+            const deltaX = (mouseX - mouseStartX) * 0.01;
+            const deltaY = -(mouseY - mouseStartY) * 0.01;
+
+            currentRotationY += deltaX;
+            currentRotationX += deltaY;
+
+            // 限制垂直旋转角度
+            currentRotationX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, currentRotationX));
+
+            camera.position.x = 5 * Math.sin(currentRotationY) * Math.cos(currentRotationX);
+            camera.position.y = 5 * Math.sin(currentRotationX);
+            camera.position.z = 5 * Math.cos(currentRotationY) * Math.cos(currentRotationX);
+
+            camera.lookAt(scene.position);
+
+            mouseStartX = mouseX;
+            mouseStartY = mouseY;
+        }
+
+        // 动画循环
+        function animate() {
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // 响应窗口大小变化
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // 添加按钮点击事件处理
+        let isCubeVisible = true;
+        cubeToggleBtn.addEventListener('click', function () {
+            isCubeVisible = !isCubeVisible;
+            cube.visible = isCubeVisible;
+            cubeToggleBtn.textContent = isCubeVisible ? '隐藏立方体' : '显示立方体';
+        });
     </script>
 </body>
+
 </html>
