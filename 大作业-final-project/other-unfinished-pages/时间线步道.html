@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>生物演化时间线步道</title>
+    <style>
+        body { margin: 0; }
+        canvas { display: block; }
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-family: Arial;
+            font-size: 16px;
+            text-shadow: 1px 1px 1px black;
+        }
+    </style>
+</head>
+<body>
+    <div id="info"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="../生物演化史数据.js"></script>
+    <script>
+        let camera, scene, renderer, controls;
+        // 添加小车相关变量
+        let car, moveSpeed = 0.2;
+        let isMovingForward = false;
+        let isMovingBackward = false;
+        // 添加相机偏移量
+        const cameraOffset = new THREE.Vector3(0, 5, 10); // 相机相对于小车的位置偏移
+
+        init();
+        animate();
+
+        function init() {
+            console.log('初始化开始');
+            
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x87ceeb);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            // 添加光源
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+            directionalLight.position.set(5, 5, 5);
+            scene.add(directionalLight);
+
+            // 创建地面
+            const groundGeometry = new THREE.PlaneGeometry(2000, 200);
+            const groundMaterial = new THREE.MeshStandardMaterial({ 
+                color: 0x808080,
+                side: THREE.DoubleSide
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            ground.position.z = -10;
+            scene.add(ground);
+
+            // 添加坐标轴辅助器（帮助调试）
+            const axesHelper = new THREE.AxesHelper(5);
+            scene.add(axesHelper);
+
+            // 递归创建时间线标记
+            function createTimelineMarkers(node, x = 0, z = 0) {
+                console.log(`创建标记: ${node.name}, 时间: ${node.time}`);
+                
+                const markerGeometry = new THREE.BoxGeometry(0.5, 2, 0.5);
+                const markerMaterial = new THREE.MeshStandardMaterial({
+                    color: 0xff0000,
+                    roughness: 0.7,
+                    metalness: 0.3
+                });
+                const marker = new THREE.Mesh(markerGeometry, markerMaterial);
+                
+                let timeNum;
+                if (node.time.includes('亿年前')) {
+                    timeNum = parseFloat(node.time.replace('亿年前', '')) * 100;
+                } else if (node.time.includes('万年前')) {
+                    timeNum = parseFloat(node.time.replace('万年前', ''));
+                } else if (node.time.includes('公元前')) {
+                    timeNum = parseFloat(node.time.replace(/[^0-9.-]/g, '')) / 10000;
+                }
+                
+                const scale = 0.5;
+                const position = -(timeNum * scale);
+                marker.position.set(position, 1, z);
+                scene.add(marker);
+
+                // 递归处理子节点
+                if (node.children) {
+                    node.children.forEach((child, index) => {
+                        createTimelineMarkers(child, position, z - 1);
+                    });
+                }
+            }
+
+            // 从根节点开始创建时间线
+            createTimelineMarkers(treeData);
+
+            // 添加小车
+            function createCar() {
+                const carGeometry = new THREE.BoxGeometry(1, 0.5, 0.7);
+                const carMaterial = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+                car = new THREE.Mesh(carGeometry, carMaterial);
+                car.position.set(0, 1.25, 0); // 将小车放置在地面上方
+                scene.add(car);
+            }
+            
+            createCar();
+
+            // 添加键盘控制监听器
+            document.addEventListener('keydown', onKeyDown);
+            document.addEventListener('keyup', onKeyUp);
+
+            window.addEventListener('resize', onWindowResize, false);
+
+            console.log('初始化完成');
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // 添加键盘控制函数
+        function onKeyDown(event) {
+            switch(event.key) {
+                case 'ArrowUp':
+                    isMovingForward = true;
+                    break;
+                case 'ArrowDown':
+                    isMovingBackward = true;
+                    break;
+            }
+        }
+
+        function onKeyUp(event) {
+            switch(event.key) {
+                case 'ArrowUp':
+                    isMovingForward = false;
+                    break;
+                case 'ArrowDown':
+                    isMovingBackward = false;
+                    break;
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // 更新小车位置
+            if (isMovingForward) {
+                car.position.x -= moveSpeed;
+            }
+            if (isMovingBackward) {
+                car.position.x += moveSpeed;
+            }
+
+            // 更新相机位置和朝向
+            camera.position.copy(car.position).add(cameraOffset);
+            camera.lookAt(car.position);
+
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
