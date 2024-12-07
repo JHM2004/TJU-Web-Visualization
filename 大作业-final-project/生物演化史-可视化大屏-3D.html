@@ -501,7 +501,7 @@
             <div style="margin-top: 10px;">
                 <button id="fullscreen" class="nav-button">全屏显示</button>
                 <button onclick="window.location.href='./生物分类-太阳爆发图-2D.html'" class="nav-button">生物分类-太阳爆发图-2D</button>
-                <button onclick="window.location.href='./生物演化-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
+                <button onclick="window.location.href='./生物演化史-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
                 <button onclick="window.location.href='./生物演化史-Tree-2D.html'" class="nav-button">生物演化史-Tree-2D</button>
                 <button onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'"
                     class="nav-button">生物演化史-DNA双螺旋-3D</button>
@@ -1213,13 +1213,26 @@
                     imagePath = `./static-other/Skybox_Texture/全景天空盒/${selectedPanorama}.png`;
                 }
 
+                // 显示加载提示
+                showLoadingMessage(true, '全景');
+
                 // 加载全景图
-                textureLoader.load(imagePath, (texture) => {
-                    texture.mapping = THREE.EquirectangularReflectionMapping;
-                    scene.background = texture;
-                    scene.environment = texture;
-                    renderer.render(scene, camera);
-                });
+                textureLoader.load(
+                    imagePath,
+                    (texture) => {
+                        texture.mapping = THREE.EquirectangularReflectionMapping;
+                        scene.background = texture;
+                        scene.environment = texture;
+                        renderer.render(scene, camera);
+                        // 隐藏加载提示
+                        showLoadingMessage(false);
+                    },
+                    undefined,
+                    (error) => {
+                        console.error('全景天空盒加载失败:', error);
+                        showLoadingMessage(false);
+                    }
+                );
             });
         }
 
@@ -1648,6 +1661,298 @@
             `;
             }
         }
+
+        // 添加一个加载提示的函数
+        function showLoadingMessage(show, type = '') {
+            let loadingDiv = document.getElementById('skybox-loading');
+            
+            if (!loadingDiv) {
+                loadingDiv = document.createElement('div');
+                loadingDiv.id = 'skybox-loading';
+                loadingDiv.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: rgba(0, 0, 0, 0.8);
+                    color: white;
+                    padding: 20px 40px;
+                    border-radius: 10px;
+                    z-index: 9999;
+                    display: none;
+                    font-size: 18px;
+                `;
+                document.body.appendChild(loadingDiv);
+            }
+            
+            if (show) {
+                loadingDiv.textContent = `${type}天空盒正在加载中...`;
+                loadingDiv.style.display = 'block';
+            } else {
+                loadingDiv.style.display = 'none';
+            }
+        }
+
+        // 修改立方体天空盒的加载部分
+        document.getElementById('cubeSelect').addEventListener('change', (e) => {
+            const selectedSkybox = e.target.value;
+            // 当选择立方体天空盒时，重置全景天空盒选择
+            if (selectedSkybox !== 'none') {
+                document.getElementById('panoramaSelect').value = 'none';
+            }
+
+            // 获取星空背景对象
+            const stars = scene.children.find(child => child instanceof THREE.Points);
+
+            if (selectedSkybox === 'none') {
+                scene.background = new THREE.Color(0x000000);
+                // 显示星空背景
+                if (stars) stars.visible = true;
+                return;
+            }
+
+            // 隐藏星空背景
+            if (stars) stars.visible = false;
+
+            const loader = new THREE.CubeTextureLoader();
+            let urls;
+
+            switch (selectedSkybox) {
+                case 'taikong':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/taikong/right.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/taikong/left.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/taikong/up.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/taikong/bottom.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/taikong/front.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/taikong/back.jpg'
+                    ];
+                    break;
+                case 'outer_space':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/outer_space/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/outer_space/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/outer_space/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/outer_space/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/outer_space/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/outer_space/back.png'
+                    ];
+                    break;
+                case 'space_2':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/近地轨道/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/近地轨道/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/近地轨道/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/近地轨道/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/近地轨道/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/近地轨道/back.png'
+                    ];
+                    break;
+                case 'snow_mountain':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/snow_mountain/right.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/snow_mountain/left.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/snow_mountain/back.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/snow_mountain/front.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/snow_mountain/bottom.jpg',
+                        './static-other/Skybox_Texture/立方体天空盒/snow_mountain/up.jpg'
+                    ];
+                    break;
+                case 'green_nebula':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/green_nebula/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/green_nebula/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/green_nebula/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/green_nebula/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/green_nebula/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/green_nebula/back.png'
+                    ];
+                    break;
+                case 'blue_nebula':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/blue_nebula/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/blue_nebula/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/blue_nebula/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/blue_nebula/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/blue_nebula/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/blue_nebula/back.png'
+                    ];
+                    break;
+                case 'dark_nebula':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/dark_nebula/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/dark_nebula/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/dark_nebula/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/dark_nebula/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/dark_nebula/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/dark_nebula/back.png'
+                    ];
+                    break;
+                case 'purple_nebula':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/purple_nebula/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/purple_nebula/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/purple_nebula/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/purple_nebula/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/purple_nebula/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/purple_nebula/back.png'
+                    ];
+                    break;
+                case 'day_cubemap':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/day_cubemap/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/day_cubemap/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/day_cubemap/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/day_cubemap/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/day_cubemap/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/day_cubemap/back.png'
+                    ];
+                    break;
+                case 'rainy_cubemap':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/rainy_cubemap/back.png'
+                    ];
+                    break;
+                case 'night_cubemap':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap/back.png'
+                    ];
+                    break;
+                case 'night_cubemap_2':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_2/back.png'
+                    ];
+                    break;
+                case 'night_cubemap_3':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/night_cubemap_3/back.png'
+                    ];
+                    break;
+                case 'sunset_cubemap':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap/back.png'
+                    ];
+                    break;
+                case 'sunset_cubemap_2':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_2/back.png'
+                    ];
+                    break;
+                case 'sunset_cubemap_3':
+                    urls = [
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/left.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/right.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/up.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/bottom.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/front.png',
+                        './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/back.png'
+                    ];
+                    break;
+            }
+
+            if (urls) {
+                showLoadingMessage(true, '立方体');
+                const loader = new THREE.CubeTextureLoader();
+                loader.load(
+                    urls,
+                    (skyboxTexture) => {
+                        scene.background = skyboxTexture;
+                        showLoadingMessage(false);
+                    },
+                    undefined,
+                    (error) => {
+                        console.error('天空盒加载失败:', error);
+                        showLoadingMessage(false);
+                    }
+                );
+            }
+        });
+
+        // 修改全景天空盒的加载部分
+        document.getElementById('panoramaSelect').addEventListener('change', (e) => {
+            const selectedPanorama = e.target.value;
+            // 当选择全景天空盒时，重置立方体天空盒选择
+            if (selectedPanorama !== 'none') {
+                document.getElementById('cubeSelect').value = 'none';
+            }
+
+            // 获取星空背景对象
+            const stars = scene.children.find(child => child instanceof THREE.Points);
+
+            if (selectedPanorama === 'none') {
+                scene.background = new THREE.Color(0x000000);
+                // 显示星空背景
+                if (stars) stars.visible = true;
+                return;
+            }
+
+            // 隐藏星空背景
+            if (stars) stars.visible = false;
+
+            // 创建纹理加载器
+            const textureLoader = new THREE.TextureLoader();
+
+            // 构建图片路径
+            let imagePath;
+            if (selectedPanorama.startsWith('FS')) {
+                // 新增的全景图路径
+                imagePath = `./static-other/Skybox_Texture/全景天空盒/new-01/${selectedPanorama}.png`;
+            } else {
+                // 原有的全景图路径
+                imagePath = `./static-other/Skybox_Texture/全景天空盒/${selectedPanorama}.png`;
+            }
+
+            // 显示加载提示
+            showLoadingMessage(true, '全景');
+
+            // 加载全景图
+            textureLoader.load(
+                imagePath,
+                (texture) => {
+                    texture.mapping = THREE.EquirectangularReflectionMapping;
+                    scene.background = texture;
+                    scene.environment = texture;
+                    renderer.render(scene, camera);
+                    // 隐藏加载提示
+                    showLoadingMessage(false);
+                },
+                undefined,
+                (error) => {
+                    console.error('全景天空盒加载失败:', error);
+                    showLoadingMessage(false);
+                }
+            );
+        });
     </script>
 </body>
 
