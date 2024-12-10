@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>地球古地理</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #info {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: white;
+            font-family: Arial;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #rotateButton {
+            position: absolute;
+            top: 80px;
+            left: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #cloudsButton {
+            position: absolute;
+            top: 80px;
+            left: 140px;
+            /* 调整这个值使按钮紧邻 rotateButton */
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* 两个按钮共用的悬停效果 */
+        #rotateButton:hover,
+        #cloudsButton:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        #timeSelect {
+            position: absolute;
+            top: 130px;
+            /* 调整回原来的位置 */
+            left: 10px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Arial;
+            min-width: 150px;
+        }
+
+        #timeSelect option {
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px;
+        }
+
+        #timeSelect:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        #controlInfo {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-family: Arial;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            line-height: 1.5;
+        }
+
+     
+
+        .timeButton {
+            position: absolute;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #prevButton {
+            bottom: 20px;
+            right: 120px;
+        }
+
+        #nextButton {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .timeButton:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        #jumpButton {
+            position: absolute;
+            bottom: 20px;
+            right: 240px;
+            padding: 8px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: 1px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #jumpButton:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        /* 添加以下样式来防止页面弹性滚动 */
+        html, body {
+            overflow: hidden;
+            touch-action: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 添加加载提示 -->
+    <div id="loadingText" style="
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 36px;
+        font-family: Arial;
+        text-align: center;
+        z-index: 9999;
+    ">
+        地球模型加载中...
+    </div>
+
+    <div id="info">
+        地球古地理-大陆漂移
+        <div style="color: red; font-size: 14px; margin-top: 5px;">若移动端加载缓慢/失败,请转到pc端进行操作</div>
+    </div>
+    <button id="rotateButton">停止自动旋转</button>
+    <button id="cloudsButton">显示云层</button>
+    <button id="prevButton" class="timeButton">上一个时期</button>
+    <button id="jumpButton" onclick="window.location.href='./index.html'">跳转到生物演化史导航页</button>
+    <button id="nextButton" class="timeButton">下一个时期</button>
+    <select id="timeSelect" class="timeSelect">
+        <option value="0">现代地球(第四纪-全新世)</option>
+        <option value="20">2千万年前(渐新世结束-新近纪开始-中新世开始)</option>
+        <option value="35">3.5千万年前(始新世结束-渐新世开始)</option>
+        <option value="50">5千万年前(始新世)</option>
+        <option value="66">6.6千万年前(中生代晚期-新生代开始-古新世)</option>
+        <option value="90">9千万年前(白垩纪)</option>
+        <option value="105">1.05亿年前(白垩纪)</option>
+        <option value="120">1.2亿年前(白垩纪开始)</option>
+        <option value="170">1.7亿年前(侏罗纪)</option>
+        <option value="200">2亿年前(三叠纪结束-侏罗纪开始)</option>
+        <option value="220">2.2亿年前(三叠纪)</option>
+        <option value="240">2.4亿年前(中生代早期)</option>
+        <option value="260">2.6亿年前(古生代晚期)</option>
+        <option value="280">2.8亿年前(二叠纪)</option>
+        <option value="300">3亿年前(石炭纪)</option>
+        <option value="340">3.4亿年前(石炭纪)</option>
+        <option value="370">3.7亿年前(泥盆纪)</option>
+        <option value="400">4亿年前(泥盆纪)</option>
+        <option value="430">4.3亿年前(志留纪)</option>
+        <option value="450">4.5亿年前(奥陶纪)</option>
+        <option value="470">4.7亿年前(奥陶纪)</option>
+        <option value="540">5.4亿年前(古生代早期-寒武纪)</option>
+        <option value="600">6亿年前(元古宙晚期-震旦纪)</option>
+        <option value="750">7.5亿年前(超大陆罗迪尼亚大陆开始分裂)</option>
+    </select>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+        let scene, camera, renderer, earth, controls, clouds;
+
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: false, // 关闭抗锯齿以提高性能
+                powerPreference: "high-performance" 
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+
+            // 创建地球
+            const geometry = new THREE.SphereGeometry(5, 32, 32);
+            const textureLoader = new THREE.TextureLoader();
+
+            // 创建纹理映射对象
+            const textures = {};
+
+            // 定义时间点数组（只定义一次）
+            const timePoints = [0, 20, 35, 50, 66, 90, 105, 120, 170, 200, 220, 240, 260, 280, 300, 340, 370, 400, 430, 450, 470, 540, 600, 750];
+            let currentTimeIndex = 0;
+            // 添加计数器来追踪纹理加载进度
+            let loadedTextures = 0;
+            const totalTextures = timePoints.length;
+
+            // 修改纹理加载部分
+            timePoints.forEach(time => {
+                const fileName = time === 0 ? 'world.jpg' : `${time}.jpg`;
+                textureLoader.load(
+                    `./static-other/World_Texture/${fileName}`,
+                    function (texture) {
+                        textures[time] = texture;
+                        loadedTextures++;
+
+                        // 确保第一个纹理(现代地球)加载完成后立即创建地球
+                        if (time === 0) {
+                            const material = new THREE.MeshPhongMaterial({
+                                map: texture,
+                                specular: new THREE.Color('grey'),
+                                shininess: 10
+                            });
+                            earth = new THREE.Mesh(geometry, material);
+                            scene.add(earth);
+                        }
+
+                        // 所有纹理加载完成后隐藏加载提示
+                        if (loadedTextures === totalTextures) {
+                            document.getElementById('loadingText').style.display = 'none';
+                        }
+                    },
+                    undefined,
+                    function (error) {
+                        console.error('纹理加载失败:', error);
+                        loadedTextures++; // 即使加载失败也要计数
+                        if (loadedTextures === totalTextures) {
+                            document.getElementById('loadingText').style.display = 'none';
+                        }
+                    }
+                );
+            });
+
+            // 修改切换时期的函数
+            function switchToTimeIndex(index) {
+                if (index >= 0 && index < timePoints.length) {
+                    currentTimeIndex = index;
+                    const time = timePoints[index];
+                    if (earth && textures[time]) {
+                        earth.material.map = textures[time];
+                        earth.material.needsUpdate = true;
+                        document.getElementById('timeSelect').value = time;
+                        // 更新时期信息
+                    }
+                }
+            }
+
+            // 修改选择框事件监听
+            document.getElementById('timeSelect').addEventListener('change', function () {
+                const time = parseInt(this.value);
+                currentTimeIndex = timePoints.indexOf(time);
+                if (earth && textures[time]) {
+                    earth.material.map = textures[time];
+                    earth.material.needsUpdate = true;
+                    // 更新时期信息
+                }
+            });
+
+            // 修改键盘事件监听部分
+            let keyInterval;
+
+            document.addEventListener('keydown', function (event) {
+                if (event.repeat) return;
+
+                const key = event.key.toLowerCase();
+                // 添加对方向键的支持
+                if (key === 'd' || key === 'a' || key === 'arrowright' || key === 'arrowleft') {
+                    // 首次按下立即切换一次
+                    if ((key === 'a' || key === 'arrowleft') && currentTimeIndex < timePoints.length - 1) {
+                        switchToTimeIndex(currentTimeIndex + 1);
+                    } else if ((key === 'd' || key === 'arrowright') && currentTimeIndex > 0) {
+                        switchToTimeIndex(currentTimeIndex - 1);
+                    }
+
+                    // 设置延时后开始连续切换
+                    keyInterval = setInterval(() => {
+                        if ((key === 'a' || key === 'arrowleft') && currentTimeIndex < timePoints.length - 1) {
+                            switchToTimeIndex(currentTimeIndex + 1);
+                        } else if ((key === 'd' || key === 'arrowright') && currentTimeIndex > 0) {
+                            switchToTimeIndex(currentTimeIndex - 1);
+                        }
+                    }, 300);
+                }
+            });
+
+            document.addEventListener('keyup', function (event) {
+                const key = event.key.toLowerCase();
+                if (key === 'd' || key === 'a' || key === 'arrowright' || key === 'arrowleft') {
+                    clearInterval(keyInterval);
+                }
+            });
+
+            // 鼠标事件监听
+            let mouseInterval;
+            renderer.domElement.addEventListener('contextmenu', function (event) {
+                event.preventDefault();
+            });
+
+            renderer.domElement.addEventListener('mousedown', function (event) {
+                event.preventDefault();
+                if (event.button === 0) { // 左键
+                    mouseInterval = setInterval(() => {
+                        if (currentTimeIndex < timePoints.length - 1) {
+                            switchToTimeIndex(currentTimeIndex + 1);
+                        }
+                    }, 300);
+                } else if (event.button === 2) { // 右键
+                    mouseInterval = setInterval(() => {
+                        if (currentTimeIndex > 0) {
+                            switchToTimeIndex(currentTimeIndex - 1);
+                        }
+                    }, 300);
+                }
+            });
+
+            renderer.domElement.addEventListener('mouseup', function () {
+                clearInterval(mouseInterval);
+            });
+
+            // 添加鼠标离开画布的事件处理
+            renderer.domElement.addEventListener('mouseleave', function () {
+                clearInterval(mouseInterval);
+            });
+
+            // 修改光源设置
+            const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.7);
+            camera.add(directionalLight);
+            directionalLight.position.set(0, 0, 1);
+            scene.add(camera);
+
+            camera.position.z = 15;
+
+            // 添加星空背景
+            createStarfield();
+
+            // 添加控制器
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 6;
+            controls.maxDistance = 30;
+            controls.maxPolarAngle = Math.PI;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.5;
+
+            // 添加以下触摸控制相关配置
+            controls.enableZoom = true;        // 启用缩放
+            controls.enableRotate = true;      // 启用旋转
+            controls.enablePan = false;        // 禁用平移
+            controls.touches = {
+                ONE: THREE.TOUCH.ROTATE,       // 单指旋转
+                TWO: THREE.TOUCH.DOLLY_PAN     // 双指缩放
+            };
+
+            const rotateButton = document.getElementById('rotateButton');
+            rotateButton.addEventListener('click', function () {
+                controls.autoRotate = !controls.autoRotate;
+                this.textContent = controls.autoRotate ? '停止自动旋转' : '开始自动旋转';
+            });
+
+            // 在创建地球后添加云层
+            const cloudsGeometry = new THREE.SphereGeometry(5.05, 32, 32);
+            const cloudsTexture = new THREE.TextureLoader().load(
+                './static-other/World_Texture/fair-clouds.png', // 修正纹理路径
+                function (texture) {
+                    const cloudsMaterial = new THREE.MeshPhongMaterial({
+                        map: texture,
+                        transparent: true,
+                        opacity: 1,
+                        side: THREE.DoubleSide // 添加双面渲染
+                    });
+                    clouds = new THREE.Mesh(cloudsGeometry, cloudsMaterial);
+                    clouds.visible = false;
+                    scene.add(clouds);
+
+                    // 确保云层按钮可以正常工作
+                    const cloudsButton = document.getElementById('cloudsButton');
+                    cloudsButton.addEventListener('click', function () {
+                        if (clouds) {
+                            clouds.visible = !clouds.visible;
+                            this.textContent = clouds.visible ? '隐藏云层' : '显示云层';
+                        }
+                    });
+                },
+                undefined, // onProgress callback
+                function (error) { // onError callback
+                    console.error('云层纹理加载失败:', error);
+                }
+            );
+
+            // 添加按钮事件监听
+            document.getElementById('prevButton').addEventListener('click', function() {
+                if (currentTimeIndex < timePoints.length - 1) {
+                    switchToTimeIndex(currentTimeIndex + 1);
+                }
+            });
+
+            document.getElementById('nextButton').addEventListener('click', function() {
+                if (currentTimeIndex > 0) {
+                    switchToTimeIndex(currentTimeIndex - 1);
+                }
+            });
+
+            // 修改触摸事件处理
+            document.addEventListener('touchstart', function(e) {
+                // 检查触摸目标是否是按钮或选择框
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
+                    return; // 如果是按钮或选择框，不阻止默认行为
+                }
+                e.preventDefault();
+            }, { passive: false });
+            
+            document.addEventListener('touchmove', function(e) {
+                // 检查触摸目标是否是按钮或选择框
+                if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
+                    return; // 如果是按钮或选择框，不阻止默认行为
+                }
+                e.preventDefault();
+            }, { passive: false });
+
+            // 为按钮添加触摸事件处理
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function(e) {
+                    e.stopPropagation(); // 阻止事件冒泡
+                });
+            });
+
+            // 为选择框添加触摸事件处理
+            const select = document.querySelector('select');
+            if (select) {
+                select.addEventListener('touchstart', function(e) {
+                    e.stopPropagation(); // 阻止事件冒泡
+                });
+            }
+
+            // 检测 WebGL 支持
+            if (!renderer.capabilities.isWebGL2 && !renderer.capabilities.isWebGL) {
+                document.getElementById('loadingText').innerHTML = '您的浏览器不支持 WebGL，请使用支持 WebGL 的现代浏览器。';
+                return;
+            }
+        }
+
+        function createStarfield() {
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xFFFFFF,
+                size: 0.1
+            });
+
+            const starsVertices = [];
+            for (let i = 0; i < 10000; i++) {
+                const x = THREE.MathUtils.randFloatSpread(2000);
+                const y = THREE.MathUtils.randFloatSpread(2000);
+                const z = THREE.MathUtils.randFloatSpread(2000);
+                starsVertices.push(x, y, z);
+            }
+
+            starsGeometry.setAttribute('position',
+                new THREE.Float32BufferAttribute(starsVertices, 3));
+            const starField = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starField);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+
+            // 添加云层自转
+            if (clouds) {
+                clouds.rotation.y += 0.0003;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        init();
+        animate();
+
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // 添加全屏显示功能
+        document.getElementById('fullscreen-btn').addEventListener('click', function () {
+            if (!document.fullscreenElement) {
+                // 进入全屏
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) { // Firefox
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) { // Chrome, Safari
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) { // IE/Edge
+                    document.documentElement.msRequestFullscreen();
+                }
+                this.textContent = '退出全屏';
+            } else {
+                // 退出全屏
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.mozCancelFullScreen) {
+                    document.mozCancelFullScreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                this.textContent = '全屏显示';
+            }
+        });
+
+        // 监听全屏变化事件，确保按钮文字正确显示
+        document.addEventListener('fullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('mozfullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('MSFullscreenChange', updateFullscreenButtonText);
+
+        function updateFullscreenButtonText() {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            if (document.fullscreenElement) {
+                fullscreenBtn.textContent = '退出全屏';
+            } else {
+                fullscreenBtn.textContent = '全屏显示';
+            }
+        }
+    </script>
+</body>
+
+</html>

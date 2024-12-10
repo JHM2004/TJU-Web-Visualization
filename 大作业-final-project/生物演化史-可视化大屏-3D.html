@@ -41,9 +41,9 @@
         }
 
         .slider-container label {
-            margin-right: 10px;
+            margin-right: 5px;
             white-space: nowrap;
-            width: 80px;
+            width: 78px;
         }
 
         .slider {
@@ -495,6 +495,33 @@
                     <option value="FS017_Sunset">日落场景4</option>
                     <option value="FS018_Sunset">日落场景5</option>
                     <option value="FS020_Sunset">日落场景6</option>
+                    <option value="world" style="font-size: 12px;">世界地图(现代高清)</option>
+                    <option value="0" style="font-size: 12px;">世界地图(0亿年前)</option>
+                    <option value="20" style="font-size: 12px;">世界地图(20亿年前)</option>
+                    <option value="35" style="font-size: 12px;">世界地图(35亿年前)</option>
+                    <option value="50" style="font-size: 12px;">世界地图(50亿年前)</option>
+                    <option value="66" style="font-size: 12px;">世界地图(66亿年前)</option>
+                    <option value="90" style="font-size: 12px;">世界地图(90亿年前)</option>
+                    <option value="105" style="font-size: 12px;">世界地图(105亿年前)</option>
+                    <option value="120" style="font-size: 12px;">世界地图(120亿年前)</option>
+                    <option value="150" style="font-size: 12px;">世界地图(150亿年前)</option>
+                    <option value="170" style="font-size: 12px;">世界地图(170亿年前)</option>
+                    <option value="200" style="font-size: 12px;">世界地图(200亿年前)</option>
+                    <option value="220" style="font-size: 12px;">世界地图(220亿年前)</option>
+                    <option value="240" style="font-size: 12px;">世界地图(240亿年前)</option>
+                    <option value="260" style="font-size: 12px;">世界地图(260亿年前)</option>
+                    <option value="280" style="font-size: 12px;">世界地图(280亿年前)</option>
+                    <option value="300" style="font-size: 12px;">世界地图(300亿年前)</option>
+                    <option value="340" style="font-size: 12px;">世界地图(340亿年前)</option>
+                    <option value="370" style="font-size: 12px;">世界地图(370亿年前)</option>
+                    <option value="400" style="font-size: 12px;">世界地图(400亿年前)</option>
+                    <option value="430" style="font-size: 12px;">世界地图(430亿年前)</option>
+                    <option value="450" style="font-size: 12px;">世界地图(450亿年前)</option>
+                    <option value="470" style="font-size: 12px;">世界地图(470亿年前)</option>
+                    <option value="500" style="font-size: 12px;">世界地图(500亿年前)</option>
+                    <option value="540" style="font-size: 12px;">世界地图(540亿年前)</option>
+                    <option value="600" style="font-size: 12px;">世界地图(600亿年前)</option>
+                    <option value="750" style="font-size: 12px;">世界地图(750亿年前)</option>
                 </select>
             </div>
             <!-- 在右侧面板的最方添加导按钮组 -->
@@ -1182,7 +1209,7 @@
             // 修改全景天空盒事件监听
             document.getElementById('panoramaSelect').addEventListener('change', (e) => {
                 const selectedPanorama = e.target.value;
-                // 当选择全景天空盒时，重置立方体天空盒选择
+                // 当选择全景天空盒时,重置立方体天空盒选择
                 if (selectedPanorama !== 'none') {
                     document.getElementById('cubeSelect').value = 'none';
                 }
@@ -1206,10 +1233,16 @@
                 // 构建图片路径
                 let imagePath;
                 if (selectedPanorama.startsWith('FS')) {
-                    // 新增的全景图路径
-                    imagePath = `./static-other/Skybox_Texture/全景天空盒/new-01/${selectedPanorama}.png`;
-                } else {
                     // 原有的全景图路径
+                    imagePath = `./static-other/Skybox_Texture/全景天空盒/new-01/${selectedPanorama}.png`;
+                } else if (['fair-clouds', 'world'].includes(selectedPanorama)) {
+                    // 特殊命名的图片
+                    imagePath = `./static-other/World_Texture/${selectedPanorama}.${selectedPanorama === 'fair-clouds' ? 'png' : 'jpg'}`;
+                } else if (!isNaN(selectedPanorama)) {
+                    // 数字命名的图片
+                    imagePath = `./static-other/World_Texture/${selectedPanorama}.jpg`;
+                } else {
+                    // 原有的其他全景图路径
                     imagePath = `./static-other/Skybox_Texture/全景天空盒/${selectedPanorama}.png`;
                 }
 
@@ -1901,7 +1934,7 @@
         // 修改全景天空盒的加载部分
         document.getElementById('panoramaSelect').addEventListener('change', (e) => {
             const selectedPanorama = e.target.value;
-            // 当选择全景天空盒时，重置立方体天空盒选择
+            // 当选择全景天空盒时,重置立方体天空盒选择
             if (selectedPanorama !== 'none') {
                 document.getElementById('cubeSelect').value = 'none';
             }
@@ -1925,10 +1958,16 @@
             // 构建图片路径
             let imagePath;
             if (selectedPanorama.startsWith('FS')) {
-                // 新增的全景图路径
-                imagePath = `./static-other/Skybox_Texture/全景天空盒/new-01/${selectedPanorama}.png`;
-            } else {
                 // 原有的全景图路径
+                imagePath = `./static-other/Skybox_Texture/全景天空盒/new-01/${selectedPanorama}.png`;
+            } else if (['fair-clouds', 'world'].includes(selectedPanorama)) {
+                // 特殊命名的图片
+                imagePath = `./static-other/World_Texture/${selectedPanorama}.${selectedPanorama === 'fair-clouds' ? 'png' : 'jpg'}`;
+            } else if (!isNaN(selectedPanorama)) {
+                // 数字命名的图片
+                imagePath = `./static-other/World_Texture/${selectedPanorama}.jpg`;
+            } else {
+                // 原有的其他全景图路径
                 imagePath = `./static-other/Skybox_Texture/全景天空盒/${selectedPanorama}.png`;
             }
 

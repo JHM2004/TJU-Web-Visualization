@@ -99,6 +99,8 @@
             color: white;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
             font-size: 1em;
+            width: 100px;
+            margin-left: 1px;
         }
 
         .swipe-hint {
@@ -180,23 +182,22 @@
 
         /* 修改立方体控制按钮样式 */
         .cube-toggle {
-            padding: 8px 15px;
+            padding: 0px 15px;
             background-color: rgba(255, 255, 255, 0.8);
             border: 1px solid #ccc;
             border-radius: 5px;
             font-size: 0.9em;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: 5px;
+            margin-right: 1px;
         }
 
         /* 修改移动端按钮样式调整 */
         .redirect-button.mobile {
             padding: 15px 30px;
             font-size: 1.2em;
-            bottom: 100px;
-            right: auto;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 10%;
+            right: 1%;
             white-space: nowrap;
             background-color: rgba(0, 123, 255, 0.5);
         }
@@ -221,6 +222,60 @@
             20% { opacity: 1; }
             80% { opacity: 1; }
             100% { opacity: 0; }
+        }
+
+        /* 修改 .comment-button 样式 */
+        .comment-button {
+            position: fixed;
+            bottom: 28%;
+            right: 1%;
+            padding: 10px 20px;
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-button:hover {
+            background-color: rgba(0, 98, 204, 0.9);
+        }
+
+        /* 修改移动端样式 */
+        .comment-button.mobile {
+            padding: 8px 15px;
+            font-size: 1em;
+            background-color: rgba(0, 123, 255, 0.5);
+        }
+
+        /* 添加地���模型跳转按钮样式 */
+        .earth-button {
+            position: fixed;
+            bottom: 20.5%;
+            right: 1%;
+            padding: 10px 20px;
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        .earth-button:hover {
+            background-color: rgba(0, 98, 204, 0.9);
+        }
+
+        /* 移动端样式 */
+        .earth-button.mobile {
+            padding: 8px 15px;
+            font-size: 1em;
+            background-color: rgba(0, 123, 255, 0.5);
         }
     </style>
 </head>
@@ -424,7 +479,7 @@
             {
                 name: '日落场景2',
                 type: 'equirectangular',
-                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Sunset.png'
+                url: './static-other/Skybox_Texture/全景天���盒/new-01/FS014_Sunset.png'
             },
             {
                 name: '日落场景3',
@@ -458,7 +513,7 @@
                 url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Day.png'
             },
             {
-                name: '太空立方体',
+                name: '太空方体',
                 type: 'cubemap',
                 urls: [
                     './static-other/Skybox_Texture/立方体天空盒/taikong/right.jpg',
@@ -648,6 +703,140 @@
                     './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/front.png',
                     './static-other/Skybox_Texture/立方体天空盒/sunset_cubemap_3/back.png'
                 ]
+            },
+            {
+                name: '世界地图(现代高清)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/world.jpg'
+            },
+            {
+                name: '世界地图(0亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/0.jpg'
+            },
+            {
+                name: '世界地图(20亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/20.jpg'
+            },
+            {
+                name: '世界地图(35亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/35.jpg'
+            },
+            {
+                name: '世界地图(50亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/50.jpg'
+            },
+            {
+                name: '世界地图(66亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/66.jpg'
+            },
+            {
+                name: '世界地图(90亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/90.jpg'
+            },
+            {
+                name: '世界地图(105亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/105.jpg'
+            },
+            {
+                name: '世界地图(120亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/120.jpg'
+            },
+            {
+                name: '世界地图(150亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/150.jpg'
+            },
+            {
+                name: '世界地图(170亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/170.jpg'
+            },
+            {
+                name: '世界地图(200亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/200.jpg'
+            },
+            {
+                name: '世界地图(220亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/220.jpg'
+            },
+            {
+                name: '世界地图(240亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/240.jpg'
+            },
+            {
+                name: '世界地图(260亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/260.jpg'
+            },
+            {
+                name: '世界地图(280亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/280.jpg'
+            },
+            {
+                name: '世界地图(300亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/300.jpg'
+            },{
+                name: '世界地图(340亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/340.jpg'
+            },
+            {
+                name: '世界地图(370亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/370.jpg'
+            },
+            {
+                name: '世界地图(400亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/400.jpg'
+            },
+            {
+                name: '世界地图(430亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/430.jpg'
+            },
+            {
+                name: '世界地图(450亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/450.jpg'
+            },
+            {
+                name: '世界地图(470亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/470.jpg'
+            },
+            {
+                name: '世界地图(500亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/500.jpg'
+            },
+            {
+                name: '世界地图(540亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/540.jpg'
+            },
+            {
+                name: '世界地图(600亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/600.jpg'
+            },
+            {
+                name: '世界地图(750亿年前)',
+                type: 'equirectangular',
+                url: './static-other/World_Texture/750.jpg'
             }
         ];
 
@@ -681,7 +870,7 @@
         controlsDiv.appendChild(cubeToggleBtn);  // 添加按钮到控制区域
         document.body.appendChild(controlsDiv);
 
-        // 修改天空盒加载函数
+        // 修改天空盒加��函数
         function loadSkyboxTexture(textureConfig) {
             loadingDiv.style.display = 'block';
 
@@ -803,7 +992,7 @@
             currentRotationY += deltaX;
             currentRotationX += deltaY;
 
-            // 限制垂直旋转角度
+            // 限制旋转角度
             currentRotationX = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, currentRotationX));
 
             camera.position.x = 5 * Math.sin(currentRotationY) * Math.cos(currentRotationX);
@@ -885,6 +1074,39 @@
             cube.visible = isCubeVisible;
             cubeToggleBtn.textContent = isCubeVisible ? '隐藏立方体' : '显示立方体';
         });
+
+        const commentButton = document.createElement('button');
+        commentButton.textContent = '评论区';
+        commentButton.className = isMobileDevice() ? 'comment-button mobile' : 'comment-button';
+
+        commentButton.onclick = function() {
+            if (!isMobileDevice()) {
+                window.location.href = 'http://39.105.163.119:3000';
+            } else {
+                const message = document.createElement('div');
+                message.className = 'mobile-message';
+                message.textContent = '只有PC端才能展示评论区~';
+                document.body.appendChild(message);
+                
+                // 1秒后移除消息
+                setTimeout(() => {
+                    message.remove();
+                }, 1000);
+            }
+        };
+
+        document.body.appendChild(commentButton);
+
+        // 在脚本末尾添加地球模型跳转按钮
+        const earthButton = document.createElement('button');
+        earthButton.textContent = '切换到地球模型';
+        earthButton.className = isMobileDevice() ? 'earth-button mobile' : 'earth-button';
+
+        earthButton.onclick = function() {
+            window.location.href = './index-earth.html';
+        };
+
+        document.body.appendChild(earthButton);
     </script>
 </body>
 
