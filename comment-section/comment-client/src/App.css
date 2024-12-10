@@ -1,0 +1,862 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #dddddd;
+  --comment-bg: #ffffff;
+  --hover-bg: #f0f0f0;
+  --button-bg: #007bff;
+  --button-text: #ffffff;
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --stats-bg: #f8f9fa;
+  --img-filter: none;
+}
+
+[data-theme='dark'] {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --border-color: #444444;
+  --comment-bg: #2d2d2d;
+  --hover-bg: #3d3d3d;
+  --button-bg: #0056b3;
+  --button-text: #ffffff;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --stats-bg: #2d2d2d;
+  --secondary-text: #cccccc;
+  --panel-header-bg: #2d2d2d;
+  --reply-border: #555555;
+  --img-filter: brightness(0.9) contrast(1.1);
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.app {
+  display: flex;
+  gap: 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  background-color: var(--bg-color);
+}
+
+.main-content {
+  flex: 0 0 500px;
+  margin-left: 20px;
+}
+
+.panels-container {
+  display: flex;
+  gap: 20px;
+  flex: 1;
+}
+
+.reply-panel {
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background: white;
+  height: calc(100vh - 40px);
+  position: sticky;
+  top: 20px;
+  overflow-y: auto;
+  background-color: var(--comment-bg);
+  border-color: var(--border-color);
+}
+
+.reply-panel.second-level {
+  border-color: #adb5bd;
+}
+
+.reply-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--panel-header-bg);
+}
+
+.reply-panel-header h3 {
+  margin: 0;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+.original-comment {
+  padding: 15px;
+  background: var(--comment-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.replies-list {
+  padding: 15px;
+}
+
+.reply-time {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.comment {
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: var(--comment-bg);
+  border-color: var(--border-color);
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.nickname {
+  font-weight: bold;
+  font-size: 0.9em;
+}
+
+.floor {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.replies {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+
+.reply {
+  border-left: 2px solid var(--reply-border);
+  margin: 10px 0;
+  padding: 10px 15px;
+}
+
+.reply-to {
+  color: #666;
+  font-size: 0.9em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  padding-right: 100px !important;
+  box-sizing: border-box;
+  background-color: var(--comment-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.form-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+button:hover {
+  background-color: #0056b3;
+  background-color: var(--hover-bg);
+}
+
+button[type="button"] {
+  background-color: #6c757d;
+}
+
+button[type="button"]:hover {
+  background-color: #545b62;
+}
+
+.comment-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.view-replies-btn {
+  background-color: #6c757d;
+}
+
+.view-replies-btn:hover {
+  background-color: #545b62;
+}
+
+.reply-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.panels-container {
+  position: static;
+  width: auto;
+  flex-direction: row;
+  max-height: none;
+}
+
+.comment-section {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.head {
+  position: sticky;
+  top: 0;
+  background-color: var(--bg-color);
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 100;
+}
+
+.head input {
+  background-color: var(--comment-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px;
+  width: 97%;
+}
+
+.head textarea {
+  background-color: var(--comment-bg);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 8px;
+  width: 100%;
+  resize: vertical;
+}
+
+.comment-content {
+  font-size: 1.1em;
+  margin: 8px 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  max-width: 100%;
+}
+
+.reply .comment-content {
+  font-size: 1.1em;
+  margin: 8px 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+  max-width: 100%;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.comment-time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+.pagination-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #f0f0f0;
+}
+
+.pagination-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-btn:disabled {
+  background-color: #f0f0f0;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.source-code-btn {
+  background-color: #28a745;
+  font-size: 0.9em;
+  padding: 6px 12px;
+}
+
+.source-code-btn:hover {
+  background-color: #218838;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  background-color: var(--comment-bg);
+  color: var(--text-color);
+  margin: 0;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.modal-body {
+  line-height: 1.6;
+}
+
+.modal-body p {
+  margin: 15px 0;
+  display: flex;
+  align-items: center;
+}
+
+.modal-body strong {
+  min-width: 80px;
+}
+
+.modal-body a {
+  color: #007bff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.modal-body a:hover {
+  text-decoration: underline;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.contact-btn {
+  background-color: #17a2b8;
+  font-size: 0.9em;
+  padding: 6px 12px;
+}
+
+.contact-btn:hover {
+  background-color: #138496;
+}
+
+.author-intro {
+  font-style: italic;
+  color: #666;
+  text-align: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.contact-info {
+  margin-left: 10px;
+  color: #333;
+}
+
+.qr-code {
+  text-align: center;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.qr-code img {
+  max-width: 200px;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  filter: var(--img-filter);
+}
+
+.qr-code .qr-title {
+  font-weight: bold;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.textarea-container {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.emoji-button {
+  position: static;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  margin-right: -10px;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.emoji-button:hover {
+  opacity: 1;
+  background: none;
+}
+
+.emoji-picker-container {
+  position: absolute;
+  top: 45px;
+  right: 0;
+  z-index: 1000;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--comment-bg);
+  border: 1px solid var(--border-color);
+}
+
+/* 暗色模式下的表情选择器样式 */
+[data-theme='dark'] .emoji-picker-react {
+  background-color: var(--comment-bg) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme='dark'] .emoji-picker-react .emoji-group:before {
+  background-color: var(--comment-bg) !important;
+  color: var(--text-color) !important;
+}
+
+[data-theme='dark'] .emoji-picker-react input.emoji-search {
+  background-color: var(--comment-bg) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-color) !important;
+  padding-left: 35px !important;
+  width: calc(100% - 40px) !important;
+  margin: 10px !important;
+  height: 35px !important;
+}
+
+[data-theme='dark'] .emoji-picker-react .emoji-categories button {
+  filter: invert(1);
+}
+
+[data-theme='dark'] .emoji-picker-react .emoji-search-icon-svg {
+  fill: var(--text-color) !important;
+  position: absolute !important;
+  left: 20px !important;
+  top: 20px !important;
+  width: 15px !important;
+  height: 15px !important;
+}
+
+[data-theme='dark'] .emoji-picker-react .emoji-group-label {
+  background-color: var(--comment-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* 重置所有表情相关元素的样式 */
+.emoji-picker-react,
+.emoji-picker-react *,
+.emoji-picker-react *::before,
+.emoji-picker-react *::after {
+  background: none !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 只保留主容器的背景色 */
+.emoji-picker-react.emoji-picker {
+  background-color: var(--comment-bg) !important;
+}
+
+/* 表情分类标签背景 */
+.emoji-picker-react .emoji-group::before {
+  background-color: var(--comment-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* 搜索框样式 */
+.emoji-picker-react input.emoji-search {
+  background-color: var(--comment-bg) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-color) !important;
+  padding-left: 35px !important;
+  width: calc(100% - 40px) !important;
+  margin: 10px !important;
+  height: 35px !important;
+}
+
+/* 确保表情本身不受影响 */
+.emoji-picker-react img.emoji-img,
+.emoji-picker-react span[role="img"] {
+  background: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* 移除所有按钮的背景和边框 */
+.emoji-picker-react button {
+  border: none !important;
+  background: none !important;
+  padding: 0 !important;
+}
+
+/* 移除悬停效果 */
+.emoji-picker-react button:hover,
+.emoji-picker-react .emoji:hover {
+  background: none !important;
+  background-color: transparent !important;
+}
+
+.emoji-picker-react .emoji-group button {
+  background: none !important;
+}
+
+.emoji-picker-react .emoji-group button:hover {
+  background: none !important;
+}
+
+/* 移除表情分类的背景色 */
+.emoji-picker-react .emoji-categories button {
+  background: none !important;
+}
+
+/* 移除表情选择器中所有按钮的背景色 */
+.emoji-picker-react button {
+  background: none !important;
+}
+
+/* 移除表情hover时的背景色 */
+.emoji-picker-react .emoji {
+  background-color: transparent !important;
+}
+
+.emoji-picker-react .emoji:hover {
+  background-color: transparent !important;
+}
+
+/* 确保表情图标显示正常 */
+.emoji-picker-container span[role="img"] {
+  color: initial !important;
+}
+
+/* 移除表情分组标签的背景色 */
+.emoji-picker-react .emoji-group-label {
+  background: none !important;
+}
+
+.textarea-controls {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  display: flex;
+  gap: 15px;
+}
+
+.upload-button {
+  font-size: 1.5em;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
+
+.upload-button:hover {
+  opacity: 1;
+}
+
+/* 修改评论内容式以支持图片显示 */
+.comment-content img {
+  max-width: 100%;
+  max-height: 300px;
+  margin: 10px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.comment-content img:hover {
+  transform: scale(1.02);
+}
+
+.comment-stats {
+  position: fixed;
+  left: 20px;
+  top: 100px;
+  transform: none;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  width: 80px;
+  background-color: var(--stats-bg);
+  border-color: var(--border-color);
+}
+
+.stat-item {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.stat-item:first-child {
+  border-bottom: 1px solid #eee;
+}
+
+.stat-label {
+  font-size: 0.85em;
+  color: #666;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.stat-value {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #007bff;
+  display: block;
+}
+
+/* 添加主题切换按钮样式 */
+.theme-toggle-btn {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 4px;
+  margin-right: 10px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+}
+
+/* 修改其他元素样式 */
+input, textarea {
+  background-color: var(--comment-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+button:hover {
+  background-color: var(--hover-bg);
+}
+
+.modal-overlay {
+  background-color: var(--modal-overlay);
+}
+
+/* 确保表情选择器在暗色主题下可见 */
+.emoji-picker-container {
+  background-color: var(--comment-bg);
+}
+
+[data-theme='dark'] .emoji-picker-container {
+  background-color: var(--comment-bg);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme='dark'] .emoji-picker-container input {
+  background-color: var(--comment-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+[data-theme='dark'] button:hover {
+  background-color: var(--hover-bg);
+  opacity: 0.9;
+}
+
+[data-theme='dark'] .modal-body a {
+  color: #66b3ff;
+}
+
+[data-theme='dark'] .modal-body a:hover {
+  color: #99ccff;
+}
+
+/* 修改暗色主题变量 */
+[data-theme='dark'] {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --border-color: #444444;
+  --comment-bg: #2d2d2d;
+  --hover-bg: #3d3d3d;
+  --button-bg: #0056b3;
+  --button-text: #ffffff;
+  --modal-overlay: rgba(0, 0, 0, 0.7);
+  --stats-bg: #2d2d2d;
+  --secondary-text: #cccccc;
+}
+
+/* 修改相关文字样式 */
+.floor, .comment-time, .reply-time {
+  color: var(--secondary-text);
+}
+
+.stat-label {
+  color: var(--secondary-text);
+}
+
+.stat-value {
+  color: #66b3ff;
+}
+
+.author-intro {
+  color: var(--secondary-text);
+}
+
+.contact-info {
+  color: var(--text-color);
+}
+
+.close-button {
+  color: var(--secondary-text);
+}
+
+.close-button:hover {
+  color: var(--text-color);
+}
+
+.empty-panel h3 {
+  color: var(--text-color);
+}
+
+.empty-panel p {
+  color: var(--secondary-text);
+}
+
+.nickname {
+  color: var(--text-color);
+}
+
+/* 确保所有文本输入框中的文字颜色正确 */
+input::placeholder,
+textarea::placeholder {
+  color: var(--secondary-text);
+}
+
+/* 修改链接颜色 */
+[data-theme='dark'] a {
+  color: #66b3ff;
+}
+
+[data-theme='dark'] a:hover {
+  color: #99ccff;
+}
+
+.nav-btn:hover {
+  background-color: #45a049 !important;
+}
+
+[data-theme='dark'] .nav-btn {
+  background-color: #45a049;
+}
