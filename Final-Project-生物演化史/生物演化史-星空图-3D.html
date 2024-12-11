@@ -38,6 +38,9 @@
             margin: 10px 0;
             line-height: 1.5;
             font-size: 16px;
+            max-height: 168px;
+            overflow-y: auto;
+            padding-right: 10px;
         }
         #details img {
             width: 300px;
@@ -185,6 +188,24 @@
             height: 15px;
             margin-right: 10px;
             border-radius: 3px;
+        }
+
+        #details p::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #details p::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+
+        #details p::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 3px;
+        }
+
+        #details p::-webkit-scrollbar-thumb:hover {
+            background: #00cc6a;
         }
 
     </style>
@@ -489,7 +510,7 @@
                 
                 // 根据起点和终点的距离调整控制点
                 const distance = startPoint.distanceTo(endPoint);
-                const adjustedOffset = controlPointOffset * (distance / 100); // 根据距离调整偏移量
+                const adjustedOffset = controlPointOffset * (distance / 100); // ��据距离调整偏移量
                 
                 // 创建更集中的控制点
                 const controlPoint = midPoint.clone().add(new THREE.Vector3(
@@ -580,7 +601,7 @@
                             heightOffset = categoryHeightOffset[child.name] || 0;
                         }
                         
-                        // 计算子节点位置
+                        // 计算子节���位置
                         let angleMultiplier = 1.0;
                         if (child.children && child.children.length > 0) {
                             angleMultiplier = 0.3;
@@ -707,12 +728,15 @@
             if (isTransitioning) {
                 camera.position.lerp(targetPosition, 0.05);
                 controls.target.lerp(targetLookAt, 0.05);
-                controls.enableDamping = false;
-
+                
                 if (camera.position.distanceTo(targetPosition) < 1) {
                     isTransitioning = false;
                     controls.target.copy(targetLookAt);
+                    controls.enabled = true;
                     controls.enableDamping = true;
+                    controls.enableZoom = true;
+                    controls.enableRotate = true;
+                    controls.enablePan = true;
                     controls.update();
                 }
             } else {

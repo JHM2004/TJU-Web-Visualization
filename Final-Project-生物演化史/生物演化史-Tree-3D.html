@@ -28,7 +28,9 @@
             backdrop-filter: blur(5px);
             font-family: Arial, sans-serif;
             box-shadow: 0 0 20px rgba(0,255,0,0.2);
-            pointer-events: none;
+            pointer-events: auto;
+            max-height: 500px;
+            overflow-y: auto;
         }
         #details h3 {
             margin: 0 0 10px 0;
@@ -39,6 +41,7 @@
             margin: 10px 0;
             line-height: 1.5;
             font-size: 16px;
+            padding-right: 10px;
         }
         #details img {
             width: 300px;
@@ -222,6 +225,25 @@
         .nav-button.active {
             background: rgba(0,255,136,0.4);
         }
+
+        /* 添加滚动条样式 */
+        #details::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #details::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        #details::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 136, 0.5);
+            border-radius: 4px;
+        }
+
+        #details::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 136, 0.7);
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -322,7 +344,7 @@
             d: false
         };
 
-        // 添加键盘事件监听
+        // 添���键盘事件监听
         window.addEventListener('keydown', (event) => {
             switch(event.key.toLowerCase()) {
                 case 'q': keyState.q = true; break;
@@ -473,8 +495,32 @@
             initializeSliders();
             animate();
             
-            // 添加鼠标点击事件监听
-            renderer.domElement.addEventListener('click', onMouseClick);
+            // 修改鼠标点击事件监听
+            renderer.domElement.addEventListener('click', (event) => {
+                // 检查点击是否发生在详细信息面板上
+                const detailsPanel = document.getElementById('details');
+                if (!detailsPanel.contains(event.target)) {
+                    onMouseClick(event);
+                }
+            });
+
+            // 添加滚轮事件处理
+            renderer.domElement.addEventListener('wheel', (event) => {
+                // 检查鼠标是否在详细信息面板上
+                const detailsPanel = document.getElementById('details');
+                if (detailsPanel.contains(event.target)) {
+                    event.stopPropagation(); // 阻止事件传播到OrbitControls
+                }
+            }, { passive: false });
+
+            // 添加鼠标移动事件处理
+            renderer.domElement.addEventListener('mousemove', (event) => {
+                // 检查鼠标是否在详细信息面板上
+                const detailsPanel = document.getElementById('details');
+                if (!detailsPanel.contains(event.target)) {
+                    onMouseMove(event);
+                }
+            });
         }
 
         function createStarField() {
@@ -810,7 +856,7 @@
         function animate() {
             requestAnimationFrame(animate);
             
-            // 处理���盘旋转和移动
+            // 处理盘旋转和移动
             const rotationSpeed = 0.02;
             const moveSpeed = 30;
             

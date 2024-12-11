@@ -78,7 +78,6 @@
             background: rgba(0, 0, 0, 0.8);
             color: white;
             border-radius: 5px;
-            pointer-events: none;
             display: none;
             max-width: 700px;
             font-size: 25px;
@@ -142,12 +141,6 @@
             font-weight: bold;
         }
 
-        img:hover {
-            width: calc(100% - 100px);
-            height: calc(100% - 100px);
-            transition: all 0.3s ease;
-        }
-
         .button-arrow {
             margin-left: 10px;
         }
@@ -201,7 +194,7 @@
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
 
-        // 创建树��布局
+        // 创建树布局
         const tree = d3.tree()
             .size([height - margin.top - margin.bottom, width - margin.left - margin.right]);
 
@@ -211,6 +204,9 @@
         // 在script标签内添加一个变量来跟踪固定显示的tooltip
         let fixedTooltip = null;
         let fixedPosition = null;
+
+        // 添加一个变量来存储timeout
+        let hideTimeout;
 
         // 加载数并渲染树
         function renderTree(data, filter = 'all') {
@@ -302,7 +298,15 @@
                 .text(d => d.data.name);
 
             // 添加交互事件
+            let currentNode = null;
+
             nodes.on("mouseover", function(event, d) {
+                // 清除之前的timeout
+                if (hideTimeout) {
+                    clearTimeout(hideTimeout);
+                }
+                
+                currentNode = d;
                 const scrollX = window.pageXOffset || document.documentElement.scrollLeft;
                 const scrollY = window.pageYOffset || document.documentElement.scrollTop;
                 
@@ -332,7 +336,7 @@
                 
                 let tooltipY = event.clientY + scrollY + 20;
                 
-                // 边界检查
+                // 边界��查
                 if (tooltipX + tooltipWidth > viewportWidth + scrollX - MARGIN.RIGHT) {
                     tooltipX = viewportWidth + scrollX - tooltipWidth - MARGIN.RIGHT;
                 }
@@ -363,22 +367,31 @@
                 }
             })
             .on("mouseout", function(event, d) {
-                // 如果有固定的tooltip，保持显示在固定位置
-                if (fixedTooltip) {
-                    tooltip.style("display", "block")
-                        .html(`
-                            <strong>${fixedTooltip.data.name}</strong>
-                            ${fixedTooltip.data.src ? `<img src="${fixedTooltip.data.src}" alt="${fixedTooltip.data.name}">` : ''}
-                            <div class="tooltip-text">
-                                ${fixedTooltip.data.name ? '<br>时间: ' + fixedTooltip.data.name : ''}
-                                ${fixedTooltip.data.description ? '<br>描述: ' + fixedTooltip.data.description : ''}
-                            </div>
-                        `)
-                        .style("left", fixedPosition.left + "px")
-                        .style("top", fixedPosition.top + "px");
-                } else {
-                    tooltip.style("display", "none");
+                // 检查鼠标是否直接移动到了tooltip上
+                const toElement = event.relatedTarget;
+                if (toElement && (toElement.closest('.tooltip') || toElement.closest('.node'))) {
+                    return;
                 }
+                
+                // 设置200ms的延迟
+                hideTimeout = setTimeout(() => {
+                    if (fixedTooltip) {
+                        tooltip.style("display", "block")
+                            .html(`
+                                <strong>${fixedTooltip.data.name}</strong>
+                                ${fixedTooltip.data.src ? `<img src="${fixedTooltip.data.src}" alt="${fixedTooltip.data.name}">` : ''}
+                                <div class="tooltip-text">
+                                    ${fixedTooltip.data.name ? '<br>时间: ' + fixedTooltip.data.name : ''}
+                                    ${fixedTooltip.data.description ? '<br>描述: ' + fixedTooltip.data.description : ''}
+                                </div>
+                            `)
+                            .style("left", fixedPosition.left + "px")
+                            .style("top", fixedPosition.top + "px");
+                    } else {
+                        currentNode = null;
+                        tooltip.style("display", "none");
+                    }
+                }, 200);  // 200ms延迟
             })
             .on("contextmenu", function(event, d) {
                 event.preventDefault();
@@ -443,6 +456,32 @@
                         .style("top", tooltipY + "px");
                 }
             });
+
+            // 修改tooltip的鼠标事件
+            tooltip
+                .on("mouseover", function() {
+                    // 清除隐藏的timeout
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                    }
+                    if (currentNode) {
+                        tooltip.style("display", "block");
+                    }
+                })
+                .on("mouseout", function(event) {
+                    const toElement = event.relatedTarget;
+                    if (toElement && (toElement.closest('.tooltip') || toElement.closest('.node'))) {
+                        return;
+                    }
+                    
+                    // 设置200ms的延迟
+                    hideTimeout = setTimeout(() => {
+                        if (!fixedTooltip) {
+                            currentNode = null;
+                            tooltip.style("display", "none");
+                        }
+                    }, 200);
+                });
         }
 
         // 添加下拉框事件监听
@@ -457,7 +496,7 @@
         // 修改为:
         function getTreeLayout(filter) {
             let dynamicHeight;
-            // 为不��时期设置特殊的高度倍数
+            // 为不时期设置特殊的高度倍数
             switch(filter) {
                 case 'all':
                     dynamicHeight = height * 8;
@@ -481,7 +520,7 @@
                 .size([dynamicHeight - margin.top - margin.bottom, dynamicWidth]);
         }
 
-        // 添加全屏功能
+        // ���加全屏功能
         const fullscreenBtn = document.getElementById('fullscreenBtn');
         
         fullscreenBtn.addEventListener('click', function() {

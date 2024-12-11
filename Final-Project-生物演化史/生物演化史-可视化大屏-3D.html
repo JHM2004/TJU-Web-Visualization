@@ -286,7 +286,7 @@
         ">
             <h3 style="margin: 0 0 8px 0; font-size: 20px; text-align: center;">节点属性</h3>
             <div id="node-info" style="
-                height: 505px;
+                height: 410px;
                 border: 2px solid rgba(255, 255, 255, 0.2);
                 border-radius: 8px;
                 padding: 5px;
@@ -1662,7 +1662,7 @@
                     </h4>
                     ${nodeData.time ? `<p style="margin: 5px 0;">时期: ${nodeData.time}</p>` : ''}
                     ${nodeData.description ? `<p style="margin: 5px 0;">描述: ${nodeData.description}</p>` : ''}
-                    ${nodeData.src ? `<img src="${nodeData.src}" style="max-width: 100%; margin-top: 10px;">` : ''}
+                    ${nodeData.src ? `<img src="${nodeData.src}" style="max-width: 100%; margin-top: 10px; cursor: pointer;" onclick="showLargeImage('${nodeData.src}')">` : ''}
                 </div>
             `;
                 nodeInfo.innerHTML = html;
@@ -1952,7 +1952,7 @@
             // 隐藏星空背景
             if (stars) stars.visible = false;
 
-            // 创建纹理加载器
+            // 创建纹理加���器
             const textureLoader = new THREE.TextureLoader();
 
             // 构建图片路径
@@ -1992,6 +1992,74 @@
                 }
             );
         });
+
+        // 添加图片放大功能
+        function showLargeImage(src) {
+            // 创建遮罩层
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+                cursor: pointer;
+            `;
+
+            // 创建图片元素
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.cssText = `
+                max-width: 90%;
+                max-height: 90%;
+                object-fit: contain;
+                border: 2px solid white;
+                border-radius: 5px;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            `;
+
+            // 添加关闭按钮
+            const closeButton = document.createElement('div');
+            closeButton.innerHTML = '×';
+            closeButton.style.cssText = `
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                color: white;
+                font-size: 30px;
+                cursor: pointer;
+                width: 40px;
+                height: 40px;
+                background: rgba(0, 0, 0, 0.5);
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: background 0.3s;
+            `;
+            closeButton.onmouseover = () => closeButton.style.background = 'rgba(0, 0, 0, 0.8)';
+            closeButton.onmouseout = () => closeButton.style.background = 'rgba(0, 0, 0, 0.5)';
+
+            // 点击遮罩层或关闭按钮时关闭
+            overlay.onclick = closeButton.onclick = () => {
+                document.body.removeChild(overlay);
+            };
+
+            // 阻止点击图片时关闭
+            img.onclick = (e) => {
+                e.stopPropagation();
+            };
+
+            // 将元素添加到页面
+            overlay.appendChild(img);
+            overlay.appendChild(closeButton);
+            document.body.appendChild(overlay);
+        }
     </script>
 </body>
 
