@@ -478,7 +478,7 @@
                     <option value="mushrooms">蘑菇</option>
                     <option value="snow_village_night">夜晚雪村</option>
                     <option value="space">太空</option>
-                    <option value="starmap">星图</option>
+                    <option value="starmap">星��</option>
                     <option value="underwater">海底世界</option>
                     <option value="FS003_Night">夜晚场景1</option>
                     <option value="FS011_Night">夜晚场景2</option>
@@ -882,24 +882,21 @@
 
             // X轴斥力控制
             document.getElementById('xForce').addEventListener('input', (e) => {
-                const strength = (e.target.value - 50) / 25; // 增加力的范围
-                console.log('X轴力度:', strength); // 添加调试信息
+                const strength = e.target.value / 20; // 将范围缩小为 0 到 2
                 simulation.force("axis").setXStrength(strength);
                 simulation.alpha(1).restart();
             });
 
             // Y轴斥力控制
             document.getElementById('yForce').addEventListener('input', (e) => {
-                const strength = (e.target.value - 50) / 25;
-                console.log('Y轴力度:', strength);
+                const strength = e.target.value / 20;
                 simulation.force("axis").setYStrength(strength);
                 simulation.alpha(1).restart();
             });
 
             // Z轴斥力控制
             document.getElementById('zForce').addEventListener('input', (e) => {
-                const strength = (e.target.value - 50) / 25;
-                console.log('Z轴力度:', strength);
+                const strength = e.target.value / 20;
                 simulation.force("axis").setZStrength(strength);
                 simulation.alpha(1).restart();
             });
@@ -937,9 +934,50 @@
 
             // 居中按钮
             document.getElementById('center').addEventListener('click', () => {
-                controls.target.set(0, 0, 0);
-                controls.update();
+                // 找到根节点 (没有入边的节点)
+                const rootNode = nodes.find(node => !links.some(link => link.target === node));
+                
+                if (rootNode && rootNode.object) {
+                    // 设置动画参数
+                    const duration = 1000; // 动画持续时间(毫秒)
+                    const startTime = Date.now();
+                    const startPosition = controls.target.clone();
+                    const startCameraPosition = camera.position.clone();
+                    
+                    // 设置目标位置为根节点位置
+                    const targetPosition = rootNode.object.position.clone();
+                    // 设置相机目标位置(保持当前距离,但对准根节点)
+                    const offset = camera.position.clone().sub(controls.target);
+                    const targetCameraPosition = targetPosition.clone().add(offset);
+
+                    // 动画函数
+                    function animate() {
+                        const elapsed = Date.now() - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        
+                        // 使用缓动函数使动画更平滑
+                        const easeProgress = easeInOutQuad(progress);
+                        
+                        // 更新控制器目标点
+                        controls.target.lerpVectors(startPosition, targetPosition, easeProgress);
+                        // 更新相机位置
+                        camera.position.lerpVectors(startCameraPosition, targetCameraPosition, easeProgress);
+                        
+                        controls.update();
+                        
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        }
+                    }
+                    
+                    animate();
+                }
             });
+
+            // 缓动函数(如果还没有定义的话)
+            function easeInOutQuad(t) {
+                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            }
 
             // 放大按钮
             document.getElementById('zoomIn').addEventListener('click', () => {
@@ -1092,7 +1130,7 @@
                         urls = [
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/left.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/right.png',
-                            './static-other/Skybox_Texture/立方体天空盒/blue_nebula/up.png',
+                            './static-other/Skybox_Texture/立方体���空盒/blue_nebula/up.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/bottom.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/front.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/back.png'
@@ -1337,36 +1375,39 @@
         // 添加轴向控制
         function createAxisForce() {
             let xStrength = 1;
-            let yStrength = 1;
+            let yStrength = 1; 
             let zStrength = 1;
 
-            const force = function (alpha) {
+            const force = function(alpha) {
                 nodes.forEach(node => {
-                    // 增加力的强度
-                    const xForce = (Math.random() - 0.5) * xStrength * 20; // 增加到20
-                    const yForce = (Math.random() - 0.5) * yStrength * 20;
-                    const zForce = (Math.random() - 0.5) * zStrength * 20;
+                    // 修改力的方向：将正负号反转
+                    const xRepulsion = -Math.sign(node.x) * Math.pow(Math.abs(node.x), 0.7) * xStrength;
+                    const yRepulsion = -Math.sign(node.y) * Math.pow(Math.abs(node.y), 0.7) * yStrength;
+                    const zRepulsion = -Math.sign(node.z) * Math.pow(Math.abs(node.z), 0.7) * zStrength;
 
-                    // 添加基于位置的力
-                    const distance = Math.sqrt(node.x * node.x + node.y * node.y + node.z * node.z);
-                    if (distance > 0) {
-                        node.vx += xForce * alpha + (node.x / distance) * xStrength * alpha * 10;
-                        node.vy += yForce * alpha + (node.y / distance) * yStrength * alpha * 10;
-                        node.vz += zForce * alpha + (node.z / distance) * zStrength * alpha * 10;
-                    }
+                    // 应用轴向力
+                    node.vx += xRepulsion * alpha * 0.5;
+                    node.vy += yRepulsion * alpha * 0.5;
+                    node.vz += zRepulsion * alpha * 0.5;
+
+                    // 添加约束力
+                    const axisConstraint = 0.1;
+                    node.vx += node.x * axisConstraint * xStrength * alpha;
+                    node.vy += node.y * axisConstraint * yStrength * alpha;
+                    node.vz += node.z * axisConstraint * zStrength * alpha;
                 });
             };
 
             // 设置各轴的力度
-            force.setXStrength = function (strength) {
+            force.setXStrength = function(strength) {
                 xStrength = strength;
                 return force;
             };
-            force.setYStrength = function (strength) {
+            force.setYStrength = function(strength) {
                 yStrength = strength;
                 return force;
             };
-            force.setZStrength = function (strength) {
+            force.setZStrength = function(strength) {
                 zStrength = strength;
                 return force;
             };
@@ -1588,7 +1629,7 @@
                     selectionCircle.lookAt(camera.position);
                     scene.add(selectionCircle);
 
-                    // 获取节点和根节点位置
+                    // 获取节点和根节点位���
                     const nodePosition = nodeData.object.position.clone();
                     const rootPosition = new THREE.Vector3(0, 0, 0); // 设根节点在原点
 
@@ -1952,7 +1993,7 @@
             // 隐藏星空背景
             if (stars) stars.visible = false;
 
-            // 创建纹理加���器
+            // 创建纹理加载器
             const textureLoader = new THREE.TextureLoader();
 
             // 构建图片路径
