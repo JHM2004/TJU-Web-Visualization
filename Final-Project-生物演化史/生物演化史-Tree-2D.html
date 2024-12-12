@@ -144,6 +144,59 @@
         .button-arrow {
             margin-left: 10px;
         }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            right: 10%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: #45a049;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+
+        #search-results {
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            background-color: white;
+        }
+
+        .search-result-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .highlighted-path {
+            stroke: #ff4444;
+            stroke-width: 3px;
+        }
     </style>
 </head>
 <body>
@@ -176,6 +229,10 @@
             <span class="button-arrow">→</span>
         </button>
     </div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="搜索节点...">
+        <div id="search-results"></div>
+    </div>
     <div id="tree"></div>
     <div class="tooltip"></div>
 
@@ -201,12 +258,15 @@
         // 创建工具提示div
         const tooltip = d3.select(".tooltip");
 
-        // 在script标签内添加一个变量来跟踪固定显示的tooltip
+        // 在script标签内添加一个变量来跟踪固定示的tooltip
         let fixedTooltip = null;
         let fixedPosition = null;
 
         // 添加一个变量来存储timeout
         let hideTimeout;
+
+        // 添加一个变量来跟踪当前高亮的节点
+        let currentHighlightedNode = null;
 
         // 加载数并渲染树
         function renderTree(data, filter = 'all') {
@@ -336,7 +396,7 @@
                 
                 let tooltipY = event.clientY + scrollY + 20;
                 
-                // 边界��查
+                // 边界检查
                 if (tooltipX + tooltipWidth > viewportWidth + scrollX - MARGIN.RIGHT) {
                     tooltipX = viewportWidth + scrollX - tooltipWidth - MARGIN.RIGHT;
                 }
@@ -474,7 +534,7 @@
                         return;
                     }
                     
-                    // 设置200ms的延迟
+                    // 设置200ms的延���
                     hideTimeout = setTimeout(() => {
                         if (!fixedTooltip) {
                             currentNode = null;
@@ -482,9 +542,79 @@
                         }
                     }, 200);
                 });
+
+            let allNodes = root.descendants();
+
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase();
+                if (!searchTerm) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                const matches = allNodes.filter(node => 
+                    node.data.name.toLowerCase().includes(searchTerm) ||
+                    (node.data.description && node.data.description.toLowerCase().includes(searchTerm))
+                );
+
+                searchResults.innerHTML = matches
+                    .slice(0, 10)
+                    .map(node => `
+                        <div class="search-result-item" data-node-id="${node.data.name}">
+                            ${node.data.name}
+                        </div>
+                    `).join('');
+
+                // 修改搜索结果的点击事件处理
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const nodeId = this.dataset.nodeId;
+                        const targetNode = allNodes.find(n => n.data.name === nodeId);
+                        if (targetNode) {
+                            // 如果点击了新的搜索结果，更新高亮路径
+                            highlightPathToRoot(targetNode);
+                            scrollToNode(targetNode);
+                        }
+                    });
+                });
+            });
+
+            function highlightPathToRoot(node) {
+                // 清除之前的高亮
+                svg.selectAll('.link').classed('highlighted-path', false);
+                
+                // 更新当前高亮的节点
+                currentHighlightedNode = node;
+                
+                // 获取从节点到根节点的路径
+                let current = node;
+                let path = [];
+                while (current.parent) {
+                    path.push({source: current.parent, target: current});
+                    current = current.parent;
+                }
+                
+                // 高亮路径
+                svg.selectAll('.link')
+                    .filter(d => path.some(p => 
+                        p.source === d.source && p.target === d.target
+                    ))
+                    .classed('highlighted-path', true);
+            }
+
+            function scrollToNode(node) {
+                const nodeY = node.x + margin.top;
+                window.scrollTo({
+                    top: nodeY - window.innerHeight / 2,
+                    behavior: 'smooth'
+                });
+            }
         }
 
-        // 添加下拉框事件监听
+        // 加下拉框事件监听
         d3.select("#era-select").on("change", function() {
             const selectedEra = this.value;
             renderTree(treeData, selectedEra);
@@ -520,7 +650,7 @@
                 .size([dynamicHeight - margin.top - margin.bottom, dynamicWidth]);
         }
 
-        // ���加全屏功能
+        // 添加全屏功能
         const fullscreenBtn = document.getElementById('fullscreenBtn');
         
         fullscreenBtn.addEventListener('click', function() {

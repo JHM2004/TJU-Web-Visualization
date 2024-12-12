@@ -325,7 +325,7 @@
 
             // 修改纹理加载部分
             timePoints.forEach(time => {
-                const fileName = time === 0 ? 'world.jpg' : `${time}.jpg`;
+                const fileName = time === 0 ? '0.jpg' : `${time}.jpg`;
                 textureLoader.load(
                     `./static-other/World_Texture/${fileName}`,
                     function (texture) {

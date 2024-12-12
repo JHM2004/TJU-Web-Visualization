@@ -43,6 +43,7 @@
             object-fit: contain;
             border-radius: 4px;
             background: white;
+            cursor: pointer;
         }
 
         .header {
@@ -159,6 +160,115 @@
             font-size: 16px;
             font-weight: bold;
         }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .search-result {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        .highlight-path {
+            stroke: #ff4444;
+            stroke-width: 3px;
+        }
+
+        .detail-panel {
+            position: fixed;
+            right: 320px;
+            top: 20%;
+            transform: translateY(-50%);
+            width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+        }
+
+        .detail-panel .content {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .detail-panel img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .detail-panel h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .detail-panel p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        /* 添加模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
     </style>
 </head>
 <body>
@@ -175,6 +285,8 @@
         <button class="control-button" onclick="window.location.href='./生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
         <button class="control-button" onclick="window.location.href='./生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
         <button class="control-button" onclick="window.location.href='./生物演化史-可视化大屏-3D.html'">生物演化史-可视化大屏-3D</button>
+        <button class="control-button" onclick="window.location.href='./地球古地理-3D.html'">地球古地理-3D</button>
+        <button class="control-button" onclick="window.location.href='./index.html'">返回导航页</button>
     </div>
     <div class="bottom-time-filter">
         <input type="range" id="timeSlider" min="0" max="500000" value="500000">
@@ -182,6 +294,21 @@
     </div>
     <div class="keyboard-hint">
         使用 'Q' 键逆时针旋转，'E' 键顺时针旋转
+    </div>
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="搜索节点...">
+        <div class="search-result"></div>
+    </div>
+    <div class="detail-panel">
+        <div class="content">
+            <img src="" alt="">
+            <h3></h3>
+            <p class="time"></p>
+            <p class="description"></p>
+        </div>
+    </div>
+    <div id="imageModal" class="modal">
+        <img class="modal-content" id="modalImage">
     </div>
     <script src="./生物演化史数据.js"></script>
     <script>
@@ -312,7 +439,7 @@
             .attr("stroke", "white")
             .attr("stroke-width", 3);
 
-        // 修改缩放行为
+        // 修改放行为
         const zoom = d3.zoom()
             .scaleExtent([0.2, 5])
             .on("zoom", (event) => {
@@ -392,7 +519,7 @@
         function updateView(threshold) {
             const visibleNodes = new Set();
             
-            // 第一遍遍历：找出时间小于阈值的节点(表示更近的时间)
+            // 一遍遍历：找出时间小于阈值的节点(表示更近的时间)
             root.descendants().forEach(d => {
                 const time = parseTime(d.data.time);
                 if (time === 0 || time <= threshold) {
@@ -452,6 +579,171 @@
             timeDisplay.textContent = displayText;
             updateView(value);
         });
+
+        // 搜索功能实现
+        const searchInput = document.querySelector('.search-input');
+        const searchResult = document.querySelector('.search-result');
+
+        // 搜索函数
+        function searchNodes(query) {
+            const results = [];
+            root.descendants().forEach(node => {
+                const name = node.data.name || '';
+                const description = node.data.description || '';
+                const time = node.data.time || '';
+                
+                // 如果没有查询词，显示所有节点
+                if (!query || name.toLowerCase().includes(query.toLowerCase()) ||
+                    description.toLowerCase().includes(query.toLowerCase()) ||
+                    time.toLowerCase().includes(query.toLowerCase())) {
+                    results.push(node);
+                }
+            });
+
+            displaySearchResults(results);
+            searchResult.style.display = 'block'; // 始终显示搜索结果面板
+        }
+
+        // 显示搜索结果
+        function displaySearchResults(results) {
+            searchResult.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResult.innerHTML = '<div class="search-result-item">未找到相关结果</div>';
+                searchResult.style.display = 'block';
+                return;
+            }
+
+            results.forEach(node => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.textContent = `${node.data.name} ${node.data.time || ''}`;
+                div.addEventListener('click', (event) => {
+                    event.stopPropagation(); // 阻止事件冒泡
+                    highlightPath(node);
+                });
+                searchResult.appendChild(div);
+            });
+
+            searchResult.style.display = 'block';
+        }
+
+        // 高亮显示路径
+        function highlightPath(node) {
+            // 清除之前的高亮
+            g.selectAll('.link').classed('highlight-path', false);
+            
+            // 获取从根节点到目标节点的路径
+            const path = [];
+            let current = node;
+            while (current.parent) {
+                path.push([current.parent, current]);
+                current = current.parent;
+            }
+
+            // 高亮路径
+            g.selectAll('.link')
+                .classed('highlight-path', d => {
+                    return path.some(p => 
+                        (p[0].id === d.source.id && p[1].id === d.target.id)
+                    );
+                });
+
+            // 显示详细信息面板
+            const detailPanel = document.querySelector('.detail-panel');
+            const content = detailPanel.querySelector('.content');
+            const img = content.querySelector('img');
+            const title = content.querySelector('h3');
+            const time = content.querySelector('.time');
+            const description = content.querySelector('.description');
+
+            // 更新面板内容
+            if (node.data.src) {
+                img.src = node.data.src;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
+            
+            title.textContent = node.data.name || '';
+            time.textContent = node.data.time ? `时间：${node.data.time}` : '';
+            description.textContent = node.data.description ? `描述：${node.data.description}` : '';
+
+            // 显示面板
+            detailPanel.style.display = 'block';
+        }
+
+        // 修改搜索相关的事件监听
+        searchInput.addEventListener('input', (e) => {
+            const searchValue = e.target.value;
+            searchNodes(searchValue);
+            // 保存搜索值到 localStorage (可选)
+            localStorage.setItem('lastSearch', searchValue);
+        });
+
+        // 添加页面加载时恢复上次搜索内容 (可选)
+        window.addEventListener('load', () => {
+            const lastSearch = localStorage.getItem('lastSearch');
+            if (lastSearch) {
+                searchInput.value = lastSearch;
+                searchNodes(lastSearch);
+            }
+        });
+
+        // 添加焦点事件监听
+        searchInput.addEventListener('focus', (e) => {
+            searchNodes(e.target.value); // 当获得焦点时，显示当前输入值的搜索结果
+        });
+
+        // 点击其他地方时关闭搜索结果
+        document.addEventListener('click', (e) => {
+            if (!searchResult.contains(e.target) && e.target !== searchInput) {
+                searchResult.style.display = 'none';
+            }
+        });
+
+        // 修改点击其他区域关闭详细信息面板的功能
+        document.addEventListener('click', (e) => {
+            const detailPanel = document.querySelector('.detail-panel');
+            const searchContainer = document.querySelector('.search-container');
+            const modal = document.getElementById('imageModal');
+            
+            if (!detailPanel.contains(e.target) && 
+                !searchContainer.contains(e.target) && 
+                !e.target.closest('.node') &&
+                !modal.contains(e.target)) {  // 添加这个条件
+                detailPanel.style.display = 'none';
+                // 清除高亮路径
+                g.selectAll('.link').classed('highlight-path', false);
+            }
+        });
+
+        // 添加图片点击放大功能
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+
+        // 为详情面板中的图片添加点击事件
+        document.querySelector('.detail-panel img').addEventListener('click', function() {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        });
+
+        // 为工具提示中的图片添加点击事件
+        tooltip.on('click', 'img', function() {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            d3.event.stopPropagation(); // 阻止事件冒泡
+        });
+
+        // 修改模态框关闭事件处理
+        modal.onclick = function(event) {
+            // 只有当点击的是模态框背景时才关闭
+            if (event.target === modal) {
+                modal.style.display = "none";
+                // 移除阻止事件冒泡,这样其他元素的显示状态会保持不变
+                event.stopPropagation();
+            }
+        }
     </script>
 </body>
 </html>

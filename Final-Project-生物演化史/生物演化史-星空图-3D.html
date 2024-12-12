@@ -71,7 +71,7 @@
         #controls-panel {
             position: absolute;
             top: 590px;
-            right: 32px;
+            right: 20px;
             background: rgba(0,0,0,0.7);
             padding: 15px;
             border-radius: 10px;
@@ -94,6 +94,13 @@
             white-space: nowrap;
         }
 
+        .button-group {
+            display: flex;
+            align-items: center;
+            width: 140px;
+            justify-content: space-between;
+        }
+
         .control-group button {
             background: #00ff88;
             border: none;
@@ -111,7 +118,7 @@
         }
 
         .control-group span {
-            min-width: 30px;
+            min-width: 40px;
             text-align: center;
             font-size: 18px;
         }
@@ -236,22 +243,44 @@
     </div>
     <div id="controls-panel">
         <div class="control-group">
+            <label>连接线</label>
+            <button id="toggleLines" onclick="toggleConnectionLines()" style="width: 140px;">隐藏</button>
+        </div>
+        <div class="control-group">
+            <label>星空</label>
+            <button id="toggleStars" onclick="toggleStars()" style="width: 140px;">隐藏</button>
+        </div>
+        <div class="control-group">
             <label>高度差</label>
-            <button onclick="adjustParameter('heightStep', -5)">-</button>
-            <span id="heightStep-value">25</span>
-            <button onclick="adjustParameter('heightStep', 5)">+</button>
+            <div class="button-group">
+                <button onclick="adjustParameter('heightStep', -5)">-</button>
+                <span id="heightStep-value">25</span>
+                <button onclick="adjustParameter('heightStep', 5)">+</button>
+            </div>
         </div>
         <div class="control-group">
             <label>线长度</label>
-            <button onclick="adjustParameter('radius', -5)">-</button>
-            <span id="radius-value">255</span>
-            <button onclick="adjustParameter('radius', 5)">+</button>
+            <div class="button-group">
+                <button onclick="adjustParameter('radius', -5)">-</button>
+                <span id="radius-value">255</span>
+                <button onclick="adjustParameter('radius', 5)">+</button>
+            </div>
         </div>
         <div class="control-group">
             <label>垂直间距</label>
-            <button onclick="adjustParameter('levelHeight', -2)">-</button>
-            <span id="levelHeight-value">25</span>
-            <button onclick="adjustParameter('levelHeight', 2)">+</button>
+            <div class="button-group">
+                <button onclick="adjustParameter('levelHeight', -2)">-</button>
+                <span id="levelHeight-value">25</span>
+                <button onclick="adjustParameter('levelHeight', 2)">+</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>节点大小</label>
+            <div class="button-group">
+                <button onclick="adjustParameter('nodeSize', -0.5)">-</button>
+                <span id="nodeSize-value">2.5</span>
+                <button onclick="adjustParameter('nodeSize', 0.5)">+</button>
+            </div>
         </div>
     </div>
     <div id="legend">
@@ -326,10 +355,11 @@
         let networkParameters = {
             heightStep: 25,     // 高度差
             radius: 255,        // 线长度
-            levelHeight: 25     // 垂直间距
+            levelHeight: 25,    // 垂直间距
+            nodeSize: 2.5      // 新增:节点大小参数
         };
 
-        // 添加参数调节函数
+        // 添加数调节函数
         function adjustParameter(param, delta) {
             networkParameters[param] += delta;
             // 更新显示的值
@@ -337,6 +367,15 @@
             // 重新创建网络
             scene.remove(networkGroup);
             networkGroup = createNetworkVisualization();
+            
+            // 添加: 如果连接线是隐藏状态,则保持隐藏
+            if (!showLines) {
+                networkGroup.children.forEach(child => {
+                    if (child instanceof THREE.Line) {
+                        child.visible = false;
+                    }
+                });
+            }
         }
 
         function init() {
@@ -382,6 +421,9 @@
             
             animate();
         }
+
+        let starField, brightStarField, coloredStarField;
+        let showStars = true;
 
         function createStarField() {
             const starsGeometry = new THREE.BufferGeometry();
@@ -451,9 +493,9 @@
             coloredStarsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(coloredStarsVertices, 3));
             coloredStarsGeometry.setAttribute('color', new THREE.Float32BufferAttribute(coloredStarsColors, 3));
             
-            const starField = new THREE.Points(starsGeometry, starsMaterial);
-            const brightStarField = new THREE.Points(brightStarsGeometry, brightStarsMaterial);
-            const coloredStarField = new THREE.Points(coloredStarsGeometry, coloredStarsMaterial);
+            starField = new THREE.Points(starsGeometry, starsMaterial);
+            brightStarField = new THREE.Points(brightStarsGeometry, brightStarsMaterial);
+            coloredStarField = new THREE.Points(coloredStarsGeometry, coloredStarsMaterial);
             
             scene.add(starField);
             scene.add(brightStarField);
@@ -485,7 +527,7 @@
             // 使用参数计算高度偏移
             const categoryHeightOffset = {
                 '冥古宙': 0,
-                '太古宙': networkParameters.heightStep,
+                '太古': networkParameters.heightStep,
                 '元古宙': networkParameters.heightStep * 2,
                 '显生宙': networkParameters.heightStep * 3,
                 '中生代': networkParameters.heightStep * 4,
@@ -510,7 +552,7 @@
                 
                 // 根据起点和终点的距离调整控制点
                 const distance = startPoint.distanceTo(endPoint);
-                const adjustedOffset = controlPointOffset * (distance / 100); // ��据距离调整偏移量
+                const adjustedOffset = controlPointOffset * (distance / 100); // 据距离调整偏移量
                 
                 // 创建更集中的控制点
                 const controlPoint = midPoint.clone().add(new THREE.Vector3(
@@ -541,9 +583,9 @@
                 return line;
             }
             
-            // 修改createNodes函数的颜色逻辑
+            // 修改createNodes函数的颜色���辑
             function createNodes(data, position = new THREE.Vector3(), level = 0, angle = 0, parentColor, baseAngle = null) {
-                const nodeGeometry = new THREE.SphereGeometry(2.5, 32, 32);
+                const nodeGeometry = new THREE.SphereGeometry(networkParameters.nodeSize, 32, 32);
                 let color;
                 
                 if (level === 1) {
@@ -601,7 +643,7 @@
                             heightOffset = categoryHeightOffset[child.name] || 0;
                         }
                         
-                        // 计算子节���位置
+                        // 算节点位置
                         let angleMultiplier = 1.0;
                         if (child.children && child.children.length > 0) {
                             angleMultiplier = 0.3;
@@ -664,18 +706,29 @@
 
         let highlightCircle;
 
-        // 创建圈的函数
-        function createHighlightCircle(position) {
+        // 修改创建圈的函数
+        function createHighlightCircle(position, selectedObject) {
             if (highlightCircle) {
                 scene.remove(highlightCircle);
             }
 
-            const ringGeometry = new THREE.RingGeometry(5, 5.5, 32);
-            const ringMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00, side: THREE.DoubleSide });
+            // 获取节点当前的缩放比例
+            const scale = selectedObject.scale.x;
+            // 基础圈的大小乘以节点的缩放比例
+            const innerRadius = 5 * scale;
+            const outerRadius = 5.5 * scale;
+
+            const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xffff00, 
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
             highlightCircle = new THREE.Mesh(ringGeometry, ringMaterial);
 
             highlightCircle.position.copy(position);
-            highlightCircle.rotation.x = -Math.PI / 2; // 将圈放置在节点的水平面上
+            highlightCircle.rotation.x = -Math.PI / 2;
             scene.add(highlightCircle);
         }
 
@@ -701,7 +754,8 @@
                 const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
                 targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
                 targetLookAt.copy(nodePosition);
-                createHighlightCircle(nodePosition);
+                // 传入选中的对象
+                createHighlightCircle(nodePosition, selectedObject);
 
                 isTransitioning = true;
                 isInfoDisplayed = true;
@@ -846,11 +900,49 @@
                 document.documentElement.requestFullscreen().catch(err => {
                     console.log(`Error attempting to enable full-screen mode: ${err.message}`);
                 });
+                document.getElementById('fullscreen-btn').textContent = '退出全屏';
             } else {
                 if (document.exitFullscreen) {
                     document.exitFullscreen();
+                    document.getElementById('fullscreen-btn').textContent = '全屏';
                 }
             }
+        }
+
+        // 添加全屏变化事件监听
+        document.addEventListener('fullscreenchange', function() {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            if (document.fullscreenElement) {
+                fullscreenBtn.textContent = '退出全屏';
+            } else {
+                fullscreenBtn.textContent = '全屏';
+            }
+        });
+
+        // 添加连接线显示状态变量
+        let showLines = true;
+        
+        // 添加切换连接线显示/隐藏的函数
+        function toggleConnectionLines() {
+            showLines = !showLines;
+            const button = document.getElementById('toggleLines');
+            button.textContent = showLines ? '隐藏' : '显示';
+            
+            networkGroup.children.forEach(child => {
+                if (child instanceof THREE.Line) {
+                    child.visible = showLines;
+                }
+            });
+        }
+
+        function toggleStars() {
+            showStars = !showStars;
+            const button = document.getElementById('toggleStars');
+            button.textContent = showStars ? '隐藏' : '显示';
+            
+            if(starField) starField.visible = showStars;
+            if(brightStarField) brightStarField.visible = showStars;
+            if(coloredStarField) coloredStarField.visible = showStars;
         }
 
         init();
