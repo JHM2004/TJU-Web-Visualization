@@ -534,7 +534,7 @@
                         return;
                     }
                     
-                    // 设置200ms的延���
+                    // 设置200ms的延迟
                     hideTimeout = setTimeout(() => {
                         if (!fixedTooltip) {
                             currentNode = null;
@@ -549,19 +549,28 @@
             const searchResults = document.getElementById('search-results');
 
             searchInput.addEventListener('input', function(e) {
-                const searchTerm = e.target.value.toLowerCase();
+                const searchTerm = e.target.value.trim().toLowerCase();
                 if (!searchTerm) {
                     searchResults.innerHTML = '';
                     return;
                 }
 
+                // 匹配 name 属性
                 const matches = allNodes.filter(node => 
-                    node.data.name.toLowerCase().includes(searchTerm) ||
-                    (node.data.description && node.data.description.toLowerCase().includes(searchTerm))
+                    node.data.name && node.data.name.toLowerCase().includes(searchTerm)
                 );
 
+                // 按时间属性排序
+                matches.sort((a, b) => {
+                    // 如果没有 time 属性，则将其排在后面
+                    if (!a.data.time) return 1;
+                    if (!b.data.time) return -1;
+                    // 时间从远到近排序（数字越大时间越近）
+                    return b.data.time - a.data.time;
+                });
+
+                // 显示搜索结果
                 searchResults.innerHTML = matches
-                    .slice(0, 10)
                     .map(node => `
                         <div class="search-result-item" data-node-id="${node.data.name}">
                             ${node.data.name}
@@ -670,9 +679,9 @@
         // 监听全屏变化事件
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
-                fullscreenBtn.textContent = '全屏显示';
-            } else {
                 fullscreenBtn.textContent = '退出全屏';
+            } else {
+                fullscreenBtn.textContent = '全屏显示';
             }
         });
     </script>
