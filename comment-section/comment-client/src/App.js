@@ -456,7 +456,7 @@ function App() {
             </p>
             <p>
               <strong>QQ群:</strong>
-              <span className="contact-info">可视前端-学习/聊天群: 585135622</span>
+              <span className="contact-info">EvoViz交流群: 585135622</span>
             </p>
             <p>
               <strong>bilibili:</strong>
