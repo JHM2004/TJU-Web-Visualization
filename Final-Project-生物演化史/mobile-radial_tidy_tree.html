@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生物演化史放射状树形图</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+        
+        .node circle {
+            fill: #fff;
+            stroke: #555;
+            stroke-width: 2px;
+        }
+        
+        .node text {
+            font: 12px sans-serif;
+        }
+        
+        .link {
+            fill: none;
+            stroke: #555;
+            stroke-width: 1px;
+        }
+
+        .tooltip {
+            position: absolute;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 12px;
+            max-width: 300px;
+            box-shadow: 0 2px 4px rgb(0,0,0);
+        }
+        .tooltip img {
+            object-fit: contain;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+        }
+
+        .header {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 200px;
+        }
+
+        .header h1 {
+            text-align: center;
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background: #5cb85c;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #4cae4c;
+        }
+
+        .nav-link::after {
+            content: "→";
+            margin-left: auto;
+        }
+
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-button {
+            width: 100% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 10px 15px !important;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .control-button:hover {
+            background-color: #45a049;
+        }
+
+        .control-button.active {
+            background-color: #2E7D32;
+            font-weight: bold;
+        }
+
+        .keyboard-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            font-size: 14px;
+            color: #333;
+        }
+
+        .time-filter {
+            display: none;
+        }
+
+        .bottom-time-filter {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .bottom-time-filter #timeSlider {
+            width: 100%;
+        }
+
+        .bottom-time-filter #timeDisplay {
+            display: block;
+            text-align: center;
+            color: #333;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 300px;
+            font-size: 14px;
+        }
+
+        .search-result {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-result-item:hover {
+            background: #f5f5f5;
+        }
+
+        .highlight-path {
+            stroke: #ff4444;
+            stroke-width: 3px;
+        }
+
+        .detail-panel {
+            position: fixed;
+            right: 320px;
+            top: 20%;
+            transform: translateY(-50%);
+            width: 300px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: none;
+            z-index: 1000;
+        }
+
+        .detail-panel .content {
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .detail-panel img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .detail-panel h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+
+        .detail-panel p {
+            margin: 5px 0;
+            line-height: 1.5;
+        }
+
+        /* 添加模态框样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .bottom-rotate-buttons {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .bottom-rotate-buttons .control-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .bottom-rotate-buttons .control-button:hover {
+            background-color: #45a049;
+        }
+
+        .alert-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 2000;
+            text-align: center;
+            max-width: 80%;
+            white-space: pre-line;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Radial Tidy Tree</h1>
+        <a href="./mobile-生物演化史-Tree-2D.html" class="nav-link">Tidy Tree</a>
+    </div>
+    <div class="control-buttons">
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-力导向-2D.html'">生物演化史-力导向-2D</button>
+        <button class="control-button active" onclick="window.location.href='./mobile-生物演化史-Tree-2D.html'">生物演化史-Tree-2D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-DNA双螺旋-3D.html'">生物演化史-DNA双螺旋-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-可视化大屏-3D.html'">生物演化史-可视化大屏-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-地球古地理-3D.html'">地球古地理-3D</button>
+        <button class="control-button" onclick="window.location.href='./index.html'">返回导航页</button>
+    </div>
+    <div class="bottom-rotate-buttons">
+        <button class="control-button" id="rotateLeftBtn">逆时针旋转</button>
+        <button class="control-button" id="rotateRightBtn">顺时针旋转</button>
+    </div>
+    <div class="bottom-time-filter">
+        <input type="range" id="timeSlider" min="0" max="500000" value="500000">
+        <span id="timeDisplay">显示所有时期</span>
+    </div>
+
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="搜索节点...">
+        <div class="search-result"></div>
+    </div>
+    <div class="detail-panel">
+        <div class="content">
+            <img src="" alt="">
+            <h3></h3>
+            <p class="time"></p>
+            <p class="description"></p>
+        </div>
+    </div>
+    <div id="imageModal" class="modal">
+        <img class="modal-content" id="modalImage">
+    </div>
+    <div class="alert-message" id="alertMessage"></div>
+    <script src="./生物演化史数据.js"></script>
+    <script>
+        // 在SVG创建之前添加旋转角度变量
+        let currentRotation = 0;
+        const rotationStep = 5; // 每次旋转5度
+        
+        // 获取窗口尺寸
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        
+        // 创建SVG容器
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .attr("viewBox", [-width / 2, -height / 2, width, height]);
+
+        // 添加一个专门用于缩放的组
+        const g = svg.append("g");
+
+        // 创建放射状树形图布局
+        const radius = Math.min(width, height) / 1;
+        
+        // 在创建层级先设置节点ID
+        let nodeId = 0;
+        const root = d3.hierarchy(treeData);
+        root.descendants().forEach(d => {
+            d.id = nodeId++;
+        });
+
+        // 创建放射状树形图布局
+        const tree = d3.tree()
+            .size([2 * Math.PI, radius])
+            .separation((a, b) => {
+                return (a.parent == b.parent ? 2 : 3) / a.depth;
+            });
+
+        // 应用树形布局
+        const treeData2 = tree(root);
+
+        // 创建工具提示
+        const tooltip = d3.select("body")
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        // 绘制连接线
+        g.selectAll(".link")
+            .data(treeData2.links())
+            .join("path")
+            .attr("class", "link")
+            .attr("d", d3.linkRadial()
+                .angle(d => d.x)
+                .radius(d => d.y));
+
+        // 创建节点组
+        const node = g.selectAll(".node")
+            .data(treeData2.descendants())
+            .join("g")
+            .attr("class", "node")
+            .attr("transform", d => `
+                translate(${d3.pointRadial(d.x, d.y)})
+            `);
+
+        // 创建一个显示tooltip的函
+        const showTooltip = (event, d) => {
+            tooltip.transition()
+                .duration(200)
+                .style("opacity", .9);
+            
+            let tooltipContent = '';
+            
+            // 修改图片样式，确保完整显示
+            if (d.data.src) {
+                tooltipContent += `<img src="${d.data.src}" style="width: 200px; height: 200px; display: block; margin-bottom: 10px; object-fit: contain;"><br>`;
+            }
+            
+            tooltipContent += `名称: ${d.data.name}`;
+            if (d.data.time) tooltipContent += `<br>间: ${d.data.time}`;
+            if (d.data.description) tooltipContent += `<br>描述: ${d.data.description}`;
+            
+            tooltip.html(tooltipContent)
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 10) + "px");
+        };
+
+        // 创建一个隐藏tooltip的函数
+        const hideTooltip = () => {
+            tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+        };
+
+        // 添加图片
+        node.append("image")
+            .attr("xlink:href", d => d.data.src || '')
+            .attr("x", 8)
+            .attr("y", -12)
+            .attr("width", 24)
+            .attr("height", 24)
+            .attr("transform", d => {
+                const angle = (d.x * 180 / Math.PI - 90);
+                return `rotate(${angle})`;
+            })
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip);
+
+        // 添加节点圆圈
+        node.append("circle")
+            .attr("r", 4)
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip);
+
+        // 添加文本标签
+        node.append("text")
+            .attr("dy", "0.31em")
+            .attr("x", 40)
+            .attr("text-anchor", "start")
+            .attr("transform", d => {
+                const angle = (d.x * 180 / Math.PI - 90);
+                return `rotate(${angle})`;
+            })
+            .text(d => d.data.name)
+            .on("mouseover", showTooltip)
+            .on("mouseout", hideTooltip)
+            .clone(true).lower()
+            .attr("stroke", "white")
+            .attr("stroke-width", 3);
+
+        // 修改放行为
+        const zoom = d3.zoom()
+            .scaleExtent([0.2, 5])
+            .on("zoom", (event) => {
+                g.attr("transform", `${event.transform} rotate(${currentRotation})`);
+            });
+
+        // 设置初始缩放和平移
+        svg.call(zoom)
+           .call(zoom.transform, d3.zoomIdentity
+                .translate(width/50 , height/20)
+                .scale(0.55)); // 保持原有的缩放比例
+
+        // 添加键盘事件监听
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'q') {
+                // 逆时针旋转
+                currentRotation -= rotationStep;
+                g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
+            } else if (event.key === 'e') {
+                // 顺时针旋转
+                currentRotation += rotationStep;
+                g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
+            }
+        });
+
+        // 修改时间解析函数，统一转换为"万年"作为基本单位
+        function parseTime(timeStr) {
+            if (!timeStr) return 0;
+            
+            // 处理"亿年前"格式
+            let match = timeStr.match(/(\d+(?:\.\d+)?)\s*亿年前/);
+            if (match) {
+                return parseFloat(match[1]) * 10000; // 转换为万年单位
+            }
+            
+            // 处理"万年前"格式
+            match = timeStr.match(/(\d+(?:\.\d+)?)\s*万年前/);
+            if (match) {
+                return parseFloat(match[1]); // 已经是万年单位
+            }
+            
+            // 处理"百万年前"格式
+            match = timeStr.match(/(\d+(?:\.\d+)?)\s*百万年前/);
+            if (match) {
+                return parseFloat(match[1]) * 100; // 转换为万年单位
+            }
+            
+            return 0;
+        }
+
+        function updateView(threshold) {
+            const visibleNodes = new Set();
+            
+            // 一遍遍历：找出时间小于阈值的节点(表示更近的时间)
+            root.descendants().forEach(d => {
+                const time = parseTime(d.data.time);
+                if (time === 0 || time <= threshold) {
+                    visibleNodes.add(d.id);
+                    // 将必要的祖先节点加入可见集合
+                    let ancestor = d.parent;
+                    while (ancestor) {
+                        visibleNodes.add(ancestor.id);
+                        ancestor = ancestor.parent;
+                    }
+                }
+            });
+
+            // 更新连接线和节点显示
+            g.selectAll(".link")
+                .style("display", d => {
+                    return (visibleNodes.has(d.source.id) && visibleNodes.has(d.target.id)) ? "block" : "none";
+                });
+
+            g.selectAll(".node")
+                .style("display", d => {
+                    return visibleNodes.has(d.id) ? "block" : "none";
+                });
+        }
+
+        // 修改初始化显示
+        updateView(500000); // 初始显示所有节点 (50亿年)
+
+        // 修改滑块初始值
+        const timeSlider = document.getElementById('timeSlider');
+        timeSlider.min = 0;     // 最小值为0
+        timeSlider.max = 500000; // 最大值为50亿年（转换为万年单位）
+        timeSlider.value = 500000; // 设置初始值为最大值
+        timeSlider.step = 1;    // 步长为1万年
+
+        const timeDisplay = document.getElementById('timeDisplay');
+        timeDisplay.textContent = "显示所有时期"; // 设置初始显示文本
+
+        // 修改滑块事件监听器
+        timeSlider.addEventListener('input', (event) => {
+            const value = parseInt(event.target.value);
+            let displayText;
+            
+            if (value === 500000) {
+                displayText = "显示所有时期";
+            } else if (value >= 10000) {
+                // 大于1亿年的显示
+                displayText = `显示距今 ${(value/10000).toFixed(1)} 亿年前及更近时期`;
+            } else if (value >= 100) {
+                // 大于100万年的显示
+                displayText = `显示距今 ${(value/100).toFixed(1)} 万年前及更近时期`;
+            } else {
+                // 小于100万年的显示
+                displayText = `显示距今 ${value} 万年前及更近时期`;
+            }
+            
+            timeDisplay.textContent = displayText;
+            updateView(value);
+        });
+
+        // 搜索功能实现
+        const searchInput = document.querySelector('.search-input');
+        const searchResult = document.querySelector('.search-result');
+
+        // 搜索函数
+        function searchNodes(query) {
+            const results = [];
+            root.descendants().forEach(node => {
+                const name = node.data.name || '';
+                const description = node.data.description || '';
+                const time = node.data.time || '';
+                
+                // 如果没有查询词，显示所有节点
+                if (!query || name.toLowerCase().includes(query.toLowerCase()) ||
+                    description.toLowerCase().includes(query.toLowerCase()) ||
+                    time.toLowerCase().includes(query.toLowerCase())) {
+                    results.push(node);
+                }
+            });
+
+            displaySearchResults(results);
+            searchResult.style.display = 'block'; // 始终显示搜索结果面板
+        }
+
+        // 显示搜索结果
+        function displaySearchResults(results) {
+            searchResult.innerHTML = '';
+            
+            if (results.length === 0) {
+                searchResult.innerHTML = '<div class="search-result-item">未找到相关结果</div>';
+                searchResult.style.display = 'block';
+                return;
+            }
+
+            results.forEach(node => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.textContent = `${node.data.name} ${node.data.time || ''}`;
+                div.addEventListener('click', (event) => {
+                    event.stopPropagation(); // 阻止事件冒泡
+                    highlightPath(node);
+                });
+                searchResult.appendChild(div);
+            });
+
+            searchResult.style.display = 'block';
+        }
+
+        // 高亮显示路径
+        function highlightPath(node) {
+            // 清除之前的高亮
+            g.selectAll('.link').classed('highlight-path', false);
+            
+            // 获取从根节点到目标节点的路径
+            const path = [];
+            let current = node;
+            while (current.parent) {
+                path.push([current.parent, current]);
+                current = current.parent;
+            }
+
+            // 高亮路径
+            g.selectAll('.link')
+                .classed('highlight-path', d => {
+                    return path.some(p => 
+                        (p[0].id === d.source.id && p[1].id === d.target.id)
+                    );
+                });
+
+            // 显示详细信息面板
+            const detailPanel = document.querySelector('.detail-panel');
+            const content = detailPanel.querySelector('.content');
+            const img = content.querySelector('img');
+            const title = content.querySelector('h3');
+            const time = content.querySelector('.time');
+            const description = content.querySelector('.description');
+
+            // 更新面板内容
+            if (node.data.src) {
+                img.src = node.data.src;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
+            
+            title.textContent = node.data.name || '';
+            time.textContent = node.data.time ? `时间：${node.data.time}` : '';
+            description.textContent = node.data.description ? `描述：${node.data.description}` : '';
+
+            // 显示面板
+            detailPanel.style.display = 'block';
+        }
+
+        // 修改搜索相关的事件监听
+        searchInput.addEventListener('input', (e) => {
+            const searchValue = e.target.value;
+            searchNodes(searchValue);
+            // 保存搜索值到 localStorage (可选)
+            localStorage.setItem('lastSearch', searchValue);
+        });
+
+        // ���加页面加载时恢复上次搜索内容 (可选)
+        window.addEventListener('load', () => {
+            const lastSearch = localStorage.getItem('lastSearch');
+            if (lastSearch) {
+                searchInput.value = lastSearch;
+                searchNodes(lastSearch);
+            }
+        });
+
+        // 添加焦点事件监听
+        searchInput.addEventListener('focus', (e) => {
+            searchNodes(e.target.value); // 当获得焦点时，显示当前输入值的搜索结果
+        });
+
+        // 点击其他地方时关闭搜索结果
+        document.addEventListener('click', (e) => {
+            if (!searchResult.contains(e.target) && e.target !== searchInput) {
+                searchResult.style.display = 'none';
+            }
+        });
+
+        // 修改点击其他区域关闭详细信息面板的功能
+        document.addEventListener('click', (e) => {
+            const detailPanel = document.querySelector('.detail-panel');
+            const searchContainer = document.querySelector('.search-container');
+            const modal = document.getElementById('imageModal');
+            
+            if (!detailPanel.contains(e.target) && 
+                !searchContainer.contains(e.target) && 
+                !e.target.closest('.node') &&
+                !modal.contains(e.target)) {  // 添加这个条件
+                detailPanel.style.display = 'none';
+                // 清除高亮路径
+                g.selectAll('.link').classed('highlight-path', false);
+            }
+        });
+
+        // 添加图片点击放大功能
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+
+        // 为详情面板中的图片添加点击事件
+        document.querySelector('.detail-panel img').addEventListener('click', function() {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+        });
+
+        // 为工具提示中的图片添加点击事件
+        tooltip.on('click', 'img', function() {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            d3.event.stopPropagation(); // 阻止事件冒泡
+        });
+
+        // 修改模态框关闭事件处理
+        modal.onclick = function(event) {
+            // 只有当点击的是模态框背景时才关闭
+            if (event.target === modal) {
+                modal.style.display = "none";
+                // 移除阻止事件冒泡,这样其他元素的显示状态会保持不变
+                event.stopPropagation();
+            }
+        }
+
+        // 在script标签中添加或修改旋转按钮相关的代
+        let rotationInterval; // 用于存储interval的ID
+        const rotationDelay = 50; // 旋转的时间间隔（毫秒）
+
+        // 开始旋转的函数
+        function startRotation(direction) {
+            // 清除可能存在的之前的interval
+            clearInterval(rotationInterval);
+            
+            // 设置新的interval
+            rotationInterval = setInterval(() => {
+                currentRotation += direction * rotationStep;
+                g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
+            }, rotationDelay);
+        }
+
+        // 停止旋转的函数
+        function stopRotation() {
+            clearInterval(rotationInterval);
+        }
+
+        // 为左旋转按钮添加事件
+        rotateLeftBtn.addEventListener('mousedown', () => startRotation(-1)); // 逆时针
+        rotateLeftBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // 防止触摸事件的默认行为
+            startRotation(-1);
+        });
+
+        // 为右旋转按钮添加事件
+        rotateRightBtn.addEventListener('mousedown', () => startRotation(1)); // 顺时针
+        rotateRightBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            startRotation(1);
+        });
+
+        // 添加停止旋转的事件监听
+        ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(eventName => {
+            rotateLeftBtn.addEventListener(eventName, stopRotation);
+            rotateRightBtn.addEventListener(eventName, stopRotation);
+        });
+
+        // 为了防止在页面失去焦点时继续旋转，添加window的blur事件监听
+        window.addEventListener('blur', stopRotation);
+
+        // 为了防止在滚动时继续旋转，添加document的scroll事件监听
+        document.addEventListener('scroll', stopRotation);
+
+        function showAlert(message) {
+            const alertBox = document.getElementById('alertMessage');
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+            
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

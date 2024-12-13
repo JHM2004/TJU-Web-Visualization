@@ -152,7 +152,7 @@
             transform: scale(1.05);
         }
 
-        /* 添加新的呼吸效果样式 */
+        /* 添加新的呼效果样式 */
         .vr-hint {
             position: fixed;
             top: 15%;
@@ -202,7 +202,7 @@
             background-color: rgba(0, 123, 255, 0.5);
         }
 
-        /* 移动端消息提示样式 */
+        /* 移���端消息提示样式 */
         .mobile-message {
             position: fixed;
             top: 50%;
@@ -251,7 +251,7 @@
             background-color: rgba(0, 123, 255, 0.5);
         }
 
-        /* 添加地���模型跳转按钮样式 */
+        /* 添加地模型跳转按钮样式 */
         .earth-button {
             position: fixed;
             bottom: 20.5%;
@@ -301,20 +301,13 @@
             };
             document.body.appendChild(redirectButton);
         } else {
-            // 移动端添加按钮但显示提示信息
+            // 修改移动端的处理
             const redirectButton = document.createElement('button');
             redirectButton.className = 'redirect-button mobile';
             redirectButton.textContent = '点击跳转到生物演化史首页';
             redirectButton.onclick = function () {
-                const message = document.createElement('div');
-                message.className = 'mobile-message';
-                message.textContent = '只有PC端才能进入首页~';
-                document.body.appendChild(message);
-                
-                // 1秒后移除消息
-                setTimeout(() => {
-                    message.remove();
-                }, 1000);
+                // 直接跳转到移动端页面
+                window.location.href = "./mobile-生物演化史-Tree-2D.html";
             };
             document.body.appendChild(redirectButton);
         }
@@ -479,7 +472,7 @@
             {
                 name: '日落场景2',
                 type: 'equirectangular',
-                url: './static-other/Skybox_Texture/全景天���盒/new-01/FS014_Sunset.png'
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Sunset.png'
             },
             {
                 name: '日落场景3',
@@ -513,7 +506,7 @@
                 url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Day.png'
             },
             {
-                name: '太空方体',
+                name: '太方体',
                 type: 'cubemap',
                 urls: [
                     './static-other/Skybox_Texture/立方体天空盒/taikong/right.jpg',
@@ -870,7 +863,7 @@
         controlsDiv.appendChild(cubeToggleBtn);  // 添加按钮到控制区域
         document.body.appendChild(controlsDiv);
 
-        // 修改天空盒加��函数
+        // 修改天空盒加载函数
         function loadSkyboxTexture(textureConfig) {
             loadingDiv.style.display = 'block';
 
@@ -1083,15 +1076,7 @@
             if (!isMobileDevice()) {
                 window.location.href = 'http://39.105.163.119:3000';
             } else {
-                const message = document.createElement('div');
-                message.className = 'mobile-message';
-                message.textContent = '只有PC端才能展示评论区~';
-                document.body.appendChild(message);
-                
-                // 1秒后移除消息
-                setTimeout(() => {
-                    message.remove();
-                }, 1000);
+                window.location.href = './mobile-comment.html';
             }
         };
 

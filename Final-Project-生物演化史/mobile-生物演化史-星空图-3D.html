@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生物演化史-星空图-3D</title>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-family: Arial;
+            font-size: 18px;
+            pointer-events: none;
+        }
+        #details {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 340px;
+            display: none;
+            backdrop-filter: blur(5px);
+            font-family: Arial, sans-serif;
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+        #details h3 {
+            margin: 0 0 10px 0;
+            color: #00ff88;
+            font-size: 24px;
+        }
+        #details p {
+            margin: 10px 0;
+            line-height: 1.5;
+            font-size: 16px;
+            max-height: 168px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        #details img {
+            width: 300px;
+            height: 300px;
+            margin-left: 0;
+            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0 0 15px rgba(0,255,0,0.3);
+        }
+        #controls-info {
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+            background: rgba(0,0,0,0.7);
+            color: #00ff88;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 10px rgba(0,255,0,0.2);
+            user-select: none;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        #controls-panel {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            color: #00ff88;
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-group label {
+            width: 70px;
+            font-size: 18px;
+            white-space: nowrap;
+        }
+
+        .button-group {
+            display: flex;
+            align-items: center;
+            width: 140px;
+            justify-content: space-between;
+        }
+
+        .control-group button {
+            background: #00ff88;
+            border: none;
+            color: black;
+            width: 25px;
+            height: 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .control-group button:hover {
+            background: #00cc6a;
+        }
+
+        .control-group span {
+            min-width: 40px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        #navigation-panel {
+            position: absolute;
+            bottom: 260px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: rgba(0,0,0,0.7);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            min-width: fit-content;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .nav-button:hover {
+            background: rgba(0,255,136,0.2);
+        }
+
+        #fullscreen-btn {
+            background: rgba(0,0,0,0.7);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        #fullscreen-btn:hover {
+            background: rgba(0,255,136,0.2);
+        }
+        .nav-button.active {
+            background: rgba(0,255,136,0.4);
+        }
+
+        #legend {
+            position: absolute;
+            left: 10px;
+            bottom: 60px;
+            background: rgba(0,0,0,0.7);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 0 20px rgba(0,255,0,0.2);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .color-box {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+
+        #details p::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #details p::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 3px;
+        }
+
+        #details p::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 3px;
+        }
+
+        #details p::-webkit-scrollbar-thumb:hover {
+            background: #00cc6a;
+        }
+
+        #toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.8);
+            color: #00ff88;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: Arial, sans-serif;
+            display: none;
+            text-align: center;
+            max-width: 80%;
+            line-height: 1.5;
+            word-break: break-all;
+            z-index: 9999;
+        }
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="./生物演化史数据.js"></script>
+</head>
+<body>
+    <div id="navigation-panel">
+        <a href="./mobile-生物分类-太阳爆发图-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
+        <a href="./mobile-生物演化史-力导向-2D.html" class="nav-button">生物演化史-力导向-2D</a>
+        <a href="./mobile-生物演化史-Tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
+        <a href="./mobile-生物演化史-DNA双螺旋-3D.html" class="nav-button">生物演化史-DNA双螺旋-3D</a>
+        <a href="./mobile-生物演化史-星空图-3D.html" class="nav-button active">生物演化史-星空图-3D</a>
+        <a href="./mobile-生物演化史-Tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
+        <a href="./mobile-生物演化史-可视化大屏-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
+        <a href="./mobile-地球古地理-3D.html" class="nav-button">地球古地理-3D</a>
+        <a href="index.html" class="nav-button">返回导航页</a>
+    </div>
+    <div id="info">生物演化史</div>
+    <div id="details"></div>
+    <div id="controls-info">
+        <div>点击节点聚焦</div>
+    </div>
+    <div id="controls-panel">
+        <div class="control-group">
+            <label>连接线</label>
+            <button id="toggleLines" onclick="toggleConnectionLines()" style="width: 140px;">隐藏</button>
+        </div>
+        <div class="control-group">
+            <label>星空</label>
+            <button id="toggleStars" onclick="toggleStars()" style="width: 140px;">隐藏</button>
+        </div>
+        <div class="control-group">
+            <label>高度差</label>
+            <div class="button-group">
+                <button onclick="adjustParameter('heightStep', -5)">-</button>
+                <span id="heightStep-value">25</span>
+                <button onclick="adjustParameter('heightStep', 5)">+</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>线长度</label>
+            <div class="button-group">
+                <button onclick="adjustParameter('radius', -5)">-</button>
+                <span id="radius-value">255</span>
+                <button onclick="adjustParameter('radius', 5)">+</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>垂直间距</label>
+            <div class="button-group">
+                <button onclick="adjustParameter('levelHeight', -2)">-</button>
+                <span id="levelHeight-value">25</span>
+                <button onclick="adjustParameter('levelHeight', 2)">+</button>
+            </div>
+        </div>
+        <div class="control-group">
+            <label>节点大小</label>
+            <div class="button-group">
+                <button onclick="adjustParameter('nodeSize', -0.5)">-</button>
+                <span id="nodeSize-value">2.5</span>
+                <button onclick="adjustParameter('nodeSize', 0.5)">+</button>
+            </div>
+        </div>
+    </div>
+    <div id="legend">
+        <div class="legend-item">
+            <div class="color-box" style="background: #FF0000;"></div>
+            <span>冥古宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #FF7F00;"></div>
+            <span>太古宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #FFFF00;"></div>
+            <span>元古宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #00FF00;"></div>
+            <span>显生宙</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #00FFFF;"></div>
+            <span>中生代</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #0000FF;"></div>
+            <span>新生代</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box" style="background: #8B00FF;"></div>
+            <span>第四纪</span>
+        </div>
+    </div>
+    <div id="toast"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="./生物演化史据.js"></script>
+    <script>
+        let scene, camera, renderer, controls;
+        let dnaPoints = [];
+        const timelineObjects = new THREE.Group();
+        let composer;
+
+        // 添加键盘控制状态
+        const keyState = {
+            q: false,
+            e: false
+        };
+
+        // 添加键盘事件监听
+        window.addEventListener('keydown', (event) => {
+            switch(event.key.toLowerCase()) {
+                case 'q':
+                    keyState.q = true;
+                    break;
+                case 'e':
+                    keyState.e = true;
+                    break;
+            }
+        });
+
+        window.addEventListener('keyup', (event) => {
+            switch(event.key.toLowerCase()) {
+                case 'q':
+                    keyState.q = false;
+                    break;
+                case 'e':
+                    keyState.e = false;
+                    break;
+            }
+        });
+
+        // 修改初始参数
+        let networkParameters = {
+            heightStep: 25,     // 高度差
+            radius: 255,        // 线长度
+            levelHeight: 25,    // 垂直间距
+            nodeSize: 2.5      // 新增:节点大小参数
+        };
+
+        // 添加数调节函数
+        function adjustParameter(param, delta) {
+            networkParameters[param] += delta;
+            // 更新显示的值
+            document.getElementById(`${param}-value`).textContent = networkParameters[param];
+            // 重新创建网络
+            scene.remove(networkGroup);
+            networkGroup = createNetworkVisualization();
+            
+            // 添加: 如果连接线是隐藏状态,则保持隐藏
+            if (!showLines) {
+                networkGroup.children.forEach(child => {
+                    if (child instanceof THREE.Line) {
+                        child.visible = false;
+                    }
+                });
+            }
+        }
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x000000);
+            
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 10000);
+            camera.position.set(120, 270, 500);
+            camera.lookAt(0, 0, 0);
+            
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+            
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.maxDistance = 3000;
+            controls.minDistance = 50;
+            
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const pointLight = new THREE.PointLight(0xffffff, 1);
+            pointLight.position.set(100, 100, 100);
+            scene.add(pointLight);
+            
+            createStarField();
+            networkGroup = createNetworkVisualization();
+            
+            if (typeof THREE.EffectComposer !== 'undefined') {
+                composer = new THREE.EffectComposer(renderer);
+                const renderPass = new THREE.RenderPass(scene, camera);
+                composer.addPass(renderPass);
+
+                const bloomPass = new THREE.UnrealBloomPass(
+                    new THREE.Vector2(window.innerWidth, window.innerHeight),
+                    1.5,
+                    0.4,
+                    0.85
+                );
+                composer.addPass(bloomPass);
+            }
+            
+            animate();
+        }
+
+        let starField, brightStarField, coloredStarField;
+        let showStars = true;
+
+        function createStarField() {
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsMaterial = new THREE.PointsMaterial({
+                color: 0xFFFFFF,
+                size: 0.3,
+                transparent: true,
+                opacity: 1.0,
+                sizeAttenuation: true
+            });
+
+            const starsVertices = [];
+            for(let i = 0; i < 15000; i++) {
+                const x = (Math.random() - 0.5) * 2000;
+                const y = (Math.random() - 0.5) * 2000;
+                const z = (Math.random() - 0.5) * 2000;
+                starsVertices.push(x, y, z);
+            }
+
+            const brightStarsGeometry = new THREE.BufferGeometry();
+            const brightStarsMaterial = new THREE.PointsMaterial({
+                color: 0xFFFFFF,
+                size: 0.8,
+                transparent: true,
+                opacity: 1.0,
+                sizeAttenuation: true
+            });
+            
+            const brightStarsVertices = [];
+            for(let i = 0; i < 1000; i++) {
+                const x = (Math.random() - 0.5) * 1000;
+                const y = (Math.random() - 0.5) * 1000;
+                const z = (Math.random() - 0.5) * 1000;
+                brightStarsVertices.push(x, y, z);
+            }
+            
+            const coloredStarsGeometry = new THREE.BufferGeometry();
+            const coloredStarsMaterial = new THREE.PointsMaterial({
+                vertexColors: true,
+                size: 0.6,
+                transparent: true,
+                opacity: 1.0,
+                sizeAttenuation: true
+            });
+            
+            const coloredStarsVertices = [];
+            const coloredStarsColors = [];
+            const starColors = [
+                new THREE.Color(0x6699ff),
+                new THREE.Color(0xff9966),
+                new THREE.Color(0xff6666),
+                new THREE.Color(0x66ff99)
+            ];
+            
+            for(let i = 0; i < 500; i++) {
+                const x = (Math.random() - 0.5) * 1500;
+                const y = (Math.random() - 0.5) * 1500;
+                const z = (Math.random() - 0.5) * 1500;
+                coloredStarsVertices.push(x, y, z);
+                
+                const color = starColors[Math.floor(Math.random() * starColors.length)];
+                coloredStarsColors.push(color.r, color.g, color.b);
+            }
+            
+            starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starsVertices, 3));
+            brightStarsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(brightStarsVertices, 3));
+            coloredStarsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(coloredStarsVertices, 3));
+            coloredStarsGeometry.setAttribute('color', new THREE.Float32BufferAttribute(coloredStarsColors, 3));
+            
+            starField = new THREE.Points(starsGeometry, starsMaterial);
+            brightStarField = new THREE.Points(brightStarsGeometry, brightStarsMaterial);
+            coloredStarField = new THREE.Points(coloredStarsGeometry, coloredStarsMaterial);
+            
+            scene.add(starField);
+            scene.add(brightStarField);
+            scene.add(coloredStarField);
+            
+            function animateStars() {
+                brightStarsMaterial.size = 0.8 + Math.sin(Date.now() * 0.001) * 0.2;
+                coloredStarsMaterial.size = 0.6 + Math.sin(Date.now() * 0.002) * 0.15;
+                
+                requestAnimationFrame(animateStars);
+            }
+            animateStars();
+        }
+
+        function createNetworkVisualization() {
+            const networkGroup = new THREE.Group();
+            
+            // 为每个类别定义基准度（弧度制）
+            const categoryBaseAngles = {
+                '冥古宙': 0,           // 0度
+                '太古宙': Math.PI/3,   // 60度
+                '元古宙': 2*Math.PI/3, // 120度
+                '显生宙': Math.PI,     // 180度
+                '中生代': 4*Math.PI/3, // 240度
+                '新生代': 5*Math.PI/3, // 300度
+                '第四纪': 2*Math.PI    // 360度
+            };
+
+            // 使用参数计算高度偏移
+            const categoryHeightOffset = {
+                '冥古宙': 0,
+                '太古': networkParameters.heightStep,
+                '元古宙': networkParameters.heightStep * 2,
+                '显生宙': networkParameters.heightStep * 3,
+                '中生代': networkParameters.heightStep * 4,
+                '新生代': networkParameters.heightStep * 5,
+                '第四纪': networkParameters.heightStep * 6
+            };
+
+            // 使用彩虹色系定义地质年代颜色映射
+            const categoryColors = {
+                '冥古宙': new THREE.Color(0xFF0000), // 红色
+                '太古宙': new THREE.Color(0xFF7F00), // 橙色
+                '元古宙': new THREE.Color(0xFFFF00), // 黄色
+                '显生宙': new THREE.Color(0x00FF00), // 绿色
+                '中生代': new THREE.Color(0x00FFFF), // 青色
+                '新生代': new THREE.Color(0x0000FF), // 蓝色
+                '第四纪': new THREE.Color(0x8B00FF)  // 紫色
+            };
+
+            // 创建曲线连接函数
+            function createCurvedLine(startPoint, endPoint, color, controlPointOffset = 50) {
+                const midPoint = new THREE.Vector3().addVectors(startPoint, endPoint).multiplyScalar(0.5);
+                
+                // 根据起点和终点的距离调整控制点
+                const distance = startPoint.distanceTo(endPoint);
+                const adjustedOffset = controlPointOffset * (distance / 100); // 据距离调整偏移量
+                
+                // 创建更集中的控制点
+                const controlPoint = midPoint.clone().add(new THREE.Vector3(
+                    (Math.random() - 0.5) * adjustedOffset * 0.5,
+                    Math.abs(Math.random()) * adjustedOffset, // 总是向上偏移
+                    (Math.random() - 0.5) * adjustedOffset * 0.5
+                ));
+                
+                const curve = new THREE.QuadraticBezierCurve3(
+                    startPoint,
+                    controlPoint,
+                    endPoint
+                );
+                
+                const points = curve.getPoints(50);
+                const geometry = new THREE.BufferGeometry().setFromPoints(points);
+                
+                const material = new THREE.LineBasicMaterial({ 
+                    color: color,
+                    transparent: true,
+                    opacity: 0.6,
+                    linewidth: 1
+                });
+                
+                const line = new THREE.Line(geometry, material);
+                line.userData.originalColor = color;
+                
+                return line;
+            }
+            
+            // 修改createNodes函数的颜色逻辑
+            function createNodes(data, position = new THREE.Vector3(), level = 0, angle = 0, parentColor, baseAngle = null) {
+                const nodeGeometry = new THREE.SphereGeometry(networkParameters.nodeSize, 32, 32);
+                let color;
+                
+                if (level === 1) {
+                    // 第二层节点使用分类颜色
+                    color = categoryColors[data.name] || new THREE.Color(0xffffff);
+                    // 设置基准角度
+                    baseAngle = categoryBaseAngles[data.name];
+                } else if (level > 1) {
+                    color = parentColor;
+                } else {
+                    color = new THREE.Color(0xffffff);
+                }
+                
+                const nodeMaterial = new THREE.MeshPhongMaterial({
+                    color: color,
+                    emissive: color,
+                    emissiveIntensity: 0.5,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                
+                const node = new THREE.Mesh(nodeGeometry, nodeMaterial);
+                node.position.copy(position);
+                node.userData = data;
+                
+                networkGroup.add(node);
+                
+                if (data.children) {
+                    const childCount = data.children.length;
+                    const radius = networkParameters.radius - level * 6;
+                    
+                    // 修改角计算逻辑
+                    let angleStep;
+                    let startAngle;
+                    
+                    if (level === 0) {
+                        // 第一层的子节点使用预定义的基准角度
+                        angleStep = (Math.PI * 2) / childCount;
+                        startAngle = 0;
+                    } else if (level === 1) {
+                        // 第二层开始，在基准角度的基础上展开
+                        angleStep = Math.PI / 6; // 30度的扇形范围
+                        startAngle = baseAngle - (angleStep * (childCount - 1) / 2);
+                    } else {
+                        // 后续层级在父节点角度基础上小范围展开
+                        angleStep = Math.PI / 8; // 更小的扇形范围
+                        startAngle = angle - (angleStep * (childCount - 1) / 2);
+                    }
+
+                    data.children.forEach((child, index) => {
+                        const childAngle = startAngle + angleStep * index;
+                        let heightOffset = 0;
+                        
+                        if (level === 0) {
+                            heightOffset = categoryHeightOffset[child.name] || 0;
+                        }
+                        
+                        // 算节点位置
+                        let angleMultiplier = 1.0;
+                        if (child.children && child.children.length > 0) {
+                            angleMultiplier = 0.3;
+                        }
+                        
+                        const childPosition = new THREE.Vector3(
+                            position.x + Math.cos(childAngle) * radius * angleMultiplier,
+                            position.y + (level * networkParameters.levelHeight) + heightOffset,
+                            position.z + Math.sin(childAngle) * radius * angleMultiplier
+                        );
+                        
+                        // 调整控制点
+                        let controlPointOffset = 30 + level * 5;
+                        if (child.children && child.children.length > 0) {
+                            controlPointOffset *= 0.5;
+                        }
+                        
+                        const connection = createCurvedLine(
+                            position,
+                            childPosition,
+                            color,
+                            controlPointOffset
+                        );
+                        networkGroup.add(connection);
+                        
+                        createNodes(child, childPosition, level + 1, childAngle, color, baseAngle);
+                    });
+                }
+            }
+            
+            // 从根节点开始创建整个网络
+            createNodes(treeData);
+            
+            // 只保留节点的呼吸效果，移除线条动画
+            function animateNetwork() {
+                networkGroup.children.forEach(child => {
+                    if (child instanceof THREE.Mesh) {
+                        // 节点呼吸效果
+                        child.scale.x = 1 + Math.sin(Date.now() * 0.001) * 0.2;
+                        child.scale.y = 1 + Math.sin(Date.now() * 0.001) * 0.2;
+                        child.scale.z = 1 + Math.sin(Date.now() * 0.001) * 0.2;
+                    }
+                    // 移除了线条的动画效果
+                });
+                
+                requestAnimationFrame(animateNetwork);
+            }
+            
+            animateNetwork();
+            scene.add(networkGroup);
+            return networkGroup;
+        }
+
+        let targetPosition = new THREE.Vector3();
+        let targetLookAt = new THREE.Vector3();
+        let isTransitioning = false;
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        let highlightCircle;
+
+        // 修改创建圈的函数
+        function createHighlightCircle(position, selectedObject) {
+            if (highlightCircle) {
+                scene.remove(highlightCircle);
+            }
+
+            // 获取节点当前的缩放比例
+            const scale = selectedObject.scale.x;
+            // 基础圈的大小乘以节点的缩放比例
+            const innerRadius = 5 * scale;
+            const outerRadius = 5.5 * scale;
+
+            const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xffff00, 
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            highlightCircle = new THREE.Mesh(ringGeometry, ringMaterial);
+
+            highlightCircle.position.copy(position);
+            highlightCircle.rotation.x = -Math.PI / 2;
+            scene.add(highlightCircle);
+        }
+
+        let isInfoDisplayed = false; // 添加标志位
+
+        window.addEventListener('click', onMouseClick);
+
+        function onMouseClick(event) {
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
+
+            if (intersects.length > 0) {
+                const selectedObject = intersects[0].object;
+                const nodePosition = selectedObject.position;
+
+                // 显示新节点的信息
+                const nodeData = selectedObject.userData;
+                showEventDetails(nodeData);
+                
+                const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                targetLookAt.copy(nodePosition);
+                // 传入选中的对象
+                createHighlightCircle(nodePosition, selectedObject);
+
+                isTransitioning = true;
+                isInfoDisplayed = true;
+            } else {
+                // 点击空白处时隐藏信息
+                hideEventDetails();
+                isInfoDisplayed = false;
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // 处理键盘旋转
+            const rotationSpeed = 0.02;
+            if (keyState.q) {
+                camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), rotationSpeed);
+            }
+            if (keyState.e) {
+                camera.position.applyAxisAngle(new THREE.Vector3(0, 1, 0), -rotationSpeed);
+            }
+
+            // 平滑过渡相机位置和视角
+            if (isTransitioning) {
+                camera.position.lerp(targetPosition, 0.05);
+                controls.target.lerp(targetLookAt, 0.05);
+                
+                if (camera.position.distanceTo(targetPosition) < 1) {
+                    isTransitioning = false;
+                    controls.target.copy(targetLookAt);
+                    controls.enabled = true;
+                    controls.enableDamping = true;
+                    controls.enableZoom = true;
+                    controls.enableRotate = true;
+                    controls.enablePan = true;
+                    controls.update();
+                }
+            } else {
+                controls.update();
+            }
+
+            camera.lookAt(controls.target);
+
+            // 渲染场景
+            if (composer) {
+                composer.render();
+            } else {
+                renderer.render(scene, camera);
+            }
+        }
+
+
+        function onMouseMove(event) {
+            if (isInfoDisplayed) return; // 如果有固定显示的信息，不执行鼠标移动的交互效果
+
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
+            
+            if(intersects.length > 0) {
+                const selectedObject = intersects[0].object;
+                selectedObject.material.emissiveIntensity = 1;
+                selectedObject.scale.set(1.5, 1.5, 1.5);
+                
+                const nodeData = selectedObject.userData;
+                showEventDetails(nodeData);
+                
+                networkGroup.children.forEach(child => {
+                    if (child instanceof THREE.Line) {
+                        const linePositions = child.geometry.attributes.position.array;
+                        const startPoint = new THREE.Vector3(linePositions[0], linePositions[1], linePositions[2]);
+                        const endPoint = new THREE.Vector3(
+                            linePositions[linePositions.length - 3],
+                            linePositions[linePositions.length - 2],
+                            linePositions[linePositions.length - 1]
+                        );
+                        
+                        if (startPoint.distanceTo(selectedObject.position) < 1 || 
+                            endPoint.distanceTo(selectedObject.position) < 1) {
+                            child.material.opacity = 1;
+                            child.material.color.setHex(0xffffff);
+                        }
+                    }
+                });
+            } else {
+                networkGroup.children.forEach(child => {
+                    if (child instanceof THREE.Mesh) {
+                        child.material.emissiveIntensity = 0.5;
+                        child.scale.set(1, 1, 1);
+                    } else if (child instanceof THREE.Line) {
+                        child.material.opacity = 0.6;
+                        child.material.color.copy(child.userData.originalColor);
+                    }
+                });
+                hideEventDetails();
+            }
+        }
+
+        function showEventDetails(nodeData) {
+            const details = document.getElementById('details');
+            details.style.display = 'block';
+            
+            let html = `<h3>${nodeData.name}</h3>`;
+            
+            if (nodeData.time) {
+                html += `<p><span style="color: #00ff88;">时间:</span> ${nodeData.time}</p>`;
+            }
+            
+            if (nodeData.description) {
+                html += `<p>${nodeData.description}</p>`;
+            }
+            
+            if (nodeData.src) {
+                html += `<img src="${nodeData.src}" alt="${nodeData.name}">`;
+            }
+            
+            details.innerHTML = html;
+        }
+
+        function hideEventDetails() {
+            const details = document.getElementById('details');
+            details.style.display = 'none';
+        }
+
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('resize', onWindowResize, false);
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            if (composer) {
+                composer.setSize(window.innerWidth, window.innerHeight);
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen mode: ${err.message}`);
+                });
+                document.getElementById('fullscreen-btn').textContent = '退出全屏';
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                    document.getElementById('fullscreen-btn').textContent = '全屏';
+                }
+            }
+        }
+
+        // 添加全屏变化事件监听
+        document.addEventListener('fullscreenchange', function() {
+            const fullscreenBtn = document.getElementById('fullscreen-btn');
+            if (document.fullscreenElement) {
+                fullscreenBtn.textContent = '退出全屏';
+            } else {
+                fullscreenBtn.textContent = '全屏';
+            }
+        });
+
+        // 添加连接线显示状态变量
+        let showLines = true;
+        
+        // 添加切换连接线显示/隐藏的函数
+        function toggleConnectionLines() {
+            showLines = !showLines;
+            const button = document.getElementById('toggleLines');
+            button.textContent = showLines ? '隐藏' : '显示';
+            
+            networkGroup.children.forEach(child => {
+                if (child instanceof THREE.Line) {
+                    child.visible = showLines;
+                }
+            });
+        }
+
+        function toggleStars() {
+            showStars = !showStars;
+            const button = document.getElementById('toggleStars');
+            button.textContent = showStars ? '隐藏' : '显示';
+            
+            if(starField) starField.visible = showStars;
+            if(brightStarField) brightStarField.visible = showStars;
+            if(coloredStarField) coloredStarField.visible = showStars;
+        }
+
+        init();
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sunburstLink = document.querySelector('a[href="./mobile-生物分类-太阳爆发图-2D.html"]');
+            
+            sunburstLink.addEventListener('click', function(e) {
+                e.preventDefault(); // 阻止默认跳转
+                
+                const toast = document.getElementById('toast');
+                toast.textContent = '在pc端才能跳转到\n生物分类-太阳爆发图-2D页面~';
+                toast.style.display = 'block';
+                toast.style.whiteSpace = 'pre-line';  // 允许换行
+                
+                // 2.5秒后隐藏提示
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 2500);
+            });
+        });
+    </script>
+</body>
+</html>

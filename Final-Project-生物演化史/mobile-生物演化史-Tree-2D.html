@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>生物演化史-Tree-2D</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 2px;
+        }
+
+        .node text {
+            font: 18px sans-serif;
+        }
+
+        .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1px;
+        }
+
+        #timeline {
+            margin: 20px;
+        }
+
+        .time-filter {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 180px;
+        }
+
+        .filter-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #era-select {
+            font-size: 18px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            background-color: white;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #era-select:hover {
+            border-color: #888;
+        }
+
+        #era-select:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+
+        .node-image {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+
+        .tooltip {
+            position: fixed;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            display: none;
+            max-width: 90%;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translate(-50%, -50%);
+        }
+
+        .tooltip img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 5px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        .tooltip-text {
+            font-size: 14px;
+            font-size: 25px;
+            line-height: 1.3;
+            padding: 8px;
+        }
+
+        .tooltip strong {
+            font-size: 25px;
+            font-size: 35px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 1000;
+        }
+
+        .control-button {
+            width: 100% !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            padding: 10px 15px !important;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+
+        .control-button:hover {
+            background-color: #45a049;
+        }
+
+        .control-button.active {
+            background-color: #2E7D32;
+            font-weight: bold;
+        }
+
+        .button-arrow {
+            margin-left: 10px;
+        }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #4CAF50;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: #45a049;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+
+        #search-results {
+            margin-top: 5px;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+            background-color: white;
+        }
+
+        .search-result-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .highlighted-path {
+            stroke: #ff4444;
+            stroke-width: 3px;
+        }
+
+        /* 修改提示框样式 */
+        .alert-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 5px;
+            font-size: 25px;  /* 增大字体大小 */
+            z-index: 1000;
+            display: none;
+            white-space: pre-line;  /* 支持换行 */
+            text-align: center;     /* 文字居中 */
+            line-height: 1.5;       /* 增加行高 */
+            max-width: 80%;         /* 限制最大宽度 */
+            word-wrap: break-word;  /* 长文本自动换行 */
+        }
+    </style>
+</head>
+<body>
+    <div id="alertMessage" class="alert-message"></div>
+    <div class="control-buttons">
+        <button class="control-button" onclick="checkDevice('生物分类-太阳爆发图-2D.html')">生物分类-太阳爆发图-2D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-力导向-2D.html'">生物演化史-力导向-2D</button>
+        <button class="control-button active" onclick="window.location.href='./mobile-生物演化史-Tree-2D.html'">生物演化史-Tree-2D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-DNA双螺旋-3D.html'">生物演化史-DNA双螺旋-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-可视化大屏-3D.html'">生物演化史-可视化大屏-3D</button>
+        <button class="control-button" onclick="window.location.href='./mobile-地球古地理-3D.html'">地球古地理-3D</button>
+        <button class="control-button" onclick="window.location.href='index.html'">返回导航页</button>
+    </div>
+    <div class="time-filter">
+        <div class="filter-title">Tidy Tree</div>
+        <select id="era-select">
+            <option value="all">全部时期</option>
+            <option value="冥古宙">冥古宙</option>
+            <option value="太古宙">太古宙</option>
+            <option value="元古宙">元古宙</option>
+            <option value="显生宙">显生宙</option>
+            <option value="中生代">中生代</option>
+            <option value="新生代">新生代</option>
+            <option value="第四纪">第四纪</option>
+        </select>
+        <button class="control-button" onclick="window.location.href='./mobile-radial_tidy_tree.html'">
+            <span>Radial Tidy Tree</span>
+            <span class="button-arrow">→</span>
+        </button>
+    </div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="搜索节点...">
+        <div id="search-results"></div>
+    </div>
+    <div id="tree"></div>
+    <div class="tooltip"></div>
+
+    <script src="./生物演化史数据.js"></script>
+    <script>
+        // 设置画布尺寸
+        const width = window.innerWidth - 50;
+        let height = 800; // 初始高度
+        const margin = {top: 50, right: 90, bottom: 20, left: 90};
+
+        // 创建SVG容器
+        const svg = d3.select("#tree")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .append("g")
+            .attr("transform", `translate(${margin.left},${margin.top})`);
+
+        // 创建树布局
+        const tree = d3.tree()
+            .size([height - margin.top - margin.bottom, width - margin.left - margin.right]);
+
+        // 创建工具提示div
+        const tooltip = d3.select(".tooltip");
+
+        // 在script标签内添加一个变量来跟踪固定的tooltip
+        let fixedTooltip = null;
+        let fixedPosition = null;
+
+        // 添加一个变量来存储timeout
+        let hideTimeout;
+
+        // 添加一个变量来跟踪当前高亮的节点
+        let currentHighlightedNode = null;
+
+        // 加载数并渲染
+        function renderTree(data, filter = 'all') {
+            // 清除现有内容
+            svg.selectAll("*").remove();
+
+            // 过滤数据
+            let filteredData = JSON.parse(JSON.stringify(data));
+            if (filter !== 'all') {
+                filteredData.children = filteredData.children.filter(d => d.name === filter);
+            }
+
+            // 创建层次构
+            const root = d3.hierarchy(filteredData);
+            
+            // 计算需要的高度
+            const nodeCount = root.descendants().length;
+            const minHeightPerNode = 40; // 个节点的最小高度
+            const calculatedHeight = nodeCount * minHeightPerNode;
+            
+            // 更新高度
+            let svgHeight;
+            switch(filter) {
+                case 'all':
+                    svgHeight = Math.max(height * 8, calculatedHeight);
+                    break;
+                case '显生宙':
+                    svgHeight = Math.max(height * 3, calculatedHeight);
+                    break;
+                case '新生代':
+                case '中生代':
+                    svgHeight = Math.max(height * 2, calculatedHeight);
+                    break;
+                default:
+                    svgHeight = Math.max(height, calculatedHeight);
+            }
+            
+            // 更新树形布局
+            const tree = d3.tree()
+                .size([svgHeight - margin.top - margin.bottom, 
+                    filter === 'all' ? 
+                        width - margin.left - margin.right : 
+                        (width - margin.left - margin.right) * 0.6
+                ]);
+            
+            // 调整 SVG 容器高度
+            d3.select("#tree svg")
+                .attr("height", svgHeight);
+            
+            // 计算节点位置
+            tree(root);
+
+            // 调整连接线的绘制
+            const links = svg.selectAll(".link")
+                .data(root.links())
+                .enter()
+                .append("path")
+                .attr("class", "link")
+                .attr("d", d3.linkHorizontal()
+                    .x(d => d.y)
+                    .y(d => d.x));
+
+            // 调整节点组的位置
+            const nodes = svg.selectAll(".node")
+                .data(root.descendants())
+                .enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${d.y},${d.x})`);
+
+            // 添加节点圆圈
+            nodes.append("circle")
+                .attr("r", 5);
+
+            // 添加图片
+            nodes.append("image")
+                .attr("xlink:href", d => d.data.src)
+                .attr("class", "node-image")
+                .attr("x", -15)
+                .attr("y", -15)
+                .attr("width", 30)
+                .attr("height", 30);
+
+            // 添加文本标签
+            nodes.append("text")
+                .attr("dy", ".35em")
+                .attr("x", d => d.children ? -40 : 40)
+                .attr("text-anchor", d => d.children ? "end" : "start")
+                .text(d => d.data.name);
+
+            // 添加交互事件
+            let currentNode = null;
+
+            nodes.on("mouseover", function(event, d) {
+                // 清除之前的timeout
+                if (hideTimeout) {
+                    clearTimeout(hideTimeout);
+                }
+                
+                currentNode = d;
+                
+                // 获取视窗尺寸
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                // 始终将tooltip显示在页��中央
+                const tooltipX = viewportWidth / 2;
+                const tooltipY = viewportHeight / 2;
+                
+                tooltip.style("display", "block")
+                    .html(`
+                        <strong>${d.data.name}</strong>
+                        ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
+                        <div class="tooltip-text">
+                            ${d.data.name ? '<br>时间: ' + d.data.name : ''}
+                            ${d.data.description ? '<br>描述: ' + d.data.description : ''}
+                        </div>
+                    `)
+                    .style("left", "50%") 
+                    .style("top", "50%")
+                    .style("transform", "translate(-50%, -50%)"); // 使用transform确保居中
+
+                if (fixedTooltip === d) {
+                    fixedPosition = { left: "50%", top: "50%" };
+                }
+            })
+            .on("mouseout", function(event, d) {
+                // 检查鼠标是否直接移动到了tooltip上
+                const toElement = event.relatedTarget;
+                if (toElement && (toElement.closest('.tooltip') || toElement.closest('.node'))) {
+                    return;
+                }
+                
+                // 设置200ms的���迟
+                hideTimeout = setTimeout(() => {
+                    if (fixedTooltip) {
+                        tooltip.style("display", "block")
+                            .html(`
+                                <strong>${fixedTooltip.data.name}</strong>
+                                ${fixedTooltip.data.src ? `<img src="${fixedTooltip.data.src}" alt="${fixedTooltip.data.name}">` : ''}
+                                <div class="tooltip-text">
+                                    ${fixedTooltip.data.name ? '<br>时间: ' + fixedTooltip.data.name : ''}
+                                    ${fixedTooltip.data.description ? '<br>描述: ' + fixedTooltip.data.description : ''}
+                                </div>
+                            `)
+                            .style("left", fixedPosition.left + "px")
+                            .style("top", fixedPosition.top + "px");
+                    } else {
+                        currentNode = null;
+                        tooltip.style("display", "none");
+                    }
+                }, 200);  // 200ms延迟
+            })
+            .on("contextmenu", function(event, d) {
+                event.preventDefault();
+                
+                if (fixedTooltip === d) {
+                    fixedTooltip = null;
+                    fixedPosition = null;
+                    tooltip.style("display", "none");
+                } else {
+                    fixedTooltip = d;
+                    fixedPosition = { left: "50%", top: "50%" };
+                    
+                    tooltip.style("display", "block")
+                        .html(`
+                            <strong>${d.data.name}</strong>
+                            ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
+                            <div class="tooltip-text">
+                                ${d.data.name ? '<br>时间: ' + d.data.name : ''}
+                                ${d.data.description ? '<br>描述: ' + d.data.description : ''}
+                            </div>
+                        `)
+                        .style("left", "50%")
+                        .style("top", "50%")
+                        .style("transform", "translate(-50%, -50%)");
+                }
+            });
+
+            // 修改tooltip的鼠标事件
+            tooltip
+                .on("mouseover", function() {
+                    // 清除隐藏的timeout
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                    }
+                    if (currentNode) {
+                        tooltip.style("display", "block");
+                    }
+                })
+                .on("mouseout", function(event) {
+                    const toElement = event.relatedTarget;
+                    if (toElement && (toElement.closest('.tooltip') || toElement.closest('.node'))) {
+                        return;
+                    }
+                    
+                    // 设置200ms的延迟
+                    hideTimeout = setTimeout(() => {
+                        if (!fixedTooltip) {
+                            currentNode = null;
+                            tooltip.style("display", "none");
+                        }
+                    }, 200);
+                });
+
+            let allNodes = root.descendants();
+
+            const searchInput = document.getElementById('search-input');
+            const searchResults = document.getElementById('search-results');
+
+            searchInput.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.trim().toLowerCase();
+                if (!searchTerm) {
+                    searchResults.innerHTML = '';
+                    return;
+                }
+
+                // 匹配 name 属性
+                const matches = allNodes.filter(node => 
+                    node.data.name && node.data.name.toLowerCase().includes(searchTerm)
+                );
+
+                // 按时间属性排序
+                matches.sort((a, b) => {
+                    // 如果没有 time 属性，则将其排在后面
+                    if (!a.data.time) return 1;
+                    if (!b.data.time) return -1;
+                    // 时间从到近排序（数字越大时越近）
+                    return b.data.time - a.data.time;
+                });
+
+                // 显示搜索结果
+                searchResults.innerHTML = matches
+                    .map(node => `
+                        <div class="search-result-item" data-node-id="${node.data.name}">
+                            ${node.data.name}
+                        </div>
+                    `).join('');
+
+                // 修改搜索结果的点击事件处理
+                document.querySelectorAll('.search-result-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const nodeId = this.dataset.nodeId;
+                        const targetNode = allNodes.find(n => n.data.name === nodeId);
+                        if (targetNode) {
+                            // 如果点击了新的搜索结果，更新高亮路径
+                            highlightPathToRoot(targetNode);
+                            scrollToNode(targetNode);
+                        }
+                    });
+                });
+            });
+
+            function highlightPathToRoot(node) {
+                // 清除之前的高亮
+                svg.selectAll('.link').classed('highlighted-path', false);
+                
+                // 更新当前高亮的节点
+                currentHighlightedNode = node;
+                
+                // 获取从节点到根节点的路径
+                let current = node;
+                let path = [];
+                while (current.parent) {
+                    path.push({source: current.parent, target: current});
+                    current = current.parent;
+                }
+                
+                // 高亮路径
+                svg.selectAll('.link')
+                    .filter(d => path.some(p => 
+                        p.source === d.source && p.target === d.target
+                    ))
+                    .classed('highlighted-path', true);
+            }
+
+            function scrollToNode(node) {
+                const nodeY = node.x + margin.top;
+                window.scrollTo({
+                    top: nodeY - window.innerHeight / 2,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // 加拉框事件监听
+        d3.select("#era-select").on("change", function() {
+            const selectedEra = this.value;
+            renderTree(treeData, selectedEra);
+        });
+
+        // 初始渲染
+        renderTree(treeData);
+
+        // 修改为:
+        function getTreeLayout(filter) {
+            let dynamicHeight;
+            // 为不时期设置特的高度倍
+            switch(filter) {
+                case 'all':
+                    dynamicHeight = height * 8;
+                    break;
+                case '显生宙':
+                    dynamicHeight = height * 3;
+                    break;
+                case '新生代':
+                case '中生代':
+                    dynamicHeight = height * 2;
+                    break;
+                default:
+                    dynamicHeight = height;
+            }
+            
+            const dynamicWidth = filter === 'all' ? 
+                width - margin.left - margin.right : 
+                (width - margin.left - margin.right) * 0.6;
+            
+            return d3.tree()
+                .size([dynamicHeight - margin.top - margin.bottom, dynamicWidth]);
+        }
+
+        // 添加设备检查函数
+        function checkDevice(url) {
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                const alertBox = document.getElementById('alertMessage');
+                alertBox.textContent = "只有pc端才能进入\n生物分类-太阳爆发图-2D页面~";
+                alertBox.style.display = 'block';
+                
+                setTimeout(() => {
+                    alertBox.style.display = 'none';
+                }, 2500);
+            } else {
+                window.location.href = url;
+            }
+        }
+
+        // 在现有的nodes事件处理中添加触摸事件
+        nodes.on("touchstart", function(event, d) {
+            event.preventDefault(); // 阻止默认行为
+            
+            // 检查是否是移动设备
+            if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                tooltip.style("display", "block")
+                    .html(`
+                        <strong>${d.data.name}</strong>
+                        ${d.data.src ? `<img src="${d.data.src}" alt="${d.data.name}">` : ''}
+                        <div class="tooltip-text">
+                            ${d.data.name ? '<br>时间: ' + d.data.name : ''}
+                            ${d.data.description ? '<br>描述: ' + d.data.description : ''}
+                        </div>
+                    `)
+                    .style("left", "50%")
+                    .style("top", "50%");
+            }
+        });
+
+        // 添加点击空白区域关闭tooltip的功能
+        document.addEventListener('touchstart', function(event) {
+            if (!event.target.closest('.node') && !event.target.closest('.tooltip')) {
+                tooltip.style("display", "none");
+            }
+        }, false);
+
+        // 允许tooltip内部滚动
+        tooltip.on("touchmove", function(event) {
+            event.stopPropagation();
+        });
+    </script>
+</body>
+</html>
