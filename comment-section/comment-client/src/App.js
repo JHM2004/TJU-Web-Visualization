@@ -456,7 +456,7 @@ function App() {
             </p>
             <p>
               <strong>QQ群:</strong>
-              <span className="contact-info">EvoViz交流群: 585135622</span>
+              <span className="contact-info">585135622</span>
             </p>
             <p>
               <strong>bilibili:</strong>
@@ -545,7 +545,7 @@ function App() {
           setUploadedImages([...uploadedImages, imageUrl]);
           setNewComment(newComment + `\n![图片](${imageUrl})`);
         } catch (err) {
-          console.error('上传图���失败:', err);
+          console.error('上传图片失败:', err);
           alert('上传图片失败，请重试');
         }
         break;
