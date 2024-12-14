@@ -480,7 +480,7 @@
             .on("mouseout", hideTooltip)
             .clone(true).lower()
             .attr("stroke", "white")
-            .attr("stroke-width", 3);
+            .attr("stroke-width", 1);
 
         // 修改放行为
         const zoom = d3.zoom()
@@ -683,7 +683,7 @@
             }
             
             title.textContent = node.data.name || '';
-            time.textContent = node.data.time ? `时间：${node.data.time}` : '';
+            time.textContent = node.data.time ? `时��：${node.data.time}` : '';
             description.textContent = node.data.description ? `描述：${node.data.description}` : '';
 
             // 显示面板
@@ -698,7 +698,7 @@
             localStorage.setItem('lastSearch', searchValue);
         });
 
-        // ���加页面加载时恢复上次搜索内容 (可选)
+        // 加页面加载时恢复上次搜索内容 (可选)
         window.addEventListener('load', () => {
             const lastSearch = localStorage.getItem('lastSearch');
             if (lastSearch) {
