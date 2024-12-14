@@ -13,6 +13,12 @@
 
         .node text {
             font: 18px sans-serif;
+            fill: black;
+            stroke: white;
+            stroke-width: 0.5px;
+            paint-order: stroke fill;
+            font-weight: bold;
+          
         }
 
         .link {
@@ -44,6 +50,12 @@
             text-align: center;
             font-size: 18px;
             font-weight: bold;
+            color: black;
+            text-shadow: 
+                1px 1px 0 #fff,
+                -1px -1px 0 #fff,
+                1px -1px 0 #fff,
+                -1px 1px 0 #fff;
         }
 
         #era-select {
@@ -51,9 +63,11 @@
             padding: 8px;
             border-radius: 4px;
             border: 1px solid #ccc;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 1);
+            color: black;
             cursor: pointer;
             width: 100%;
+            font-weight: bold;
         }
 
         #era-select:hover {
@@ -163,6 +177,9 @@
             border: 2px solid #4CAF50;
             border-radius: 4px;
             font-size: 16px;
+            background-color: rgba(255, 255, 255, 1);
+            color: black;
+            font-weight: bold;
         }
 
         #search-input:focus {
@@ -185,7 +202,9 @@
             padding: 8px 12px;
             cursor: pointer;
             border-bottom: 1px solid #eee;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 1);
+            color: black;
+            font-weight: bold;
         }
 
         .search-result-item:hover {
@@ -352,7 +371,7 @@
                     .x(d => d.y)
                     .y(d => d.x));
 
-            // 调整节点组的位置
+            // 调整节点组���位置
             const nodes = svg.selectAll(".node")
                 .data(root.descendants())
                 .enter()
@@ -380,7 +399,7 @@
                 .attr("text-anchor", d => d.children ? "end" : "start")
                 .text(d => d.data.name);
 
-            // 添加交互事件
+            // 添加交���事件
             let currentNode = null;
 
             nodes.on("mouseover", function(event, d) {
@@ -395,7 +414,7 @@
                 const viewportWidth = window.innerWidth;
                 const viewportHeight = window.innerHeight;
                 
-                // 始终将tooltip显示在页��中央
+                // 始终将tooltip显示在页中央
                 const tooltipX = viewportWidth / 2;
                 const tooltipY = viewportHeight / 2;
                 
@@ -423,7 +442,7 @@
                     return;
                 }
                 
-                // 设置200ms的���迟
+                // 设置200ms的延迟
                 hideTimeout = setTimeout(() => {
                     if (fixedTooltip) {
                         tooltip.style("display", "block")
@@ -486,7 +505,7 @@
                         return;
                     }
                     
-                    // 设置200ms的延迟
+                    // 设置200ms的延��
                     hideTimeout = setTimeout(() => {
                         if (!fixedTooltip) {
                             currentNode = null;
@@ -550,7 +569,7 @@
                 // 更新当前高亮的节点
                 currentHighlightedNode = node;
                 
-                // 获取从节点到根节点的路径
+                // 获取从��点到根节点的路径
                 let current = node;
                 let path = [];
                 while (current.parent) {
@@ -615,7 +634,7 @@
         function checkDevice(url) {
             if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 const alertBox = document.getElementById('alertMessage');
-                alertBox.textContent = "只有pc端才能进入\n生物分类-太阳爆发图-2D页面~";
+                alertBox.textContent = "只有pc端能进入\n生物分类-太阳爆发图-2D页面~";
                 alertBox.style.display = 'block';
                 
                 setTimeout(() => {
