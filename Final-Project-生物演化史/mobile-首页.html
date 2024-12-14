@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旋转卡片展示</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            perspective: 1000px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            transition: transform 0.3s ease;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-back {
+            display: none;
+        }
+
+        .card-wrapper:hover {
+            transform: translateY(-5px) scale(1.03);
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .title {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .card-wrapper:hover {
+                transform: translateY(-5px) scale(1.03);
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .title {
+                font-size: 16px;
+            }
+        }
+
+        .message-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">点击卡片进入页面</div>
+    <div class="container">
+        <script>
+            const images = [
+                '生物分类-太阳爆发图-2D',
+                '生物演化史-力导向-2D',
+                '生物演化史-Tree-2D',
+                '生物演化史-DNA双螺旋-3D',
+                '生物演化史-星空图-3D',
+                '生物演化史-Tree-3D',
+                '生物演化史-可视化大屏-3D',
+                '地球古地理-3D'
+            ];
+
+            images.forEach((img, index) => {
+                if (index === 0) {
+                    // 第一张卡片的特殊处理
+                    document.write(`
+                        <div class="card-wrapper">
+                            <div class="card" onclick="showPCOnlyMessage()">
+                                <div class="card-face card-front">
+                                    <img src="./select-cards/${img}.png" alt="${img}">
+                                </div>
+                                <div class="card-face card-back">
+                                    <span>点击查看详情</span>
+                                </div>
+                            </div>
+                        </div>
+                    `);
+                } else {
+                    // 其他卡片保持不变
+                    document.write(`
+                        <div class="card-wrapper">
+                            <a href="./mobile-${img}.html">
+                                <div class="card">
+                                    <div class="card-face card-front">
+                                        <img src="./select-cards/${img}.png" alt="${img}">
+                                    </div>
+                                    <div class="card-face card-back">
+                                        <span>点击查看详情</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    `);
+                }
+            });
+        </script>
+    </div>
+
+    <script>
+        // 添加鼠标移动时的3D效果
+        document.querySelectorAll('.card-wrapper').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = -(x - centerX) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+
+    <script>
+        function showPCOnlyMessage() {
+            // 创建消息元素
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message-popup';
+            messageDiv.innerHTML = '在pc端才能访问<br>生物分类-太阳爆发图-2D页面<br>请尝试其他页面~';
+            document.body.appendChild(messageDiv);
+
+            // 显示消息
+            messageDiv.style.display = 'block';
+
+            // 2.5秒后移除消息
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                document.body.removeChild(messageDiv);
+            }, 2500);
+        }
+    </script>
+</body>
+</html>

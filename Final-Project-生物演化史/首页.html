@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旋转卡片展示</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+            perspective: 1000px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            padding: 40px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .card-wrapper {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            transition: transform 0.3s ease;
+        }
+
+        .card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .card-back {
+            display: none;
+        }
+
+        .card-wrapper:hover {
+            transform: translateY(-15px) scale(1.05);
+        }
+
+        .card:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-15px); }
+        }
+
+        .card-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .title {
+            position: fixed;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="title">点击卡片进入页面</div>
+    <div class="container">
+        <script>
+            const images = [
+                '生物分类-太阳爆发图-2D',
+                '生物演化史-力导向-2D',
+                '生物演化史-Tree-2D',
+                '生物演化史-DNA双螺旋-3D',
+                '生物演化史-星空图-3D',
+                '生物演化史-Tree-3D',
+                '生物演化史-可视化大屏-3D',
+                '地球古地理-3D'
+            ];
+
+            images.forEach(img => {
+                document.write(`
+                    <div class="card-wrapper">
+                        <a href="./${img}.html">
+                            <div class="card">
+                                <div class="card-face card-front">
+                                    <img src="./select-cards/${img}.png" alt="${img}">
+                                </div>
+                                <div class="card-face card-back">
+                                    <span>点击查看详情</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `);
+            });
+        </script>
+    </div>
+
+    <script>
+        // 添加鼠标移动时的3D效果
+        document.querySelectorAll('.card-wrapper').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = -(x - centerX) / 10;
+                
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
