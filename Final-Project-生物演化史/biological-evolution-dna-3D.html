@@ -56,7 +56,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             font-family: Arial, sans-serif;
-            font-size: 35px;
+            font-size: 18px;
             backdrop-filter: blur(5px);
             box-shadow: 0 0 10px rgba(0,255,0,0.2);
             user-select: none;
@@ -101,60 +101,32 @@
             background: rgba(0,255,136,0.4);
         }
 
-        /* 添加提示框样式 */
-        #toast {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: #00ff88;
-            padding: 20px;
-            border-radius: 10px;
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            text-align: center;
-            max-width: 300px;
-            line-height: 1.5;
-            z-index: 9999;
-            backdrop-filter: blur(5px);
-            border: 2px solid #00ff88;
-            box-shadow: 0 0 20px rgba(0,255,0,0.2);
-            white-space: pre-line;
-        }
-
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="./生物演化史数据.js"></script>
+    <script src="./biological-evolution-data.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.9.5/Tween.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
 </head>
 <body>
-    <!-- 在body标签内添加提示文字元素 -->
-    <div id="controls-info">点击节点聚焦</div>
-    
-    <!-- 添加提示框元素 -->
-    <div id="toast"></div>
-    
     <div id="navigation">
-        <!-- 修改第一个按钮,移除href属性,添加id -->
-        <a id="sunburst-btn" class="nav-button">生物分类-太阳爆发图-2D</a>
-        <a href="./mobile-生物演化史-力导向-2D.html" class="nav-button">生物演化史-力导向-2D</a>
-        <a href="./mobile-生物演化史-Tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
-        <a href="./mobile-生物演化史-DNA双螺旋-3D.html" class="nav-button active">生物演化史-DNA双螺旋-3D</a>
-        <a href="./mobile-生物演化史-星空图-3D.html" class="nav-button">生物演化史-星空图-3D</a>
-        <a href="./mobile-生物演化史-Tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
-        <a href="./mobile-生物演化史-可视化大屏-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
-        <a href="./mobile-地球古地理-3D.html" class="nav-button">地球古地理-3D</a>
+        <button id="fullscreen-btn" class="nav-button">全屏显示</button>
+        <a href="./biological-classification-sunburst-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
+        <a href="./biological-evolution-force-2D.html" class="nav-button">生物演化史-力导向-2D</a>
+        <a href="./biological-evolution-tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
+        <a href="./biological-evolution-dna-3D.html" class="nav-button active">生物演化史-DNA双螺旋-3D</a>
+        <a href="./biological-evolution-star-3D.html" class="nav-button">生物演化史-星空图-3D</a>
+        <a href="./biological-evolution-tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
+        <a href="./biological-evolution-visualization-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
+        <a href="./paleo-geography-3D.html" class="nav-button">地球古地理-3D</a>
         <a href="index.html" class="nav-button">返回导航页</a>
     </div>
     <div id="info">生物演化史-DNA双螺旋-3D</div>
     <div id="details"></div>
+    <div id="controls-info">按 Q/E 键进行顺/逆时针旋转视角</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-    <script src="./生物演化史数据.js"></script>
+    <script src="./biological-evolution-data.js"></script>
     <script>
         let scene, camera, renderer, controls;
         let dnaPoints = [];
@@ -264,8 +236,8 @@
                     const originalPosition = camera.position.clone();
                     const originalRotation = camera.rotation.clone();
                     
-                    // 设置目标位置(从下方看向上方) - 将 y 坐标从 -300 改为 -400
-                    const targetPosition = new THREE.Vector3(0, -315, 0);
+                    // 设置目标位置(从下方看向上方)
+                    const targetPosition = new THREE.Vector3(0, -300, 0);
                     const targetLookAt = new THREE.Vector3(0, 0, 0);
                     
                     // 创建动画
@@ -274,7 +246,7 @@
                             x: targetPosition.x,
                             y: targetPosition.y,
                             z: targetPosition.z
-                        }, 2000)
+                        }, 2000) // 2秒完成动画
                         .easing(TWEEN.Easing.Cubic.InOut)
                         .start();
                         
@@ -288,7 +260,7 @@
                         .easing(TWEEN.Easing.Cubic.InOut)
                         .start();
                 } else {
-                    // 暂停恢复原始视
+                    // 暂停恢复原始视角
                     new TWEEN.Tween(camera.position)
                         .to({
                             x: 100,
@@ -344,7 +316,7 @@
             // 创建速度显示标签
             const speedLabel = document.createElement('div');
             speedLabel.style.color = '#00ff88';
-            speedLabel.style.fontSize = '24px';
+            speedLabel.style.fontSize = '16px';
             speedLabel.style.textAlign = 'center';
             speedLabel.innerText = '播放速度: 1x';
 
@@ -900,21 +872,15 @@
             }
         }
 
-        // 添加显示提示框的函数
-        function showToast(message, duration = 2500) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.style.display = 'block';
-            
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, duration);
-        }
-
-        // 添加按钮点击事件
-        document.getElementById('sunburst-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            showToast('在pc端才能跳转到\n生物分类-太阳爆发图-2D页面~');
+        // 添加全屏功能
+        document.getElementById('fullscreen-btn').addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`全屏请求错误: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
         });
 
         init();

@@ -137,17 +137,16 @@
 
         .bottom-time-filter {
             position: fixed;
-            bottom: 20px;
-            left: 50%;
+            bottom: 10px;
+            left: 67%;
             transform: translateX(-50%);
             background: white;
             padding: 15px 30px;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             width: 90%;
-            max-width: 800px;
+            max-width: 1200px;
             text-align: center;
-            z-index: 1000;
         }
 
         .bottom-time-filter #timeSlider {
@@ -270,73 +269,32 @@
             top: 50%;
             transform: translateY(-50%);
         }
-
-        .bottom-rotate-buttons {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 20px;
-            z-index: 1000;
-        }
-
-        .bottom-rotate-buttons .control-button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        .bottom-rotate-buttons .control-button:hover {
-            background-color: #45a049;
-        }
-
-        .alert-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            z-index: 2000;
-            text-align: center;
-            max-width: 80%;
-            white-space: pre-line;
-            display: none;
-        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Radial Tidy Tree</h1>
-        <a href="./mobile-生物演化史-Tree-2D.html" class="nav-link">Tidy Tree</a>
+        <h1>生物演化史-Tree-2D</h1>
+        <a href="./biological-evolution-tree-2D.html" class="nav-link">Tidy Tree</a>         
     </div>
     <div class="control-buttons">
-        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-力导向-2D.html'">生物演化史-力导向-2D</button>
-        <button class="control-button active" onclick="window.location.href='./mobile-生物演化史-Tree-2D.html'">生物演化史-Tree-2D</button>
-        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-DNA双螺旋-3D.html'">生物演化史-DNA双螺旋-3D</button>
-        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-星空图-3D.html'">生物演化史-星空图-3D</button>
-        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-Tree-3D.html'">生物演化史-Tree-3D</button>
-        <button class="control-button" onclick="window.location.href='./mobile-生物演化史-可视化大屏-3D.html'">生物演化史-可视化大屏-3D</button>
-        <button class="control-button" onclick="window.location.href='./mobile-地球古地理-3D.html'">地球古地理-3D</button>
+        <button class="control-button" id="fullscreenBtn">全屏显示</button>
+        <button class="control-button" onclick="window.location.href='./biological-evolution-sunburst-2D.html'">生物分类-太阳爆发图-2D</button>
+        <button class="control-button" onclick="window.location.href='./biological-evolution-force-2D.html'">生物演化史-力导向-2D</button>
+        <button class="control-button active" onclick="window.location.href='./biological-evolution-tree-2D.html'">生物演化史-Tree-2D</button>
+        <button class="control-button" onclick="window.location.href='./biological-evolution-dna-3D.html'">生物演化史-DNA双螺旋-3D</button>
+        <button class="control-button" onclick="window.location.href='./biological-evolution-star-3D.html'">生物演化史-星空图-3D</button>
+        <button class="control-button" onclick="window.location.href='./biological-evolution-tree-3D.html'">生物演化史-Tree-3D</button>
+        <button class="control-button" onclick="window.location.href='./biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
+        <button class="control-button" onclick="window.location.href='./paleo-geography-3D.html'">地球古地理-3D</button>
         <button class="control-button" onclick="window.location.href='./index.html'">返回导航页</button>
-    </div>
-    <div class="bottom-rotate-buttons">
-        <button class="control-button" id="rotateLeftBtn">逆时针旋转</button>
-        <button class="control-button" id="rotateRightBtn">顺时针旋转</button>
     </div>
     <div class="bottom-time-filter">
         <input type="range" id="timeSlider" min="0" max="500000" value="500000">
         <span id="timeDisplay">显示所有时期</span>
     </div>
-
+    <div class="keyboard-hint">
+        使用 'Q' 键逆时针旋转，'E' 键顺时针旋转
+    </div>
     <div class="search-container">
         <input type="text" class="search-input" placeholder="搜索节点...">
         <div class="search-result"></div>
@@ -352,8 +310,7 @@
     <div id="imageModal" class="modal">
         <img class="modal-content" id="modalImage">
     </div>
-    <div class="alert-message" id="alertMessage"></div>
-    <script src="./生物演化史数据.js"></script>
+    <script src="./biological-evolution-data.js"></script>
     <script>
         // 在SVG创建之前添加旋转角度变量
         let currentRotation = 0;
@@ -480,7 +437,7 @@
             .on("mouseout", hideTooltip)
             .clone(true).lower()
             .attr("stroke", "white")
-            .attr("stroke-width", 1);
+            .attr("stroke-width", 3);
 
         // 修改放行为
         const zoom = d3.zoom()
@@ -492,8 +449,8 @@
         // 设置初始缩放和平移
         svg.call(zoom)
            .call(zoom.transform, d3.zoomIdentity
-                .translate(width/50 , height/20)
-                .scale(0.55)); // 保持原有的缩放比例
+                .translate(width * -0.23, height * -0.03) // 调整初始位置
+                .scale(0.45)); // 保持原有的缩放比例
 
         // 添加键盘事件监听
         document.addEventListener('keydown', (event) => {
@@ -505,6 +462,32 @@
                 // 顺时针旋转
                 currentRotation += rotationStep;
                 g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
+            }
+        });
+
+        // 加全屏功能
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                // 进入全屏
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+                fullscreenBtn.textContent = '退出全屏';
+            } else {
+                // 退出全屏
+                document.exitFullscreen();
+                fullscreenBtn.textContent = '全屏显示';
+            }
+        });
+
+        // 监听全屏化事件
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement) {
+                fullscreenBtn.textContent = '全屏显示';
+            } else {
+                fullscreenBtn.textContent = '退出全屏';
             }
         });
 
@@ -587,7 +570,7 @@
                 displayText = `显示距今 ${(value/10000).toFixed(1)} 亿年前及更近时期`;
             } else if (value >= 100) {
                 // 大于100万年的显示
-                displayText = `显示距今 ${(value/100).toFixed(1)} 万年前及更近时期`;
+                displayText = `显示距今 ${(value/100).toFixed(1)} 百万年前及更近时期`;
             } else {
                 // 小于100万年的显示
                 displayText = `显示距今 ${value} 万年前及更近时期`;
@@ -683,7 +666,7 @@
             }
             
             title.textContent = node.data.name || '';
-            time.textContent = node.data.time ? `时��：${node.data.time}` : '';
+            time.textContent = node.data.time ? `时间：${node.data.time}` : '';
             description.textContent = node.data.description ? `描述：${node.data.description}` : '';
 
             // 显示面板
@@ -698,7 +681,7 @@
             localStorage.setItem('lastSearch', searchValue);
         });
 
-        // 加页面加载时恢复上次搜索内容 (可选)
+        // 添加页面加载时恢复上次搜索内容 (可选)
         window.addEventListener('load', () => {
             const lastSearch = localStorage.getItem('lastSearch');
             if (lastSearch) {
@@ -760,63 +743,6 @@
                 // 移除阻止事件冒泡,这样其他元素的显示状态会保持不变
                 event.stopPropagation();
             }
-        }
-
-        // 在script标签中添加或修改旋转按钮相关的代
-        let rotationInterval; // 用于存储interval的ID
-        const rotationDelay = 50; // 旋转的时间间隔（毫秒）
-
-        // 开始旋转的函数
-        function startRotation(direction) {
-            // 清除可能存在的之前的interval
-            clearInterval(rotationInterval);
-            
-            // 设置新的interval
-            rotationInterval = setInterval(() => {
-                currentRotation += direction * rotationStep;
-                g.attr("transform", `${d3.zoomTransform(svg.node())} rotate(${currentRotation})`);
-            }, rotationDelay);
-        }
-
-        // 停止旋转的函数
-        function stopRotation() {
-            clearInterval(rotationInterval);
-        }
-
-        // 为左旋转按钮添加事件
-        rotateLeftBtn.addEventListener('mousedown', () => startRotation(-1)); // 逆时针
-        rotateLeftBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // 防止触摸事件的默认行为
-            startRotation(-1);
-        });
-
-        // 为右旋转按钮添加事件
-        rotateRightBtn.addEventListener('mousedown', () => startRotation(1)); // 顺时针
-        rotateRightBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            startRotation(1);
-        });
-
-        // 添加停止旋转的事件监听
-        ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(eventName => {
-            rotateLeftBtn.addEventListener(eventName, stopRotation);
-            rotateRightBtn.addEventListener(eventName, stopRotation);
-        });
-
-        // 为了防止在页面失去焦点时继续旋转，添加window的blur事件监听
-        window.addEventListener('blur', stopRotation);
-
-        // 为了防止在滚动时继续旋转，添加document的scroll事件监听
-        document.addEventListener('scroll', stopRotation);
-
-        function showAlert(message) {
-            const alertBox = document.getElementById('alertMessage');
-            alertBox.textContent = message;
-            alertBox.style.display = 'block';
-            
-            setTimeout(() => {
-                alertBox.style.display = 'none';
-            }, 2500);
         }
     </script>
 </body>

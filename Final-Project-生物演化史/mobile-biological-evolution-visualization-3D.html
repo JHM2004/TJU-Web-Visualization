@@ -150,10 +150,40 @@
             background-color: #0D47A1;
             cursor: default;
         }
+
+        /* 添加提示框样式 */
+        .message-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 100000;  /* 增加z-index确保在最上层 */
+            text-align: center;
+            white-space: pre-line;
+            display: none;
+            font-size: 16px;
+            min-width: 200px;
+        }
     </style>
 </head>
 
 <body>
+    <div style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255,0,0,0.8); 
+        color: white;
+        text-align: center;
+        padding: 10px;
+        font-size: 20px;
+        z-index: 9999;
+    ">在pc端解锁更多功能, 体验更佳~</div>
     <div id="container">
         <div id="node-color-info" style="
             position: absolute;
@@ -524,27 +554,30 @@
                     <option value="750" style="font-size: 12px;">世界地图(750亿年前)</option>
                 </select>
             </div>
-            <!-- 在右侧面板的最方添加导按钮组 -->
+            <!-- 在右侧面板的��方添加导按钮组 -->
             <div style="margin-top: 10px;">
-                <button id="fullscreen" class="nav-button">全屏显示</button>
-                <button onclick="window.location.href='./生物分类-太阳爆发图-2D.html'" class="nav-button">生物分类-太阳爆发图-2D</button>
-                <button onclick="window.location.href='./生物演化史-力导向-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
-                <button onclick="window.location.href='./生物演化史-Tree-2D.html'" class="nav-button">生物演化史-Tree-2D</button>
-                <button onclick="window.location.href='./生物演化史-DNA双螺旋-3D.html'"
+                <!-- 修改按钮,移除onclick属性,添加id -->
+                <button id="sunburstBtn" class="nav-button">生物分类-太阳爆发图-2D</button>
+                <button onclick="window.location.href='./mobile-biological-evolution-force-2D.html'" class="nav-button">生物演化史-力导向-2D</button>
+                <button onclick="window.location.href='./mobile-biological-evolution-tree-2D.html'" class="nav-button">生物演化史-Tree-2D</button>
+                <button onclick="window.location.href='./mobile-biological-evolution-dna-3D.html'"
                     class="nav-button">生物演化史-DNA双螺旋-3D</button>
-                <button onclick="window.location.href='./生物演化史-星空图-3D.html'" class="nav-button">生物演化史-星空图-3D</button>
-                <button onclick="window.location.href='./生物演化史-Tree-3D.html'" class="nav-button">生物演化史-Tree-3D</button>
+                <button onclick="window.location.href='./mobile-biological-evolution-star-3D.html'" class="nav-button">生物演化史-星空图-3D</button>
+                <button onclick="window.location.href='./mobile-biological-evolution-tree-3D.html'" class="nav-button">生物演化史-Tree-3D</button>
                 <button class="nav-button active">生物演化史-可视化大屏-3D</button>
-                <button onclick="window.location.href='./地球古地理-3D.html'" class="nav-button">地球古地理-3D</button>
+                <button onclick="window.location.href='./mobile-paleo-geography-3D.html'" class="nav-button">地球古地理-3D</button>
                 <button onclick="window.location.href='index.html'" class="nav-button">返回导航页</button>
             </div>
         </div>
     </div>
 
+    <!-- 添加提示框HTML -->
+    <div id="messagePopup" class="message-popup"></div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.0.0/d3.min.js"></script>
-    <script src="./生物演化史数据.js"></script>
+    <script src="./biological-evolution-data.js"></script>
     <script>
         let scene, camera, renderer, graph;
         let nodes = [], links = [];
@@ -1130,7 +1163,7 @@
                         urls = [
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/left.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/right.png',
-                            './static-other/Skybox_Texture/立方体���空盒/blue_nebula/up.png',
+                            './static-other/Skybox_Texture/立方体天空盒/blue_nebula/up.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/bottom.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/front.png',
                             './static-other/Skybox_Texture/立方体天空盒/blue_nebula/back.png'
@@ -1304,6 +1337,11 @@
                         showLoadingMessage(false);
                     }
                 );
+            });
+
+            // 在addEventListeners()函数中添加这段代码
+            document.getElementById('sunburstBtn').addEventListener('click', () => {
+                showMessage('在pc端才能跳转到\n生物分类-太阳爆发图-2D页面~');
             });
         }
 
@@ -1594,17 +1632,51 @@
         updatePanelBackground();
 
         // 修改点击事件处理
-        renderer.domElement.addEventListener('click', (event) => {
+        renderer.domElement.addEventListener('click', handleNodeClick);
+        renderer.domElement.addEventListener('touchstart', handleNodeClick, { passive: false });
+        renderer.domElement.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+        renderer.domElement.addEventListener('touchend', (e) => e.preventDefault(), { passive: false });
+
+        function handleNodeClick(event) {
             event.preventDefault();
+            
+            // 获取正确的坐标
+            let clientX, clientY;
+            let rect = renderer.domElement.getBoundingClientRect();
+            
+            if (event.type === 'touchstart') {
+                // 触摸事件
+                const touch = event.touches[0];
+                clientX = touch.clientX; // 直接使用clientX
+                clientY = touch.clientY; // 直接使用clientY 
+            } else {
+                // 鼠标事件
+                clientX = event.clientX;
+                clientY = event.clientY;
+            }
 
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            // 计算相对于canvas的坐标
+            const x = clientX - rect.left;
+            const y = clientY - rect.top;
+            
+            // 计算规范化的设备坐标
+            mouse.x = (x / rect.width) * 2 - 1;
+            mouse.y = -(y / rect.height) * 2 + 1;
 
+            // 更新射线
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(
-                nodes.map(node => node.object).filter(obj => obj),
-                false
-            );
+            
+            // 增大射线检测的范围和精度
+            raycaster.params.Points.threshold = 50; // 增大点击判定范围
+            raycaster.far = 10000; // 增大射线检测距离
+            
+            // 获取所有可见的节点对象
+            const visibleNodes = nodes
+                .map(node => node.object)
+                .filter(obj => obj && obj.visible);
+            
+            // 进行射线检测
+            const intersects = raycaster.intersectObjects(visibleNodes, false);
 
             if (intersects.length > 0) {
                 const nodeData = nodes.find(n => n.object === intersects[0].object);
@@ -1612,7 +1684,7 @@
                     selectedNode = nodeData;
                     updateNodeInfo(nodeData);
 
-                    // 更新中圈
+                    // 更新选中圈
                     if (selectionCircle) {
                         scene.remove(selectionCircle);
                     }
@@ -1680,7 +1752,7 @@
                     animateCamera();
                 }
             }
-        });
+        }
 
         // 缓动函数
         function easeInOutQuad(t) {
@@ -2101,6 +2173,58 @@
             overlay.appendChild(closeButton);
             document.body.appendChild(overlay);
         }
+
+        // 在init()函数之前添加这个函数
+        function showMessage(message) {
+            const popup = document.getElementById('messagePopup');
+            if (!popup) {
+                console.error('Message popup element not found');
+                return;
+            }
+            popup.textContent = message;
+            popup.style.display = 'block';
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+            }, 2500);
+        }
+
+        // 在addEventListeners()函数中添加这段代码
+        function addEventListeners() {
+            // ... existing event listener code ...
+
+            // 添加太阳爆发图按钮的事件监听
+            document.getElementById('sunburstBtn').addEventListener('click', () => {
+                showMessage('在pc端才能跳转到\n生物分类-太阳爆发图-2D页面~');
+            });
+
+            // ... rest of the existing event listeners ...
+        }
+
+        // 确保messagePopup的样式是正确的
+        const messagePopupStyle = `
+            .message-popup {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 20px;
+                border-radius: 10px;
+                z-index: 100000;  /* 增加z-index确保在最上层 */
+                text-align: center;
+                white-space: pre-line;
+                display: none;
+                font-size: 16px;
+                min-width: 200px;
+            }
+        `;
+
+        // 添加样式到head
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = messagePopupStyle;
+        document.head.appendChild(styleSheet);
     </script>
 </body>
 
