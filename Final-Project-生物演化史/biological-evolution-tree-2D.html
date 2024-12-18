@@ -84,8 +84,8 @@
         }
 
         .tooltip img {
-            width: 700px;
-            height: 700px;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             border-radius: 5px;
             margin: 10px 0;
@@ -384,7 +384,7 @@
                 const tooltipWidth = 700;
                 const tooltipHeight = 800;
                 
-                // 检查鼠标位置，决定tooltip显示在左侧还是右侧
+                // 检查鼠标位置，决定tooltip显示在左��还是右侧
                 let tooltipX;
                 if (event.clientX > viewportWidth / 2) {
                     // 鼠标在右半边，tooltip显示在左侧
@@ -679,7 +679,7 @@
         // 监听全屏变化事件
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
-                fullscreenBtn.textContent = '退出全屏';
+                fullscreenBtn.textContent = '退出���屏';
             } else {
                 fullscreenBtn.textContent = '全屏显示';
             }
