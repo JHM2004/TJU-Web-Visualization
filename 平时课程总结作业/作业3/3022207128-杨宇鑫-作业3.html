@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.2/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.17.2/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.17.2/dist/index.js"></script><script>(r => {
+                setTimeout(r);
+              })(() => {
+  const {
+    markmap,
+    mm
+  } = window;
+  const {
+    el
+  } = markmap.Toolbar.create(mm);
+  el.setAttribute('style', 'position:absolute;bottom:20px;right:20px');
+  document.body.append(el);
+})</script><script>((getMarkmap, getOptions, root2, jsonOptions) => {
+              const markmap = getMarkmap();
+              window.mm = markmap.Markmap.create(
+                "svg#mindmap",
+                (getOptions || markmap.deriveOptions)(jsonOptions),
+                root2
+              );
+            })(() => window.markmap,null,{"content":"地理空间可视化","children":[{"content":"1. 引言","children":[{"content":"定义和意义","children":[],"payload":{"lines":"3,4"}},{"content":"发展历史","children":[],"payload":{"lines":"4,5"}},{"content":"基本方法","children":[],"payload":{"lines":"5,6"}},{"content":"应用和挑战","children":[],"payload":{"lines":"6,8"}}],"payload":{"lines":"2,3"}},{"content":"2. 空间数据","children":[{"content":"层次和图数据可视化面临的挑战","children":[],"payload":{"lines":"9,10"}},{"content":"层次和图数据的可视化算法","children":[],"payload":{"lines":"10,12"}}],"payload":{"lines":"8,9"}},{"content":"3. 图和网络数据","children":[{"content":"感知和认知交互模型","children":[],"payload":{"lines":"13,15"}}],"payload":{"lines":"12,13"}},{"content":"4. 文本数据与高维数据","children":[],"payload":{"lines":"15,16"}},{"content":"5. 地理信息数据","children":[{"content":"上机实践（D3.js等）","children":[],"payload":{"lines":"18,20"}}],"payload":{"lines":"17,18"}},{"content":"6. 上机实践（分组答辩）","children":[],"payload":{"lines":"20,21"}},{"content":"历史发展","children":[{"content":"12,000 B.C. 旧石器时代晚期：西班牙北部纳瓦拉地区阿邦兹洞穴中的石板，被认为是最早的景观描绘。","children":[],"payload":{"lines":"23,24"}},{"content":"3000 B.C. 地图的起源：根据一定的数学法则，将地球或其他星球的自然现象和社会现象通过概括和符号缩绘在平面上的图形。","children":[],"payload":{"lines":"24,26"}}],"payload":{"lines":"22,23"}},{"content":"应用实例","children":[{"content":"谷歌地图中的加油站","children":[],"payload":{"lines":"27,28"}},{"content":"基于位置的服务（LBS）","children":[],"payload":{"lines":"28,29"}},{"content":"富人居住区分布","children":[],"payload":{"lines":"29,30"}},{"content":"911紧急呼叫接听和调度","children":[],"payload":{"lines":"30,31"}},{"content":"地震地图","children":[],"payload":{"lines":"31,33"}}],"payload":{"lines":"26,27"}},{"content":"地图类型","children":[{"content":"符号地图","children":[],"payload":{"lines":"34,35"}},{"content":"点地图","children":[],"payload":{"lines":"35,36"}},{"content":"土地利用地图","children":[],"payload":{"lines":"36,37"}},{"content":"等值区域统计图","children":[],"payload":{"lines":"37,38"}},{"content":"线图","children":[],"payload":{"lines":"38,39"}},{"content":"等值线地图","children":[],"payload":{"lines":"39,40"}},{"content":"表面地图","children":[],"payload":{"lines":"40,42"}}],"payload":{"lines":"33,34"}},{"content":"地图投影","children":[{"content":"将地球三维表面转换成二维平面地图的技术和方法。","children":[],"payload":{"lines":"43,44"}},{"content":"变量：子午线（λ）、纬度（ϕ）、标准平行线的纬度（ϕ0）、中央经线（λ0）。","children":[],"payload":{"lines":"44,46"}}],"payload":{"lines":"42,43"}},{"content":"投影分类","children":[{"content":"等角投影：保持角度的真实性，但面积不保持。","children":[],"payload":{"lines":"47,48"}},{"content":"等量或相等面积：保持地表面积的真实性，但形状、角度和距离可能会变形。","children":[],"payload":{"lines":"48,49"}},{"content":"等距离：中心点到任何其他点的距离在地图上是准确的，但面积和形状可能不会保持真实。","children":[],"payload":{"lines":"49,50"}},{"content":"球心映射：大圆航线在地图上显示为直线，用于航海和航空中的路径规划。","children":[],"payload":{"lines":"50,51"}},{"content":"等方位角映射：从某中心点向外保持正确的方向。","children":[],"payload":{"lines":"51,53"}}],"payload":{"lines":"46,47"}},{"content":"按投影面分类","children":[{"content":"圆柱、平面和圆锥投影。","children":[],"payload":{"lines":"54,56"}}],"payload":{"lines":"53,54"}},{"content":"特定投影方法","children":[{"content":"等经纬度圆柱投影","children":[],"payload":{"lines":"57,58"}},{"content":"兰伯特圆柱等面积投影","children":[],"payload":{"lines":"58,59"}},{"content":"哈默-艾托夫投影","children":[],"payload":{"lines":"59,60"}},{"content":"摩尔魏特投影","children":[],"payload":{"lines":"60,61"}},{"content":"余弦等面积投影","children":[],"payload":{"lines":"61,62"}},{"content":"阿尔伯斯等面积圆锥投影","children":[],"payload":{"lines":"62,63"}},{"content":"墨卡托投影","children":[],"payload":{"lines":"63,65"}}],"payload":{"lines":"56,57"}},{"content":"视觉变量在空间数据中的应用","children":[{"content":"映射问题：绝对与相对映射产生不同的等值区域统计图。","children":[],"payload":{"lines":"66,67"}},{"content":"不同颜色图产生不同的等值区域统计图。","children":[],"payload":{"lines":"67,68"}},{"content":"不同的空间聚合产生不同的等值区域统计图。","children":[],"payload":{"lines":"68,70"}}],"payload":{"lines":"65,66"}},{"content":"点数据可视化","children":[{"content":"点地图：每个圆圈代表一个事件的空间位置。","children":[],"payload":{"lines":"71,73"}}],"payload":{"lines":"70,71"}},{"content":"线数据可视化","children":[{"content":"网络地图、流图和边缘捆绑。","children":[],"payload":{"lines":"74,75"}},{"content":"流图：最小化边缘交叉和节点扭曲，保留相对位置。","children":[],"payload":{"lines":"75,76"}},{"content":"边缘捆绑：层次化弯曲线条使用B-splines。","children":[],"payload":{"lines":"76,78"}}],"payload":{"lines":"73,74"}},{"content":"面数据可视化","children":[{"content":"等值线图：计算方法、等值线抽取、真实数据的采样、距离场计算、所属区域中心的距离。","children":[],"payload":{"lines":"79,80"}},{"content":"Choropleth地图：假设数据的属性在一个区域内平均分布。","children":[],"payload":{"lines":"80,81"}},{"content":"Cartogram地图：按照地理区域的属性值对各个区域进行适当的变形。","children":[],"payload":{"lines":"81,83"}}],"payload":{"lines":"78,79"}},{"content":"三维地图可视化","children":[{"content":"崭新的应用：旅游线路规划、移动导航、移动广告、市政规划、交通模拟。","children":[],"payload":{"lines":"84,85"}},{"content":"三维可视化的问题：与传统地图思想相左、可能带来视觉干扰、视觉遮挡、错觉、距离更难估计。","children":[],"payload":{"lines":"85,87"}}],"payload":{"lines":"83,84"}},{"content":"地理空间数据集","children":[{"content":"Google和Baidu API","children":[],"payload":{"lines":"88,89"}},{"content":"OpenStreetMap","children":[],"payload":{"lines":"89,90"}},{"content":"香港政府数据集","children":[],"payload":{"lines":"90,91"}}],"payload":{"lines":"87,88"}}],"payload":{"lines":"0,1"}},{})</script>
+</body>
+</html>
