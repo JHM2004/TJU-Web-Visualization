@@ -243,6 +243,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div id="alertMessage" class="alert-message"></div>
     <div class="control-buttons">
         <button class="control-button" onclick="checkDevice('mobile-biological-classification-sunburst-2D.html')">生物分类-太阳爆发图-2D</button>

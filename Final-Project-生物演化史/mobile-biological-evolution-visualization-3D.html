@@ -173,6 +173,12 @@
 </head>
 
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div style="
         position: fixed;
         top: 0;
@@ -555,7 +561,7 @@
                     <option value="750" style="font-size: 12px;">世界地图(750亿年前)</option>
                 </select>
             </div>
-            <!-- 在右侧面板的��方添加导按钮组 -->
+            <!-- 在右侧面板的下方添加导按钮组 -->
             <div style="margin-top: 10px;">
                 <!-- 修改按钮,移除onclick属性,添加id -->
                 <button id="sunburstBtn" class="nav-button">生物分类-太阳爆发图-2D</button>
@@ -1702,7 +1708,7 @@
                     selectionCircle.lookAt(camera.position);
                     scene.add(selectionCircle);
 
-                    // 获取节点和根节点位���
+                    // 获取节点和根节点位置
                     const nodePosition = nodeData.object.position.clone();
                     const rootPosition = new THREE.Vector3(0, 0, 0); // 设根节点在原点
 

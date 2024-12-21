@@ -7,6 +7,12 @@
     <title>生物演化史导航页</title>
     <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
     <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
+    <script>
         window.onload = function() {
             // 显示手动选择按钮
             document.getElementById('manual-selection').style.display = 'block';
@@ -42,11 +48,11 @@
     </script>
     <style>
         #manual-selection button {
-            width: 200px;
-            height: 60px;
+            width: 300px;
+            height: 80px;
             margin: 10px auto;
             padding: 0;
-            font-size: 18px;
+            font-size: 24px;
             display: block;
         }
         .title {
@@ -60,7 +66,7 @@
         #countdown {
             text-align: center;
             margin-top: 20px;
-            font-size: 16px;
+            font-size: 24px;
             color: #333;
         }
         .highlight {

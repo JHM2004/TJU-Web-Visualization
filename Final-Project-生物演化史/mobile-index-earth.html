@@ -146,6 +146,12 @@
 </head>
 
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <!-- 添加加载提示 -->
     <div id="loadingText" style="
         position: fixed;

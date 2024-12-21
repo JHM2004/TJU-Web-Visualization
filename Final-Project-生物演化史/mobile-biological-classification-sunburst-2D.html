@@ -341,6 +341,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div class="control-tips">
         按住 Q 键逆时针旋转<br>
         按住 E 键顺时针旋转<br>
@@ -809,7 +815,7 @@
         }
     }
 
-    // 修改原有的SVG��建代码，确保svg变量可被访问
+    // 修改原有的SVG建代码，确保svg变量可被访问
     const svg2 = d3.select('#tree-container')
         .append('svg')
         .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)

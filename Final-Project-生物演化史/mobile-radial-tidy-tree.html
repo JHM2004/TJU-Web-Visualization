@@ -315,6 +315,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div class="header">
         <h1>Radial Tidy Tree</h1>
         <a href="./mobile-biological-evolution-tree-2D.html" class="nav-link">Tidy Tree</a>
@@ -684,7 +690,7 @@
             }
             
             title.textContent = node.data.name || '';
-            time.textContent = node.data.time ? `时��：${node.data.time}` : '';
+            time.textContent = node.data.time ? `时期：${node.data.time}` : '';
             description.textContent = node.data.description ? `描述：${node.data.description}` : '';
 
             // 显示面板

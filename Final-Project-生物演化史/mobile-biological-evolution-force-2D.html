@@ -234,6 +234,12 @@
 </head>
 
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div id="background-container" class="background-image-container"></div>
     <div class="controls">
         <div class="nav-buttons">
@@ -518,7 +524,7 @@
                 .style("fill", d => getNodeColor(d))
                 .style("cursor", "pointer");  // 添加指针样式
 
-            // ��改文本标的位置逻辑
+            // 修改文本标的位置逻辑
             nodeEnter.append("text")
                 .attr("dy", ".31em")
                 .attr("x", d => {
@@ -1631,7 +1637,7 @@
         `;
         document.head.appendChild(messageStyle);
 
-        // 添加一个测试函数，可以在控制台手动���用测试
+        // 添加一个测试函数，可以在控制台手动调用测试
         window.testMessage = function() {
             showMessage('测试消息\n第二行');
         }

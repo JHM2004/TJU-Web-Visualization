@@ -127,6 +127,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div class="title">点击卡片进入页面</div>
     <div class="container">
         <script>

@@ -8,7 +8,7 @@
         body { margin: 0; overflow: hidden; }
         #info {
             position: absolute;
-            top: 10px;
+            top: 50px;
             width: 100%;
             text-align: center;
             color: white;
@@ -240,6 +240,15 @@
     <script src="./biological-evolution-data.js"></script>
 </head>
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
+    <div style="position: fixed; top: 0; width: 100%; text-align: center; background-color: rgba(0, 0, 0, 0.7); color: red; font-size: 20px; padding: 10px; z-index: 10000;">
+        >在pc端解锁更多功能, 体验更佳~
+    </div>
     <div id="navigation-panel">
         <a href="./mobile-biological-classification-sunburst-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
         <a href="./mobile-biological-evolution-force-2D.html" class="nav-button">生物演化史-力导向-2D</a>
@@ -599,7 +608,7 @@
                 return line;
             }
             
-            // 修改createNodes函数的颜色逻辑
+            // 修改createNodes函数颜色逻辑
             function createNodes(data, position = new THREE.Vector3(), level = 0, angle = 0, parentColor, baseAngle = null) {
                 const nodeGeometry = new THREE.SphereGeometry(networkParameters.nodeSize, 32, 32);
                 let color;

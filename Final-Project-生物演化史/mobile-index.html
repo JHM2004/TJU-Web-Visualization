@@ -310,6 +310,12 @@
 </head>
 
 <body>
+    <script>
+        // 禁用移动端浏览器的左右滑动翻页行为
+        document.body.addEventListener('touchmove', function(event) {
+            event.preventDefault();
+        }, { passive: false });
+    </script>
     <div id="message" class="message">
         请使用PC端(电脑)访问以获得最佳体验
     </div>
@@ -335,7 +341,7 @@
             redirectButton.className = 'redirect-button mobile';
             redirectButton.textContent = '点击跳转到生物演化史首页';
             redirectButton.onclick = function () {
-                // 直接跳转到移动端页���
+                // 直接跳转到移动端页面
                 window.location.href = "./mobile-home-page.html";
             };
             document.body.appendChild(redirectButton);
@@ -440,7 +446,7 @@
             {
                 name: '夜晚蘑菇',
                 type: 'equirectangular',
-                url: './static-other/Skybox_Texture/全��天空盒/mushrooms_night.png'
+                url: './static-other/Skybox_Texture/全景天空盒/mushrooms_night.png'
             },
             {
                 name: '日落蘑菇',
@@ -476,7 +482,7 @@
             {
                 name: '夜晚场景2',
                 type: 'equirectangular',
-                url: './static-other/Skybox_Texture/��景天空盒/new-01/FS011_Night.png'
+                url: './static-other/Skybox_Texture/全景天空盒/new-01/FS011_Night.png'
             },
             {
                 name: '夜晚场景3',
@@ -993,7 +999,7 @@
         let currentRotationX = 0;
         let currentRotationY = 0;
 
-        // ���加触摸事件监听器
+        // 加触摸事件监听器
         document.addEventListener('touchstart', onTouchStart, false);
         document.addEventListener('touchmove', onTouchMove, false);
 
