@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+html lang="zh">
+head>
+   <meta charset="UTF-8">
+   <title>生物演化史墙</title>
+   <script src="https://d3js.org/d3.v7.min.js"></script>
+   <script src="./biological-evolution-data.js"></script> <!-- 引入数据文件 -->
+   <style>
+       .node {
+           border: 1px solid #ccc;
+           padding: 10px;
+           margin: 5px;
+           display: inline-block;
+           vertical-align: top;
+       }
+       .node img {
+           max-width: 100px;
+           display: block;
+           margin: 0 auto;
+           opacity: 0;
+           transition: opacity 0.3s;
+       }
+   </style>
+/head>
+body>
+   <div id="evolution-wall"></div>
+   <script>
+       console.log(treeData); // 检查数据是否正确加载
+        function createWall(data, container) {
+           const node = container.append("div")
+               .attr("class", "node");
+            node.append("h3").text(data.name);
+           node.append("p").text(data.time);
+           node.append("p").text(data.description);
+           node.append("img")
+               .attr("data-src", data.src) // 使用data-src存储图片路径
+               .attr("alt", data.name);
+            if (data.children) {
+               const childrenContainer = node.append("div").attr("class", "children");
+               data.children.forEach(child => {
+                   createWall(child, childrenContainer);
+               });
+           }
+       }
+        const wallContainer = d3.select("#evolution-wall");
+       createWall(treeData, wallContainer);
+        // 懒加载图片
+       const lazyLoadImages = document.querySelectorAll('img[data-src]');
+       const imageObserver = new IntersectionObserver((entries, observer) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   const img = entry.target;
+                   img.src = img.getAttribute('data-src');
+                   img.onload = () => img.style.opacity = 1;
+                   observer.unobserve(img);
+               }
+           });
+       });
+        lazyLoadImages.forEach(img => {
+           imageObserver.observe(img);
+       });
+   </script>
+/body>
+/html>

@@ -84,7 +84,7 @@
         .node-image {
             width: 30px;
             height: 30px;
-            border-radius: 50%;
+            border-radius: 0;
         }
 
         .tooltip {
@@ -311,6 +311,18 @@
         // 添加一个变量来跟踪当前高亮的节点
         let currentHighlightedNode = null;
 
+        // 创建Intersection Observer
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    console.log(`Loading image: ${img.dataset.src}`); // 调试信息
+                    img.src = img.dataset.src; // 将data-src的值赋给src
+                    observer.unobserve(img); // 停止观察已加载的图片
+                }
+            });
+        });
+
         // 加载数并渲染
         function renderTree(data, filter = 'all') {
             // 清除现有内容
@@ -372,7 +384,7 @@
                     .x(d => d.y)
                     .y(d => d.x));
 
-            // 调整节点组���位置
+            // 调整节点组位置
             const nodes = svg.selectAll(".node")
                 .data(root.descendants())
                 .enter()
@@ -385,13 +397,20 @@
                 .attr("r", 5);
 
             // 添加图片
-            nodes.append("image")
-                .attr("xlink:href", d => d.data.src)
-                .attr("class", "node-image")
+            nodes.append("foreignObject")
                 .attr("x", -15)
                 .attr("y", -15)
                 .attr("width", 30)
-                .attr("height", 30);
+                .attr("height", 30)
+                .append("xhtml:img")
+                .attr("data-src", d => d.data.src) // 使用data-src存储图片URL
+                .attr("class", "node-image")
+                .attr("width", 30)
+                .attr("height", 30)
+                .each(function() { 
+                    console.log(`Observing image: ${d3.select(this).attr('data-src')}`); // 调试信息
+                    observer.observe(this); 
+                }); // 观察每个图片
 
             // 添加文本标签
             nodes.append("text")
@@ -400,7 +419,7 @@
                 .attr("text-anchor", d => d.children ? "end" : "start")
                 .text(d => d.data.name);
 
-            // 添加交���事件
+            // 添加交事件
             let currentNode = null;
 
             nodes.on("mouseover", function(event, d) {
@@ -506,7 +525,7 @@
                         return;
                     }
                     
-                    // 设置200ms的延��
+                    // 设置200ms的延迟
                     hideTimeout = setTimeout(() => {
                         if (!fixedTooltip) {
                             currentNode = null;
@@ -570,7 +589,7 @@
                 // 更新当前高亮的节点
                 currentHighlightedNode = node;
                 
-                // 获取从��点到根节点的路径
+                // 取从点到根节点的路径
                 let current = node;
                 let path = [];
                 while (current.parent) {
@@ -646,7 +665,7 @@
             }
         }
 
-        // 在现有的nodes事件处理中添加触摸事件
+        // 在现的nodes事件处理中添加触摸事件
         nodes.on("touchstart", function(event, d) {
             event.preventDefault(); // 阻止默认行为
             

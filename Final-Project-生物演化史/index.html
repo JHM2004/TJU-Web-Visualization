@@ -8,27 +8,73 @@
     <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
     <script>
         window.onload = function() {
-            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            if (isMobile) {
-                window.location.href = "./mobile-index.html";
+            // 显示手动选择按钮
+            document.getElementById('manual-selection').style.display = 'block';
+
+            // 检测设备类型
+            let target = '';
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                target = '<span class="highlight">移动端</span>';
+                // 缩小标题字体
+                document.querySelector('.title').style.fontSize = '30px';
             } else {
-                window.location.href = "./pc-index.html";
+                target = '<span class="highlight">PC端</span>';
             }
 
-            // 后备方案：如果没有自动跳转，显示手动选择按钮
-            setTimeout(function() {
-                if (window.location.href.includes('index.html')) {
-                    document.getElementById('manual-selection').style.display = 'block';
+            // 倒计时
+            let countdown = 3;
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.innerHTML = `根据自动检测，将在 ${countdown} 秒后自动跳转到${target}页面...`;
+            const interval = setInterval(() => {
+                countdown--;
+                countdownElement.innerHTML = `根据自动检测，将在 ${countdown} 秒后自动跳转到${target}页面...`;
+                if (countdown === 0) {
+                    clearInterval(interval);
+                    // 自动跳转
+                    if (target.includes('移动端')) {
+                        window.location.href = './mobile-index.html';
+                    } else {
+                        window.location.href = './pc-index.html';
+                    }
                 }
             }, 1000);
         }
     </script>
+    <style>
+        #manual-selection button {
+            width: 200px;
+            height: 60px;
+            margin: 10px auto;
+            padding: 0;
+            font-size: 18px;
+            display: block;
+        }
+        .title {
+            color: #FF0000;
+            font-size: 48px;
+            font-family: "Microsoft YaHei";
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+        }
+        #countdown {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .highlight {
+            color: #FF0000;
+        }
+    </style>
 </head>
 
 <body>
+    <h1 class="title">生物演化史 - EvoViz</h1>
     <div id="manual-selection" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
-        <button style="display: block; margin: 10px auto; padding: 15px 30px; font-size: 18px;" onclick="window.location.href='./pc-index.html'">跳转到 PC版 -> </button>
-        <button style="display: block; margin: 10px auto; padding: 15px 30px; font-size: 18px;" onclick="window.location.href='./mobile-index.html'">跳转到 移动版 -> </button>
+        <button onclick="window.location.href='./pc-index.html'">PC端由此进入&nbsp;&nbsp→</button>
+        <button onclick="window.location.href='./mobile-index.html'">移动端由此进入&nbsp;→</button>
+        <div id="countdown">根据自动检测，将在 3 秒后自动跳转...</div>
     </div>
 </body>
 

@@ -269,6 +269,29 @@
         // 添加一个变量来跟踪当前高亮的节点
         let currentHighlightedNode = null;
 
+        // 懒加载图片
+        function lazyLoadImages() {
+            const images = document.querySelectorAll('image.node-image');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const src = img.getAttribute('data-src');
+                        if (src) {
+                            img.setAttribute('href', src);
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(image => {
+                observer.observe(image);
+            });
+        }
+
         // 加载数并渲染树
         function renderTree(data, filter = 'all') {
             // 清除现有内容
@@ -344,12 +367,15 @@
 
             // 添加图片
             nodes.append("image")
-                .attr("xlink:href", d => d.data.src)
+                .attr("data-src", d => d.data.src)
                 .attr("class", "node-image")
                 .attr("x", -15)
                 .attr("y", -15)
                 .attr("width", 30)
                 .attr("height", 30);
+
+            // 调用懒加载函数
+            lazyLoadImages();
 
             // 添加文本标签
             nodes.append("text")
@@ -385,7 +411,7 @@
                 const tooltipWidth = 700;
                 const tooltipHeight = 800;
                 
-                // 检查鼠标位置，决定tooltip显示在左��还是右侧
+                // 检查鼠标位置，决定tooltip显示在左侧还是右侧
                 let tooltipX;
                 if (event.clientX > viewportWidth / 2) {
                     // 鼠标在右半边，tooltip显示在左侧
@@ -680,7 +706,7 @@
         // 监听全屏变化事件
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
-                fullscreenBtn.textContent = '退出���屏';
+                fullscreenBtn.textContent = '退出屏';
             } else {
                 fullscreenBtn.textContent = '全屏显示';
             }

@@ -287,11 +287,19 @@
         .earth-button {
             bottom: 8%;
         }
+
+        /* 禁止选择文本 */
+        .no-select {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome, Opera, and Edge */
+        }
     </style>
 </head>
 
 <body>
-    <div id="message" class="message">
+    <div id="message" class="message no-select">
         生物演化史 - EvoViz
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -568,7 +576,7 @@
                 type: 'cubemap',
                 urls: [
                     './static-other/Skybox_Texture/立方体天空盒/green_nebula/left.png',
-                    './static-other/Skybox_Texture/立方体天空���/green_nebula/right.png',
+                    './static-other/Skybox_Texture/立方体天空盒/green_nebula/right.png',
                     './static-other/Skybox_Texture/立方体天空盒/green_nebula/up.png',
                     './static-other/Skybox_Texture/立方体天空盒/green_nebula/bottom.png',
                     './static-other/Skybox_Texture/立方体天空盒/green_nebula/front.png',
@@ -888,7 +896,7 @@
 
                 // 根据设备类型显示不同的提示
                 const vrHint = document.createElement('div');
-                vrHint.className = 'vr-hint';
+                vrHint.className = 'vr-hint no-select';
                 if (isMobileDevice()) {
                     vrHint.textContent = '左右滑动体验VR全景';
                 } else {
