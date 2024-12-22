@@ -1,0 +1,3969 @@
+Computer science: 2427次
+Artificial intelligence: 1549次
+Visualization: 1492次
+Computer vision: 1357次
+Data visualization: 1273次
+Theoretical computer science: 1056次
+Data mining: 679次
+Visual analytics: 408次
+Information visualization: 401次
+Rendering (computer graphics): 381次
+Mathematics: 315次
+Volume rendering: 268次
+Machine learning: 216次
+Interactive visualization: 213次
+User interface: 164次
+Computational geometry: 159次
+Cluster analysis: 152次
+Data set: 148次
+Computer graphics: 148次
+Human–computer interaction: 143次
+Scientific visualization: 141次
+Animation: 135次
+Mathematical optimization: 131次
+Flow visualization: 131次
+Vector field: 121次
+Feature extraction: 113次
+Computer graphics (images): 107次
+Data science: 107次
+Graph drawing: 103次
+Text mining: 99次
+Simulation: 98次
+Multimedia: 97次
+Data modeling: 95次
+Scalar (physics): 89次
+Scalability: 81次
+Isosurface: 77次
+Information retrieval: 77次
+Analytics: 77次
+Topology: 75次
+Data structure: 74次
+Polygon mesh: 74次
+Software: 69次
+Level of detail: 68次
+Interactive visual analysis: 68次
+Graphical user interface: 66次
+Mesh generation: 63次
+Discrete mathematics: 63次
+Grid: 62次
+Multivariate statistics: 62次
+Graph theory: 61次
+Parallel coordinates: 59次
+Graph: 58次
+Voxel: 57次
+Interpolation: 57次
+Image segmentation: 55次
+Scalar field: 54次
+Computational fluid dynamics: 54次
+Pattern recognition: 53次
+Interaction technique: 52次
+Computation: 52次
+Clustering high-dimensional data: 51次
+3D rendering: 49次
+Algorithm design: 49次
+Usability: 48次
+Image texture: 48次
+Computer animation: 47次
+Algorithm: 45次
+Real-time rendering: 45次
+Streamlines streaklines and pathlines: 45次
+Texture mapping: 44次
+Ray tracing (graphics): 43次
+Dimensionality reduction: 43次
+Graphics: 42次
+Ray casting: 42次
+Graphics hardware: 42次
+Geometric modeling: 40次
+Hierarchy: 39次
+Cognition: 39次
+Shading: 38次
+Vertex (geometry): 38次
+Filter (signal processing): 38次
+Workflow: 38次
+Creative visualization: 37次
+Transfer function: 37次
+Image processing: 37次
+Cultural analytics: 37次
+Polygon: 36次
+Iterative reconstruction: 36次
+Tensor: 36次
+Task analysis: 36次
+Pixel: 35次
+Social network: 34次
+Glyph: 34次
+Architecture: 33次
+Parallel rendering: 32次
+Time series: 32次
+Tiled rendering: 32次
+Diagram: 32次
+Software rendering: 32次
+Perception: 31次
+Graph Layout: 31次
+The Internet: 31次
+Zoom: 31次
+Image-based modeling and rendering: 31次
+Vortex: 31次
+Robustness (computer science): 30次
+Software visualization: 30次
+Geographic information system: 30次
+Geospatial analysis: 30次
+Histogram: 30次
+Data model: 29次
+Operator (computer programming): 29次
+Database: 29次
+Diffusion MRI: 29次
+Geometry: 29次
+Marching cubes: 28次
+Alternate frame rendering: 28次
+Tree (data structure): 28次
+Ranging: 27次
+Abstraction: 27次
+Virtual machine: 27次
+Medical imaging: 26次
+Curvature: 26次
+Particle: 26次
+Interactivity: 26次
+Social media: 25次
+Scaling: 25次
+Spatial analysis: 25次
+Virtual reality: 25次
+Statistics: 24次
+Bioinformatics: 24次
+World Wide Web: 24次
+Knowledge extraction: 24次
+Matrix (mathematics): 24次
+Data point: 24次
+Shape analysis (digital geometry): 23次
+Data exploration: 23次
+Sampling (statistics): 23次
+Solid modeling: 23次
+Hardware acceleration: 23次
+Principal component analysis: 23次
+Real-time computer graphics: 23次
+Scatter plot: 23次
+Data compression: 23次
+Wavelet: 22次
+Texture memory: 22次
+Communication design: 22次
+Hierarchical clustering: 22次
+Region of interest: 22次
+Tensor field: 22次
+Distance transform: 22次
+Parallel computing: 22次
+Collaborative software: 22次
+Advection: 22次
+Raw data: 21次
+Triangle mesh: 21次
+Data type: 21次
+Shader: 21次
+Critical point (mathematics): 21次
+Hierarchical database model: 21次
+Combinatorics: 21次
+Multidimensional scaling: 20次
+Distortion: 20次
+Image resolution: 20次
+Opacity: 20次
+Transparency (graphic): 20次
+Image quality: 20次
+Computer hardware: 20次
+Geovisualization: 20次
+Exploit: 20次
+Finite element method: 20次
+Manifold: 19次
+Probabilistic logic: 19次
+Knowledge management: 19次
+Smoothing: 19次
+Line integral convolution: 19次
+Segmentation: 19次
+Fluid dynamics: 19次
+Immersion (virtual reality): 19次
+Tree traversal: 19次
+Visual perception: 18次
+Distributed computing: 18次
+Artificial neural network: 18次
+Encoding (memory): 18次
+Frame rate: 18次
+Tag cloud: 18次
+Parameter space: 18次
+Semantics: 18次
+Graph (abstract data type): 18次
+Piecewise: 18次
+Computational physics: 18次
+Temporal database: 18次
+Ranking: 18次
+Triangulation (social science): 17次
+Phenomenon: 17次
+Software system: 17次
+Real-time computing: 17次
+Natural language processing: 17次
+Categorical variable: 17次
+Relational database: 17次
+Embedding: 17次
+Planar: 17次
+Contextual image classification: 17次
+Timeline: 17次
+Curse of dimensionality: 16次
+Clutter: 16次
+Terrain: 16次
+Information system: 16次
+Level set: 16次
+Trajectory: 16次
+Deformation (mechanics): 16次
+Chart: 16次
+Computed tomography: 16次
+Computational complexity theory: 16次
+Stress (mechanics): 16次
+Euclidean vector: 16次
+Population: 16次
+Overlay: 16次
+Workstation: 16次
+STREAMS: 15次
+Feature vector: 15次
+3D computer graphics: 15次
+Data flow diagram: 15次
+Point cloud: 15次
+Visual programming language: 15次
+Sensemaking: 15次
+Eye tracking: 15次
+Management science: 15次
+Spline (mathematics): 15次
+Application software: 15次
+Empirical research: 15次
+Graphics pipeline: 15次
+Complex data type: 15次
+Iterative method: 15次
+Indexation: 14次
+Wavelet transform: 14次
+Subject-matter expert: 14次
+Metadata: 14次
+Fuzzy logic: 14次
+Information space: 14次
+Sorting: 14次
+Volume ray casting: 14次
+Brushing and linking: 14次
+Exploratory data analysis: 14次
+Categorization: 14次
+Visual comparison: 14次
+Small number: 14次
+Metaphor: 14次
+Critical point (thermodynamics): 14次
+Voronoi diagram: 14次
+Image registration: 13次
+Skeleton (computer programming): 13次
+Terrain rendering: 13次
+Seeding: 13次
+Convolution: 13次
+Use case: 13次
+Scale-space segmentation: 13次
+Computer simulation: 13次
+Tetrahedron: 13次
+Turbulence: 13次
+Magnitude (mathematics): 13次
+Feature selection: 13次
+Octree: 13次
+Data analysis: 12次
+Color space: 12次
+Unstructured grid: 12次
+Curvilinear coordinates: 12次
+Multidimensional systems: 12次
+Table (information): 12次
+User experience design: 12次
+Invariant (mathematics): 12次
+Comprehension: 12次
+Weather forecasting: 12次
+Extensibility: 12次
+Decision support system: 12次
+Mathematical analysis: 12次
+Data reduction: 12次
+Social network analysis: 12次
+Technical report: 12次
+Annotation: 12次
+Particle tracking velocimetry: 12次
+Computational science: 12次
+Ground truth: 12次
+Fiber: 11次
+Sensory cue: 11次
+Parametrization: 11次
+Data access: 11次
+Massively parallel: 11次
+Thread (computing): 11次
+Preprocessor: 11次
+Network topology: 11次
+Query language: 11次
+Speedup: 11次
+CONTEST: 11次
+Automatic summarization: 11次
+Domain knowledge: 11次
+Signed distance function: 11次
+Glyph (data visualization): 11次
+Outlier: 11次
+Topic model: 11次
+Interaction design: 11次
+Metric (mathematics): 11次
+Directed graph: 11次
+Approximation algorithm: 11次
+Dynamic data: 11次
+Information theory: 11次
+Communication channel: 11次
+Visual inspection: 11次
+Augmented reality: 11次
+Time complexity: 11次
+Virtual colonoscopy: 11次
+Full text search: 11次
+Correlation clustering: 11次
+Synthetic data: 10次
+3D interaction: 10次
+Haptic technology: 10次
+Univariate: 10次
+Data management: 10次
+Heuristic: 10次
+Global illumination: 10次
+Information processing: 10次
+Microblogging: 10次
+Situation awareness: 10次
+Feature (computer vision): 10次
+Molecular dynamics: 10次
+Market research: 10次
+Self-organizing map: 10次
+Geodesic: 10次
+Flow map: 10次
+Knowledge representation and reasoning: 10次
+Data collection: 10次
+Coherence (physics): 10次
+Image warping: 10次
+Statistical graphics: 10次
+Quantization (signal processing): 10次
+Cartesian coordinate system: 10次
+Electronic design automation: 10次
+Human visual system model: 10次
+Flow (psychology): 10次
+Tree structure: 10次
+Workspace: 10次
+Visibility: 10次
+Acceleration: 10次
+Curve fitting: 10次
+Web application: 10次
+Readability: 10次
+Power graph analysis: 10次
+Statistical model: 9次
+Small multiple: 9次
+Similarity measure: 9次
+Delaunay triangulation: 9次
+Surface reconstruction: 9次
+Trilinear interpolation: 9次
+Search engine: 9次
+Correctness: 9次
+Uncertain data: 9次
+Linear interpolation: 9次
+Compositing: 9次
+Brightness: 9次
+Context awareness: 9次
+Maximum intensity projection: 9次
+Data quality: 9次
+Adjacency matrix: 9次
+Biological data visualization: 9次
+Analogy: 9次
+Classical mechanics: 9次
+Nonlinear system: 9次
+Narrative: 9次
+Source code: 9次
+Probability distribution: 9次
+Out-of-core algorithm: 9次
+Bottleneck: 9次
+Piecewise linear function: 9次
+Floating point: 9次
+Viewpoints: 9次
+Government: 9次
+Bar chart: 9次
+Computer architecture: 9次
+Eigenvalues and eigenvectors: 9次
+Java: 9次
+Polynomial: 9次
+Texture synthesis: 9次
+Heuristics: 9次
+CUDA: 9次
+Fuzzy clustering: 9次
+Global Positioning System: 9次
+Image retrieval: 9次
+Strength of a graph: 9次
+Search engine indexing: 8次
+Lens (optics): 8次
+Lookup table: 8次
+Data processing: 8次
+Molecular biophysics: 8次
+Sparse matrix: 8次
+Workload: 8次
+Display device: 8次
+Affine transformation: 8次
+Spatial contextual awareness: 8次
+Software architecture: 8次
+Kernel (linear algebra): 8次
+Design process: 8次
+Bounded function: 8次
+Text corpus: 8次
+Engineering design process: 8次
+Slicing: 8次
+Visual processing: 8次
+Line chart: 8次
+Scripting language: 8次
+Cache: 8次
+Semantic analytics: 8次
+Complex network: 8次
+Application domain: 8次
+Urban planning: 8次
+Color mapping: 8次
+Linear subspace: 8次
+Debugging: 8次
+Graph database: 8次
+Biological data: 8次
+Parameterized complexity: 8次
+Tree (graph theory): 8次
+Intelligence analysis: 8次
+Numerical weather prediction: 8次
+Analytic reasoning: 8次
+Iterative and incremental development: 8次
+User-centered design: 8次
+Force-directed graph drawing: 8次
+Supercomputer: 8次
+Approximation error: 8次
+Stereoscopy: 8次
+Systems architecture: 8次
+Software development: 8次
+Computational steering: 8次
+Coordinate system: 8次
+Geography: 8次
+Mutual information: 8次
+Spacetime: 8次
+Compression (physics): 8次
+Informatics: 8次
+Segmentation-based object categorization: 8次
+Decision tree: 8次
+Texture compression: 8次
+Modular design: 8次
+Parallel algorithm: 8次
+Edge detection: 8次
+OpenGL: 8次
+Numerical analysis: 8次
+Visual search: 8次
+Modular decomposition: 8次
+Physics: 8次
+Web page: 7次
+Maxima and minima: 7次
+Projector: 7次
+Spatial relation: 7次
+Discretization: 7次
+Frequency domain: 7次
+Genomics: 7次
+Magnetic resonance imaging: 7次
+Tractography: 7次
+Cognitive load: 7次
+Computational biology: 7次
+Adaptive mesh refinement: 7次
+Context model: 7次
+Solver: 7次
+Data cube: 7次
+Expressivity: 7次
+Monte Carlo method: 7次
+Lyapunov exponent: 7次
+Atmospheric model: 7次
+Basis function: 7次
+Server: 7次
+Software deployment: 7次
+Mathematical visualization: 7次
+Cartesian tensor: 7次
+Tensor (intrinsic definition): 7次
+Tensor contraction: 7次
+Load balancing (computing): 7次
+Marching tetrahedra: 7次
+Box spline: 7次
+Graph bandwidth: 7次
+Systems engineering: 7次
+Video tracking: 7次
+Embedded system: 7次
+Subdivision surface: 7次
+Phylogenetic tree: 7次
+User modeling: 7次
+Correlation: 7次
+Ambient occlusion: 7次
+Wireless sensor network: 7次
+Anomaly detection: 7次
+Digital library: 7次
+Implementation: 7次
+Software analytics: 7次
+Web service: 7次
+Regular grid: 7次
+Object model: 7次
+Image-based lighting: 7次
+Conformal map: 7次
+Design methods: 7次
+Scale space: 7次
+Subspace topology: 7次
+Information needs: 7次
+Texture advection: 7次
+Data integrity: 7次
+Atmospheric sciences: 7次
+Triangulation: 7次
+Business intelligence: 7次
+CURE data clustering algorithm: 7次
+Tracing: 7次
+Uncertainty analysis: 7次
+Voltage graph: 7次
+Color histogram: 6次
+Distributed algorithm: 6次
+Asynchronous communication: 6次
+Data domain: 6次
+Domain analysis: 6次
+Non-photorealistic rendering: 6次
+Motion estimation: 6次
+Data stream: 6次
+Initialization: 6次
+Volume mesh: 6次
+Image stitching: 6次
+Radiology: 6次
+Climate model: 6次
+Reference model: 6次
+Drill down: 6次
+Moving least squares: 6次
+k-nearest neighbors algorithm: 6次
+Hue: 6次
+Design tool: 6次
+Experimental data: 6次
+Space partitioning: 6次
+Space technology: 6次
+Unbiased rendering: 6次
+Big data: 6次
+Spatial variability: 6次
+Inertial frame of reference: 6次
+Proof of concept: 6次
+Formative assessment: 6次
+Natural language user interface: 6次
+Feature detection: 6次
+Crowdsourcing: 6次
+Merge (version control): 6次
+Color model: 6次
+Grayscale: 6次
+Flattening: 6次
+Data transmission: 6次
+Parametric statistics: 6次
+Discrete wavelet transform: 6次
+Knowledge-based systems: 6次
+Systems design: 6次
+Symmetric tensor: 6次
+Asymptotic decider: 6次
+Cauchy stress tensor: 6次
+Data element: 6次
+Morphing: 6次
+Fourier transform: 6次
+Sonification: 6次
+Lattice (order): 6次
+Client–server model: 6次
+Image plane: 6次
+Tangent: 6次
+Pairwise comparison: 6次
+Cartogram: 6次
+End user: 6次
+Reconstruction algorithm: 6次
+Bundle: 6次
+Texture filtering: 6次
+Vocabulary: 6次
+Compromise: 6次
+Graphics processing unit: 6次
+Support vector machine: 6次
+Magnification: 6次
+Adjacency list: 6次
+Gaussian process: 6次
+Thematic map: 6次
+Euclidean distance: 6次
+Kinematics: 6次
+Mobile device: 6次
+Query optimization: 6次
+Lossy compression: 6次
+Strengths and weaknesses: 6次
+Multivariate analysis: 6次
+Personality: 6次
+Confocal microscopy: 6次
+Lagrangian coherent structures: 6次
+Progressive refinement: 6次
+Recall: 6次
+Persistence (computer science): 5次
+Persistent homology: 5次
+Sensor fusion: 5次
+Data stream mining: 5次
+Multiresolution analysis: 5次
+Display size: 5次
+Nearest-neighbor interpolation: 5次
+Data warehouse: 5次
+Distributed database: 5次
+Stochastic process: 5次
+Uncertainty quantification: 5次
+Random variable: 5次
+Universe: 5次
+In situ: 5次
+Memory management: 5次
+Elevation: 5次
+Data mapping: 5次
+Aneurysm: 5次
+Dynamic network analysis: 5次
+Storytelling: 5次
+Conversation: 5次
+Rigid body: 5次
+Dataflow: 5次
+Document clustering: 5次
+Sparse approximation: 5次
+restrict: 5次
+Reference frame: 5次
+Spatial distribution: 5次
+Data-driven: 5次
+Linear discriminant analysis: 5次
+Knowledge base: 5次
+Ontology (information science): 5次
+Satisfiability: 5次
+Factorization: 5次
+Graphic design: 5次
+Visual space: 5次
+Interactive design: 5次
+Tensor density: 5次
+Differential equation: 5次
+Reuse: 5次
+Group method of data handling: 5次
+Sampling (signal processing): 5次
+Differential geometry: 5次
+External Data Representation: 5次
+Computer Aided Design: 5次
+Variables: 5次
+Flow velocity: 5次
+Graph partition: 5次
+Aerodynamics: 5次
+Lattice graph: 5次
+Depiction: 5次
+Geometric primitive: 5次
+Data acquisition: 5次
+Heterogeneous network: 5次
+Recursion: 5次
+Computer engineering: 5次
+Subdivision: 5次
+Directory: 5次
+Vorticity: 5次
+Versa: 5次
+Simulation modeling: 5次
+Test data: 5次
+Lossless compression: 5次
+Expression (mathematics): 5次
+Discontinuous Galerkin method: 5次
+Domain-specific language: 5次
+Attenuation: 5次
+Web query classification: 5次
+Web navigation: 5次
+Topological skeleton: 5次
+Instability: 5次
+Pattern matching: 5次
+Mental mapping: 5次
+Triangle strip: 5次
+Spatial ecology: 5次
+Finance: 5次
+Signal processing: 5次
+Direction vector: 5次
+Legibility: 5次
+Level set method: 5次
+Transaction data: 5次
+Information engineering: 5次
+Directed acyclic graph: 5次
+Orthographic projection: 5次
+Coding (social sciences): 5次
+Anisotropy: 5次
+Intuition: 5次
+Imaging phantom: 5次
+Anisotropic diffusion: 5次
+SPQR tree: 5次
+Saddle: 5次
+Texture atlas: 5次
+Branching (version control): 5次
+Occlusion: 5次
+Bivariate analysis: 5次
+Input device: 5次
+Data field: 5次
+Kernel density estimation: 5次
+Silhouette: 5次
+Deep learning: 5次
+Perturbation (astronomy): 5次
+Line segment: 5次
+Cluster (physics): 5次
+Field line: 5次
+Sparkline: 5次
+Thumbnail: 5次
+Optics: 5次
+Clipping (audio): 5次
+Query expansion: 5次
+Microscopy: 5次
+Graph operations: 5次
+Salient: 5次
+Schematic: 5次
+Periodic graph (geometry): 5次
+Memory footprint: 5次
+Response time: 5次
+Color balance: 4次
+Conceptual model: 4次
+Symmetric matrix: 4次
+Computer facial animation: 4次
+Arc (geometry): 4次
+Point of interest: 4次
+Display resolution: 4次
+Machine vision: 4次
+Camera auto-calibration: 4次
+Molecule: 4次
+Climate change: 4次
+DNA sequencing: 4次
+Blood flow: 4次
+Spurious relationship: 4次
+Alpha compositing: 4次
+k-d tree: 4次
+Software design pattern: 4次
+Adaptability: 4次
+Linear system: 4次
+Normal: 4次
+Metaverse: 4次
+Biological network: 4次
+Duality (optimization): 4次
+Internet privacy: 4次
+Profiling (computer programming): 4次
+Programmer: 4次
+Constrained optimization: 4次
+Cube: 4次
+Resource allocation: 4次
+Spaghetti plot: 4次
+Gaze: 4次
+Simulated annealing: 4次
+Multiple: 4次
+Starlight Information Visualization System: 4次
+Hemodynamics: 4次
+Rule-based system: 4次
+Bridging (networking): 4次
+Active learning: 4次
+Network model: 4次
+Natural language: 4次
+Information privacy: 4次
+Data manipulation language: 4次
+Mipmap: 4次
+Aliasing: 4次
+Centrality: 4次
+Throughput: 4次
+Computational topology: 4次
+Cloud computing: 4次
+Bitmap: 4次
+Pointwise: 4次
+TRIPS architecture: 4次
+Schedule: 4次
+Haar wavelet: 4次
+Paging: 4次
+Complex system: 4次
+Range query (data structures): 4次
+Matrix decomposition: 4次
+Ubiquitous computing: 4次
+Network analysis: 4次
+Excavation: 4次
+Workbench: 4次
+Quaternion: 4次
+Terminology: 4次
+Degenerate energy levels: 4次
+Lightness: 4次
+Web accessibility: 4次
+Astrophysics: 4次
+Cell projection: 4次
+Syntax: 4次
+Input/output: 4次
+Distributed ray tracing: 4次
+Modeling and simulation: 4次
+Inference: 4次
+Rendering equation: 4次
+Medial axis: 4次
+Approximation theory: 4次
+Marching squares: 4次
+Visual modeling: 4次
+Risk management: 4次
+Web search query: 4次
+Order of magnitude: 4次
+Parsing: 4次
+General-purpose computing on graphics processing units: 4次
+Decimation: 4次
+User interface management systems: 4次
+T-vertices: 4次
+Mobile computing: 4次
+Region growing: 4次
+Scalable Vector Graphics: 4次
+WYSIWYG: 4次
+Knowledge acquisition: 4次
+Business process discovery: 4次
+Mixed reality: 4次
+Gesture recognition: 4次
+Singularity: 4次
+Color-coding: 4次
+Requirements analysis: 4次
+Icon: 4次
+User interface design: 4次
+Shadow: 4次
+Generality: 4次
+Optimization problem: 4次
+Human–computer information retrieval: 4次
+Airflow: 4次
+Trend analysis: 4次
+Euclidean geometry: 4次
+Streak: 4次
+Ocean current: 4次
+Database transaction: 4次
+Ensemble forecasting: 4次
+Data integration: 4次
+Row: 4次
+Business analytics: 4次
+Culling: 4次
+Snapshot (computer storage): 4次
+Information technology: 4次
+Sentence: 4次
+Text processing: 4次
+Social data analysis: 4次
+Constrained clustering: 4次
+Feature detection (computer vision): 4次
+Data compression ratio: 4次
+Tessellation (computer graphics): 4次
+Gaussian: 4次
+Topological graph theory: 4次
+Probability density function: 4次
+Unstructured data: 4次
+Boundary representation: 4次
+Econometrics: 4次
+Missing data: 4次
+Global optimization: 4次
+Observer (quantum physics): 4次
+Conceptual framework: 4次
+Regression analysis: 4次
+White matter: 4次
+Genome: 4次
+Concurrent computing: 4次
+Turbomachinery: 4次
+User information: 4次
+Clickstream: 4次
+Mesoscale meteorology: 4次
+Effective method: 4次
+Convolutional neural network: 4次
+Biclustering: 4次
+ENCODE: 4次
+Qualitative property: 4次
+Novelty: 4次
+Semantic network: 4次
+Minification: 4次
+Quadratic equation: 4次
+RGB color model: 4次
+Resampling: 4次
+Generation time: 4次
+Gene expression: 4次
+GRASP: 4次
+Connectomics: 4次
+Documentation: 4次
+Formal specification: 4次
+Lagrangian: 4次
+Gene: 4次
+Precomputation: 4次
+Genetic algorithm: 4次
+Casual: 4次
+Sentiment analysis: 4次
+Brown clustering: 4次
+Eddy: 4次
+Remote sensing: 4次
+VRML: 4次
+Canopy clustering algorithm: 4次
+Clustering coefficient: 4次
+Data stream clustering: 4次
+Biology: 4次
+Noise reduction: 4次
+Planar graph: 4次
+Standard deviation: 4次
+Luminance: 3次
+Topological data analysis: 3次
+Hypertext: 3次
+Decoding methods: 3次
+Nested set model: 3次
+Computer aided surgery: 3次
+Camera resectioning: 3次
+Viewing frustum: 3次
+Data classification: 3次
+Dendrogram: 3次
+Reconstruction filter: 3次
+Stairstep interpolation: 3次
+Bilinear interpolation: 3次
+Tuple: 3次
+Spite: 3次
+Ellipsoid: 3次
+Iterative design: 3次
+Coronary artery disease: 3次
+Hyperlink: 3次
+Web server: 3次
+Jigsaw: 3次
+Network dynamics: 3次
+Particle physics: 3次
+Grid computing: 3次
+Bounding volume hierarchy: 3次
+Outflow: 3次
+Semantic similarity: 3次
+Testbed: 3次
+Numerical integration: 3次
+Greedy algorithm: 3次
+Multidimensional analysis: 3次
+Test data generation: 3次
+Fuzzy set: 3次
+Network simulation: 3次
+HTML email: 3次
+Euler diagram: 3次
+Cardinality: 3次
+Open research: 3次
+Time domain: 3次
+Massless particle: 3次
+Control theory: 3次
+Graphics software: 3次
+Design elements and principles: 3次
+Creativity: 3次
+Pragmatics: 3次
+Visual approach: 3次
+Phong shading: 3次
+Data pre-processing: 3次
+Checklist: 3次
+Cognitive psychology: 3次
+Bubble: 3次
+Multimodal interaction: 3次
+Computer data storage: 3次
+Modalities: 3次
+Stress majorization: 3次
+Color vision: 3次
+Pipeline transport: 3次
+Business process: 3次
+Public transport: 3次
+Anecdotal evidence: 3次
+Cohort: 3次
+Fixed point: 3次
+Design knowledge: 3次
+Provenance: 3次
+Virtual memory: 3次
+Concept map: 3次
+Industrial computed tomography: 3次
+Information design: 3次
+Motion analysis: 3次
+Ablation: 3次
+Archaeology: 3次
+Tensor product of Hilbert spaces: 3次
+Acoustics: 3次
+Wavefront: 3次
+Dynamical systems theory: 3次
+Pure mathematics: 3次
+Fractal: 3次
+Psychological intervention: 3次
+Traffic analysis: 3次
+Empirical evidence: 3次
+Ambiguity: 3次
+Gauss map: 3次
+Quadtree: 3次
+Audio signal: 3次
+Causality: 3次
+Morse theory: 3次
+Complex dynamics: 3次
+Euclidean space: 3次
+Hyperspectral imaging: 3次
+Topological complexity: 3次
+Convection: 3次
+Behavioural sciences: 3次
+Descriptive statistics: 3次
+Horizon: 3次
+Binary number: 3次
+Video processing: 3次
+Deferred shading: 3次
+Problem solving environment: 3次
+Ultrasound: 3次
+Engineering: 3次
+Credibility: 3次
+Generalizability theory: 3次
+Rectangle: 3次
+Internet traffic: 3次
+Computer network: 3次
+Root cause: 3次
+Dataflow architecture: 3次
+Viewport: 3次
+Divergence: 3次
+Statistical classification: 3次
+XML: 3次
+Network security: 3次
+Sketch: 3次
+Bicubic interpolation: 3次
+Association rule learning: 3次
+Endoscopy: 3次
+Web intelligence: 3次
+Exploratory search: 3次
+Logarithmic scale: 3次
+Parametric surface: 3次
+Computational chemistry: 3次
+Quadric: 3次
+Computer security: 3次
+Smoothness: 3次
+Granularity: 3次
+Digital image: 3次
+Phrase: 3次
+Informing science: 3次
+Hilbert space: 3次
+Fluid mechanics: 3次
+Gabor wavelet: 3次
+Colors of noise: 3次
+Constructive solid geometry: 3次
+Information seeking: 3次
+Evolving networks: 3次
+STRIPS: 3次
+Multi-user: 3次
+Gravitational singularity: 3次
+Topographic map: 3次
+Depth perception: 3次
+Climatology: 3次
+Spline interpolation: 3次
+Information overload: 3次
+MIMD: 3次
+Information access: 3次
+Image restoration: 3次
+DNA: 3次
+Network architecture: 3次
+Trait: 3次
+Knot (unit): 3次
+Upload: 3次
+Error detection and correction: 3次
+Sequence alignment: 3次
+Surface finish: 3次
+Linear map: 3次
+Automatic label placement: 3次
+Earth science: 3次
+Automatic image annotation: 3次
+Weather Research and Forecasting Model: 3次
+Discriminative model: 3次
+Outbreak: 3次
+Conformal geometry: 3次
+Terrorism: 3次
+Closeness: 3次
+Computer graphics lighting: 3次
+Radiation: 3次
+Database design: 3次
+Void (astronomy): 3次
+Information Dissemination: 3次
+Rope: 3次
+Potentially visible set: 3次
+Point location: 3次
+Jacobian matrix and determinant: 3次
+Network science: 3次
+Divide and conquer algorithms: 3次
+Noise measurement: 3次
+Photogrammetry: 3次
+Particle image velocimetry: 3次
+Observable: 3次
+Cognitive model: 3次
+Selection algorithm: 3次
+K-ary tree: 3次
+Communications protocol: 3次
+Usage data: 3次
+Vector potential: 3次
+Scalar (mathematics): 3次
+Recommender system: 3次
+Second-generation wavelet transform: 3次
+Wavelet packet decomposition: 3次
+Decision engineering: 3次
+Surgical planning: 3次
+Citation: 3次
+Mixture model: 3次
+Supine position: 3次
+Streaming data: 3次
+Fixed-function: 3次
+Personalization: 3次
+Benchmark (computing): 3次
+Generative grammar: 3次
+Mean flow: 3次
+Hydraulics: 3次
+Fractional anisotropy: 3次
+Frame of reference: 3次
+Aspect ratio (image): 3次
+Air traffic control: 3次
+Visual artifact: 3次
+Constraint satisfaction: 3次
+Error bar: 3次
+Line (geometry): 3次
+Distributed memory: 3次
+Fiber bundle: 3次
+Locality: 3次
+Isotropy: 3次
+Scientific literature: 3次
+Participatory design: 3次
+Photon mapping: 3次
+Gantt chart: 3次
+Encyclopedia: 3次
+Locus of control: 3次
+Multiple edges: 3次
+Broadcasting: 3次
+Software construction: 3次
+Finite volume method: 3次
+Path analysis (computing): 3次
+Multidisciplinary design optimization: 3次
+On the fly: 3次
+Bayes' theorem: 3次
+Bayesian inference: 3次
+Sustainability: 3次
+Monte Carlo integration: 3次
+Model selection: 3次
+Judgement: 3次
+Interactive systems engineering: 3次
+Linear approximation: 3次
+Weighting: 3次
+Geophysics: 3次
+Boundary layer: 3次
+Protein structure: 3次
+Molecular graphics: 3次
+Visual Objects: 3次
+Convergence (routing): 3次
+Spatial frequency: 3次
+Volumetric lighting: 3次
+Graph power: 3次
+Level structure: 3次
+Consensus clustering: 3次
+Stereo display: 3次
+Shared memory: 3次
+Discrete event simulation: 3次
+Sargable: 3次
+Binary space partitioning: 3次
+Spatial ability: 3次
+User-generated content: 3次
+User requirements document: 3次
+Microarray analysis techniques: 3次
+Behavioral pattern: 3次
+Composition (visual arts): 3次
+Visual reasoning: 3次
+Traffic flow: 3次
+Confocal: 3次
+Environmental science: 3次
+Lattice Boltzmann methods: 3次
+Affect (psychology): 3次
+Object-oriented programming: 3次
+FLAME clustering: 3次
+Computer-aided software engineering: 3次
+Stippling: 3次
+Traverse: 3次
+Interval tree: 3次
+Metric space: 3次
+Tomography: 3次
+Shadow mapping: 3次
+Interoperability: 3次
+Incremental decision tree: 3次
+Cutting-plane method: 3次
+Multivariate normal distribution: 3次
+Anchoring: 3次
+Biological system: 3次
+Interference (wave propagation): 3次
+Method of moments (statistics): 3次
+Structural change: 3次
+Dimensional reduction: 3次
+Saddle point: 3次
+Composite number: 3次
+Gesture: 3次
+Time evolution: 3次
+Cosmology: 3次
+Domain decomposition methods: 3次
+Voting: 3次
+Complement graph: 3次
+Pareto principle: 3次
+Discrete Morse theory: 3次
+Supercomputer Education Research Centre: 3次
+Volume of fluid method: 3次
+Numerical diffusion: 3次
+KEGG: 3次
+Depth of field: 3次
+Graph product: 3次
+Topic Maps: 3次
+ICC profile: 2次
+Lab color space: 2次
+Color depth: 2次
+Distributed Computing Environment: 2次
+Image sensor: 2次
+Coprocessor: 2次
+Hypermedia: 2次
+User assistance: 2次
+Stylus: 2次
+Large format: 2次
+Computed tomography angiography: 2次
+Atom: 2次
+Generalization: 2次
+k-means clustering: 2次
+Information visualization reference model: 2次
+Impression: 2次
+Multivariate interpolation: 2次
+Project management: 2次
+Scheduling (computing): 2次
+Compatibility (mechanics): 2次
+Surface triangulation: 2次
+Tensor product: 2次
+Focus (geometry): 2次
+Iterative refinement: 2次
+Continuous optimization: 2次
+Poisson distribution: 2次
+Whole genome sequencing: 2次
+Coronary arteries: 2次
+Medical simulation: 2次
+Artery: 2次
+Anatomy: 2次
+Posterior probability: 2次
+Filter design: 2次
+Derivation: 2次
+Robust statistics: 2次
+Object detection: 2次
+Resource-oriented architecture: 2次
+Package development process: 2次
+Software sizing: 2次
+Radiance: 2次
+Big Bang: 2次
+Propagation of uncertainty: 2次
+Biological pathway: 2次
+4D vector: 2次
+Shading language: 2次
+Integral equation: 2次
+Kernel (image processing): 2次
+Cognitive bias: 2次
+World map: 2次
+Bivariate map: 2次
+Choropleth map: 2次
+Visual appearance: 2次
+Radial tree: 2次
+Force field (chemistry): 2次
+Blackboard system: 2次
+Whitespace: 2次
+Compact space: 2次
+Compiler: 2次
+Programming language: 2次
+Complex event processing: 2次
+Synteny: 2次
+Minimum description length: 2次
+Human-in-the-loop: 2次
+Inertia: 2次
+Human Phenotype Ontology: 2次
+Functional decomposition: 2次
+Linear combination: 2次
+Information sensitivity: 2次
+Focus group: 2次
+Wind speed: 2次
+Ridge: 2次
+Replicate: 2次
+WIMP: 2次
+Color image: 2次
+Color quantization: 2次
+Data sharing: 2次
+Tangent space: 2次
+Schema (psychology): 2次
+Relevance feedback: 2次
+Bin: 2次
+Nonparametric statistics: 2次
+Web analytics: 2次
+Biorthogonal system: 2次
+Fast wavelet transform: 2次
+Diagrammatic reasoning: 2次
+Domain specificity: 2次
+Gouraud shading: 2次
+Scan line: 2次
+Latent Dirichlet allocation: 2次
+Hybrid algorithm: 2次
+Abstract data type: 2次
+Interface design: 2次
+Radiofrequency ablation: 2次
+Radio frequency: 2次
+Color mixing: 2次
+Room acoustics: 2次
+Speech recognition: 2次
+Battlefield: 2次
+Stylized fact: 2次
+3D ultrasound: 2次
+Speckle pattern: 2次
+Scale factor: 2次
+Plug-in: 2次
+Backscatter: 2次
+Plume: 2次
+Seafloor spreading: 2次
+Thermal: 2次
+Torus: 2次
+Electric power system: 2次
+Electric power industry: 2次
+Smart camera: 2次
+Graph traversal: 2次
+Orthogonal coordinates: 2次
+Log-polar coordinates: 2次
+Map projection: 2次
+Cubic crystal system: 2次
+Information integration: 2次
+Telephony: 2次
+Document processing: 2次
+Image fusion: 2次
+Mathematical model: 2次
+Vector quantization: 2次
+Navigation system: 2次
+Inverse problem: 2次
+Latency (engineering): 2次
+Motion perception: 2次
+Programming paradigm: 2次
+Light scattering: 2次
+Strain rate: 2次
+Configuration design: 2次
+Hypersonic speed: 2次
+Random geometric graph: 2次
+Point estimation: 2次
+Numerosity adaptation effect: 2次
+Single-photon emission computed tomography: 2次
+Space time: 2次
+Density estimation: 2次
+Guideline: 2次
+Nanoparticle: 2次
+Binary tree: 2次
+Astronomy: 2次
+Stars: 2次
+Human factors and ergonomics: 2次
+Process design: 2次
+Link analysis: 2次
+Marginal distribution: 2次
+Joint probability distribution: 2次
+Video capture: 2次
+Motion compensation: 2次
+Solving the geodesic equations: 2次
+World line: 2次
+Image formation: 2次
+Elegance: 2次
+Pearson product-moment correlation coefficient: 2次
+Beam tracing: 2次
+Path tracing: 2次
+Bathymetry: 2次
+Horizontal and vertical: 2次
+Matching (graph theory): 2次
+Execution model: 2次
+Mechanics: 2次
+Image scaling: 2次
+Smoothing spline: 2次
+Radial basis function: 2次
+Fractal tree index: 2次
+Molecular physics: 2次
+Electron density: 2次
+Finite-state machine: 2次
+Evolutionary computation: 2次
+Evolutionary algorithm: 2次
+Classifier (linguistics): 2次
+Algebraic connectivity: 2次
+Multigrid method: 2次
+Entropy encoding: 2次
+General relativity: 2次
+Neuroscience: 2次
+Energy landscape: 2次
+Office automation: 2次
+Unix: 2次
+Information discovery: 2次
+Information security: 2次
+Information assurance: 2次
+Cumulative distribution function: 2次
+Financial management: 2次
+Computational problem: 2次
+Theory of computation: 2次
+Technical drawing: 2次
+Surgery: 2次
+Web modeling: 2次
+Logarithm: 2次
+Orders of magnitude (numbers): 2次
+Projective texture mapping: 2次
+Displacement mapping: 2次
+Electronic structure: 2次
+Set theory: 2次
+Texture mapping unit: 2次
+Work in process: 2次
+Agent-based social simulation: 2次
+Preprint: 2次
+Space exploration: 2次
+Monochromatic color: 2次
+SPMD: 2次
+Dual graph: 2次
+Quadratic form: 2次
+Interpretability: 2次
+Data transformation (statistics): 2次
+Network monitoring: 2次
+Roaming: 2次
+Raster graphics: 2次
+Torque: 2次
+Hilbert curve: 2次
+Space research: 2次
+Brute-force search: 2次
+Astronomical Objects: 2次
+Visitor pattern: 2次
+Positron emission tomography: 2次
+Benchmarking: 2次
+Motion planning: 2次
+Electroencephalography: 2次
+Test case: 2次
+Test suite: 2次
+Horseshoe vortex: 2次
+Conditional entropy: 2次
+Local analysis: 2次
+Radiative transfer: 2次
+Organism: 2次
+Adversary: 2次
+Intelligent decision support system: 2次
+Digital image processing: 2次
+Financial instrument: 2次
+Gene regulatory network: 2次
+Engineering drawing: 2次
+Rigid body dynamics: 2次
+Multigraph: 2次
+Fine-tuning: 2次
+Memory map: 2次
+Uniform memory access: 2次
+Software metric: 2次
+Knot theory: 2次
+Command and control: 2次
+Time management: 2次
+Associative property: 2次
+Information science: 2次
+Digital geometry: 2次
+Automatic control: 2次
+Situated: 2次
+Colored: 2次
+Neurophysiology: 2次
+Visual cortex: 2次
+Flow measurement: 2次
+Linear programming: 2次
+Intrusion detection system: 2次
+Adaptive sampling: 2次
+Geodesy: 2次
+Visual Word: 2次
+Database index: 2次
+Wide area network: 2次
+Group work: 2次
+Edge contraction: 2次
+North American Mesoscale Model: 2次
+Volumetric flow rate: 2次
+Diffuse reflection: 2次
+Decision tree learning: 2次
+Likelihood function: 2次
+Projection screen: 2次
+Embarrassingly parallel: 2次
+Fold (higher-order function): 2次
+Differential form: 2次
+Riemann surface: 2次
+Chord (music): 2次
+Competitive advantage: 2次
+Rate of convergence: 2次
+Client-side: 2次
+Internet access: 2次
+Uniform distribution (continuous): 2次
+Database theory: 2次
+Dykstra's projection algorithm: 2次
+Specular reflection: 2次
+Estimation theory: 2次
+Turn-by-turn navigation: 2次
+Mobile robot navigation: 2次
+Dissemination: 2次
+Fragment processing: 2次
+Casting: 2次
+Computer-aided manufacturing: 2次
+Data curation: 2次
+Thin client: 2次
+Ajax: 2次
+cons: 2次
+Energy functional: 2次
+Energy minimization: 2次
+Lagrangian–Eulerian advection: 2次
+Temporal resolution: 2次
+Weak topology: 2次
+Data parallelism: 2次
+Wind tunnel: 2次
+Mobility model: 2次
+Biomedical engineering: 2次
+Shear stress: 2次
+Parallel projection: 2次
+Chemical species: 2次
+Spatial organization: 2次
+SIMD: 2次
+Sustainable development: 2次
+Classification of discontinuities: 2次
+Deconvolution: 2次
+Biconnected component: 2次
+Block graph: 2次
+Spanning tree: 2次
+Biconnected graph: 2次
+Limiting factor: 2次
+Nondestructive testing: 2次
+Vector Laplacian: 2次
+Aesthetics: 2次
+Active listening: 2次
+Cascade algorithm: 2次
+Exploratory research: 2次
+Quadratic programming: 2次
+Cultural heritage: 2次
+Computer-supported cooperative work: 2次
+Many-to-many (data model): 2次
+Spinel: 2次
+Spinel group: 2次
+Ideation: 2次
+Dynamic simulation: 2次
+Open-channel flow: 2次
+Control system: 2次
+Bowyer–Watson algorithm: 2次
+Scalar Value: 2次
+Observational study: 2次
+Triangulation (geometry): 2次
+Hexahedron: 2次
+Multi-agent system: 2次
+Cycling: 2次
+Technical Presentation: 2次
+Whiteboard: 2次
+Arrow: 2次
+Scattering: 2次
+Dot plot (statistics): 2次
+Porosity: 2次
+Dynamic time warping: 2次
+Digital subscriber line: 2次
+Correlation coefficient: 2次
+Subset and superset: 2次
+Synthetic aperture sonar: 2次
+Visual hierarchy: 2次
+Sea surface temperature: 2次
+Verifiable secret sharing: 2次
+Logistic regression: 2次
+Random forest: 2次
+Constrained Delaunay triangulation: 2次
+Cylinder: 2次
+Pinhole camera model: 2次
+Memorization: 2次
+Finite-difference time-domain method: 2次
+Cache coherence: 2次
+Hardware architecture: 2次
+Wang tile: 2次
+Alpha shape: 2次
+Motion field: 2次
+Minimum bounding box: 2次
+Regularization (mathematics): 2次
+Adaptive filter: 2次
+Aperture: 2次
+Diffraction: 2次
+Lift (force): 2次
+Public domain software: 2次
+Computational model: 2次
+Watershed: 2次
+Subroutine: 2次
+Eye movement: 2次
+Permutation: 2次
+Perspective (graphical): 2次
+Fingerprint: 2次
+xkcd: 2次
+Shortest path problem: 2次
+Federal budget: 2次
+Infographic: 2次
+Boolean function: 2次
+Moving average: 2次
+Software framework: 2次
+Edge loop: 2次
+Co-occurrence networks: 2次
+Content management: 2次
+Social graph: 2次
+Black box: 2次
+Digital elevation model: 2次
+Propagation delay: 2次
+Uniprocessor system: 2次
+Automated reasoning: 2次
+Direct manipulation interface: 2次
+Measurement uncertainty: 2次
+Painting: 2次
+Scanning electron microscope: 2次
+Bayesian probability: 2次
+Ultrasonic sensor: 2次
+Statistical hypothesis testing: 2次
+Statistical inference: 2次
+Projection pursuit: 2次
+Heat equation: 2次
+Laminar flow: 2次
+Cloth modeling: 2次
+Interview: 2次
+Python (programming language): 2次
+Natural language generation: 2次
+Lazy evaluation: 2次
+Protein engineering: 2次
+Parallel communication: 2次
+Ricci decomposition: 2次
+Chemical kinetics: 2次
+Visual computing: 2次
+Biological process: 2次
+Boids: 2次
+Rule-based machine translation: 2次
+Data discovery: 2次
+Law enforcement: 2次
+Extension topology: 2次
+Principle of maximum entropy: 2次
+Connectivity: 2次
+Expert system: 2次
+Epipolar geometry: 2次
+Operating system: 2次
+Central processing unit: 2次
+Stock market: 2次
+Market analysis: 2次
+Web mining: 2次
+Online analytical processing: 2次
+Pivot table: 2次
+Galaxy: 2次
+Doors: 2次
+Bump mapping: 2次
+Elementary cognitive task: 2次
+Arc length: 2次
+Correspondence analysis: 2次
+Disjoint sets: 2次
+Phylogenetics: 2次
+Memory bandwidth: 2次
+Microscope: 2次
+Physical model: 2次
+Collision detection: 2次
+Julia set: 2次
+Inverse iteration: 2次
+Computer-aided diagnosis: 2次
+Graph rewriting: 2次
+Angular velocity: 2次
+Perceptual psychology: 2次
+Crowding: 2次
+Resource management: 2次
+Forest management: 2次
+Image compression: 2次
+Visual communication: 2次
+Card sorting: 2次
+Lifting scheme: 2次
+Angioscopy: 2次
+Social software: 2次
+Interaction model: 2次
+Online aggregation: 2次
+RDF query language: 2次
+Navier–Stokes equations: 2次
+Orthopedic surgery: 2次
+Vulnerability: 2次
+Notation: 2次
+Patent visualisation: 2次
+Bézier curve: 2次
+Photon: 2次
+Einstein tensor: 2次
+Formatted text: 2次
+Affordance: 2次
+Probabilistic classification: 2次
+Liquid crystal: 2次
+Architectural engineering: 2次
+Building design: 2次
+Computational statistics: 2次
+Convex optimization: 2次
+Digital mapping: 2次
+Vector graphics: 2次
+Compressible flow: 2次
+Rhetorical question: 2次
+Intersection (Euclidean geometry): 2次
+Optical microscope: 2次
+Active networking: 2次
+Molecular biology: 2次
+Geophysical fluid dynamics: 2次
+DNA microarray: 2次
+Pie chart: 2次
+Ontology: 2次
+Trade-off: 2次
+Goal-Driven Software Development Process: 2次
+Capstone: 2次
+Dispersion (optics): 2次
+Pointer (computer programming): 2次
+Oracle: 2次
+RNA: 2次
+Braid: 2次
+Hyperplane: 2次
+Polyhedron: 2次
+Recurrent neural network: 2次
+Story-driven modeling: 2次
+Complex lamellar vector field: 2次
+Boundary value problem: 2次
+Thin plate spline: 2次
+White noise: 2次
+Real-time simulation: 2次
+3D city models: 2次
+Betweenness centrality: 2次
+Surface roughness: 2次
+Geometric shape: 2次
+Feedback arc set: 2次
+Mixed graph: 2次
+Inflow: 2次
+Biomechanics: 2次
+Metric expansion of space: 2次
+Compressed sensing: 2次
+Scene graph: 2次
+Combustion: 2次
+Software portability: 2次
+Ellipse: 2次
+Training set: 2次
+Beijing: 2次
+Literary criticism: 2次
+3D reconstruction: 2次
+Structuring: 2次
+Qualitative research: 2次
+Information foraging: 2次
+Image moment: 2次
+Multi-core processor: 2次
+Small set: 2次
+Citation analysis: 2次
+Microstructure: 2次
+Block (data storage): 2次
+Shape factor: 2次
+Collision: 2次
+Psychophysics: 2次
+Boosting (machine learning): 2次
+Confusion matrix: 2次
+Overfitting: 2次
+Class hierarchy: 2次
+Social Visualization: 2次
+New product development: 2次
+Dual-Energy Computed Tomography: 2次
+Financial institution: 2次
+Data hierarchy: 2次
+Terabyte: 2次
+Protein secondary structure: 2次
+Bisection method: 2次
+Redundancy (engineering): 2次
+Laplace operator: 2次
+Distraction: 2次
+Tone mapping: 2次
+Length scale: 2次
+Confusion: 2次
+Inverse: 2次
+Customer satisfaction: 2次
+Null graph: 2次
+Web mapping: 2次
+Dark matter: 2次
+Function representation: 2次
+Motion capture: 2次
+Depth peeling: 2次
+Cartography: 2次
+Time delay and integration: 2次
+Visual structure: 2次
+Kanade–Lucas–Tomasi feature tracker: 2次
+Dashboard (business): 2次
+Upsampling: 2次
+Dilation (morphology): 2次
+Refraction: 2次
+Directional derivative: 2次
+Stencil: 2次
+Temporal context: 2次
+Line drawing algorithm: 2次
+Butterfly graph: 2次
+Simplex graph: 2次
+Phase space: 2次
+Multiple Render Targets: 2次
+Unified shader model: 2次
+Active shape model: 2次
+Fast marching method: 2次
+Least squares: 2次
+Homogeneity (physics): 2次
+Software project management: 2次
+Working set: 2次
+Skeletonization: 2次
+Summary statistics: 2次
+Local feature size: 2次
+Digital topology: 2次
+Angular resolution: 2次
+Information transfer: 2次
+Conservation of mass: 2次
+Turnaround time: 2次
+Machine translation: 2次
+3D projection: 2次
+Analysis of flows: 2次
+Wait-for graph: 2次
+Coral: 2次
+Mesoscopic physics: 2次
+Natural user interface: 2次
+Physical quantity: 2次
+Particle number: 2次
+Fluid simulation: 2次
+Salience (language): 2次
+Panning (camera): 2次
+Visibility graph: 2次
+Crossing number (graph theory): 2次
+Imaging technology: 2次
+Popularity: 2次
+Normalization (statistics): 2次
+Gestalt psychology: 2次
+Word error rate: 2次
+Moral graph: 2次
+Gamut: 1次
+Helix: 1次
+Automatic target recognition: 1次
+Distributed design patterns: 1次
+Social environment: 1次
+Semantic data model: 1次
+Latent semantic analysis: 1次
+Drag and drop: 1次
+Hasse diagram: 1次
+Nonlinear distortion: 1次
+Skeletal animation: 1次
+Calcitriol receptor: 1次
+Order dimension: 1次
+Jump-and-Walk algorithm: 1次
+Rigid transformation: 1次
+Function space: 1次
+Seasonality: 1次
+Stenosis: 1次
+Peripheral: 1次
+Complementarity (molecular biology): 1次
+Parallelizable manifold: 1次
+Smoothing group: 1次
+Independent component analysis: 1次
+Radial basis function network: 1次
+Demosaicing: 1次
+Resource (project management): 1次
+Bézier surface: 1次
+Minimal surface: 1次
+Data efficiency: 1次
+Distributed data store: 1次
+Document Structure Description: 1次
+Hybrid image: 1次
+White spaces: 1次
+Sequence assembly: 1次
+Perfusion: 1次
+Taylor series: 1次
+Expected value: 1次
+Backporting: 1次
+Sphere packing: 1次
+Kissing number problem: 1次
+Harmony (color): 1次
+Quark: 1次
+Gluon: 1次
+Quark–gluon plasma: 1次
+Relativistic Heavy Ion Collider: 1次
+Proton: 1次
+Dynamic problem: 1次
+Remote procedure call: 1次
+Management system: 1次
+Hypergraph: 1次
+Constraint graph: 1次
+Boolean conjunctive query: 1次
+Tangible user interface: 1次
+Geospatial predictive modeling: 1次
+Environmental pollution: 1次
+Grounded theory: 1次
+Interdependence: 1次
+Vascular disease: 1次
+Magnetic resonance angiography: 1次
+Blood vessel: 1次
+Reductionism: 1次
+Socially distributed cognition: 1次
+Combinatorial explosion: 1次
+Email address harvesting: 1次
+Constraint programming: 1次
+Entry point: 1次
+Unordered pair: 1次
+Decoy effect: 1次
+Crowdsource: 1次
+Attraction: 1次
+Surface map: 1次
+Number line: 1次
+Bipartite graph: 1次
+List ranking: 1次
+Item analysis: 1次
+Literacy: 1次
+Content validity: 1次
+Educational measurement: 1次
+Heat map: 1次
+Docking (molecular): 1次
+Intermolecular force: 1次
+Conditioning: 1次
+Predicate (grammar): 1次
+Attribute grammar: 1次
+Traditional grammar: 1次
+Genome evolution: 1次
+Extant taxon: 1次
+Web directory: 1次
+Equations of motion: 1次
+Settling: 1次
+Hindsight bias: 1次
+Umbrella term: 1次
+Superimposition: 1次
+Climate ensemble: 1次
+Subtyping: 1次
+Compact disc: 1次
+Unit of analysis: 1次
+Centroid: 1次
+Best practice: 1次
+Building information modeling: 1次
+Constructability: 1次
+SQL: 1次
+Differential privacy: 1次
+Sense of agency: 1次
+Word embedding: 1次
+Noisy text analytics: 1次
+Lexicon: 1次
+Polysemy: 1次
+Ridge detection: 1次
+Jet stream: 1次
+Clique: 1次
+Clique percolation method: 1次
+Persuasion: 1次
+Human scale: 1次
+Information extraction: 1次
+Mass spectrometry imaging: 1次
+Team sport: 1次
+Color difference: 1次
+Business operations: 1次
+Reinforcement learning: 1次
+Network packet: 1次
+Subjectivity: 1次
+Personal experience: 1次
+Autobiographical memory: 1次
+Operations research: 1次
+Service quality: 1次
+Road Weather Information System: 1次
+Global Forecast System: 1次
+Multilinear map: 1次
+Continuous wavelet transform: 1次
+Dynamical simulation: 1次
+Cohort study: 1次
+Stall (fluid mechanics): 1次
+Abstract space: 1次
+Sunflower: 1次
+Autoregressive model: 1次
+Elementary diagram: 1次
+System context diagram: 1次
+Quantitative Evaluations: 1次
+First class: 1次
+Voyager program: 1次
+Watson: 1次
+Research center: 1次
+Orthogonality: 1次
+Demand paging: 1次
+Knowledge retrieval: 1次
+Scenario analysis: 1次
+Petascale computing: 1次
+Suspect: 1次
+Scanline rendering: 1次
+Heuristic (computer science): 1次
+Probabilistic analysis of algorithms: 1次
+Randomized algorithm: 1次
+Non-negative matrix factorization: 1次
+Mass spectrum: 1次
+Formal verification: 1次
+Structured light: 1次
+Ablation zone: 1次
+Telecommunications: 1次
+Internet Protocol: 1次
+Network performance: 1次
+Precinct: 1次
+Exact solutions in general relativity: 1次
+Topological tensor product: 1次
+Colour Vision: 1次
+Acoustic metric: 1次
+Architectural acoustics: 1次
+Impulse response: 1次
+Transient response: 1次
+Network-centric warfare: 1次
+Gigabit: 1次
+Cartographic labeling: 1次
+Variational principle: 1次
+Network planning and design: 1次
+Stereo cameras: 1次
+Telecommunications network: 1次
+Computer program: 1次
+Root mean square: 1次
+Convection–diffusion equation: 1次
+Particulates: 1次
+Seawater: 1次
+Entrainment (chronobiology): 1次
+Mineralogy: 1次
+Dynamical system: 1次
+Invariant manifold: 1次
+Quadratic function: 1次
+Mandelbox: 1次
+Mandelbrot set: 1次
+External ray: 1次
+Complex number: 1次
+Complex quadratic polynomial: 1次
+Crepuscular rays: 1次
+Descriptive knowledge: 1次
+Computational mathematics: 1次
+Transmission system: 1次
+HIPPI: 1次
+Generalized coordinates: 1次
+Importance sampling: 1次
+Sensitivity (control systems): 1次
+Triangulated irregular network: 1次
+Frequency response: 1次
+Audio signal processing: 1次
+Complex-valued function: 1次
+Linear complex structure: 1次
+DirectX: 1次
+Isomorphism: 1次
+Millennium Run: 1次
+Natural convection: 1次
+Rheoscopic fluid: 1次
+Kalliroscope: 1次
+Small data: 1次
+Motion detection: 1次
+Parallel programming model: 1次
+Venus: 1次
+Infinitesimal strain theory: 1次
+Tension (physics): 1次
+Supersonic speed: 1次
+Transonic: 1次
+Fourier transform ion cyclotron resonance: 1次
+Hausdorff distance: 1次
+Social navigation: 1次
+Spatialization: 1次
+Integral curve: 1次
+Animal ethology: 1次
+Social animal: 1次
+Weaving: 1次
+Telecollaboration: 1次
+Robotics: 1次
+Flagging: 1次
+Operational efficiency: 1次
+Run-length encoding: 1次
+Boundary cell: 1次
+Sextant (astronomical): 1次
+Sunset: 1次
+Cardinal direction: 1次
+Sky: 1次
+Sunrise: 1次
+Binary classification: 1次
+Mosaic plot: 1次
+Conditional probability distribution: 1次
+Attribute domain: 1次
+RSS: 1次
+Video compression picture types: 1次
+Smacker video: 1次
+Multiview Video Coding: 1次
+Video post-processing: 1次
+Repertoire: 1次
+Parallelepiped: 1次
+Static mesh: 1次
+Geodesic map: 1次
+Linked list: 1次
+RenderMan Shading Language: 1次
+Morphometrics: 1次
+Decision-making: 1次
+Sonar: 1次
+Survey data collection: 1次
+Seabed: 1次
+Analysis of competing hypotheses: 1次
+Argumentation theory: 1次
+Reference genome: 1次
+Service provider: 1次
+Burstiness: 1次
+Cable modem: 1次
+Data aggregator: 1次
+Visual sensor network: 1次
+Comparative genomics: 1次
+Online search: 1次
+Entire brain: 1次
+Aneurysm rupture: 1次
+Cerebrovascular Circulation: 1次
+Data Matrix: 1次
+Block matrix: 1次
+Foreign currency exchange: 1次
+Conversation analysis: 1次
+Health information exchange: 1次
+Online health communities: 1次
+Health communication: 1次
+Electric power transmission: 1次
+Voltage: 1次
+Power-flow study: 1次
+Electric power: 1次
+AC power: 1次
+Electronic engineering: 1次
+Goodness of fit: 1次
+Earth system science: 1次
+Adaptive user interface: 1次
+Supramolecular chemistry: 1次
+Protein folding: 1次
+Self-assembly: 1次
+Covalent bond: 1次
+Non-covalent interactions: 1次
+Linear space: 1次
+Higher-order singular value decomposition: 1次
+Multimedia information retrieval: 1次
+Kullback–Leibler divergence: 1次
+Optical transfer function: 1次
+Crystal structure: 1次
+Eigendecomposition of a matrix: 1次
+Range encoding: 1次
+Software analysis pattern: 1次
+Dependency graph: 1次
+Special relativity: 1次
+Theory of relativity: 1次
+Chaining: 1次
+Expression templates: 1次
+Galerkin method: 1次
+Problem domain: 1次
+Fortran: 1次
+Biological neural network: 1次
+Fitness landscape: 1次
+Stain: 1次
+Body of knowledge: 1次
+Flow network: 1次
+News analytics: 1次
+Scientific instrument: 1次
+Declarative programming: 1次
+Specification language: 1次
+Interactive programming: 1次
+Retargeting: 1次
+Intelligent user interface: 1次
+Transsphenoidal approach: 1次
+Pituitary tumors: 1次
+Endoscopic Procedure: 1次
+System of systems: 1次
+Critical infrastructure: 1次
+Supply chain: 1次
+Charge density: 1次
+Elementary charge: 1次
+Ab initio quantum chemistry methods: 1次
+Quantum mechanics: 1次
+Radio telescope: 1次
+Medical diagnosis: 1次
+Distortion (optics): 1次
+Perl: 1次
+Graphics address remapping table: 1次
+Production engineering: 1次
+Scheduling (production processes): 1次
+Document retrieval: 1次
+NASA Deep Space Network: 1次
+Outer space: 1次
+Deep space exploration: 1次
+Spacecraft: 1次
+Software verification and validation: 1次
+Fault detection and isolation: 1次
+Plug and play: 1次
+Creativity technique: 1次
+Polygon (computer graphics): 1次
+Invariants of tensors: 1次
+Gauss: 1次
+Parallel transport: 1次
+Wireless network: 1次
+JavaScript: 1次
+Electronic data interchange: 1次
+Flicker: 1次
+Visual field: 1次
+Raster data: 1次
+Mechanical equilibrium: 1次
+Quasistatic approximation: 1次
+Degrees of freedom (mechanics): 1次
+Noun phrase: 1次
+Phrase search: 1次
+Common Data Representation: 1次
+Design strategy: 1次
+Animated movie: 1次
+2D to 3D conversion: 1次
+Nonuniform sampling: 1次
+Aerospace engineering: 1次
+Aerospace: 1次
+Frequency analysis: 1次
+Conjoint analysis: 1次
+Wave function: 1次
+Quantum computer: 1次
+General knowledge: 1次
+Fuzzy control system: 1次
+Planetary nebula: 1次
+Rotational symmetry: 1次
+Axial symmetry: 1次
+Nebula: 1次
+Crystallographic defect: 1次
+Informal learning: 1次
+Marketing strategy: 1次
+Myocardial perfusion imaging: 1次
+Opportunism: 1次
+Optical flow: 1次
+Radio-frequency identification: 1次
+Rose tree: 1次
+Software quality: 1次
+Extreme value theory: 1次
+Wingtip vortices: 1次
+Starting vortex: 1次
+Two-dimensional flow: 1次
+Vortex tube: 1次
+Vortex shedding: 1次
+Vortex ring: 1次
+Familiar environment: 1次
+Chebyshev filter: 1次
+Low-pass filter: 1次
+Shearing (physics): 1次
+Dipole: 1次
+Subduction: 1次
+Geomechanics: 1次
+Algebraic specification: 1次
+Infrared: 1次
+Moss: 1次
+Morphogenesis: 1次
+Physcomitrella patens: 1次
+Batch processing: 1次
+Critical value: 1次
+Exhibition: 1次
+Data conversion: 1次
+Visible human project: 1次
+Target audience: 1次
+Weighted space: 1次
+Product engineering: 1次
+Design review: 1次
+Normal mapping: 1次
+Space-filling curve: 1次
+Texture perception: 1次
+Intelligent computer network: 1次
+Traffic generation model: 1次
+Packet analyzer: 1次
+Network traffic control: 1次
+Network traffic simulation: 1次
+Network management station: 1次
+Application portfolio management: 1次
+Financial modeling: 1次
+Investment decisions: 1次
+Financial plan: 1次
+Portfolio: 1次
+Community structure: 1次
+CAD: 1次
+Prosthetic heart: 1次
+Program slicing: 1次
+Expressive power: 1次
+Discontinuity (linguistics): 1次
+Flat memory model: 1次
+Memory architecture: 1次
+Cache-only memory architecture: 1次
+Memory hierarchy: 1次
+Computer memory: 1次
+Projection method: 1次
+Domino: 1次
+Well logging: 1次
+Reidemeister move: 1次
+Cognitive skill: 1次
+Dynamic decision-making: 1次
+Bead shape: 1次
+Semantic computing: 1次
+Semantic Web Stack: 1次
+Relevance (information retrieval): 1次
+DTED: 1次
+Response surface methodology: 1次
+Mesh parameterization: 1次
+Feature recognition: 1次
+GIS file format: 1次
+Enterprise GIS: 1次
+Byte: 1次
+Image file formats: 1次
+Rhinomanometry: 1次
+Nose: 1次
+Partial differential equation: 1次
+Choreography: 1次
+Environmental data: 1次
+Pipe flow: 1次
+Proteome: 1次
+Proteomics: 1次
+Planar projection: 1次
+Level measurement: 1次
+Heart motion: 1次
+Premise: 1次
+Uncompressed video: 1次
+Morphological skeleton: 1次
+Gravitational acceleration: 1次
+Surface gravity: 1次
+Satellite: 1次
+Altimeter: 1次
+Experience design: 1次
+Semi-structured data: 1次
+Residue (complex analysis): 1次
+Riemannian manifold: 1次
+Ricci flow: 1次
+Axiom: 1次
+Geometric flow: 1次
+Knowledge sharing: 1次
+Software prototyping: 1次
+Class browser: 1次
+Query by Example: 1次
+Point source: 1次
+Diffuse illumination: 1次
+Infectious disease (medical specialty): 1次
+Epidemic model: 1次
+Public health: 1次
+Iris flower data set: 1次
+Gene Microarray: 1次
+Depth of focus: 1次
+Retina: 1次
+Retinal: 1次
+Optical tomography: 1次
+Optical coherence tomography: 1次
+Sorting algorithm: 1次
+Kinetic depth effect: 1次
+Particle system: 1次
+Domain of a function: 1次
+Tourism: 1次
+Shape coding: 1次
+Instructional simulation: 1次
+Automatic identification and data capture: 1次
+Transform coding: 1次
+Search data structure: 1次
+Omega: 1次
+Holomorphic function: 1次
+Geometric function theory: 1次
+Homeland security: 1次
+Emergency management: 1次
+European union: 1次
+Oversampling and undersampling in data analysis: 1次
+Oversampling: 1次
+Polygonal modeling: 1次
+Undersampling: 1次
+CLIPS: 1次
+Angiography: 1次
+Neuroradiology: 1次
+Interventional neuroradiology: 1次
+Cartilage: 1次
+Distortion problem: 1次
+Music theory: 1次
+Vector space: 1次
+Pitch (Music): 1次
+Music visualization: 1次
+Six degrees of freedom: 1次
+Flight planning: 1次
+Flow separation: 1次
+Catmull–Clark subdivision surface: 1次
+Server-side: 1次
+Reeb graph: 1次
+Geometric networks: 1次
+Diffusion process: 1次
+Two-vector: 1次
+Parity (mathematics): 1次
+Information filtering system: 1次
+Internetworking: 1次
+Narrative structure: 1次
+Cell lists: 1次
+Crashworthiness: 1次
+Crash: 1次
+Multiple correspondence analysis: 1次
+Metadata repository: 1次
+Database catalog: 1次
+Database testing: 1次
+Data dictionary: 1次
+Database model: 1次
+Web Accessibility Initiative: 1次
+Web-based simulation: 1次
+Neighbor joining: 1次
+Crisis management: 1次
+SPHERES: 1次
+Fourth Dimension: 1次
+Four-dimensional space: 1次
+Common ground: 1次
+Powertrain: 1次
+Metal Artifact: 1次
+Streaking: 1次
+X-ray: 1次
+Synchronization: 1次
+Local reference frame: 1次
+Reflection mapping: 1次
+Computer-integrated manufacturing: 1次
+Design for manufacturability: 1次
+Participatory culture: 1次
+Scenario: 1次
+File format: 1次
+Smart client: 1次
+GeoRSS: 1次
+Autoignition temperature: 1次
+Variable and attribute: 1次
+Level design: 1次
+Ontology-based data integration: 1次
+Process ontology: 1次
+Upper ontology: 1次
+Suggested Upper Merged Ontology: 1次
+Steiner tree problem: 1次
+Logarithmic spiral: 1次
+Hurricane Isabel: 1次
+Lasso (statistics): 1次
+Stereotaxy: 1次
+Arterial tree: 1次
+Search algorithm: 1次
+Heap (data structure): 1次
+Hill climbing: 1次
+Stochastic optimization: 1次
+Single-linkage clustering: 1次
+MIDI: 1次
+Virtual retinal display: 1次
+Concept of operations: 1次
+Volumetric display: 1次
+Chartjunk: 1次
+Designtheory: 1次
+Counterpoint: 1次
+Celestial sphere: 1次
+Small-world network: 1次
+Relationship extraction: 1次
+Tree view: 1次
+Differential growth: 1次
+Landscape architecture: 1次
+Calibration: 1次
+Biplot: 1次
+Human–machine interface: 1次
+High-definition television: 1次
+Information Age: 1次
+Isochrone map: 1次
+Alibi: 1次
+Co-citation: 1次
+Intravascular ultrasound: 1次
+Astronomical survey: 1次
+Effective dimension: 1次
+Management process: 1次
+Geometric data analysis: 1次
+Shared resource: 1次
+n-body problem: 1次
+City block: 1次
+Digital television: 1次
+Stiffness matrix: 1次
+Natural resource management: 1次
+Gaussian function: 1次
+Kaplan turbine: 1次
+Draft tube: 1次
+Segment tree: 1次
+Systems analysis: 1次
+Contouring: 1次
+Procedural modeling: 1次
+Ductile iron: 1次
+Cast iron: 1次
+Roundness (object): 1次
+Ductility: 1次
+Mechanical engineering: 1次
+Encoder: 1次
+Adaptive coding: 1次
+Open science: 1次
+HIV vaccine: 1次
+Solidity: 1次
+Risk assessment: 1次
+Forensic psychiatry: 1次
+Summative assessment: 1次
+Single-precision floating-point format: 1次
+Scalar multiplication: 1次
+Driving factors: 1次
+Social computing: 1次
+Big Five personality traits: 1次
+Marketing: 1次
+Action plan: 1次
+Prescriptive analytics: 1次
+Harmonic wavelet transform: 1次
+Temple: 1次
+Art: 1次
+Linear least squares: 1次
+Spectral geometry: 1次
+Iterative closest point: 1次
+Carving: 1次
+Cloister: 1次
+Business rule management system: 1次
+Decision analysis: 1次
+Decision management: 1次
+Business decision mapping: 1次
+Business rule: 1次
+Pelvic organs: 1次
+Pelvis: 1次
+Operating theater: 1次
+Autonomic nerve: 1次
+Sexual dysfunction: 1次
+Rhythm: 1次
+Pulse (signal processing): 1次
+Well-formed document: 1次
+Document layout analysis: 1次
+Document management system: 1次
+User analysis: 1次
+Smart card: 1次
+Visual learning: 1次
+Bivariate data: 1次
+Discoverability: 1次
+Eigenfunction: 1次
+Wearable computer: 1次
+Medical physics: 1次
+Distress: 1次
+Medical research: 1次
+Numeracy: 1次
+Cancer: 1次
+Prostate cancer: 1次
+Magnetism: 1次
+Magnetic dipole: 1次
+Microphysics: 1次
+Detect and avoid: 1次
+Concave polygon: 1次
+Market segmentation: 1次
+Coronary heart diseases: 1次
+Point set triangulation: 1次
+Minimum-weight triangulation: 1次
+Pitteway triangulation: 1次
+Propensity score matching: 1次
+Covariate: 1次
+Chain code: 1次
+Mesh networking: 1次
+Discernment: 1次
+Formal science: 1次
+Discipline: 1次
+Equidistant: 1次
+Imputation (statistics): 1次
+User expectations: 1次
+Unsupervised learning: 1次
+Simplicial complex: 1次
+Connected component: 1次
+Skip list: 1次
+Design education: 1次
+Virtual particle: 1次
+Linear transport theory: 1次
+Logical conjunction: 1次
+Prewriting: 1次
+Dichoptic presentation: 1次
+Binocular vision: 1次
+Swarm behaviour: 1次
+Flock: 1次
+Collective behavior: 1次
+Firefly protocol: 1次
+Scratch: 1次
+Smart environment: 1次
+Porous medium: 1次
+Liquid bubble: 1次
+Functional boxplot: 1次
+Line plot survey: 1次
+Tomographic reconstruction: 1次
+Killing vector field: 1次
+Time derivative: 1次
+Debiasing: 1次
+Counterintuitive: 1次
+Diabetes management: 1次
+Line integral: 1次
+Airspace class: 1次
+Spatial configuration: 1次
+Planarity testing: 1次
+Streamsurface: 1次
+Integrable system: 1次
+Bespoke: 1次
+Grammar: 1次
+Sampling error: 1次
+Evidence-based medicine: 1次
+Trend line: 1次
+Spatial correlation: 1次
+Projection (linear algebra): 1次
+Smartwatch: 1次
+Answer set programming: 1次
+Air mass: 1次
+Cyclone: 1次
+Temperature gradient: 1次
+Structural complexity: 1次
+Node (networking): 1次
+Hang: 1次
+Special case: 1次
+Observational error: 1次
+Synchronizing: 1次
+Transferability: 1次
+MMIX: 1次
+Out-of-order execution: 1次
+Complete set of invariants: 1次
+Solid mechanics: 1次
+Neutral plane: 1次
+Mirroring: 1次
+Cognitive map: 1次
+Chrominance: 1次
+Salience (neuroscience): 1次
+Computer-mediated reality: 1次
+Personally identifiable information: 1次
+Backtracking: 1次
+Sequential algorithm: 1次
+Codebook: 1次
+Chew's second algorithm: 1次
+Ruppert's algorithm: 1次
+Camera matrix: 1次
+Pinhole camera: 1次
+Stereo camera: 1次
+Graphical user interface testing: 1次
+Data logger: 1次
+Magnetic confinement fusion: 1次
+Hamiltonian (quantum mechanics): 1次
+Electromagnetic coil: 1次
+Plasma: 1次
+Poincaré map: 1次
+Magnetic field: 1次
+Test set: 1次
+High definition fiber tracking: 1次
+Visual memory: 1次
+Video Library: 1次
+Scientific workflow system: 1次
+Stacking: 1次
+Human head: 1次
+Absorption (pharmacology): 1次
+Electric potential energy: 1次
+Sequential access: 1次
+Random access: 1次
+Rake: 1次
+Stress shielding: 1次
+Heart disease: 1次
+Oligonucleotide: 1次
+Iterated function system: 1次
+Ruled surface: 1次
+Property (programming): 1次
+Visor: 1次
+Multi-source: 1次
+Random walk: 1次
+Path integral Monte Carlo: 1次
+Stationary phase approximation: 1次
+Fourier analysis: 1次
+Interaction point: 1次
+Surfel: 1次
+Bent molecular geometry: 1次
+Near-field optics: 1次
+Computational electromagnetics: 1次
+Near and far field: 1次
+Navigation bar: 1次
+Navigational instrument: 1次
+Synthetic seismogram: 1次
+Spectrum analyzer: 1次
+Seismic to simulation: 1次
+Anechoic chamber: 1次
+Phonon: 1次
+Leading edge: 1次
+Insect flight: 1次
+Wing: 1次
+Data publishing: 1次
+Privacy software: 1次
+Transactional leadership: 1次
+Matrix similarity: 1次
+Job shop scheduling: 1次
+Tectonics: 1次
+Finite difference method: 1次
+Source lines of code: 1次
+Dijkstra's algorithm: 1次
+Peripheral vision: 1次
+Contingency table: 1次
+Contingency: 1次
+Mathematical proof: 1次
+Plain text: 1次
+Positioning system: 1次
+Game testing: 1次
+Game Developer: 1次
+Game design: 1次
+Game art design: 1次
+Game mechanics: 1次
+Game design document: 1次
+Game development tool: 1次
+Competence (human resources): 1次
+Relaxation (iterative method): 1次
+Topological map: 1次
+Performance prediction: 1次
+Resource consumption: 1次
+Weighted arithmetic mean: 1次
+Laminated object manufacturing: 1次
+Photomapping: 1次
+Headline: 1次
+Public relations: 1次
+Legislation: 1次
+Customer engagement: 1次
+Enterprise data management: 1次
+2D computer graphics: 1次
+Computer representation of surfaces: 1次
+Virtual replay: 1次
+Zeroth-order logic: 1次
+Boolean algebra: 1次
+Computational logic: 1次
+Philosophical logic: 1次
+Propositional calculus: 1次
+Masking (art): 1次
+Exploration of Mars: 1次
+Telerobotics: 1次
+Planet: 1次
+Mars Exploration Program: 1次
+Macro: 1次
+Data administration: 1次
+Scale model: 1次
+Source text: 1次
+Computational journalism: 1次
+News values: 1次
+User control: 1次
+Pace: 1次
+Mode (statistics): 1次
+Model checking: 1次
+Social position: 1次
+Video browsing: 1次
+Average-case complexity: 1次
+Asymptotic computational complexity: 1次
+Lesion: 1次
+Spinal cord: 1次
+Multiple sclerosis: 1次
+Pathology: 1次
+Corpus callosum: 1次
+Corticospinal tract: 1次
+Automation: 1次
+Megabyte: 1次
+Observatory: 1次
+Radar: 1次
+Volcanic ash: 1次
+Vulcanian eruption: 1次
+Volcano: 1次
+Hypercube: 1次
+Pixelization: 1次
+Asynchronous Transfer Mode: 1次
+Motif (music): 1次
+Pattern detection: 1次
+Architectural model: 1次
+Ensemble learning: 1次
+Global environmental analysis: 1次
+Global warming: 1次
+Oceanic basin: 1次
+Interpersonal communication: 1次
+Symmetric multiprocessor system: 1次
+Community organization: 1次
+Urban design: 1次
+Spherical trigonometry: 1次
+Flat file database: 1次
+Early warning system: 1次
+User story: 1次
+Clifford algebra: 1次
+Goto: 1次
+Legendre wavelet: 1次
+Heat of combustion: 1次
+Absolute value: 1次
+Tikhonov regularization: 1次
+Buckling: 1次
+Intensive farming: 1次
+Water quality: 1次
+Environmental issue: 1次
+Pollution: 1次
+Industrialisation: 1次
+Water resources: 1次
+Data segment: 1次
+Cryptocurrency: 1次
+Transaction log: 1次
+Multi-objective optimization: 1次
+Eager evaluation: 1次
+Protein family: 1次
+Offensive: 1次
+Real-time strategy: 1次
+Textual criticism: 1次
+Collation: 1次
+Phonetics: 1次
+Causal model: 1次
+Causal inference: 1次
+Chemist: 1次
+Steady state: 1次
+Self-organization: 1次
+Cost–benefit analysis: 1次
+Variable (computer science): 1次
+Diffusion (business): 1次
+Public opinion: 1次
+Bag-of-words model: 1次
+Battlespace: 1次
+Vector processor: 1次
+Component-based software engineering: 1次
+Online transaction processing: 1次
+Region connection calculus: 1次
+Social dynamics: 1次
+Hysteroscopy: 1次
+Endometrial resection: 1次
+Cervical dilation: 1次
+Anatomic Variation: 1次
+Simultaneity: 1次
+Vascular structure: 1次
+Perceptual system: 1次
+Constellation diagram: 1次
+Feature geometry: 1次
+Parallel language: 1次
+Porting: 1次
+Market microstructure: 1次
+Market mechanism: 1次
+Mark to model: 1次
+Data cluster: 1次
+Financial market: 1次
+Market sector: 1次
+Per-pixel lighting: 1次
+Experimental Brain Research: 1次
+Human brain: 1次
+Functional integration (neurobiology): 1次
+Concept mining: 1次
+K-optimal pattern discovery: 1次
+Dither: 1次
+Data access layer: 1次
+Spectral clustering: 1次
+Laplacian matrix: 1次
+Interactive video: 1次
+Affine geometry: 1次
+Illusion: 1次
+Supercluster: 1次
+Parallel: 1次
+Golf Ball: 1次
+Video Graphics Array: 1次
+Graph center: 1次
+Graph energy: 1次
+Hypercube graph: 1次
+Geographic analysis: 1次
+Spotting: 1次
+Video game graphics: 1次
+Brainstorming: 1次
+Visual thinking: 1次
+Affinity diagram: 1次
+Psychological research: 1次
+Contour line: 1次
+Aspect ratio: 1次
+Concept learning: 1次
+Human intelligence: 1次
+Real versus nominal value: 1次
+Digital pathology: 1次
+Digital imaging: 1次
+Comparative biology: 1次
+Systematics: 1次
+Ancestral reconstruction: 1次
+Traffic congestion reconstruction with Kerner's three-phase theory: 1次
+Floating car data: 1次
+Traffic congestion: 1次
+Basic block: 1次
+Software suite: 1次
+Magnetic force microscope: 1次
+Nonlinear programming: 1次
+Ropelength: 1次
+Square root: 1次
+Interest point detection: 1次
+Scalar curvature: 1次
+Circular motion: 1次
+Start times: 1次
+Predictability: 1次
+Line bundle: 1次
+Note-taking: 1次
+Collaborative learning: 1次
+Business domain: 1次
+Nyquist frequency: 1次
+Structured text: 1次
+Structural communication: 1次
+Debugger: 1次
+Stationary wavelet transform: 1次
+Medical procedure: 1次
+Velocity gradient: 1次
+Continuum mechanics: 1次
+Suite: 1次
+Riemannian geometry: 1次
+Hyperbolic geometry: 1次
+Non-Euclidean geometry: 1次
+Hyperbolic space: 1次
+Online database: 1次
+Smoke: 1次
+Summed area table: 1次
+Specific activity: 1次
+Spatial filter: 1次
+Ringing artifacts: 1次
+Discrete Fourier transform: 1次
+View: 1次
+Bricolage: 1次
+Flow conditions: 1次
+Undo: 1次
+Heat transfer: 1次
+Cylinder block: 1次
+Cache coloring: 1次
+Cache algorithms: 1次
+Argus: 1次
+Vorticity equation: 1次
+Incompressible flow: 1次
+Calm technology: 1次
+High color: 1次
+Simple map: 1次
+Partial residual plot: 1次
+Regression: 1次
+Serial communication: 1次
+Spectral density estimation: 1次
+Synchronicity: 1次
+Information ecology: 1次
+Multi-touch: 1次
+Progressive meshes: 1次
+Discounted cumulative gain: 1次
+Insider threat: 1次
+Glaciology: 1次
+Identifying problems: 1次
+Tree rearrangement: 1次
+Arc diagram: 1次
+Control reconfiguration: 1次
+Research question: 1次
+Feedback loop: 1次
+User profile: 1次
+Result set: 1次
+Caustic (optics): 1次
+Gravitational field: 1次
+Named-entity recognition: 1次
+Lanczos tensor: 1次
+Strain rate tensor: 1次
+Viscous stress tensor: 1次
+Self-organizing network: 1次
+Mutual fund: 1次
+Target date fund: 1次
+Returns-based style analysis: 1次
+Manager of managers fund: 1次
+Performance fee: 1次
+Fund administration: 1次
+Open-end fund: 1次
+Predictive analytics: 1次
+Commercial software: 1次
+S3 Texture Compression: 1次
+Visual angle: 1次
+Recursive partitioning: 1次
+Opinion leadership: 1次
+Classification rule: 1次
+One-class classification: 1次
+False positives and false negatives: 1次
+Developmental cognitive neuroscience: 1次
+Connectome: 1次
+False positive rate: 1次
+Hotspot (Wi-Fi): 1次
+Topological defect: 1次
+Rational function: 1次
+Shot noise: 1次
+Coulomb blockade: 1次
+Architectural lighting design: 1次
+Video production: 1次
+Quasiperiodic function: 1次
+Community of practice: 1次
+Signal-to-noise ratio: 1次
+Logic programming: 1次
+Inductive logic programming: 1次
+Hash function: 1次
+Worry: 1次
+Principal geodesic analysis: 1次
+Object-oriented design: 1次
+Spacetime topology: 1次
+Background independence: 1次
+Mathematics of general relativity: 1次
+Spacetime symmetries: 1次
+Tangle: 1次
+Metamerism (color): 1次
+Spectral imaging: 1次
+Biological illustration: 1次
+Pixel density: 1次
+Reconfigurability: 1次
+H tree: 1次
+Tweaking: 1次
+Design rationale: 1次
+Flocking (texture): 1次
+Client: 1次
+Database server: 1次
+Geostatistics: 1次
+Warm front: 1次
+Room air distribution: 1次
+HVAC: 1次
+Control engineering: 1次
+Flow control (data): 1次
+Key light: 1次
+Color temperature: 1次
+Technical illustration: 1次
+Data center: 1次
+Cyber-physical system: 1次
+Megabit: 1次
+Headphones: 1次
+Auditory display: 1次
+Offset (computer science): 1次
+Patent classification: 1次
+International Patent Classification: 1次
+Added value: 1次
+Biological specimen: 1次
+Computational linguistics: 1次
+Receiver operating characteristic: 1次
+Document classification: 1次
+Haze: 1次
+Decision tree model: 1次
+Agroforestry: 1次
+Affinity Reagent: 1次
+Quantitative research: 1次
+Newton's method: 1次
+Convex function: 1次
+Coincident: 1次
+Radiosity (computer graphics): 1次
+Web design: 1次
+sysfs: 1次
+Performance studies: 1次
+Phenotype: 1次
+Age of onset: 1次
+Disease: 1次
+Pilot experiment: 1次
+Structure tensor: 1次
+Fault (geology): 1次
+Active fault: 1次
+Integrated design: 1次
+Map: 1次
+Subclass: 1次
+Triviality: 1次
+Risk analysis (business): 1次
+Gaussian network model: 1次
+Implicit function: 1次
+Nucleic acid secondary structure: 1次
+Distance matrix: 1次
+Line graph: 1次
+Communication: 1次
+Psychology: 1次
+Viral marketing: 1次
+Differentiable function: 1次
+Texton: 1次
+Color scheme: 1次
+Thermocline: 1次
+Internal wave: 1次
+Hydrostatic equilibrium: 1次
+Seifert surface: 1次
+Link (knot theory): 1次
+Knot (mathematics): 1次
+Trefoil knot: 1次
+Synthetic geometry: 1次
+Hypersurface: 1次
+Interior point method: 1次
+Autoassociative memory: 1次
+Ad hoc hypothesis: 1次
+Activity diagram: 1次
+Structured analysis: 1次
+Interaction overview diagram: 1次
+Block diagram: 1次
+Abrupt climate change: 1次
+Paleoceanography: 1次
+Prioritization: 1次
+Information quality: 1次
+News aggregator: 1次
+Edge space: 1次
+Facet (geometry): 1次
+Fuzzy classification: 1次
+Thermodynamic equilibrium: 1次
+Gibbs sampling: 1次
+Boltzmann equation: 1次
+Java applet: 1次
+Nonlinear dimensionality reduction: 1次
+Single-valued function: 1次
+Ischemic pain: 1次
+Series (mathematics): 1次
+Modeling language: 1次
+Weight function: 1次
+Procedural memory: 1次
+Extraversion and introversion: 1次
+Neuroticism: 1次
+Everything is a file: 1次
+Virtual file system: 1次
+Design rule for Camera File system: 1次
+SSH File Transfer Protocol: 1次
+File system: 1次
+Self-certifying File System: 1次
+Computer file: 1次
+Color analysis: 1次
+Invariant (physics): 1次
+Asymmetry: 1次
+Feature data: 1次
+Anti-aliasing: 1次
+Matrix analysis: 1次
+Bat flight: 1次
+Electromagnetic radiation: 1次
+Relativistic Doppler effect: 1次
+Doppler effect: 1次
+Wavelength: 1次
+Circular symmetry: 1次
+Business communication: 1次
+Structured data analysis: 1次
+Semantic technology: 1次
+Spatio-Temporal Analysis: 1次
+Viscosity: 1次
+Magnetosphere particle motion: 1次
+Space Science: 1次
+Physical science: 1次
+Conceptual design: 1次
+Content analysis: 1次
+Health informatics: 1次
+Stroke: 1次
+Hierarchical clustering of networks: 1次
+Desert climate: 1次
+El Niño Southern Oscillation: 1次
+Precipitation: 1次
+Storm: 1次
+El Niño: 1次
+Educational technology: 1次
+Grid view: 1次
+Performance measurement: 1次
+Critical thinking: 1次
+Functional requirement: 1次
+Health care: 1次
+Hospital readmission: 1次
+Medicaid: 1次
+Dummy variable: 1次
+Inpatient stays: 1次
+Inpatient procedure: 1次
+Radar chart: 1次
+Color psychology: 1次
+Color term: 1次
+WordNet: 1次
+System usability scale: 1次
+Know-how: 1次
+Specular highlight: 1次
+Decision table: 1次
+Conditional probability: 1次
+Item response theory: 1次
+Rasch model: 1次
+Psychological testing: 1次
+Matching pursuit: 1次
+Random projection: 1次
+Boundary current: 1次
+Baroclinity: 1次
+Activity recognition: 1次
+Demographic analysis: 1次
+Built environment: 1次
+Negotiation: 1次
+Precedent: 1次
+Spatial intelligence: 1次
+Aptitude: 1次
+Coding region: 1次
+RNA splicing: 1次
+Gene isoform: 1次
+Exon: 1次
+Alternative splicing: 1次
+Poetry as Topic: 1次
+Poetry: 1次
+Close reading: 1次
+Skepticism: 1次
+Digital humanities: 1次
+Marketing buzz: 1次
+Motion interpolation: 1次
+Match moving: 1次
+External flow: 1次
+Laser scanning: 1次
+Fidelity: 1次
+BitTorrent tracker: 1次
+Translational science: 1次
+Skyline: 1次
+Dozen: 1次
+Model-based reasoning: 1次
+Semantic gap: 1次
+Human body: 1次
+PageRank: 1次
+Energy conservation: 1次
+Energy consumption: 1次
+Building management system: 1次
+Search tree: 1次
+Battery (electricity): 1次
+Geometric analysis: 1次
+Ion: 1次
+Graphite: 1次
+Anode: 1次
+Carbon: 1次
+Electron backscatter diffraction: 1次
+Crystallite: 1次
+Crystal: 1次
+Fading: 1次
+Probability plot: 1次
+Violin plot: 1次
+Historical geography: 1次
+Axis–angle representation: 1次
+Euler's rotation theorem: 1次
+Plane of rotation: 1次
+Rotation formalisms in three dimensions: 1次
+Orientation (geometry): 1次
+Improper rotation: 1次
+Quaternions and spatial rotation: 1次
+Pseudovector: 1次
+Cluster labeling: 1次
+Data theft: 1次
+Rapid prototyping: 1次
+Homogeneity (statistics): 1次
+Calibration curve: 1次
+Research design: 1次
+Work domain analysis: 1次
+IGES: 1次
+Markup language: 1次
+HTML: 1次
+Input shaping: 1次
+Single-cell analysis: 1次
+Activity-centered design: 1次
+Typology: 1次
+Nervous system network models: 1次
+Time delay neural network: 1次
+Closed category: 1次
+Planetary surface: 1次
+Language model: 1次
+Conceptual clustering: 1次
+Tree decomposition: 1次
+Load management: 1次
+Product classification: 1次
+Social influence: 1次
+Priming (psychology): 1次
+Rapid construction: 1次
+Halton sequence: 1次
+System bus: 1次
+Barycentric coordinates: 1次
+Linear regression: 1次
+Ergodic theory: 1次
+Color Cell Compression: 1次
+Block Truncation Coding: 1次
+Speculative execution: 1次
+Prior probability: 1次
+Fire protection: 1次
+Technology management: 1次
+Inter-process communication: 1次
+Successor cardinal: 1次
+Thematic structure: 1次
+Dirac string: 1次
+Torsion of a curve: 1次
+Frenet–Serret formulas: 1次
+Transaction processing: 1次
+Financial transaction: 1次
+Context management: 1次
+Fetus: 1次
+Design firm: 1次
+Program comprehension: 1次
+Video camera: 1次
+Count data: 1次
+Ozone layer: 1次
+Polar vortex: 1次
+Ozone depletion: 1次
+Troposphere: 1次
+Atmospheric temperature: 1次
+Stratosphere: 1次
+Color bleeding: 1次
+Nucleic acid: 1次
+Nucleic acid structure: 1次
+Nonlinear filter: 1次
+Mathematical morphology: 1次
+Linear filter: 1次
+Sigmoid colon: 1次
+Attribution: 1次
+Incident report: 1次
+Topological space: 1次
+Conceptualization: 1次
+Semantic Web: 1次
+Ontology language: 1次
+Datapath: 1次
+Electric discharge: 1次
+Optical character recognition: 1次
+Handwriting recognition: 1次
+Linked data: 1次
+Brain atlas: 1次
+Social media analytics: 1次
+Coopetition: 1次
+Relative velocity: 1次
+Rayleigh–Taylor instability: 1次
+Supernova: 1次
+Inertial confinement fusion: 1次
+Ligand: 1次
+van der Waals force: 1次
+Caudate nucleus: 1次
+Neuroimaging: 1次
+Capital market: 1次
+Proofreading: 1次
+High dynamic range: 1次
+High-dynamic-range imaging: 1次
+Turbine: 1次
+Shear flow: 1次
+Scholarly communication: 1次
+Login: 1次
+Laser: 1次
+Stress field: 1次
+Arbitrarily large: 1次
+Nyquist stability criterion: 1次
+Nyquist–Shannon sampling theorem: 1次
+Mantle (geology): 1次
+Mantle convection: 1次
+Biosphere: 1次
+Ambiguity resolution: 1次
+Spherical harmonics: 1次
+Tropical cyclone: 1次
+Infinitesimal: 1次
+Robot: 1次
+Olfactory system: 1次
+Superellipsoid: 1次
+Diamond: 1次
+Customer intelligence: 1次
+Customer reference program: 1次
+Voice of the customer: 1次
+Microarray: 1次
+Biologist: 1次
+Auxiliary memory: 1次
+Change blindness: 1次
+Blindness: 1次
+Mathematical structure: 1次
+Radiographic Image Enhancement: 1次
+Metrology: 1次
+Digital Enhanced Cordless Telecommunications: 1次
+Directory service: 1次
+Mashup: 1次
+Nearest neighbor search: 1次
+Lipschitz continuity: 1次
+Singular point of a curve: 1次
+Legend: 1次
+Service design: 1次
+Forearm: 1次
+Wrist: 1次
+Ligament: 1次
+Standardization: 1次
+Redshift survey: 1次
+CfA Redshift Survey: 1次
+Immediate mode: 1次
+Galaxy formation and evolution: 1次
+Dark matter halo: 1次
+Smoothed-particle hydrodynamics: 1次
+N-body simulation: 1次
+Informational listening: 1次
+Gigapixel image: 1次
+Geometrical optics: 1次
+Resolution independence: 1次
+Code reuse: 1次
+Coons patch: 1次
+Hexagonal sampling: 1次
+Barycentric subdivision: 1次
+Barycentric coordinate system: 1次
+Coronary artery graft: 1次
+Approximate entropy: 1次
+Graph state: 1次
+Computer-aided engineering: 1次
+Kernel method: 1次
+Cluttering: 1次
+User Interface Toolkit: 1次
+Directory information tree: 1次
+Betti number: 1次
+Binary logarithm: 1次
+Complex logarithm: 1次
+Analytic function: 1次
+Consumer behaviour: 1次
+Loyalty: 1次
+Colored smoke: 1次
+Breaking wave: 1次
+Air entrainment: 1次
+Ballot: 1次
+Democracy: 1次
+Social psychology: 1次
+Politics: 1次
+Persistent data structure: 1次
+Contextual inquiry: 1次
+Metric k-center: 1次
+Random variate: 1次
+Information art: 1次
+Astronaut training: 1次
+Crew: 1次
+Hierarchical Dirichlet process: 1次
+Mouse button: 1次
+Neighbourhood (mathematics): 1次
+Free flight: 1次
+Sparse voxel octree: 1次
+Biomechanical Phenomena: 1次
+Contact analysis: 1次
+Configuration space: 1次
+Failure mode and effects analysis: 1次
+Gene duplication: 1次
+Kendall tau rank correlation coefficient: 1次
+Biosequence: 1次
+Design facilities: 1次
+Path analysis (statistics): 1次
+NSPACE: 1次
+Geometric design: 1次
+Reservoir simulation: 1次
+Facial tissue: 1次
+Soft tissue: 1次
+Craniofacial: 1次
+Total correlation: 1次
+Multivariate mutual information: 1次
+Usability lab: 1次
+Usability engineering: 1次
+Continuous function: 1次
+Random walker algorithm: 1次
+Data retrieval: 1次
+Ordination: 1次
+Citation network: 1次
+Emerging technologies: 1次
+Innovation management: 1次
+Interaction network: 1次
+Octahedron: 1次
+Raised-relief map: 1次
+Material point method: 1次
+Taxonomy (biology): 1次
+Axial coding: 1次
+System lifecycle: 1次
+KPI-driven code analysis: 1次
+Static program analysis: 1次
+Adobe RGB color space: 1次
+RGB color space: 1次
+Unit interval: 1次
+Rankine vortex: 1次
+Domain model: 1次
+Reverse engineering: 1次
+Open architecture: 1次
+Adaptive algorithm: 1次
+Applied mathematics: 1次
+Infinity: 1次
+Material Separation: 1次
+E-commerce: 1次
+Affinity analysis: 1次
+Round-off error: 1次
+Truncation error: 1次
+Relativistic aberration: 1次
+Relativistic quantum chemistry: 1次
+Android (operating system): 1次
+Papilio: 1次
+Permission: 1次
+Scrolling: 1次
+Eccentricity (behavior): 1次
+Randomized Hough transform: 1次
+Partial least squares regression: 1次
+Feature-oriented domain analysis: 1次
+Immunology: 1次
+Software development process: 1次
+Medicine: 1次
+Linear algebra: 1次
+Edge enhancement: 1次
+Four-tensor: 1次
+Manufacturing engineering: 1次
+Grinding: 1次
+Diesel exhaust: 1次
+Solenoidal vector field: 1次
+Vector operator: 1次
+Vector decomposition: 1次
+Vector calculus identities: 1次
+Bibliography: 1次
+Deflection (engineering): 1次
+Protein surface: 1次
+Pipeline (computing): 1次
+Hybrid system: 1次
+Meteogram: 1次
+Glass fiber: 1次
+Tensile testing: 1次
+Ultimate tensile strength: 1次
+Protein domain: 1次
+Ribbon: 1次
+Flux: 1次
+Marangoni effect: 1次
+Distance correlation: 1次
+Aorta: 1次
+Modelling biological systems: 1次
+Network analyst: 1次
+Vertical slice: 1次
+Vanishing point: 1次
+Metal foam: 1次
+Composite material: 1次
+Aluminium: 1次
+Metal: 1次
+Nanotechnology: 1次
+Materials science: 1次
+Special situation: 1次
+Radial line: 1次
+Glacier terminus: 1次
+Monte Carlo algorithm: 1次
+Centroidal Voronoi tessellation: 1次
+Level set (data structures): 1次
+Set function: 1次
+Hierarchical control system: 1次
+Interpersonal relationship: 1次
+Photoelasticity: 1次
+Refractive index: 1次
+Material properties: 1次
+Polarization (waves): 1次
+Superquadrics: 1次
+Local field: 1次
+Edge cover: 1次
+Topological sorting: 1次
+Partially ordered set: 1次
+Omnidirectional antenna: 1次
+Entire colon: 1次
+Inspection time: 1次
+Field of view: 1次
+Pressure gradient: 1次
+Security enhancement: 1次
+Authorization: 1次
+Digital signature: 1次
+Authentication: 1次
+Business process management: 1次
+Business Process Model and Notation: 1次
+Business process modeling: 1次
+Artifact-centric business process model: 1次
+Process mining: 1次
+Process modeling: 1次
+Membership function: 1次
+Chaotic: 1次
+Continuous modelling: 1次
+Cellular decomposition: 1次
+Dendritic spine: 1次
+Dendrite: 1次
+Biosimulation: 1次
+Disparate system: 1次
+Doppler radar: 1次
+Medical prescription: 1次
+Pictogram: 1次
+String graph: 1次
+Slope number: 1次
+Biopsy: 1次
+Neurosurgery: 1次
+Clinical Practice: 1次
+Brain tumor: 1次
+Equivalence (measure theory): 1次
+Expectation–maximization algorithm: 1次
+Virtual image: 1次
+Multiple baseline design: 1次
+3D modeling: 1次
+Point of sale: 1次
+Market share: 1次
+Competitive intelligence: 1次
+Real-time data: 1次
+Root cause analysis: 1次
+Overhead (computing): 1次
+Supersampling: 1次
+Change detection: 1次
+CUDA Pinned memory: 1次
+Transpose: 1次
+Point distribution model: 1次
+Heat kernel signature: 1次
+Collaborative filtering: 1次
+Process optimization: 1次
+Power iteration: 1次
+Long-term prediction: 1次
+Polynomial least squares: 1次
+Volume fraction: 1次
+Epigenomics: 1次
+Point (typography): 1次
+Tree rotation: 1次
+Vantage-point tree: 1次
+2 ? tree: 1次
+(ab)-tree: 1次
+Exponential tree: 1次
+Gaussian curvature: 1次
+State space: 1次
+Array data structure: 1次
+Data validation: 1次
+Reference data (financial markets): 1次
+Control volume: 1次
+Heuristic evaluation: 1次
+Loose coupling: 1次
+Chemical engineering: 1次
+Spinning: 1次
+Polyvinyl chloride: 1次
+Phase (matter): 1次
+Salting out: 1次
+Evaporation: 1次
+Solvent: 1次
+Aqueous solution: 1次
+Functional genomics: 1次
+Cellular process: 1次
+Social group: 1次
+Direct numerical simulation: 1次
+Variational method: 1次
+Convex hull: 1次
+Asymptotic analysis: 1次
+Critical path method: 1次
+#P-complete: 1次
+SIMPLE algorithm: 1次
+Entity–relationship model: 1次
+Weak entity: 1次
+Economics: 1次
+Verification and validation of computer simulation models: 1次
+Residual: 1次
+Probability measure: 1次
+Reproducing kernel Hilbert space: 1次
+Shear matrix: 1次
+Bitwise operation: 1次
+Derived Data: 1次
+Software peer review: 1次
+Software design description: 1次
+Social software engineering: 1次
+Function field: 1次
+Transportation planning: 1次
+Redistribution (cultural anthropology): 1次
+Biomedicine: 1次
+Life Scientists: 1次
+Complex plane: 1次
+Topological graph: 1次
+Path (graph theory): 1次
+Feature Dataset: 1次
+Application Context: 1次
+Ecology: 1次
+Cognitive science: 1次
+Cerebral cortex: 1次
+Macaque: 1次
+Collision cascade: 1次
+Subatomic particle: 1次
+Hatching: 1次
+Paraboloid: 1次
+Light field: 1次
+Instant: 1次
+Contrast effect: 1次
+Phylogenetic network: 1次
+Spare part: 1次
+Instruction cycle: 1次
+Box plot: 1次
+Cytoplasm: 1次
+Correlation function: 1次
+Object request broker: 1次
+Application server: 1次
+Common Object Request Broker Architecture: 1次
+Remote control: 1次
+Second derivative: 1次
+Nominal size: 1次
+Hessian matrix: 1次
+Flow line: 1次
+Scaffold: 1次
+Hermite interpolation: 1次
+Brain surface: 1次
+Tensor calculus: 1次
+Computer experiment: 1次
+Algorithm engineering: 1次
+Weak topology (polar topology): 1次
+Particular point topology: 1次
+Box topology: 1次
+General topology: 1次
+Partition (number theory): 1次
+Social organization: 1次
+Social system: 1次
+Particle size: 1次
+Pyramid: 1次
+Opening: 1次
+Computational trust: 1次
+File sharing: 1次
+Closed geodesic: 1次
+Typing: 1次
+Personality type: 1次
+Handwriting: 1次
+ScaLAPACK: 1次
+Matrix multiplication: 1次
+Message Passing Interface: 1次
+Dilemma: 1次
+k-medians clustering: 1次
+Data descriptor: 1次
+Intergalactic travel: 1次
+Subatomic scale: 1次
+Spectral line: 1次
+Periodic table (large cells): 1次
+Concept search: 1次
+Term Discrimination: 1次
+Adversarial information retrieval: 1次
+Cognitive models of information retrieval: 1次
+Forensic science: 1次
+Forensic pathology: 1次
+Criminal investigation: 1次
+Photography: 1次
+Discrete element method: 1次
+Land use: 1次
+Environmental planning: 1次
+Fast Fourier transform: 1次
+Coefficient matrix: 1次
+Linear equation: 1次
+Injury prevention: 1次
+Occupational safety and health: 1次
+Suicide prevention: 1次
+Web colors: 1次
+Ostium: 1次
+Fitness function: 1次
+Random field: 1次
+Automotive industry: 1次
+Computer architecture simulator: 1次
+Front and back ends: 1次
+Mahalanobis distance: 1次
+Percentile: 1次
+Computer-assisted translation: 1次
+Machine translation software usability: 1次
+Chinese room: 1次
+Example-based machine translation: 1次
+Optical illusion: 1次
+Finite subdivision rule: 1次
+Doo–Sabin subdivision surface: 1次
+Semantic reasoner: 1次
+Structural mechanics: 1次
+Screw axis: 1次
+Lagrangian analysis: 1次
+Limiting: 1次
+Common spatial pattern: 1次
+Uncorrelated: 1次
+Imaging spectroscopy: 1次
+Dense graph: 1次
+Deformation Problem: 1次
+Morse code: 1次
+Convex set: 1次
+Meander: 1次
+Telnet: 1次
+Boolean operations in computer-aided design: 1次
+Humerus fracture: 1次
+Shoulder Fracture: 1次
+Range of motion: 1次
+Polymer: 1次
+Convective heat transfer: 1次
+Covariance matrix: 1次
+Backward compatibility: 1次
+Data Property: 1次
+Joins: 1次
+The Symbolic: 1次
+Atom probe: 1次
+Nanoscopic scale: 1次
+Conventional wisdom: 1次
+Abstraction layer: 1次
+Book embedding: 1次
+Wiring diagram: 1次
+Technical documentation: 1次
+Guiding Principles: 1次
+Neck dissection: 1次
+Sparse grid: 1次
+Compression ratio: 1次
+Boundary object: 1次
+Metabolic network: 1次
+Combinatorial chemistry: 1次
+Intraocular pressure: 1次
+Alkyl: 1次
+Double bond: 1次
+Single bond: 1次
+Glaucoma: 1次
+Multiplex: 1次
+Group cohesiveness: 1次
+Relief mapping: 1次
+Bilateral filter: 1次
+Intrinsic dimension: 1次
+Link group: 1次
+Geodemographic segmentation: 1次
+Terminal velocity: 1次
+Word usage: 1次
+Java Programming Language: 1次
+Confidence interval: 1次
+Music information retrieval: 1次
+Coaching: 1次
+Finite impulse response: 1次
+Quintic function: 1次
+Root element: 1次
+Learnability: 1次
+Social relation: 1次
+Autism: 1次
+Developmental psychology: 1次
+Data assimilation: 1次
+Pairing: 1次
+Separable space: 1次
+Naive Bayes classifier: 1次
+Computer-aided: 1次
+Skewness: 1次
+Quantile: 1次
+Kurtosis: 1次
+Balanced flow: 1次
+Combinatorial topology: 1次
+Dissipation: 1次
+Massive particle: 1次
+Refinery: 1次
+Concentric: 1次
+Auralization: 1次
+Focal length: 1次
+Virtual studio: 1次
+Branch-decomposition: 1次
+Dynamic programming: 1次
+Optimal distinctiveness theory: 1次
+Multiprocessing: 1次
+Image-based meshing: 1次
+Network congestion: 1次
+Cache language model: 1次
+Financial analysis: 1次
+Flood myth: 1次
+Vulnerability assessment: 1次
+Equalizer: 1次
+Pathfinder: 1次
+Solar cell: 1次
+Polymer solar cell: 1次
+Photovoltaic system: 1次
+Nyquist rate: 1次
+Turns rounds and time-keeping systems in games: 1次
+Data anonymization: 1次
+System requirements: 1次
+Volume integral: 1次
+Percutaneous: 1次
+Radiation treatment planning: 1次
+Vivisection: 1次
+Tridiagonal matrix: 1次
+Back-face culling: 1次
+Theory of planned behavior: 1次
+Affine arithmetic: 1次
+Frustum: 1次
+Fixation (visual): 1次
+Post-WIMP: 1次
+Relational theory: 1次
+Quantization (physics): 1次
+Simulation software: 1次
+Fisheries management: 1次
+Simplicial approximation theorem: 1次
+Functional programming: 1次
+Contradiction: 1次
+Time dependent vector field: 1次
+Protein filament: 1次
+Roadrunner: 1次
+Bandwidth (signal processing): 1次
+Source data: 1次
+Subpixel rendering: 1次
+Ordinal number: 1次
+Active site: 1次
+Procedural texture: 1次
+HSL and HSV: 1次
+Homogeneous: 1次
+Separatrix: 1次
+Quad-edge: 1次
+Markov random field: 1次
+Scale-space axioms: 1次
+Contrast (statistics): 1次
+Data system: 1次
+Symbol: 1次
+Statistical theory: 1次
+Number theory: 1次
+Branch and cut: 1次
+Exact algorithm: 1次
+Geometric topology: 1次
+Microclimate: 1次
+Transect: 1次
+Protein Interaction Networks: 1次
+Protein–protein interaction: 1次
+Top-down and bottom-up design: 1次
+Stratified sampling: 1次
+Severe weather: 1次
+Atmospheric pressure: 1次
+Radar imaging: 1次
+State variable: 1次
+Surface pressure: 1次
+Tacit knowledge: 1次
+Chromaticity: 1次
+Discrete time and continuous time: 1次
+Ab initio: 1次
+Hydroxyl radical: 1次
+Chemistry: 1次
+Space environment: 1次
+Orbiter: 1次
+Human-centered computing: 1次
+Rasterisation: 1次
+Shore: 1次
+Petroleum industry: 1次
+Marine engineering: 1次
+Class diagram: 1次
+Neuroscientist: 1次
+Neuron: 1次
+Face detection: 1次
+Parallel compression: 1次
+Point of delivery: 1次
+Background noise: 1次
+Systematic error: 1次
+Quality management: 1次
+China: 1次
+Optometry: 1次
+Electrical conduit: 1次
+Development environment: 1次
+Longest common subsequence problem: 1次
+Linear model: 1次
+Probabilistic risk assessment: 1次
+Nuclear reactor: 1次
+Mathematical theory: 1次
+Probabilistic method: 1次
+State-space representation: 1次
+Transport phenomena: 1次
+Human genetic variation: 1次
+1000 Genomes Project: 1次
+Genome-wide association study: 1次
+Kinship: 1次
+Ancestor: 1次
+Brownian motion: 1次
+Bubble chart: 1次
+Aggregate data: 1次
+Stored procedure: 1次
+Multicollinearity: 1次
+Multinomial logistic regression: 1次
+Regression diagnostic: 1次
+Confounding: 1次
+SemEval: 1次
+Line wrap and word wrap: 1次
+Hopcroft–Karp algorithm: 1次
+1-planar graph: 1次
+Longest path problem: 1次
+Indifference graph: 1次
+Reaction–diffusion system: 1次
+Eulerian path: 1次
+Reaction dynamics: 1次
+Entropy (information theory): 1次
+Information flow (information theory): 1次
+Metaballs: 1次
+Storyboard: 1次
+Sink (computing): 1次
+GPU cluster: 1次
+Direct method: 1次
+Lever: 1次
+Brake: 1次
+Lattice Miner: 1次
+Bounded set: 1次
+Formal concept analysis: 1次
+Correspondence problem: 1次
+Natural ventilation: 1次
+Event (computing): 1次
+Event correlation: 1次
+CPU cache: 1次
+Instruction prefetch: 1次
+Scale analysis (statistics): 1次
+Port (computer networking): 1次
+Data profiling: 1次
+Data loss: 1次
+Tooltip: 1次
+Integer programming: 1次
+Sankey diagram: 1次
+Risk analysis (engineering): 1次
+Systematic risk: 1次
+Loan: 1次
+Financial risk: 1次
+Virtualization: 1次
+Data virtualization: 1次
+Quality of service: 1次
+Timestamp: 1次
+Contextual design: 1次
+Comprehensive layout: 1次
+Multiphase flow: 1次
+Wicked problem: 1次
+Money laundering: 1次
+Arterial Occlusive Diseases: 1次
+Lumen (unit): 1次
+Similarity (geometry): 1次
+Fishing: 1次
+Fishing industry: 1次
+Aquaculture: 1次
+Habitat: 1次
+Fuzzy rule: 1次
+Iterated function: 1次
+Web development: 1次
+Social Semantic Web: 1次
+Exponential distribution: 1次
+Default gateway: 1次
+Linearity: 1次
+Canonical correlation: 1次
+Advanced composite materials: 1次
+Internal flow: 1次
+Polar coordinate system: 1次
+Regulation of gene expression: 1次
+Clique-width: 1次
+Independent set: 1次
+Perpendicular: 1次
+Multipath routing: 1次
+Theta graph: 1次
+Circle graph: 1次
+Destination-Sequenced Distance Vector routing: 1次
+Phase (waves): 1次
+Synchronism: 1次
+Leverage (finance): 1次
+Scientific study: 1次
+Distance: 1次
+Public policy: 1次
+Information and Communications Technology: 1次
+Name server: 1次
+Domain Name System: 1次
+Optical path length: 1次
+Differential interference contrast microscopy: 1次
+Interference microscopy: 1次
+Interferometry: 1次
+Straight skeleton: 1次
+Critical graph: 1次
+Kármán vortex street: 1次
+Reynolds number: 1次
+Signal transduction: 1次
+Cell signaling: 1次
+Mass media: 1次
+Aeonium: 1次
+Social change: 1次
+Multivariable calculus: 1次
+Ocean general circulation model: 1次
+Physical property: 1次
+Electrical impedance tomography: 1次
+Examining eye: 1次
+Seam carving: 1次
+Spatial database: 1次
+Temporal difference learning: 1次
+Mathematical puzzle: 1次
+Estimator: 1次
+Almost everywhere: 1次
+Halo: 1次
+Joint entropy: 1次
+Arterial diseases: 1次
+New media: 1次
+Information policy: 1次
+Design pattern: 1次
+Forbidden graph characterization: 1次
+Distance-hereditary graph: 1次
+Spatial query: 1次
+Free surface: 1次
+Cardinal point: 1次
+Peer review: 1次
+Succinctness: 1次
+Polynomial regression: 1次
+Full table scan: 1次
+Continuation: 1次
+Team software process: 1次
+Project manager: 1次
+Water industry: 1次
+System of linear equations: 1次
+Linear function: 1次
+

@@ -1,0 +1,1037 @@
+{
+    "name": "world",
+    "children": [
+        {
+            "name": "Sub-Saharan Africa",
+            "color": "#FF0000",
+            "children": [
+                {
+                    "name": "Central Afr. Rep.",
+                    "region": "Sub-Saharan Africa",
+                    "population": 40320476,
+                    "gdp": 6984.8481825
+                },
+                {
+                    "name": "Congo, Dem. R.",
+                    "region": "Sub-Saharan Africa",
+                    "population": 622970250,
+                    "gdp": 6609.3484709
+                },
+                {
+                    "name": "Burundi",
+                    "region": "Sub-Saharan Africa",
+                    "population": 84046806,
+                    "gdp": 6659.757049500001
+                },
+                {
+                    "name": "Niger",
+                    "region": "Sub-Saharan Africa",
+                    "population": 160408829,
+                    "gdp": 7831.1581009
+                },
+                {
+                    "name": "Mozambique",
+                    "region": "Sub-Saharan Africa",
+                    "population": 231694758,
+                    "gdp": 9162.308525299999
+                },
+                {
+                    "name": "Ethiopia",
+                    "region": "Sub-Saharan Africa",
+                    "population": 833325481,
+                    "gdp": 11544.1504011
+                },
+                {
+                    "name": "Malawi",
+                    "region": "Sub-Saharan Africa",
+                    "population": 145189021,
+                    "gdp": 9573.381187
+                },
+                {
+                    "name": "Togo",
+                    "region": "Sub-Saharan Africa",
+                    "population": 61829023,
+                    "gdp": 12108.218041
+                },
+                {
+                    "name": "Sierra Leone",
+                    "region": "Sub-Saharan Africa",
+                    "population": 60946603,
+                    "gdp": 12455.728928
+                },
+                {
+                    "name": "Rwanda",
+                    "region": "Sub-Saharan Africa",
+                    "population": 97194950,
+                    "gdp": 13926.179321
+                },
+                {
+                    "name": "Liberia",
+                    "region": "Sub-Saharan Africa",
+                    "population": 13504181,
+                    "gdp": 3873.9358540000003
+                },
+                {
+                    "name": "Zimbabwe",
+                    "region": "Sub-Saharan Africa",
+                    "population": 132946854,
+                    "gdp": 17917.348635
+                },
+                {
+                    "name": "Guinea-Bissau",
+                    "region": "Sub-Saharan Africa",
+                    "population": 14781925,
+                    "gdp": 13022.672358000002
+                },
+                {
+                    "name": "Burkina Faso",
+                    "region": "Sub-Saharan Africa",
+                    "population": 149504919,
+                    "gdp": 13858.096714000001
+                },
+                {
+                    "name": "Madagascar",
+                    "region": "Sub-Saharan Africa",
+                    "population": 201487338,
+                    "gdp": 12790.131157999998
+                },
+                {
+                    "name": "Uganda",
+                    "region": "Sub-Saharan Africa",
+                    "population": 327771267,
+                    "gdp": 14533.090473999999
+                },
+                {
+                    "name": "Gambia, The",
+                    "region": "Sub-Saharan Africa",
+                    "population": 13033904,
+                    "gdp": 11273.500324
+                },
+                {
+                    "name": "Chad",
+                    "region": "Sub-Saharan Africa",
+                    "population": 114682618,
+                    "gdp": 17605.280512999998
+                },
+                {
+                    "name": "Mali",
+                    "region": "Sub-Saharan Africa",
+                    "population": 144270963,
+                    "gdp": 17049.328169
+                },
+                {
+                    "name": "Benin",
+                    "region": "Sub-Saharan Africa",
+                    "population": 87770256,
+                    "gdp": 17428.368196
+                },
+                {
+                    "name": "Guinea",
+                    "region": "Sub-Saharan Africa",
+                    "population": 47829581,
+                    "gdp": 7514.263105
+                },
+                {
+                    "name": "Tanzania",
+                    "region": "Sub-Saharan Africa",
+                    "population": 443010487,
+                    "gdp": 20742.039031999997
+                },
+                {
+                    "name": "Lesotho",
+                    "region": "Sub-Saharan Africa",
+                    "population": 18855396,
+                    "gdp": 23219.03344
+                },
+                {
+                    "name": "Kenya",
+                    "region": "Sub-Saharan Africa",
+                    "population": 393418165,
+                    "gdp": 24000.940261
+                },
+                {
+                    "name": "Cote d'Ivoire",
+                    "region": "Sub-Saharan Africa",
+                    "population": 193451650,
+                    "gdp": 26419.793154
+                },
+                {
+                    "name": "Senegal",
+                    "region": "Sub-Saharan Africa",
+                    "population": 123730565,
+                    "gdp": 25555.917299999997
+                },
+                {
+                    "name": "Ghana",
+                    "region": "Sub-Saharan Africa",
+                    "population": 231667783,
+                    "gdp": 31864.590816999997
+                },
+                {
+                    "name": "Zambia",
+                    "region": "Sub-Saharan Africa",
+                    "population": 132819821,
+                    "gdp": 31207.687723
+                },
+                {
+                    "name": "Cameroon",
+                    "region": "Sub-Saharan Africa",
+                    "population": 190082204,
+                    "gdp": 28241.172932000005
+                },
+                {
+                    "name": "Mauritania",
+                    "region": "Sub-Saharan Africa",
+                    "population": 34564732,
+                    "gdp": 31786.670296999997
+                },
+                {
+                    "name": "Nigeria",
+                    "region": "Sub-Saharan Africa",
+                    "population": 1508963381,
+                    "gdp": 48272.411500999995
+                },
+                {
+                    "name": "Congo, Rep. Of",
+                    "region": "Sub-Saharan Africa",
+                    "population": 41645896,
+                    "gdp": 47869.73452
+                },
+                {
+                    "name": "Sudan",
+                    "region": "Sub-Saharan Africa",
+                    "population": 39578828,
+                    "gdp": 4730.461871
+                },
+                {
+                    "name": "Cape Verde",
+                    "region": "Sub-Saharan Africa",
+                    "population": 3643446,
+                    "gdp": 43112.080653
+                },
+                {
+                    "name": "Angola",
+                    "region": "Sub-Saharan Africa",
+                    "population": 226584387,
+                    "gdp": 59620.213487
+                },
+                {
+                    "name": "Swaziland",
+                    "region": "Sub-Saharan Africa",
+                    "population": 8904921,
+                    "gdp": 55315.344476
+                },
+                {
+                    "name": "Namibia",
+                    "region": "Sub-Saharan Africa",
+                    "population": 20488926,
+                    "gdp": 82799.970065
+                },
+                {
+                    "name": "South Africa",
+                    "region": "Sub-Saharan Africa",
+                    "population": 477843004,
+                    "gdp": 111279.21087
+                },
+                {
+                    "name": "Botswana",
+                    "region": "Sub-Saharan Africa",
+                    "population": 18838290,
+                    "gdp": 130169.95139000002
+                },
+                {
+                    "name": "Mauritius",
+                    "region": "Sub-Saharan Africa",
+                    "population": 11295901,
+                    "gdp": 157378.68121
+                },
+                {
+                    "name": "Gabon",
+                    "region": "Sub-Saharan Africa",
+                    "population": 15820238,
+                    "gdp": 147078.87665999998
+                },
+                {
+                    "name": "Seychelles",
+                    "region": "Sub-Saharan Africa",
+                    "population": 369404,
+                    "gdp": 103987.03044999999
+                }
+            ]
+        },
+        {
+            "name": "Latin America & the Caribbean",
+            "color": "#008000",
+            "children": [
+                {
+                    "name": "Haiti",
+                    "region": "Latin America & the Caribbean",
+                    "population": 92554417,
+                    "gdp": 14705.14086
+                },
+                {
+                    "name": "Honduras",
+                    "region": "Latin America & the Caribbean",
+                    "population": 76500400,
+                    "gdp": 37985.697134
+                },
+                {
+                    "name": "Nicaragua",
+                    "region": "Latin America & the Caribbean",
+                    "population": 52875445,
+                    "gdp": 41058.652248000006
+                },
+                {
+                    "name": "Bolivia",
+                    "region": "Latin America & the Caribbean",
+                    "population": 92169202,
+                    "gdp": 54047.26314
+                },
+                {
+                    "name": "Guyana",
+                    "region": "Latin America & the Caribbean",
+                    "population": 6804045,
+                    "gdp": 58629.425524000006
+                },
+                {
+                    "name": "El Salvador",
+                    "region": "Latin America & the Caribbean",
+                    "population": 56015175,
+                    "gdp": 61065.59584
+                },
+                {
+                    "name": "Guatemala",
+                    "region": "Latin America & the Caribbean",
+                    "population": 137527637,
+                    "gdp": 63911.26117800001
+                },
+                {
+                    "name": "Belize",
+                    "region": "Latin America & the Caribbean",
+                    "population": 3029712,
+                    "gdp": 72150.98927199999
+                },
+                {
+                    "name": "Jamaica",
+                    "region": "Latin America & the Caribbean",
+                    "population": 25549082,
+                    "gdp": 74480.516768
+                },
+                {
+                    "name": "Paraguay",
+                    "region": "Latin America & the Caribbean",
+                    "population": 57440584,
+                    "gdp": 93843.737483
+                },
+                {
+                    "name": "Ecuador",
+                    "region": "Latin America & the Caribbean",
+                    "population": 138764643,
+                    "gdp": 92661.82871999999
+                },
+                {
+                    "name": "Peru",
+                    "region": "Latin America & the Caribbean",
+                    "population": 271625668,
+                    "gdp": 98873.86432
+                },
+                {
+                    "name": "Colombia",
+                    "region": "Latin America & the Caribbean",
+                    "population": 421540951,
+                    "gdp": 108025.14206
+                },
+                {
+                    "name": "Dominican Rep.",
+                    "region": "Latin America & the Caribbean",
+                    "population": 91348633,
+                    "gdp": 109225.49222
+                },
+                {
+                    "name": "Costa Rica",
+                    "region": "Latin America & the Caribbean",
+                    "population": 41846749,
+                    "gdp": 126500.72791999999
+                },
+                {
+                    "name": "Brazil",
+                    "region": "Latin America & the Caribbean",
+                    "population": 1804155703,
+                    "gdp": 134091.74531
+                },
+                {
+                    "name": "Suriname",
+                    "region": "Latin America & the Caribbean",
+                    "population": 3796813,
+                    "gdp": 106673.26747999998
+                },
+                {
+                    "name": "Mexico",
+                    "region": "Latin America & the Caribbean",
+                    "population": 1086593243,
+                    "gdp": 145659.03663
+                },
+                {
+                    "name": "Venezuela",
+                    "region": "Latin America & the Caribbean",
+                    "population": 268892967,
+                    "gdp": 152517.42638
+                },
+                {
+                    "name": "Panama",
+                    "region": "Latin America & the Caribbean",
+                    "population": 33965411,
+                    "gdp": 166751.45285
+                },
+                {
+                    "name": "Uruguay",
+                    "region": "Latin America & the Caribbean",
+                    "population": 30573504,
+                    "gdp": 167173.53239
+                },
+                {
+                    "name": "Chile",
+                    "region": "Latin America & the Caribbean",
+                    "population": 155697056,
+                    "gdp": 184920.00715999998
+                },
+                {
+                    "name": "Argentina",
+                    "region": "Latin America & the Caribbean",
+                    "population": 378945938,
+                    "gdp": 172234.51703999995
+                },
+                {
+                    "name": "Barbados",
+                    "region": "Latin America & the Caribbean",
+                    "population": 2532651,
+                    "gdp": 193700.0
+                },
+                {
+                    "name": "Bahamas",
+                    "region": "Latin America & the Caribbean",
+                    "population": 3340450,
+                    "gdp": 265577.29988999997
+                },
+                {
+                    "name": "Trinidad and Tobago",
+                    "region": "Latin America & the Caribbean",
+                    "population": 12069261,
+                    "gdp": 284371.45166
+                }
+            ]
+        },
+        {
+            "name": "South Asia",
+            "color": "#0000FF",
+            "children": [
+                {
+                    "name": "Nepal",
+                    "region": "South Asia",
+                    "population": 249164775,
+                    "gdp": 19322.888663000005
+                },
+                {
+                    "name": "Bangladesh",
+                    "region": "South Asia",
+                    "population": 1402177610,
+                    "gdp": 25131.118789000004
+                },
+                {
+                    "name": "Cambodia",
+                    "region": "South Asia",
+                    "population": 105196979,
+                    "gdp": 21586.390248999996
+                },
+                {
+                    "name": "Myanmar",
+                    "region": "South Asia",
+                    "population": 459637153,
+                    "gdp": 38811.934087
+                },
+                {
+                    "name": "India",
+                    "region": "South Asia",
+                    "population": 11358346445,
+                    "gdp": 45053.049585999994
+                },
+                {
+                    "name": "Vietnam",
+                    "region": "South Asia",
+                    "population": 814817524,
+                    "gdp": 44721.354613
+                },
+                {
+                    "name": "Pakistan",
+                    "region": "South Asia",
+                    "population": 1603193004,
+                    "gdp": 40905.062852
+                },
+                {
+                    "name": "Philippines",
+                    "region": "South Asia",
+                    "population": 872463811,
+                    "gdp": 56091.614416000004
+                },
+                {
+                    "name": "Laos",
+                    "region": "South Asia",
+                    "population": 19998717,
+                    "gdp": 18405.037724
+                },
+                {
+                    "name": "Timor-Leste",
+                    "region": "South Asia",
+                    "population": 8304702,
+                    "gdp": 59879.118817999995
+                },
+                {
+                    "name": "Bhutan",
+                    "region": "South Asia",
+                    "population": 3126560,
+                    "gdp": 32233.964939999998
+                },
+                {
+                    "name": "Sri Lanka",
+                    "region": "South Asia",
+                    "population": 184484288,
+                    "gdp": 88781.05766800001
+                },
+                {
+                    "name": "Indonesia",
+                    "region": "South Asia",
+                    "population": 2239055568,
+                    "gdp": 84963.81708
+                },
+                {
+                    "name": "Thailand",
+                    "region": "South Asia",
+                    "population": 610091495,
+                    "gdp": 130037.08818000002
+                },
+                {
+                    "name": "Malaysia",
+                    "region": "South Asia",
+                    "population": 262479486,
+                    "gdp": 208608.46107999998
+                },
+                {
+                    "name": "Singapore",
+                    "region": "South Asia",
+                    "population": 47410997,
+                    "gdp": 691585.26088
+                },
+                {
+                    "name": "Brunei Darussalam",
+                    "region": "South Asia",
+                    "population": 2840581,
+                    "gdp": 563705.06715
+                }
+            ]
+        },
+        {
+            "name": "Caucasus & Central Asia",
+            "color": "#FFFF00",
+            "children": [
+                {
+                    "name": "Tajikistan",
+                    "region": "Caucasus & Central Asia",
+                    "population": 57276797,
+                    "gdp": 17640.631885
+                },
+                {
+                    "name": "Kyrgyz Republic",
+                    "region": "Caucasus & Central Asia",
+                    "population": 50863200,
+                    "gdp": 27602.407250000004
+                },
+                {
+                    "name": "Georgia",
+                    "region": "Caucasus & Central Asia",
+                    "population": 34573400,
+                    "gdp": 71523.089122
+                },
+                {
+                    "name": "Armenia",
+                    "region": "Caucasus & Central Asia",
+                    "population": 26073113,
+                    "gdp": 68778.209091
+                },
+                {
+                    "name": "Azerbaijan",
+                    "region": "Caucasus & Central Asia",
+                    "population": 83592874,
+                    "gdp": 146081.72504999998
+                },
+                {
+                    "name": "Kazakhstan",
+                    "region": "Caucasus & Central Asia",
+                    "population": 151098680,
+                    "gdp": 199216.9388
+                }
+            ]
+        },
+        {
+            "name": "Oceania",
+            "color": "#00FFFF",
+            "children": [
+                {
+                    "name": "Pap. New Guinea",
+                    "region": "Oceania",
+                    "population": 66896523,
+                    "gdp": 30654.347401
+                },
+                {
+                    "name": "Fiji",
+                    "region": "Oceania",
+                    "population": 7852369,
+                    "gdp": 71351.89411
+                },
+                {
+                    "name": "New Zealand",
+                    "region": "Oceania",
+                    "population": 39945900,
+                    "gdp": 308380.42788000003
+                },
+                {
+                    "name": "Australia",
+                    "region": "Oceania",
+                    "population": 204766781,
+                    "gdp": 386448.03351
+                }
+            ]
+        },
+        {
+            "name": "Middle East & North Africa",
+            "color": "#800080",
+            "children": [
+                {
+                    "name": "Yemen, Rep.",
+                    "region": "Middle East & North Africa",
+                    "population": 179092023,
+                    "gdp": 26073.487176
+                },
+                {
+                    "name": "Syria",
+                    "region": "Middle East & North Africa",
+                    "population": 179631535,
+                    "gdp": 35350.0
+                },
+                {
+                    "name": "Morocco",
+                    "region": "Middle East & North Africa",
+                    "population": 300411962,
+                    "gdp": 62195.445347999994
+                },
+                {
+                    "name": "Egypt",
+                    "region": "Middle East & North Africa",
+                    "population": 792324179,
+                    "gdp": 90137.78719700001
+                },
+                {
+                    "name": "Jordan",
+                    "region": "Middle East & North Africa",
+                    "population": 71898718,
+                    "gdp": 82628.550258
+                },
+                {
+                    "name": "Tunisia",
+                    "region": "Middle East & North Africa",
+                    "population": 98052611,
+                    "gdp": 95780.69883400001
+                },
+                {
+                    "name": "Algeria",
+                    "region": "Middle East & North Africa",
+                    "population": 338758972,
+                    "gdp": 120957.35313
+                },
+                {
+                    "name": "Lebanon",
+                    "region": "Middle East & North Africa",
+                    "population": 36579441,
+                    "gdp": 104941.80322
+                },
+                {
+                    "name": "Libya",
+                    "region": "Middle East & North Africa",
+                    "population": 24928286,
+                    "gdp": 70799.63157
+                },
+                {
+                    "name": "Turkey",
+                    "region": "Middle East & North Africa",
+                    "population": 672687312,
+                    "gdp": 185708.14093999998
+                },
+                {
+                    "name": "Iran",
+                    "region": "Middle East & North Africa",
+                    "population": 688530165,
+                    "gdp": 158130.38259000002
+                },
+                {
+                    "name": "Iraq",
+                    "region": "Middle East & North Africa",
+                    "population": 37202572,
+                    "gdp": 17440.44582
+                },
+                {
+                    "name": "Israel",
+                    "region": "Middle East & North Africa",
+                    "population": 71295600,
+                    "gdp": 287355.41764999996
+                },
+                {
+                    "name": "Bahrain",
+                    "region": "Middle East & North Africa",
+                    "population": 11567801,
+                    "gdp": 385789.38645
+                },
+                {
+                    "name": "Oman",
+                    "region": "Middle East & North Africa",
+                    "population": 31682306,
+                    "gdp": 389088.74044
+                },
+                {
+                    "name": "Saudi Arabia",
+                    "region": "Middle East & North Africa",
+                    "population": 209304082,
+                    "gdp": 355886.13682
+                },
+                {
+                    "name": "United Arab Emirates",
+                    "region": "Middle East & North Africa",
+                    "population": 76905327,
+                    "gdp": 577387.5853500001
+                },
+                {
+                    "name": "Kuwait",
+                    "region": "Middle East & North Africa",
+                    "population": 30425182,
+                    "gdp": 697966.21816
+                },
+                {
+                    "name": "Qatar",
+                    "region": "Middle East & North Africa",
+                    "population": 15517533,
+                    "gdp": 888946.4972
+                }
+            ]
+        },
+        {
+            "name": "Eastern Europe",
+            "color": "#FFA500",
+            "children": [
+                {
+                    "name": "Moldova",
+                    "region": "Eastern Europe",
+                    "population": 32038287,
+                    "gdp": 39617.358858
+                },
+                {
+                    "name": "Ukraine",
+                    "region": "Eastern Europe",
+                    "population": 410401821,
+                    "gdp": 73591.44545900001
+                },
+                {
+                    "name": "Albania",
+                    "region": "Eastern Europe",
+                    "population": 26134450,
+                    "gdp": 92787.866578
+                },
+                {
+                    "name": "Bosnia and Herzegovina",
+                    "region": "Eastern Europe",
+                    "population": 32793087,
+                    "gdp": 93387.50371399999
+                },
+                {
+                    "name": "Macedonia",
+                    "region": "Eastern Europe",
+                    "population": 18667377,
+                    "gdp": 110725.37559
+                },
+                {
+                    "name": "Serbia",
+                    "region": "Eastern Europe",
+                    "population": 64844054,
+                    "gdp": 118146.42612999998
+                },
+                {
+                    "name": "Montenegro",
+                    "region": "Eastern Europe",
+                    "population": 5582850,
+                    "gdp": 133257.63127
+                },
+                {
+                    "name": "Bulgaria",
+                    "region": "Eastern Europe",
+                    "population": 65781685,
+                    "gdp": 147085.58442
+                },
+                {
+                    "name": "Romania",
+                    "region": "Eastern Europe",
+                    "population": 180768281,
+                    "gdp": 172945.40691
+                },
+                {
+                    "name": "Latvia",
+                    "region": "Eastern Europe",
+                    "population": 18454067,
+                    "gdp": 191820.93269000002
+                },
+                {
+                    "name": "Belarus",
+                    "region": "Eastern Europe",
+                    "population": 9501534,
+                    "gdp": 18078.09603
+                },
+                {
+                    "name": "Lithuania",
+                    "region": "Eastern Europe",
+                    "population": 27137514,
+                    "gdp": 220391.28466
+                },
+                {
+                    "name": "Poland",
+                    "region": "Eastern Europe",
+                    "population": 342455005,
+                    "gdp": 209634.91032000002
+                },
+                {
+                    "name": "Croatia",
+                    "region": "Eastern Europe",
+                    "population": 38701578,
+                    "gdp": 192289.73412
+                },
+                {
+                    "name": "Russia",
+                    "region": "Eastern Europe",
+                    "population": 1290305528,
+                    "gdp": 211737.08492000002
+                },
+                {
+                    "name": "Estonia",
+                    "region": "Eastern Europe",
+                    "population": 11916954,
+                    "gdp": 229797.49171000003
+                },
+                {
+                    "name": "Hungary",
+                    "region": "Eastern Europe",
+                    "population": 89369551,
+                    "gdp": 211654.48837
+                },
+                {
+                    "name": "Slovak Rep.",
+                    "region": "Eastern Europe",
+                    "population": 48649671,
+                    "gdp": 241023.45557
+                },
+                {
+                    "name": "Greece",
+                    "region": "Eastern Europe",
+                    "population": 98910587,
+                    "gdp": 247216.11356000003
+                },
+                {
+                    "name": "Slovenia",
+                    "region": "Eastern Europe",
+                    "population": 18470076,
+                    "gdp": 267409.58462
+                },
+                {
+                    "name": "Czech Rep.",
+                    "region": "Eastern Europe",
+                    "population": 94461832,
+                    "gdp": 271945.17733
+                },
+                {
+                    "name": "Cyprus",
+                    "region": "Eastern Europe",
+                    "population": 10179458,
+                    "gdp": 292486.35134
+                }
+            ]
+        },
+        {
+            "name": "East Asia",
+            "color": "#FFC0CB",
+            "children": [
+                {
+                    "name": "Mongolia",
+                    "region": "East Asia",
+                    "population": 25382090,
+                    "gdp": 88257.680757
+                },
+                {
+                    "name": "China",
+                    "region": "East Asia",
+                    "population": 12159980000,
+                    "gdp": 102867.22950899998
+                },
+                {
+                    "name": "Korea, South",
+                    "region": "East Asia",
+                    "population": 451489352,
+                    "gdp": 288715.80389
+                },
+                {
+                    "name": "Taiwan",
+                    "region": "East Asia",
+                    "population": 209698820,
+                    "gdp": 359454.0
+                },
+                {
+                    "name": "Japan",
+                    "region": "East Asia",
+                    "population": 1148498511,
+                    "gdp": 337109.59721000004
+                },
+                {
+                    "name": "Hong Kong",
+                    "region": "East Asia",
+                    "population": 64212800,
+                    "gdp": 462159.11544
+                }
+            ]
+        },
+        {
+            "name": "Western Europe",
+            "color": "#808080",
+            "children": [
+                {
+                    "name": "Malta",
+                    "region": "Western Europe",
+                    "population": 3833594,
+                    "gdp": 275866.88641000004
+                },
+                {
+                    "name": "Portugal",
+                    "region": "Western Europe",
+                    "population": 94313813,
+                    "gdp": 250502.24425
+                },
+                {
+                    "name": "Spain",
+                    "region": "Western Europe",
+                    "population": 418439522,
+                    "gdp": 299296.52562
+                },
+                {
+                    "name": "Italy",
+                    "region": "Western Europe",
+                    "population": 538499847,
+                    "gdp": 324759.54383
+                },
+                {
+                    "name": "United Kingdom",
+                    "region": "Western Europe",
+                    "population": 573274660,
+                    "gdp": 345287.52621
+                },
+                {
+                    "name": "France",
+                    "region": "Western Europe",
+                    "population": 590879990,
+                    "gdp": 342416.91084
+                },
+                {
+                    "name": "Germany",
+                    "region": "Western Europe",
+                    "population": 732153525,
+                    "gdp": 389625.44396999996
+                },
+                {
+                    "name": "Finland",
+                    "region": "Western Europe",
+                    "population": 48693183,
+                    "gdp": 366084.55073
+                },
+                {
+                    "name": "Belgium",
+                    "region": "Western Europe",
+                    "population": 99575534,
+                    "gdp": 379782.74903
+                },
+                {
+                    "name": "Iceland",
+                    "region": "Western Europe",
+                    "population": 2911088,
+                    "gdp": 388383.0268899999
+                },
+                {
+                    "name": "Sweden",
+                    "region": "Western Europe",
+                    "population": 85883625,
+                    "gdp": 400600.54443999997
+                },
+                {
+                    "name": "Denmark",
+                    "region": "Western Europe",
+                    "population": 50396443,
+                    "gdp": 406191.83515999996
+                },
+                {
+                    "name": "Austria",
+                    "region": "Western Europe",
+                    "population": 76255403,
+                    "gdp": 412306.5516
+                },
+                {
+                    "name": "Ireland",
+                    "region": "Western Europe",
+                    "population": 41503539,
+                    "gdp": 459741.27640000003
+                },
+                {
+                    "name": "Netherlands",
+                    "region": "Western Europe",
+                    "population": 150679088,
+                    "gdp": 424536.8627
+                },
+                {
+                    "name": "Switzerland",
+                    "region": "Western Europe",
+                    "population": 72059403,
+                    "gdp": 521037.9322
+                },
+                {
+                    "name": "Norway",
+                    "region": "Western Europe",
+                    "population": 45099464,
+                    "gdp": 556401.56591
+                },
+                {
+                    "name": "Luxembourg",
+                    "region": "Western Europe",
+                    "population": 4793976,
+                    "gdp": 840418.68952
+                }
+            ]
+        },
+        {
+            "name": "North America",
+            "color": "#A52A2A",
+            "children": [
+                {
+                    "name": "Canada",
+                    "region": "North America",
+                    "population": 312757778,
+                    "gdp": 381894.41649
+                },
+                {
+                    "name": "United States",
+                    "region": "North America",
+                    "population": 2825144272,
+                    "gdp": 466534.23026
+                }
+            ]
+        }
+    ]
+}

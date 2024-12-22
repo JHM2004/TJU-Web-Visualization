@@ -1,0 +1,1379 @@
+year,countries,region,population,gdp_ppp_cap
+2013,Central Afr. Rep.,Sub-Saharan Africa,4499653,613.734676
+2008,"Congo, Dem. R.",Sub-Saharan Africa,60373608,615.2779121
+2009,"Congo, Dem. R.",Sub-Saharan Africa,62409435,616.8500519
+2014,Central Afr. Rep.,Sub-Saharan Africa,4515392,629.0464251
+2010,"Congo, Dem. R.",Sub-Saharan Africa,64523263,646.8557934
+2015,Central Afr. Rep.,Sub-Saharan Africa,4546100,661.8876249
+2008,Burundi,Sub-Saharan Africa,8212264,682.3156169
+2011,"Congo, Dem. R.",Sub-Saharan Africa,66713597,682.4321554
+2009,Burundi,Sub-Saharan Africa,8489031,690.4408835
+2016,Central Afr. Rep.,Sub-Saharan Africa,4594621,693.3069097
+2010,Burundi,Sub-Saharan Africa,8766930,711.3965507
+2012,"Congo, Dem. R.",Sub-Saharan Africa,68978682,719.8175461
+2011,Burundi,Sub-Saharan Africa,9043508,732.2629901
+2016,Burundi,Sub-Saharan Africa,10524117,740.5178733
+2009,Niger,Sub-Saharan Africa,15813913,755.4085767
+2012,Burundi,Sub-Saharan Africa,9319710,755.8289272
+2015,Burundi,Sub-Saharan Africa,10199270,759.0321026
+2013,"Congo, Dem. R.",Sub-Saharan Africa,71316033,767.4772397
+2013,Burundi,Sub-Saharan Africa,9600186,782.3115809
+2008,Niger,Sub-Saharan Africa,15228525,784.1224604
+2010,Niger,Sub-Saharan Africa,16425578,797.7349614
+2011,Niger,Sub-Saharan Africa,17064636,801.6060865
+2014,Burundi,Sub-Saharan Africa,9891790,805.6505243
+2008,Mozambique,Sub-Saharan Africa,22846758,823.7864484
+2008,Central Afr. Rep.,Sub-Saharan Africa,4345386,826.8134171
+2014,"Congo, Dem. R.",Sub-Saharan Africa,73722860,827.3167664
+2009,Central Afr. Rep.,Sub-Saharan Africa,4404230,836.0110424
+2009,Mozambique,Sub-Saharan Africa,23524063,857.3459029
+2010,Central Afr. Rep.,Sub-Saharan Africa,4448525,863.3202047
+2015,"Congo, Dem. R.",Sub-Saharan Africa,76196619,865.0994627
+2016,"Congo, Dem. R.",Sub-Saharan Africa,78736153,868.2215432
+2012,Niger,Sub-Saharan Africa,17731634,878.762877
+2008,Ethiopia,Sub-Saharan Africa,83184892,888.1424518
+2010,Mozambique,Sub-Saharan Africa,24221405,899.1987278
+2013,Niger,Sub-Saharan Africa,18426372,904.5582961
+2011,Central Afr. Rep.,Sub-Saharan Africa,4476153,904.6104858
+2008,Malawi,Sub-Saharan Africa,14271234,910.9173989
+2009,Ethiopia,Sub-Saharan Africa,85416253,948.2249523
+2014,Niger,Sub-Saharan Africa,19148219,952.7936372
+2011,Mozambique,Sub-Saharan Africa,24939005,954.7991162
+2012,Central Afr. Rep.,Sub-Saharan Africa,4490416,956.1173968
+2009,Malawi,Sub-Saharan Africa,14714602,964.3149381
+2015,Niger,Sub-Saharan Africa,19896965,967.0820496
+2016,Niger,Sub-Saharan Africa,20672987,989.089156
+2010,Malawi,Sub-Saharan Africa,15167095,1012.067458
+2012,Mozambique,Sub-Saharan Africa,25676606,1012.437187
+2011,Malawi,Sub-Saharan Africa,15627618,1051.185996
+2010,Ethiopia,Sub-Saharan Africa,87702670,1052.104262
+2012,Malawi,Sub-Saharan Africa,16097305,1058.912262
+2013,Mozambique,Sub-Saharan Africa,26434372,1070.663568
+2013,Malawi,Sub-Saharan Africa,16577147,1099.200591
+2008,Togo,Sub-Saharan Africa,6161796,1110.404433
+2008,Sierra Leone,Sub-Saharan Africa,6165372,1110.918662
+2009,Sierra Leone,Sub-Saharan Africa,6310260,1128.520435
+2014,Mozambique,Sub-Saharan Africa,27212382,1137.530291
+2014,Malawi,Sub-Saharan Africa,17068838,1148.637075
+2009,Togo,Sub-Saharan Africa,6330472,1149.334985
+2015,Malawi,Sub-Saharan Africa,17573607,1159.319842
+2011,Ethiopia,Sub-Saharan Africa,90046756,1162.783317
+2016,Malawi,Sub-Saharan Africa,18091575,1168.825626
+2010,Sierra Leone,Sub-Saharan Africa,6458720,1175.715701
+2015,Mozambique,Sub-Saharan Africa,28010691,1190.755747
+2010,Togo,Sub-Saharan Africa,6502952,1201.590939
+2016,Mozambique,Sub-Saharan Africa,28829476,1215.791537
+2008,Rwanda,Sub-Saharan Africa,9708169,1216.297894
+2011,Sierra Leone,Sub-Saharan Africa,6611692,1246.252789
+2012,Ethiopia,Sub-Saharan Africa,92444183,1253.243318
+2016,Liberia,Sub-Saharan Africa,4613823,1261.027354
+2009,Rwanda,Sub-Saharan Africa,9977446,1267.403791
+2011,Togo,Sub-Saharan Africa,6679282,1270.418896
+2008,Zimbabwe,Sub-Saharan Africa,13558469,1293.881491
+2015,Liberia,Sub-Saharan Africa,4499621,1297.498562
+2008,Guinea-Bissau,Sub-Saharan Africa,1480841,1307.097078
+2014,Liberia,Sub-Saharan Africa,4390737,1315.409938
+2009,Guinea-Bissau,Sub-Saharan Africa,1517448,1328.551484
+2008,Burkina Faso,Sub-Saharan Africa,14689726,1338.860297
+2010,Rwanda,Sub-Saharan Africa,10246842,1340.452397
+2012,Togo,Sub-Saharan Africa,6859482,1342.26891
+2009,Burkina Faso,Sub-Saharan Africa,15141099,1347.579242
+2010,Madagascar,Sub-Saharan Africa,21151640,1357.654563
+2011,Madagascar,Sub-Saharan Africa,21743949,1367.543082
+2013,Ethiopia,Sub-Saharan Africa,94887724,1371.981671
+2010,Guinea-Bissau,Sub-Saharan Africa,1555880,1372.035864
+2009,Madagascar,Sub-Saharan Africa,20569121,1375.638427
+2008,Uganda,Sub-Saharan Africa,31663896,1382.487
+2010,Burkina Faso,Sub-Saharan Africa,15605217,1394.584727
+2012,Madagascar,Sub-Saharan Africa,22346573,1396.203885
+2015,Sierra Leone,Sub-Saharan Africa,7237025,1399.523362
+2013,Togo,Sub-Saharan Africa,7042948,1409.613746
+2013,Madagascar,Sub-Saharan Africa,22961146,1411.918029
+2012,Sierra Leone,Sub-Saharan Africa,6766103,1428.535497
+2009,Zimbabwe,Sub-Saharan Africa,13810599,1433.746016
+2011,Rwanda,Sub-Saharan Africa,10516071,1436.868937
+2009,Uganda,Sub-Saharan Africa,32771895,1437.430969
+2012,Guinea-Bissau,Sub-Saharan Africa,1638139,1438.981556
+2014,Madagascar,Sub-Saharan Africa,23589801,1445.342572
+2008,Madagascar,Sub-Saharan Africa,19996469,1463.094812
+2015,Madagascar,Sub-Saharan Africa,24234088,1466.497463
+2016,Sierra Leone,Sub-Saharan Africa,7396190,1470.858648
+2013,Guinea-Bissau,Sub-Saharan Africa,1681495,1470.899985
+2010,Haiti,Latin America & the Caribbean,9999617,1471.648649
+2011,Burkina Faso,Sub-Saharan Africa,16081904,1472.716482
+2014,Guinea-Bissau,Sub-Saharan Africa,1725744,1472.978369
+2011,Guinea-Bissau,Sub-Saharan Africa,1596154,1475.38909
+2014,Togo,Sub-Saharan Africa,7228915,1480.7677
+2010,Uganda,Sub-Saharan Africa,33915133,1485.202513
+2014,Ethiopia,Sub-Saharan Africa,97366774,1500.654548
+2016,Madagascar,Sub-Saharan Africa,24894551,1506.238325
+2011,"Gambia, The",Sub-Saharan Africa,1746363,1524.768774
+2008,Haiti,Latin America & the Caribbean,9705029,1526.169509
+2015,Guinea-Bissau,Sub-Saharan Africa,1770526,1540.315132
+2015,Togo,Sub-Saharan Africa,7416802,1542.690235
+2012,Burkina Faso,Sub-Saharan Africa,16571216,1549.480266
+2012,Rwanda,Sub-Saharan Africa,10788853,1552.145864
+2009,Haiti,Latin America & the Caribbean,9852870,1561.387409
+2011,Haiti,Latin America & the Caribbean,10145054,1562.278874
+2012,"Gambia, The",Sub-Saharan Africa,1802125,1589.072363
+2016,Togo,Sub-Saharan Africa,7606374,1601.128197
+2011,Uganda,Sub-Saharan Africa,35093648,1602.544811
+2014,"Gambia, The",Sub-Saharan Africa,1917852,1603.278871
+2013,Rwanda,Sub-Saharan Africa,11065151,1610.316345
+2010,"Gambia, The",Sub-Saharan Africa,1692149,1610.981598
+2012,Haiti,Latin America & the Caribbean,10289210,1614.025896
+2016,Guinea-Bissau,Sub-Saharan Africa,1815698,1616.4238
+2013,Burkina Faso,Sub-Saharan Africa,17072723,1616.779271
+2015,Ethiopia,Sub-Saharan Africa,99873033,1632.551806
+2012,Uganda,Sub-Saharan Africa,36306796,1638.068089
+2013,"Gambia, The",Sub-Saharan Africa,1859324,1640.010903
+2016,"Gambia, The",Sub-Saharan Africa,2038501,1641.446889
+2015,"Gambia, The",Sub-Saharan Africa,1977590,1663.940926
+2014,Burkina Faso,Sub-Saharan Africa,17585977,1666.894544
+2013,Uganda,Sub-Saharan Africa,37553726,1666.976794
+2008,Chad,Sub-Saharan Africa,11133861,1668.577985
+2013,Haiti,Latin America & the Caribbean,10431776,1686.171533
+2009,Chad,Sub-Saharan Africa,11502786,1695.96331
+2015,Burkina Faso,Sub-Saharan Africa,18110624,1699.879935
+2010,Zimbabwe,Sub-Saharan Africa,14086317,1702.801459
+2013,Sierra Leone,Sub-Saharan Africa,6922079,1712.832695
+2014,Rwanda,Sub-Saharan Africa,11345357,1720.627619
+2014,Uganda,Sub-Saharan Africa,38833338,1724.772029
+2016,Ethiopia,Sub-Saharan Africa,102403196,1734.464075
+2008,Mali,Sub-Saharan Africa,14138216,1737.714752
+2014,Haiti,Latin America & the Caribbean,10572466,1741.18434
+2015,Haiti,Latin America & the Caribbean,10711061,1758.33446
+2008,Benin,Sub-Saharan Africa,8696916,1768.744657
+2016,Burkina Faso,Sub-Saharan Africa,18646433,1771.32195
+2013,Guinea,Sub-Saharan Africa,11536615,1771.393011
+2009,Benin,Sub-Saharan Africa,8944706,1773.168783
+2015,Uganda,Sub-Saharan Africa,40144870,1774.010819
+2009,Mali,Sub-Saharan Africa,14606597,1774.06535
+2008,Nepal,South Asia,26475859,1777.233566
+2010,Benin,Sub-Saharan Africa,9199259,1781.987066
+2014,Sierra Leone,Sub-Saharan Africa,7079162,1782.571139
+2016,Haiti,Latin America & the Caribbean,10847334,1783.94019
+2011,Benin,Sub-Saharan Africa,9460802,1820.894693
+2016,Uganda,Sub-Saharan Africa,41487965,1821.59745
+2014,Guinea,Sub-Saharan Africa,11805509,1827.442117
+2010,Mali,Sub-Saharan Africa,15075085,1834.117059
+2012,Mali,Sub-Saharan Africa,16006670,1838.190576
+2015,Rwanda,Sub-Saharan Africa,11629553,1847.253362
+2009,Nepal,South Asia,26741103,1853.338355
+2013,Mali,Sub-Saharan Africa,16477818,1856.267363
+2011,Chad,Sub-Saharan Africa,12288651,1863.845605
+2015,Guinea,Sub-Saharan Africa,12091533,1872.367772
+2011,Mali,Sub-Saharan Africa,15540989,1874.70303
+2010,Chad,Sub-Saharan Africa,11887202,1886.251061
+2012,Benin,Sub-Saharan Africa,9729160,1890.14073
+2008,Tanzania,Sub-Saharan Africa,43270144,1908.73738
+2016,Rwanda,Sub-Saharan Africa,11917508,1934.813112
+2011,Zimbabwe,Sub-Saharan Africa,14386649,1943.211324
+2010,Nepal,South Asia,27023137,1945.806681
+2009,Tanzania,Sub-Saharan Africa,44664231,1963.591505
+2014,Mali,Sub-Saharan Africa,16962846,1964.835907
+2012,Chad,Sub-Saharan Africa,12705135,1999.034948
+2013,Benin,Sub-Saharan Africa,10004451,2002.106604
+2016,Chad,Sub-Saharan Africa,14452543,2025.737246
+2011,Nepal,South Asia,27327147,2031.087465
+2016,Guinea,Sub-Saharan Africa,12395924,2043.060205
+2015,Mali,Sub-Saharan Africa,17467905,2043.718105
+2010,Tanzania,Sub-Saharan Africa,46098591,2048.293593
+2010,Tajikistan,Caucasus & Central Asia,7641630,2063.71811
+2013,Chad,Sub-Saharan Africa,13133589,2077.060248
+2014,Benin,Sub-Saharan Africa,10286712,2108.016041
+2015,Benin,Sub-Saharan Africa,10575952,2116.036775
+2016,Mali,Sub-Saharan Africa,17994837,2125.716027
+2008,Lesotho,Sub-Saharan Africa,1999930,2139.870679
+2012,Nepal,South Asia,27649925,2142.098495
+2008,Bangladesh,South Asia,148805814,2163.554427
+2016,Benin,Sub-Saharan Africa,10872298,2167.272847
+2009,Lesotho,Sub-Saharan Africa,2019209,2181.541401
+2011,Tanzania,Sub-Saharan Africa,47570902,2186.131582
+2014,Chad,Sub-Saharan Africa,13569438,2187.627411
+2015,Chad,Sub-Saharan Africa,14009413,2201.182699
+2011,Tajikistan,Caucasus & Central Asia,7815949,2211.753822
+2013,Nepal,South Asia,27985310,2239.403285
+2008,Kenya,Sub-Saharan Africa,39148416,2243.288394
+2012,Zimbabwe,Sub-Saharan Africa,14710826,2257.9376349999998
+2009,Bangladesh,South Asia,150454708,2264.871499
+2012,Tanzania,Sub-Saharan Africa,49082997,2268.866465
+2009,Kenya,Sub-Saharan Africa,40237204,2271.887012
+2013,Zimbabwe,Sub-Saharan Africa,15054506,2286.629361
+2010,Lesotho,Sub-Saharan Africa,2040551,2317.769894
+2014,Zimbabwe,Sub-Saharan Africa,15411675,2327.767495
+2016,Zimbabwe,Sub-Saharan Africa,16150362,2332.004575
+2015,Zimbabwe,Sub-Saharan Africa,15777451,2339.369279
+2012,Tajikistan,Caucasus & Central Asia,7995062,2366.880977
+2014,Nepal,South Asia,28323241,2387.2905260000002
+2010,Bangladesh,South Asia,152149102,2393.3158319999998
+2013,Tanzania,Sub-Saharan Africa,50636595,2397.212999
+2010,Kenya,Sub-Saharan Africa,41350152,2425.837196
+2015,Nepal,South Asia,28656282,2464.389033
+2010,Cambodia,South Asia,14308740,2471.891474
+2016,Nepal,South Asia,28982771,2482.241257
+2011,Lesotho,Sub-Saharan Africa,2064166,2499.951197
+2011,Cote d'Ivoire,Sub-Saharan Africa,20895311,2511.420195
+2013,Tajikistan,Caucasus & Central Asia,8177809,2525.362606
+2014,Tanzania,Sub-Saharan Africa,52234869,2530.469015
+2011,Kenya,Sub-Saharan Africa,42486839,2556.870916
+2008,Cote d'Ivoire,Sub-Saharan Africa,19497986,2567.190743
+2011,Bangladesh,South Asia,153911916,2570.850145
+2009,Cote d'Ivoire,Sub-Saharan Africa,19936366,2612.063869
+2008,Senegal,Sub-Saharan Africa,12203957,2619.976311
+2009,Senegal,Sub-Saharan Africa,12550917,2620.609145
+2010,Cote d'Ivoire,Sub-Saharan Africa,20401331,2635.837771
+2012,Kenya,Sub-Saharan Africa,43646629,2650.443555
+2015,Tanzania,Sub-Saharan Africa,53879957,2652.530219
+2011,Cambodia,South Asia,14537886,2658.709247
+2012,Lesotho,Sub-Saharan Africa,2089928,2665.44626
+2010,Senegal,Sub-Saharan Africa,12916229,2669.424555
+2008,Kyrgyz Republic,Caucasus & Central Asia,5318700,2681.122187
+2014,Tajikistan,Caucasus & Central Asia,8362745,2682.41288
+2011,Senegal,Sub-Saharan Africa,13300910,2684.325938
+2013,Lesotho,Sub-Saharan Africa,2117361,2722.692797
+2008,Pap. New Guinea,Oceania,6787187,2730.023437
+2008,Ghana,Sub-Saharan Africa,23298640,2733.285353
+2010,Kyrgyz Republic,Caucasus & Central Asia,5447900,2733.729337
+2009,Kyrgyz Republic,Caucasus & Central Asia,5383300,2746.102655
+2012,Bangladesh,South Asia,155727053,2756.443467
+2012,Cote d'Ivoire,Sub-Saharan Africa,21418603,2762.341426
+2008,Zambia,Sub-Saharan Africa,13082517,2768.423449
+2013,Kenya,Sub-Saharan Africa,44826849,2776.498397
+2016,"Yemen, Rep.",Middle East & North Africa,27584213,2781.918091
+2016,Tanzania,Sub-Saharan Africa,55572201,2786.206274
+2012,Senegal,Sub-Saharan Africa,13703513,2789.243388
+2013,Syria,Middle East & North Africa,19809141,2800
+2015,Tajikistan,Caucasus & Central Asia,8548651,2811.907229
+2008,Cameroon,Sub-Saharan Africa,18907008,2812.645055
+2009,Ghana,Sub-Saharan Africa,23903831,2814.3581
+2009,Cameroon,Sub-Saharan Africa,19432541,2817.987654
+2014,Lesotho,Sub-Saharan Africa,2145785,2820.216929
+2013,Senegal,Sub-Saharan Africa,14120320,2828.252206
+2012,Cambodia,South Asia,14776866,2858.71357
+2009,Pap. New Guinea,Oceania,6947447,2870.189083
+2010,Cameroon,Sub-Saharan Africa,19970495,2870.562687
+2015,Lesotho,Sub-Saharan Africa,2174645,2890.792157
+2016,Syria,Middle East & North Africa,18430453,2900
+2015,Syria,Middle East & North Africa,18734987,2900
+2014,Kenya,Sub-Saharan Africa,46024250,2900.266558
+2011,Kyrgyz Republic,Caucasus & Central Asia,5514600,2920.60321
+2012,Kyrgyz Republic,Caucasus & Central Asia,5607200,2922.702873
+2013,Bangladesh,South Asia,157571292,2934.644748
+2009,Zambia,Sub-Saharan Africa,13456417,2961.99056
+2011,Cameroon,Sub-Saharan Africa,20520447,2969.047575
+2016,Tajikistan,Caucasus & Central Asia,8734951,2978.596261
+2014,Senegal,Sub-Saharan Africa,14546111,2979.566174
+2013,Cote d'Ivoire,Sub-Saharan Africa,21966312,2980.26506
+2016,Lesotho,Sub-Saharan Africa,2203821,2980.752126
+2008,Myanmar,South Asia,49479752,2989.784895
+2010,Ghana,Sub-Saharan Africa,24512104,2997.496491
+2015,Kenya,Sub-Saharan Africa,47236259,3019.843011
+2013,Cambodia,South Asia,15022692,3067.55303
+2012,Cameroon,Sub-Saharan Africa,21082383,3076.858139
+2015,Senegal,Sub-Saharan Africa,14976994,3111.477343
+2010,Pap. New Guinea,Oceania,7108239,3127.019112
+2014,Bangladesh,South Asia,159405279,3131.922089
+2009,Mauritania,Sub-Saharan Africa,3506288,3154.620763
+2011,Pap. New Guinea,Oceania,7269348,3155.403568
+2016,Kenya,Sub-Saharan Africa,48461567,3156.005222
+2013,Cameroon,Sub-Saharan Africa,21655715,3208.268326
+2010,Zambia,Sub-Saharan Africa,13850033,3212.941881
+2014,Cote d'Ivoire,Sub-Saharan Africa,22531350,3217.771022
+2013,Kyrgyz Republic,Caucasus & Central Asia,5719600,3229.349349
+2010,Mauritania,Sub-Saharan Africa,3609543,3249.876929
+2016,Senegal,Sub-Saharan Africa,15411614,3253.04224
+2008,Mauritania,Sub-Saharan Africa,3407541,3255.497599
+2015,"Yemen, Rep.",Middle East & North Africa,26916207,3258.963731
+2012,Pap. New Guinea,Oceania,7430836,3289.822855
+2014,Cambodia,South Asia,15270790,3291.284762
+2014,Syria,Middle East & North Africa,19203090,3300
+2009,Myanmar,South Asia,49800690,3308.846366
+2015,Bangladesh,South Asia,161200886,3335.759791
+2014,Kyrgyz Republic,Caucasus & Central Asia,5835500,3351.670999
+2011,Zambia,Sub-Saharan Africa,14264756,3361.112069
+2014,Cameroon,Sub-Saharan Africa,22239904,3367.176974
+2011,Mauritania,Sub-Saharan Africa,3717672,3371.994582
+2013,Pap. New Guinea,Oceania,7592865,3396.916957
+2011,Ghana,Sub-Saharan Africa,25121796,3404.459566
+2015,Kyrgyz Republic,Caucasus & Central Asia,5956900,3447.60825
+2015,Cote d'Ivoire,Sub-Saharan Africa,23108472,3451.877418
+2015,Cameroon,Sub-Saharan Africa,22834522,3502.407887
+2015,Cambodia,South Asia,15517635,3504.418254
+2012,Mauritania,Sub-Saharan Africa,3830239,3526.34393
+2009,Moldova,Eastern Europe,3565604,3531.032976
+2016,Kyrgyz Republic,Caucasus & Central Asia,6079500,3569.51839
+2012,Zambia,Sub-Saharan Africa,14699937,3574.05852
+2016,Bangladesh,South Asia,162951560,3579.756791
+2016,Cameroon,Sub-Saharan Africa,23439189,3616.218635
+2008,India,South Asia,1197146906,3637.64307
+2010,Myanmar,South Asia,50155896,3645.936435
+2016,Cote d'Ivoire,Sub-Saharan Africa,23695919,3681.02565
+2013,Mauritania,Sub-Saharan Africa,3946170,3689.8449
+2012,Ghana,Sub-Saharan Africa,25733049,3699.357199
+2013,Zambia,Sub-Saharan Africa,15153210,3701.392674
+2008,Moldova,Eastern Europe,3570108,3723.402213
+2016,Cambodia,South Asia,15762370,3733.819912
+2009,Honduras,Latin America & the Caribbean,8035021,3779.318967
+2009,Nicaragua,Latin America & the Caribbean,5666581,3781.76748
+2011,"Yemen, Rep.",Middle East & North Africa,24252206,3805.237994
+2014,Zambia,Sub-Saharan Africa,15620974,3826.626899
+2010,Moldova,Eastern Europe,3562045,3831.749187
+2015,Mauritania,Sub-Saharan Africa,4182341,3835.23106
+2014,Mauritania,Sub-Saharan Africa,4063920,3850.73463
+2008,Vietnam,South Asia,86707801,3852.182615
+2016,Mauritania,Sub-Saharan Africa,4301018,3852.525904
+2015,Zambia,Sub-Saharan Africa,16100587,3862.478483
+2012,"Yemen, Rep.",Middle East & North Africa,24909969,3863.289475
+2010,Honduras,Latin America & the Caribbean,8194778,3890.851407
+2011,Myanmar,South Asia,50553031,3898.414627
+2014,Pap. New Guinea,Oceania,7755785,3907.297159
+2009,India,South Asia,1214270132,3920.006183
+2008,Honduras,Latin America & the Caribbean,7872658,3923.597021
+2008,Nicaragua,Latin America & the Caribbean,5594506,3931.054301
+2016,Zambia,Sub-Saharan Africa,16591390,3938.663188
+2013,Ghana,Sub-Saharan Africa,26346251,3940.097375
+2010,Nicaragua,Latin America & the Caribbean,5737723,3947.216766
+2012,Syria,Middle East & North Africa,20420701,3950
+2014,"Yemen, Rep.",Middle East & North Africa,26246327,3968.106338
+2013,"Yemen, Rep.",Middle East & North Africa,25576322,4007.8267
+2014,Ghana,Sub-Saharan Africa,26962563,4032.68435
+2011,Honduras,Latin America & the Caribbean,8351600,4046.076252
+2009,Vietnam,South Asia,87565407,4050.887095
+2015,Ghana,Sub-Saharan Africa,27582821,4071.545343
+2015,Pap. New Guinea,Oceania,7919825,4072.818794
+2016,Pap. New Guinea,Oceania,8084991,4104.856436
+2008,Pakistan,South Asia,163644603,4104.907382
+2009,Pakistan,South Asia,167049580,4166.508041
+2016,Ghana,Sub-Saharan Africa,28206728,4171.30704
+2011,Moldova,Eastern Europe,3559986,4179.214809
+2010,Pakistan,South Asia,170560182,4196.955809
+2012,Honduras,Latin America & the Caribbean,8505646,4213.02445
+2012,Myanmar,South Asia,50986514,4225.119352
+2012,Moldova,Eastern Europe,3559519,4226.959198
+2011,Nicaragua,Latin America & the Caribbean,5807820,4231.497518
+2011,Pakistan,South Asia,174184265,4309.763713
+2010,India,South Asia,1230980691,4315.596074
+2010,Vietnam,South Asia,88472512,4318.997405
+2013,Honduras,Latin America & the Caribbean,8657785,4323.244467
+2010,"Yemen, Rep.",Middle East & North Africa,23606779,4388.144847
+2008,Nigeria,Sub-Saharan Africa,150347390,4413.840495
+2012,Pakistan,South Asia,177911533,4447.90271
+2014,Honduras,Latin America & the Caribbean,8809216,4457.449578
+2012,Nicaragua,Latin America & the Caribbean,5877108,4535.28474
+2008,"Congo, Rep. Of",Sub-Saharan Africa,4115435,4543.924889
+2015,Honduras,Latin America & the Caribbean,8960829,4599.650144
+2009,Syria,Middle East & North Africa,20824893,4600
+2013,Myanmar,South Asia,51448196,4613.339782
+2013,Pakistan,South Asia,181712595,4619.744539
+2011,Vietnam,South Asia,89436644,4632.765965
+2011,India,South Asia,1247236029,4635.879137
+2009,Nigeria,Sub-Saharan Africa,154402181,4678.612049
+2013,Moldova,Eastern Europe,3558566,4700.234439
+2016,Sudan,Sub-Saharan Africa,39578828,4730.461871
+2016,Honduras,Latin America & the Caribbean,9112867,4752.484848
+2009,"Congo, Rep. Of",Sub-Saharan Africa,4253712,4760.444498
+2013,Nicaragua,Latin America & the Caribbean,5945747,4779.773333
+2010,Syria,Middle East & North Africa,21018834,4800
+2014,Pakistan,South Asia,185546257,4820.78329
+2012,Vietnam,South Asia,90451881,4909.945061
+2012,India,South Asia,1263065852,4916.485846
+2010,Nigeria,Sub-Saharan Africa,158578261,4980.184542
+2008,Bolivia,Latin America & the Caribbean,9599855,4986.880533
+2008,Syria,Middle East & North Africa,20325443,5000
+2015,Pakistan,South Asia,189380513,5000.283839
+2014,Moldova,Eastern Europe,3556397,5017.306696
+2014,Myanmar,South Asia,51924182,5024.909112
+2014,Nicaragua,Latin America & the Caribbean,6013997,5040.53463
+2015,Moldova,Eastern Europe,3554108,5054.682473
+2010,"Congo, Rep. Of",Sub-Saharan Africa,4386693,5081.432145
+2011,Syria,Middle East & North Africa,20863993,5100
+2008,Philippines,South Asia,90751864,5100.535756
+2009,Bolivia,Latin America & the Caribbean,9758748,5108.873594
+2009,Philippines,South Asia,92220879,5115.481777
+2013,Vietnam,South Asia,91497725,5199.631431
+2008,Guyana,Latin America & the Caribbean,746314,5211.157655
+2011,Nigeria,Sub-Saharan Africa,162877076,5211.532251
+2011,"Congo, Rep. Of",Sub-Saharan Africa,4512730,5213.946921
+2016,Pakistan,South Asia,193203476,5238.213529
+2013,India,South Asia,1278562207,5250.512423
+2015,Nicaragua,Latin America & the Caribbean,6082035,5278.44924
+2010,Bolivia,Latin America & the Caribbean,9918242,5298.084512
+2016,Moldova,Eastern Europe,3551954,5352.776867
+2012,"Congo, Rep. Of",Sub-Saharan Africa,4633363,5368.26569
+2015,Myanmar,South Asia,52403669,5384.869389
+2012,Nigeria,Sub-Saharan Africa,167297284,5385.879532
+2009,Guyana,Latin America & the Caribbean,745693,5441.775387
+2010,Philippines,South Asia,93726624,5483.620944
+2013,"Congo, Rep. Of",Sub-Saharan Africa,4751393,5502.482873
+2016,Nicaragua,Latin America & the Caribbean,6149928,5533.07424
+2014,Vietnam,South Asia,92544915,5546.183623
+2011,Bolivia,Latin America & the Caribbean,10078343,5598.508445
+2016,"Congo, Rep. Of",Sub-Saharan Africa,5125821,5662.798091
+2014,India,South Asia,1293859294,5672.927038
+2013,Nigeria,Sub-Saharan Africa,171829303,5683.997535
+2011,Philippines,South Asia,95277940,5707.204842
+2010,Cape Verde,Sub-Saharan Africa,502384,5710.344252
+2016,Myanmar,South Asia,52885223,5720.714129
+2014,Laos,South Asia,6576397,5727.011486
+2010,Guyana,Latin America & the Caribbean,746556,5729.562899
+2014,"Congo, Rep. Of",Sub-Saharan Africa,4871101,5834.009762
+2008,Morocco,Middle East & North Africa,31596855,5866.564216
+2016,Nigeria,Sub-Saharan Africa,185989640,5875.452647
+2012,Bolivia,Latin America & the Caribbean,10239004,5899.641861
+2015,"Congo, Rep. Of",Sub-Saharan Africa,4995648,5902.429651
+2015,Vietnam,South Asia,93571567,5915.170833
+2014,Nigeria,Sub-Saharan Africa,176460502,5989.65248
+2011,Cape Verde,Sub-Saharan Africa,508067,5991.77849
+2009,El Salvador,Latin America & the Caribbean,6137276,5999.644674
+2015,Nigeria,Sub-Saharan Africa,181181744,6053.25997
+2009,Georgia,Caucasus & Central Asia,3978000,6054.394919
+2009,Angola,Sub-Saharan Africa,22549547,6081.32919
+2009,Morocco,Middle East & North Africa,31989897,6086.340164
+2012,Cape Verde,Sub-Saharan Africa,513979,6097.221554
+2012,Philippines,South Asia,96866642,6099.121248
+2008,El Salvador,Latin America & the Caribbean,6110301,6107.96454
+2015,Laos,South Asia,6663967,6128.358238
+2015,India,South Asia,1309053980,6130.067585
+2011,Guyana,Latin America & the Caribbean,749100,6130.837378
+2008,Georgia,Caucasus & Central Asia,4030000,6155.927428
+2013,Cape Verde,Sub-Saharan Africa,520106,6171.857988
+2010,El Salvador,Latin America & the Caribbean,6164626,6173.319341
+2008,Angola,Sub-Saharan Africa,21759420,6201.401882
+2010,Angola,Sub-Saharan Africa,23369131,6228.342912
+2014,Cape Verde,Sub-Saharan Africa,526437,6245.005482
+2016,Vietnam,South Asia,94569072,6295.590585
+2015,Cape Verde,Sub-Saharan Africa,532913,6298.80377
+2013,Bolivia,Latin America & the Caribbean,10400264,6303.06642
+2010,Morocco,Middle East & North Africa,32409639,6312.915427
+2009,Armenia,Caucasus & Central Asia,2888584,6323.578336
+2011,Angola,Sub-Saharan Africa,24218565,6346.944372
+2009,Guatemala,Latin America & the Caribbean,14316208,6456.233807
+2011,El Salvador,Latin America & the Caribbean,6192560,6511.443727
+2008,Guatemala,Latin America & the Caribbean,14006366,6515.045726
+2013,Philippines,South Asia,98481032,6526.650182
+2012,Guyana,Latin America & the Caribbean,753091,6538.376327
+2016,Laos,South Asia,6758353,6549.668
+2010,Armenia,Caucasus & Central Asia,2877311,6567.258582
+2016,India,South Asia,1324171354,6573.93223
+2010,Guatemala,Latin America & the Caribbean,14630417,6578.232884
+2016,Cape Verde,Sub-Saharan Africa,539560,6597.069117
+2014,Timor-Leste,South Asia,1212814,6597.528314
+2010,Georgia,Caucasus & Central Asia,3926000,6597.568543
+2014,Bolivia,Latin America & the Caribbean,10562159,6662.829762
+2011,Morocco,Middle East & North Africa,32858823,6688.402606
+2016,Angola,Sub-Saharan Africa,28813463,6756.144137
+2012,Angola,Sub-Saharan Africa,25096150,6770.668417
+2012,El Salvador,Latin America & the Caribbean,6221246,6786.562463
+2011,Guatemala,Latin America & the Caribbean,14948919,6844.487416
+2012,Morocco,Middle East & North Africa,33333789,6916.435024
+2013,Guyana,Latin America & the Caribbean,758081,6930.287425
+2014,Philippines,South Asia,100102249,6937.850118
+2015,Bolivia,Latin America & the Caribbean,10724705,6955.18277
+2013,Angola,Sub-Saharan Africa,25998340,6970.313604
+2009,Fiji,Oceania,851967,6976.983703
+2011,Armenia,Caucasus & Central Asia,2875581,7022.103943
+2012,Guatemala,Latin America & the Caribbean,15271056,7026.173969
+2013,El Salvador,Latin America & the Caribbean,6250777,7026.609374
+2015,Angola,Sub-Saharan Africa,27859305,7082.241175
+2008,Fiji,Oceania,843340,7093.550249
+2009,Mongolia,East Asia,2668289,7131.643494
+2010,Swaziland,Sub-Saharan Africa,1202843,7148.912703
+2014,Angola,Sub-Saharan Africa,26920466,7182.827798
+2010,Fiji,Oceania,859950,7203.365693
+2016,Bolivia,Latin America & the Caribbean,10887882,7234.195243
+2009,Ukraine,Eastern Europe,46053300,7239.624226
+2013,Morocco,Middle East & North Africa,33824769,7239.873106
+2013,Guatemala,Latin America & the Caribbean,15596214,7249.286758
+2014,El Salvador,Latin America & the Caribbean,6281189,7258.967543
+2008,Armenia,Caucasus & Central Asia,2908220,7260.968756
+2014,Guyana,Latin America & the Caribbean,763393,7275.073403
+2008,Mongolia,East Asia,2628131,7278.375529
+2011,Georgia,Caucasus & Central Asia,3875000,7315.090893
+2013,Bhutan,South Asia,764961,7317.337414
+2015,Philippines,South Asia,101716359,7320.498539
+2011,Swaziland,Sub-Saharan Africa,1225258,7323.997665
+2008,Sri Lanka,South Asia,19945832,7419.359138
+2014,Morocco,Middle East & North Africa,34318082,7457.181097
+2015,El Salvador,Latin America & the Caribbean,6312478,7474.913715
+2008,Indonesia,South Asia,236159276,7486.01947
+2011,Fiji,Oceania,867086,7488.829381
+2014,Guatemala,Latin America & the Caribbean,15923559,7529.383647
+2015,Guyana,Latin America & the Caribbean,768514,7535.976178
+2009,Belize,Latin America & the Caribbean,313929,7548.803628
+2010,Mongolia,East Asia,2712650,7552.665586
+2008,Belize,Latin America & the Caribbean,306165,7630.706929
+2008,China,East Asia,1324655000,7635.072611
+2012,Armenia,Caucasus & Central Asia,2881922,7649.491409
+2010,Ukraine,Eastern Europe,45870700,7666.219577
+2012,Swaziland,Sub-Saharan Africa,1248158,7667.509597
+2012,Fiji,Oceania,873596,7676.778694
+2009,Sri Lanka,South Asia,20075086,7690.427034
+2010,Belize,Latin America & the Caribbean,321608,7710.915714
+2016,El Salvador,Latin America & the Caribbean,6344722,7726.170463
+2014,Bhutan,South Asia,776448,7760.090183
+2015,Guatemala,Latin America & the Caribbean,16252429,7765.748586
+2015,Morocco,Middle East & North Africa,34803322,7770.245991
+2009,Indonesia,South Asia,239340478,7787.123624
+2016,Philippines,South Asia,103320222,7800.65101
+2016,Guyana,Latin America & the Caribbean,773303,7836.378872
+2010,Jamaica,Latin America & the Caribbean,2817210,7837.37578
+2009,Namibia,Sub-Saharan Africa,2137040,7853.818992
+2011,Belize,Latin America & the Caribbean,329192,7855.082443
+2016,Morocco,Middle East & North Africa,35276786,7857.487717
+2016,Timor-Leste,South Asia,1268671,7869.475412
+2015,Timor-Leste,South Asia,1240977,7878.523641
+2008,Namibia,Sub-Saharan Africa,2106375,7884.762889
+2009,Jamaica,Latin America & the Caribbean,2804082,7894.143541
+2016,Guatemala,Latin America & the Caribbean,16582469,7946.668385
+2015,Ukraine,Eastern Europe,45154029,7949.149002
+2013,Armenia,Caucasus & Central Asia,2893509,7997.387128
+2012,Georgia,Caucasus & Central Asia,3825000,8026.507133
+2012,Belize,Latin America & the Caribbean,336701,8051.145743
+2013,Belize,Latin America & the Caribbean,344181,8071.556441
+2011,Jamaica,Latin America & the Caribbean,2829493,8101.911276
+2013,Fiji,Oceania,879715,8113.236145
+2013,Swaziland,Sub-Saharan Africa,1271456,8139.691092
+2012,Jamaica,Latin America & the Caribbean,2840992,8167.223362
+2008,Albania,Eastern Europe,2947314,8228.318168
+2008,Jamaica,Latin America & the Caribbean,2790122,8230.784445
+2015,Bhutan,South Asia,787386,8249.249841
+2015,Swaziland,Sub-Saharan Africa,1319011,8261.74606
+2010,Indonesia,South Asia,242524123,8262.899269
+2016,Ukraine,Eastern Europe,45004645,8269.614634
+2011,Ukraine,Eastern Europe,45706100,8281.867126
+2010,Namibia,Sub-Saharan Africa,2173170,8289.696027
+2014,Swaziland,Sub-Saharan Africa,1295097,8291.600074
+2013,Jamaica,Latin America & the Caribbean,2851807,8309.30543
+2014,Belize,Latin America & the Caribbean,351694,8337.792549
+2010,Sri Lanka,South Asia,20198353,8357.030642
+2009,China,East Asia,1331260000,8374.432271
+2008,Ukraine,Eastern Europe,46258200,8395.812545
+2014,Armenia,Caucasus & Central Asia,2906220,8397.099177
+2016,Belize,Latin America & the Caribbean,366954,8411.777972
+2012,Ukraine,Eastern Europe,45593300,8475.471746
+2016,Swaziland,Sub-Saharan Africa,1343098,8481.887285
+2014,Jamaica,Latin America & the Caribbean,2862087,8486.044435
+2015,Belize,Latin America & the Caribbean,359288,8533.207853
+2013,Georgia,Caucasus & Central Asia,3776000,8541.81223
+2015,Jamaica,Latin America & the Caribbean,2871934,8626.010429
+2013,Ukraine,Eastern Europe,45489600,8629.676994
+2009,Paraguay,Latin America & the Caribbean,6127837,8649.523815
+2014,Fiji,Oceania,885806,8661.655883
+2010,Timor-Leste,South Asia,1109591,8681.315488
+2014,Ukraine,Eastern Europe,45271947,8684.009609
+2011,Namibia,Sub-Saharan Africa,2215621,8721.255524
+2008,Paraguay,Latin America & the Caribbean,6047117,8721.418217
+2015,Armenia,Caucasus & Central Asia,2916950,8727.558325
+2009,Albania,Eastern Europe,2927519,8814.84716
+2016,Jamaica,Latin America & the Caribbean,2881355,8827.71807
+2016,Armenia,Caucasus & Central Asia,2924816,8832.763435
+2011,Indonesia,South Asia,245707511,8837.820122
+2011,Mongolia,East Asia,2761516,8881.48475
+2009,Ecuador,Latin America & the Caribbean,14691275,8889.213526
+2016,Bhutan,South Asia,797765,8907.287502
+2008,Ecuador,Latin America & the Caribbean,14447562,8920.500827
+2008,Egypt,Middle East & North Africa,80953881,8940.441663
+2008,Peru,Latin America & the Caribbean,28641980,8956.515287
+2013,Timor-Leste,South Asia,1184366,8974.606311
+2009,Bosnia and Herzegovina,Eastern Europe,3746561,9004.909867
+2008,Bosnia and Herzegovina,Eastern Europe,3763599,9006.428506
+2009,Peru,Latin America & the Caribbean,29001507,9010.325505
+2015,Fiji,Oceania,892149,9027.542438
+2015,Jordan,Middle East & North Africa,9159302,9041.817565
+2016,Jordan,Middle East & North Africa,9455802,9047.768923
+2013,Jordan,Middle East & North Africa,8413464,9062.040519
+2014,Jordan,Middle East & North Africa,8809306,9082.960152
+2016,Fiji,Oceania,898760,9109.951924
+2012,Jordan,Middle East & North Africa,7992573,9129.389779
+2012,Namibia,Sub-Saharan Africa,2263934,9132.342914
+2010,Ecuador,Latin America & the Caribbean,14934690,9163.159136
+2011,Sri Lanka,South Asia,20315017,9193.359884
+2011,Jordan,Middle East & North Africa,7574943,9214.206624
+2014,Georgia,Caucasus & Central Asia,3727000,9216.71622
+2009,Egypt,Middle East & North Africa,82465022,9256.562787
+2010,Jordan,Middle East & North Africa,7182390,9281.147212
+2010,Bosnia and Herzegovina,Eastern Europe,3722084,9305.797495
+2008,Jordan,Middle East & North Africa,6489822,9332.542462
+2010,China,East Asia,1337705000,9333.124237
+2012,Indonesia,South Asia,248883232,9421.586953
+2009,Jordan,Middle East & North Africa,6821116,9436.677022
+2013,Namibia,Sub-Saharan Africa,2316520,9578.383489
+2010,Paraguay,Latin America & the Caribbean,6209877,9602.261261
+2008,Tunisia,Middle East & North Africa,10407336,9609.707561
+2015,Georgia,Caucasus & Central Asia,3717100,9610.543366
+2010,Albania,Eastern Europe,2913021,9627.93729
+2010,Egypt,Middle East & North Africa,84107606,9659.4909
+2011,Timor-Leste,South Asia,1131523,9717.081552
+2010,Peru,Latin America & the Caribbean,29373646,9755.149148
+2011,Egypt,Middle East & North Africa,85897561,9823.823287
+2009,Tunisia,Middle East & North Africa,10521834,9868.801433
+2011,Bosnia and Herzegovina,Eastern Europe,3688865,9901.553536
+2011,Ecuador,Latin America & the Caribbean,15177355,9926.903441
+2012,Mongolia,East Asia,2814226,9969.140218
+2013,Indonesia,South Asia,252032263,9979.517292
+2012,Egypt,Middle East & North Africa,87813257,10004.39071
+2016,Georgia,Caucasus & Central Asia,3719300,10004.52839
+2008,Colombia,Latin America & the Caribbean,44901544,10038.42498
+2008,Dominican Rep.,Latin America & the Caribbean,9636520,10044.09956
+2012,Paraguay,Latin America & the Caribbean,6379219,10074.38878
+2009,Dominican Rep.,Latin America & the Caribbean,9767758,10078.87014
+2011,Paraguay,Latin America & the Caribbean,6293783,10080.7389
+2009,Colombia,Latin America & the Caribbean,45416181,10120.58796
+2011,Tunisia,Middle East & North Africa,10761467,10120.67717
+2014,Namibia,Sub-Saharan Africa,2370992,10131.35633
+2013,Egypt,Middle East & North Africa,89807433,10157.4672
+2012,Timor-Leste,South Asia,1156760,10160.5881
+2012,Sri Lanka,South Asia,20425000,10163.85986
+2012,Bosnia and Herzegovina,Eastern Europe,3648200,10181.95024
+2011,Albania,Eastern Europe,2905195,10207.71889
+2010,Tunisia,Middle East & North Africa,10639931,10225.25223
+2011,China,East Asia,1344130000,10384.3666
+2014,Egypt,Middle East & North Africa,91812566,10408.86007
+2008,Macedonia,Eastern Europe,2067378,10417.65138
+2011,Peru,Latin America & the Caribbean,29759989,10449.09326
+2012,Ecuador,Latin America & the Caribbean,15419666,10512.31875
+2012,Albania,Eastern Europe,2900401,10526.28013
+2014,Indonesia,South Asia,255131116,10537.66002
+2013,Albania,Eastern Europe,2895092,10571.00365
+2010,Colombia,Latin America & the Caribbean,45918097,10572.72333
+2016,Namibia,Sub-Saharan Africa,2479713,10588.23523
+2013,Sri Lanka,South Asia,20585000,10595.71648
+2012,Tunisia,Middle East & North Africa,10886668,10595.87525
+2015,Namibia,Sub-Saharan Africa,2425561,10620.11867
+2015,Egypt,Middle East & North Africa,93778172,10751.57021
+2013,Bosnia and Herzegovina,Eastern Europe,3604999,10825.90332
+2010,Dominican Rep.,Latin America & the Caribbean,9897985,10907.35641
+2009,Macedonia,Eastern Europe,2069093,10914.21092
+2013,Tunisia,Middle East & North Africa,11014558,10947.99657
+2013,Paraguay,Latin America & the Caribbean,6465740,10950.27947
+2013,Ecuador,Latin America & the Caribbean,15661547,11037.34677
+2015,Indonesia,South Asia,258162113,11040.19721
+2013,Mongolia,East Asia,2869107,11093.85011
+2016,Egypt,Middle East & North Africa,95688681,11135.18037
+2012,Peru,Latin America & the Caribbean,30158966,11145.5119
+2014,Bosnia and Herzegovina,Eastern Europe,3566002,11164.21549
+2014,Sri Lanka,South Asia,20771000,11219.55348
+2014,Albania,Eastern Europe,2889104,11259.27972
+2010,Macedonia,Eastern Europe,2070739,11273.78165
+2016,Ecuador,Latin America & the Caribbean,16385068,11282.02433
+2009,South Africa,Sub-Saharan Africa,50970818,11301.82493
+2011,Dominican Rep.,Latin America & the Caribbean,10027095,11333.54709
+2014,Tunisia,Middle East & North Africa,11143908,11342.42397
+2012,China,East Asia,1350695000,11351.06206
+2015,Ecuador,Latin America & the Caribbean,16144368,11446.36514
+2011,Colombia,Latin America & the Caribbean,46406646,11463.53505
+2015,Tunisia,Middle East & North Africa,11273661,11464.20947
+2014,Ecuador,Latin America & the Caribbean,15903112,11483.9968
+2008,South Africa,Sub-Saharan Africa,50412129,11518.10832
+2014,Paraguay,Latin America & the Caribbean,6552584,11533.721
+2016,Tunisia,Middle East & North Africa,11403248,11605.75518
+2016,Indonesia,South Asia,261115456,11610.99312
+2011,Macedonia,Eastern Europe,2072383,11611.76713
+2010,South Africa,Sub-Saharan Africa,51584663,11647.33105
+2015,Bosnia and Herzegovina,Eastern Europe,3535961,11650.41135
+2015,Albania,Eastern Europe,2880703,11661.98118
+2012,Dominican Rep.,Latin America & the Caribbean,10154950,11706.6926
+2015,Sri Lanka,South Asia,20966000,11798.39011
+2013,Peru,Latin America & the Caribbean,30565716,11828.80684
+2009,Serbia,Eastern Europe,7320807,11829.76118
+2012,Macedonia,Eastern Europe,2074036,11841.04509
+2009,Botswana,Sub-Saharan Africa,1979882,11843.47381
+2015,Paraguay,Latin America & the Caribbean,6639119,11861.28794
+2016,Albania,Eastern Europe,2876101,11890.50039
+2008,Serbia,Eastern Europe,7350222,11921.79843
+2014,Mongolia,East Asia,2923896,11955.12576
+2012,Colombia,Latin America & the Caribbean,46881475,12007.50925
+2010,Serbia,Eastern Europe,7291436,12075.31267
+2011,South Africa,Sub-Saharan Africa,52263516,12118.73823
+2009,Costa Rica,Latin America & the Caribbean,4488263,12141.93498
+2015,Mongolia,East Asia,2976877,12152.17138
+2008,Algeria,Middle East & North Africa,34860715,12162.26435
+2014,Peru,Latin America & the Caribbean,30973354,12164.9573
+2009,Thailand,South Asia,66881867,12201.36244
+2009,Algeria,Middle East & North Africa,35465760,12242.17814
+2016,Mongolia,East Asia,3027398,12243.22393
+2008,Thailand,South Asia,66545760,12255.21202
+2013,Dominican Rep.,Latin America & the Caribbean,10281296,12322.38621
+2008,Costa Rica,Latin America & the Caribbean,4429508,12329.93006
+2016,Sri Lanka,South Asia,21203000,12343.36104
+2016,Bosnia and Herzegovina,Eastern Europe,3516816,12346.33391
+2013,China,East Asia,1357380000,12367.96501
+2016,Paraguay,Latin America & the Caribbean,6725308,12370.1181
+2012,South Africa,Sub-Saharan Africa,52998213,12440.26362
+2015,Peru,Latin America & the Caribbean,31376671,12533.49118
+2010,Algeria,Middle East & North Africa,36117637,12610.24805
+2013,Colombia,Latin America & the Caribbean,47342981,12634.28171
+2013,Macedonia,Eastern Europe,2075739,12655.59674
+2010,Costa Rica,Latin America & the Caribbean,4545280,12737.02018
+2013,South Africa,Sub-Saharan Africa,53767396,12769.99752
+2010,Botswana,Sub-Saharan Africa,2014866,12788.76859
+2008,Botswana,Sub-Saharan Africa,1946351,12947.48722
+2011,Serbia,Eastern Europe,7234099,12967.83863
+2011,Algeria,Middle East & North Africa,36819558,12990.34502
+2009,Montenegro,Eastern Europe,618294,13024.83992
+2016,Peru,Latin America & the Caribbean,31773839,13030.0139
+2014,South Africa,Sub-Saharan Africa,54539571,13051.8286
+2012,Serbia,Eastern Europe,7199077,13108.02048
+2015,South Africa,Sub-Saharan Africa,55291225,13180.53094
+2009,Brazil,Latin America & the Caribbean,194895996,13212.37847
+2010,Thailand,South Asia,67208808,13213.74775
+2016,South Africa,Sub-Saharan Africa,56015473,13250.58766
+2008,Brazil,Latin America & the Caribbean,192979029,13259.7294
+2014,Dominican Rep.,Latin America & the Caribbean,10405844,13339.7627
+2014,Colombia,Latin America & the Caribbean,47791911,13342.614
+2014,Macedonia,Eastern Europe,2077495,13370.031429999999
+2011,Costa Rica,Latin America & the Caribbean,4600474,13397.23054
+2012,Algeria,Middle East & North Africa,37565847,13404.41178
+2014,China,East Asia,1364270000,13440.47746
+2011,Thailand,South Asia,67530130,13535.13327
+2011,Botswana,Sub-Saharan Africa,2051339,13596.16709
+2010,Montenegro,Eastern Europe,619428,13634.90157
+2013,Algeria,Middle East & North Africa,38338562,13715.74358
+2013,Serbia,Eastern Europe,7164132,13760.12131
+2015,Colombia,Latin America & the Caribbean,48228697,13760.2239
+2014,Serbia,Eastern Europe,7130576,13771.3954
+2008,Azerbaijan,Caucasus & Central Asia,8763400,13799.78614
+2008,Montenegro,Eastern Europe,616969,13816.52286
+2015,Macedonia,Eastern Europe,2079308,13831.25975
+2012,Montenegro,Eastern Europe,620601,13863.91546
+2010,Suriname,Latin America & the Caribbean,526103,13923.98365
+2015,Serbia,Eastern Europe,7095383,13992.657
+2016,Colombia,Latin America & the Caribbean,48653419,14085.24188
+2012,Costa Rica,Latin America & the Caribbean,4654122,14133.68818
+2015,Lebanon,Middle East & North Africa,5851479,14135.05543
+2009,Bulgaria,Eastern Europe,7444443,14146.17589
+2009,Mexico,Latin America & the Caribbean,115505228,14172.49026
+2016,Lebanon,Middle East & North Africa,6006668,14188.29212
+2012,Botswana,Sub-Saharan Africa,2089315,14200.74841
+2014,Algeria,Middle East & North Africa,39113313,14203.8954
+2010,Brazil,Latin America & the Caribbean,196796269,14243.49214
+2015,Dominican Rep.,Latin America & the Caribbean,10528394,14264.83549
+2008,Mauritius,Sub-Saharan Africa,1244121,14270.20454
+2008,Bulgaria,Eastern Europe,7492561,14328.89209
+2009,Gabon,Sub-Saharan Africa,1586754,14347.16801
+2016,Venezuela,Latin America & the Caribbean,31568179,14400
+2015,China,East Asia,1371220000,14450.09499
+2011,Montenegro,Eastern Europe,620079,14472.4093
+2008,Panama,Latin America & the Caribbean,3516268,14518.60512
+2013,Costa Rica,Latin America & the Caribbean,4706401,14524.6715
+2009,Panama,Latin America & the Caribbean,3579385,14549.53599
+2008,Mexico,Latin America & the Caribbean,113661809,14551.04561
+2014,Lebanon,Middle East & North Africa,5603279,14567.37034
+2015,Algeria,Middle East & North Africa,39871528,14614.97043
+2008,Gabon,Sub-Saharan Africa,1536411,14686.45582
+2008,Uruguay,Latin America & the Caribbean,3350824,14705.55175
+2012,Thailand,South Asia,67843979,14714.45022
+2016,Serbia,Eastern Europe,7058322,14719.52103
+2016,Suriname,Latin America & the Caribbean,558368,14776.05471
+2016,Macedonia,Eastern Europe,2081206,14810.0315
+2009,Mauritius,Sub-Saharan Africa,1247429,14815.82915
+2010,Mexico,Latin America & the Caribbean,117318941,14858.53884
+2013,Montenegro,Eastern Europe,621207,14870.236
+2011,Suriname,Latin America & the Caribbean,531589,14887.81423
+2009,Azerbaijan,Caucasus & Central Asia,8947243,14900.50866
+2013,Lebanon,Middle East & North Africa,5276102,14904.4758
+2010,Bulgaria,Eastern Europe,7395599,14934.02198
+2011,Brazil,Latin America & the Caribbean,198686688,14973.09847
+2016,Algeria,Middle East & North Africa,40606052,15013.29638
+2010,Gabon,Sub-Saharan Africa,1640210,15045.16361
+2014,Costa Rica,Latin America & the Caribbean,4757575,15140.47037
+2016,Brazil,Latin America & the Caribbean,207652865,15181.47137
+2016,Dominican Rep.,Latin America & the Caribbean,10648791,15227.94202
+2013,Thailand,South Asia,68143065,15286.51941
+2010,Panama,Latin America & the Caribbean,3643222,15312.44725
+2012,Lebanon,Middle East & North Africa,4916404,15333.95896
+2014,Montenegro,Eastern Europe,621810,15371.18541
+2009,Uruguay,Latin America & the Caribbean,3362755,15391.19699
+2012,Brazil,Latin America & the Caribbean,200560983,15398.4287
+2012,Suriname,Latin America & the Caribbean,537077,15410.8696
+2016,Libya,Middle East & North Africa,6293253,15420.16863
+2009,Turkey,Middle East & North Africa,71339185,15483.23911
+2016,China,East Asia,1378665000,15530.63427
+2015,Suriname,Latin America & the Caribbean,553208,15593.16903
+2010,Mauritius,Sub-Saharan Africa,1250400,15616.02025
+2010,Azerbaijan,Caucasus & Central Asia,9054332,15627.60562
+2014,Thailand,South Asia,68416772,15651.18063
+2015,Brazil,Latin America & the Caribbean,205962108,15656.26667
+2011,Bulgaria,Eastern Europe,7348328,15676.07763
+2011,Lebanon,Middle East & North Africa,4588368,15693.68728
+2015,Costa Rica,Latin America & the Caribbean,4807852,15694.62533
+2011,Azerbaijan,Caucasus & Central Asia,9173082,15754.15236
+2013,Botswana,Sub-Saharan Africa,2128507,15771.11861
+2015,Libya,Middle East & North Africa,6234955,15810.25225
+2011,Gabon,Sub-Saharan Africa,1697101,15893.51531
+2013,Suriname,Latin America & the Caribbean,542540,15956.8176
+2013,Brazil,Latin America & the Caribbean,202408632,15971.00897
+2015,Botswana,Sub-Saharan Africa,2209197,16007.78594
+2008,Turkey,Middle East & North Africa,70440032,16048.92248
+2011,Mexico,Latin America & the Caribbean,119090017,16049.36476
+2010,Lebanon,Middle East & North Africa,4337141,16118.96329
+2014,Suriname,Latin America & the Caribbean,547928,16124.55866
+2012,Azerbaijan,Caucasus & Central Asia,9295784,16180.88715
+2014,Brazil,Latin America & the Caribbean,204213133,16195.87112
+2012,Bulgaria,Eastern Europe,7305888,16208.28313
+2010,Venezuela,Latin America & the Caribbean,29028033,16210.28996
+2009,Chile,Latin America & the Caribbean,16829442,16226.20693
+2015,Thailand,South Asia,68657600,16241.55555
+2015,Montenegro,Eastern Europe,622159,16337.15484
+2016,Costa Rica,Latin America & the Caribbean,4857274,16401.15678
+2014,Botswana,Sub-Saharan Africa,2168573,16411.36673
+2012,Gabon,Sub-Saharan Africa,1756817,16457.15714
+2009,Romania,Eastern Europe,20367487,16492.76953
+2009,Venezuela,Latin America & the Caribbean,28587323,16507.34135
+2008,Iran,Middle East & North Africa,72845542,16511.03298
+2008,Chile,Latin America & the Caribbean,16661942,16551.30715
+2011,Mauritius,Sub-Saharan Africa,1252404,16561.77098
+2013,Bulgaria,Eastern Europe,7265115,16571.02649
+2016,Botswana,Sub-Saharan Africa,2250260,16603.03499
+2009,Iran,Middle East & North Africa,73687565,16611.99802
+2009,Argentina,Latin America & the Caribbean,40799407,16618.12085
+2012,Mexico,Latin America & the Caribbean,120828307,16658.0818
+2008,Romania,Eastern Europe,20537875,16726.62759
+2010,Uruguay,Latin America & the Caribbean,3374415,16736.85104
+2013,Mexico,Latin America & the Caribbean,122535969,16848.0396
+2009,Latvia,Eastern Europe,2141669,16871.8711
+2012,Iran,Middle East & North Africa,76453574,16932.17721
+2016,Thailand,South Asia,68863514,16937.92689
+2013,Iran,Middle East & North Africa,77435384,16954.51316
+2010,Romania,Eastern Europe,20246871,16966.35761
+2011,Venezuela,Latin America & the Caribbean,29463291,16981.33549
+2013,Gabon,Sub-Saharan Africa,1817271,17078.21753
+2011,Panama,Latin America & the Caribbean,3707782,17093.83998
+2013,Azerbaijan,Caucasus & Central Asia,9416801,17171.76137
+2008,Venezuela,Latin America & the Caribbean,28141701,17192.91545
+2014,Libya,Middle East & North Africa,6204108,17246.82629
+2015,Mexico,Latin America & the Caribbean,125890949,17253.20422
+2016,Azerbaijan,Caucasus & Central Asia,9757812,17256.62697
+2015,Venezuela,Latin America & the Caribbean,31155134,17300
+2012,Mauritius,Sub-Saharan Africa,1255882,17408.18892
+2016,Iraq,Middle East & North Africa,37202572,17440.44582
+2010,Turkey,Middle East & North Africa,72326914,17442.86028
+2014,Mexico,Latin America & the Caribbean,124221600,17484.29234
+2014,Bulgaria,Eastern Europe,7223938,17534.39336
+2010,Latvia,Eastern Europe,2097555,17558.57111
+2014,Gabon,Sub-Saharan Africa,1875713,17569.82843
+2015,Iran,Middle East & North Africa,79360487,17571.22224
+2010,Iran,Middle East & North Africa,74567511,17579.87394
+2014,Azerbaijan,Caucasus & Central Asia,9535079,17608.37063
+2014,Venezuela,Latin America & the Caribbean,30738378,17639.88584
+2008,Argentina,Latin America & the Caribbean,40382389,17711.44179
+2015,Azerbaijan,Caucasus & Central Asia,9649341,17782.02615
+2016,Mexico,Latin America & the Caribbean,127540423,17783.9792
+2014,Iran,Middle East & North Africa,78411092,17828.63996
+2016,Montenegro,Eastern Europe,622303,17866.46591
+2011,Uruguay,Latin America & the Caribbean,3385624,17904.74583
+2011,Romania,Eastern Europe,20147528,17907.61767
+2015,Gabon,Sub-Saharan Africa,1930175,17928.70163
+2012,Venezuela,Latin America & the Caribbean,29893080,18004.46532
+2016,Gabon,Sub-Saharan Africa,1979786,18072.66918
+2016,Belarus,Eastern Europe,9501534,18078.09603
+2009,Lithuania,Eastern Europe,3162916,18145.93286
+2015,Bulgaria,Eastern Europe,7177991,18186.40302
+2011,Iran,Middle East & North Africa,75491582,18192.1056
+2013,Mauritius,Sub-Saharan Africa,1258653,18243.50124
+2010,Chile,Latin America & the Caribbean,16993354,18265.34253
+2013,Venezuela,Latin America & the Caribbean,30317848,18281.19297
+2015,Barbados,Latin America & the Caribbean,284217,18300
+2008,Poland,Eastern Europe,38125759,18310.44321
+2010,Argentina,Latin America & the Caribbean,41223889,18333.5437
+2009,Kazakhstan,Caucasus & Central Asia,16092822,18387.06365
+2008,Kazakhstan,Caucasus & Central Asia,15674000,18513.92541
+2016,Barbados,Latin America & the Caribbean,284996,18700
+2012,Panama,Latin America & the Caribbean,3772938,18781.0507
+2012,Uruguay,Latin America & the Caribbean,3396777,18817.74196
+2012,Romania,Eastern Europe,20058035,18931.55078
+2008,Barbados,Latin America & the Caribbean,277319,19100
+2014,Mauritius,Sub-Saharan Africa,1260934,19231.50561
+2010,Croatia,Eastern Europe,4417781,19232.66763
+2009,Poland,Eastern Europe,38151603,19242.98884
+2009,Malaysia,South Asia,27605383,19367.891
+2009,Russia,Eastern Europe,142785342,19386.5844
+2008,Latvia,Eastern Europe,2177322,19432.17933
+2009,Croatia,Eastern Europe,4429078,19474.40852
+2016,Bulgaria,Eastern Europe,7127822,19500.31083
+2012,Argentina,Latin America & the Caribbean,42096739,19579.00648
+2011,Argentina,Latin America & the Caribbean,41656879,19629.35185
+2011,Turkey,Middle East & North Africa,73409455,19660.88715
+2010,Kazakhstan,Caucasus & Central Asia,16321872,19690.03391
+2011,Latvia,Eastern Europe,2059709,19773.27745
+2013,Romania,Eastern Europe,19983693,19797.32119
+2014,Argentina,Latin America & the Caribbean,42981515,19802.10001
+2008,Malaysia,South Asia,27111069,19873.17089
+2013,Uruguay,Latin America & the Caribbean,3408005,19942.50405
+2016,Iran,Middle East & North Africa,80277428,19948.81948
+2016,Argentina,Latin America & the Caribbean,43847430,20042.54002
+2013,Panama,Latin America & the Caribbean,3838462,20053.57595
+2010,Lithuania,Eastern Europe,3097282,20090.72733
+2015,Mauritius,Sub-Saharan Africa,1262605,20104.13276
+2013,Argentina,Latin America & the Caribbean,42539925,20161.49683
+2008,Russia,Eastern Europe,142742350,20163.58765
+2008,Croatia,Eastern Europe,4434508,20250.7087
+2015,Argentina,Latin America & the Caribbean,43417765,20356.91551
+2011,Chile,Latin America & the Caribbean,17153357,20437.70453
+2010,Russia,Eastern Europe,142849449,20497.93408
+2009,Estonia,Eastern Europe,1334515,20498.70606
+2014,Romania,Eastern Europe,19908979,20623.37272
+2012,Turkey,Middle East & North Africa,74569867,20639.85717
+2009,Hungary,Eastern Europe,10022650,20648.05514
+2008,Hungary,Eastern Europe,10038188,20678.67991
+2010,Malaysia,South Asia,28112289,20680.29685
+2008,Lithuania,Eastern Europe,3198231,20743.98803
+2011,Croatia,Eastern Europe,4280622,20758.46415
+2014,Uruguay,Latin America & the Caribbean,3419546,20887.16177
+2010,Poland,Eastern Europe,38042794,21068.85123
+2014,Panama,Latin America & the Caribbean,3903986,21087.76783
+2015,Uruguay,Latin America & the Caribbean,3431552,21117.8016
+2016,Mauritius,Sub-Saharan Africa,1263473,21127.52776
+2012,Croatia,Eastern Europe,4267558,21156.64422
+2012,Latvia,Eastern Europe,2034319,21252.79231
+2011,Kazakhstan,Caucasus & Central Asia,16557201,21276.93402
+2010,Hungary,Eastern Europe,10000023,21555.85911
+2009,Barbados,Latin America & the Caribbean,278470,21600
+2010,Estonia,Eastern Europe,1331475,21602.74074
+2012,Chile,Latin America & the Caribbean,17309746,21620.28097
+2015,Romania,Eastern Europe,19815481,21631.7016
+2016,Uruguay,Latin America & the Caribbean,3444006,21669.9774
+2014,Barbados,Latin America & the Caribbean,283385,21700
+2010,Barbados,Latin America & the Caribbean,279569,21800
+2013,Croatia,Eastern Europe,4255689,21807.10797
+2011,Malaysia,South Asia,28635128,21818.87569
+2014,Croatia,Eastern Europe,4238389,22077.22563
+2015,Panama,Latin America & the Caribbean,3969249,22167.87578
+2013,Turkey,Middle East & North Africa,75787333,22310.53533
+2013,Libya,Middle East & North Africa,6195970,22322.3844
+2012,Kazakhstan,Caucasus & Central Asia,16792089,22391.31823
+2013,Chile,Latin America & the Caribbean,17462982,22578.72892
+2008,Estonia,Eastern Europe,1337090,22664.03933
+2013,Latvia,Eastern Europe,2012647,22676.51974
+2015,Chile,Latin America & the Caribbean,17762681,22785.81803
+2011,Hungary,Eastern Europe,9971727,22841.21034
+2011,Poland,Eastern Europe,38063255,22850.63885
+2011,Lithuania,Eastern Europe,3028115,22854.2339
+2014,Chile,Latin America & the Caribbean,17613798,22978.1913
+2012,Malaysia,South Asia,29170456,23006.92553
+2015,Croatia,Eastern Europe,4203604,23008.08438
+2009,Slovak Rep.,Eastern Europe,5386406,23055.07598
+2012,Hungary,Eastern Europe,9920362,23094.47333
+2016,Panama,Latin America & the Caribbean,4034119,23186.75425
+2016,Chile,Latin America & the Caribbean,17909754,23476.4268
+2008,Slovak Rep.,Eastern Europe,5379233,23691.64388
+2011,Barbados,Latin America & the Caribbean,280601,23700
+2012,Barbados,Latin America & the Caribbean,281585,23700
+2013,Kazakhstan,Caucasus & Central Asia,17035550,23773.43556
+2014,Latvia,Eastern Europe,1993782,23808.06908
+2012,Poland,Eastern Europe,38063164,23833.2097
+2016,Romania,Eastern Europe,19702332,23868.08822
+2014,Turkey,Middle East & North Africa,77030628,24029.74494
+2013,Malaysia,South Asia,29706724,24033.97126
+2011,Russia,Eastern Europe,142960868,24310.04397
+2013,Seychelles,Sub-Saharan Africa,89949,24361.18821
+2013,Hungary,Eastern Europe,9893082,24463.19947
+2016,Croatia,Eastern Europe,4174349,24524.42292
+2011,Estonia,Eastern Europe,1327439,24543.06747
+2012,Lithuania,Eastern Europe,2987773,24658.08091
+2013,Poland,Eastern Europe,38040196,24719.24751
+2015,Latvia,Eastern Europe,1977527,24723.43456
+2015,Russia,Eastern Europe,144096870,24737.68944
+2016,Russia,Eastern Europe,144342396,24818.90519
+2015,Turkey,Middle East & North Africa,78271472,24844.8903
+2014,Kazakhstan,Caucasus & Central Asia,17288285,24847.85876
+2010,Slovak Rep.,Eastern Europe,5391428,24986.61281
+2015,Kazakhstan,Caucasus & Central Asia,17542806,25049.93554
+2013,Barbados,Latin America & the Caribbean,282509,25100
+2016,Turkey,Middle East & North Africa,79512426,25247.20418
+2012,Greece,Eastern Europe,11045011,25284.46408
+2016,Kazakhstan,Caucasus & Central Asia,17794055,25286.43372
+2014,Malaysia,South Asia,30228017,25487.60943
+2014,Seychelles,Sub-Saharan Africa,91359,25515.53651
+2014,Hungary,Eastern Europe,9866468,25524.71762
+2014,Poland,Eastern Europe,38011735,25612.25783
+2016,Latvia,Eastern Europe,1959537,25724.21801
+2012,Russia,Eastern Europe,143201676,25784.56716
+2014,Russia,Eastern Europe,143819666,25797.49853
+2011,Slovak Rep.,Eastern Europe,5398384,25835.00476
+2012,Estonia,Eastern Europe,1322696,26022.46885
+2013,Greece,Eastern Europe,10965211,26097.8719
+2009,Malta,Western Europe,412477,26139.65838
+2011,Greece,Eastern Europe,11104899,26141.31959
+2015,Hungary,Eastern Europe,9843028,26147.53737
+2008,Malta,Western Europe,409379,26193.01756
+2013,Russia,Eastern Europe,143506911,26240.2745
+2012,Portugal,Western Europe,10514844,26454.1026
+2009,Portugal,Western Europe,10568247,26464.37547
+2015,Seychelles,Sub-Saharan Africa,93419,26468.86683
+2015,Poland,Eastern Europe,37986412,26577.5541
+2008,Portugal,Western Europe,10558177,26631.56396
+2015,Malaysia,South Asia,30723155,26639.42723
+2012,Slovak Rep.,Eastern Europe,5407579,26647.42196
+2013,Lithuania,Eastern Europe,2957689,26660.69961
+2015,Greece,Eastern Europe,10820883,26697.2485
+2016,Hungary,Eastern Europe,9814023,26700.75608
+2016,Greece,Eastern Europe,10775971,26764.96161
+2011,Portugal,Western Europe,10557560,26780.21491
+2014,Greece,Eastern Europe,10892413,26838.45523
+2010,Portugal,Western Europe,10573100,27334.8116
+2008,Israel,Middle East & North Africa,7308800,27399.44764
+2016,Poland,Eastern Europe,37970087,27419.71905
+2009,Slovenia,Eastern Europe,2039669,27471.04799
+2013,Estonia,Eastern Europe,1317997,27495.73442
+2009,Israel,Middle East & North Africa,7485600,27498.56537
+2009,Czech Rep.,Eastern Europe,10443936,27594.34686
+2016,Seychelles,Sub-Saharan Africa,94677,27641.4389
+2010,Czech Rep.,Eastern Europe,10474410,27694.40198
+2016,Malaysia,South Asia,31187265,27700.2932
+2010,Slovenia,Eastern Europe,2048583,27766.42038
+2010,Malta,Western Europe,414508,27808.90595
+2008,Czech Rep.,Eastern Europe,10384603,27844.79533
+2013,Slovak Rep.,Eastern Europe,5413393,27897.59857
+2013,Portugal,Western Europe,10457295,27899.50947
+2014,Lithuania,Eastern Europe,2932367,28174.39277
+2010,Greece,Eastern Europe,11121341,28175.85552
+2009,"Korea, South",East Asia,49307835,28320.31912
+2009,Bahamas,Latin America & the Caribbean,354856,28325.87868
+2014,Estonia,Eastern Europe,1314545,28538.42864
+2011,Malta,Western Europe,416268,28612.29697
+2010,Bahamas,Latin America & the Caribbean,360832,28630.87037
+2008,"Korea, South",East Asia,49054708,28655.98352
+2015,Estonia,Eastern Europe,1315407,28688.96877
+2014,Portugal,Western Europe,10401062,28746.65308
+2011,Czech Rep.,Eastern Europe,10496088,28797.41796
+2011,Slovenia,Eastern Europe,2052843,28804.70152
+2010,Israel,Middle East & North Africa,7623600,28828.32153
+2012,Slovenia,Eastern Europe,2057159,28900.87803
+2015,Lithuania,Eastern Europe,2904910,28904.59314
+2014,Slovak Rep.,Eastern Europe,5418649,28927.66876
+2011,Bahamas,Latin America & the Caribbean,366568,28941.02823
+2012,Czech Rep.,Eastern Europe,10510785,29047.24644
+2012,Malta,Western Europe,420028,29424.05837
+2009,Trinidad and Tobago,Latin America & the Caribbean,1321618,29429.34748
+2015,Slovak Rep.,Eastern Europe,5423801,29522.04477
+2015,Portugal,Western Europe,10358076,29532.38116
+2008,Slovenia,Eastern Europe,2021316,29624.19018
+2016,Estonia,Eastern Europe,1315790,29743.33743
+2016,Bahamas,Latin America & the Caribbean,391232,29779.798
+2013,Slovenia,Eastern Europe,2059953,29796.81199
+2008,Bahamas,Latin America & the Caribbean,348676,29857.27156
+2008,New Zealand,Oceania,4259800,29860.37025
+2013,Bahamas,Latin America & the Caribbean,377240,29878.04704
+2012,Bahamas,Latin America & the Caribbean,372039,29937.10217
+2014,Bahamas,Latin America & the Caribbean,382169,29977.56561
+2016,Lithuania,Eastern Europe,2868231,30158.63611
+2015,Bahamas,Latin America & the Caribbean,386838,30249.73823
+2009,Greece,Eastern Europe,11107017,30359.9253
+2010,"Korea, South",East Asia,49554112,30376.87182
+2014,Cyprus,Eastern Europe,1152309,30383.51482
+2016,Slovak Rep.,Eastern Europe,5430798,30460.38408
+2013,Czech Rep.,Eastern Europe,10514272,30485.71415
+2011,Israel,Middle East & North Africa,7765800,30558.39128
+2013,Cyprus,Eastern Europe,1143896,30620.70715
+2010,Trinidad and Tobago,Latin America & the Caribbean,1328100,30628.54177
+2016,Portugal,Western Europe,10325452,30658.632
+2008,Trinidad and Tobago,Latin America & the Caribbean,1315372,30693.869
+2009,New Zealand,Oceania,4302600,30700.95635
+2014,Slovenia,Eastern Europe,2061980,30854.09941
+2008,Greece,Eastern Europe,11077841,30856.01183
+2011,Trinidad and Tobago,Latin America & the Caribbean,1334788,31012.71642
+2013,Malta,Western Europe,425967,31068.82779
+2008,Taiwan,East Asia,23037031,31100
+2011,"Korea, South",East Asia,49936638,31228.5107
+2010,New Zealand,Oceania,4350700,31265.73845
+2015,Slovenia,Eastern Europe,2063531,31468.36317
+2015,Cyprus,Eastern Europe,1160985,31523.92688
+2012,Israel,Middle East & North Africa,7910500,31708.08711
+2012,Trinidad and Tobago,Latin America & the Caribbean,1341588,31830.51804
+2016,Trinidad and Tobago,Latin America & the Caribbean,1364962,31858.35544
+2012,Cyprus,Eastern Europe,1135062,31914.62435
+2010,Spain,Western Europe,46576897,31954.24275
+2012,Spain,Western Europe,46773055,31988.25387
+2009,Taiwan,East Asia,23119772,32000
+2011,Spain,Western Europe,46742697,32068.27093
+2012,"Korea, South",East Asia,50199853,32097.164
+2014,Czech Rep.,Eastern Europe,10525347,32263.31575
+2009,Spain,Western Europe,46362946,32385.20632
+2013,Trinidad and Tobago,Latin America & the Caribbean,1348248,32500.49384
+2013,Spain,Western Europe,46620045,32603.90577
+2013,"Korea, South",East Asia,50428893,32615.77259
+2016,Slovenia,Eastern Europe,2065042,32723.07195
+2011,New Zealand,Oceania,4384000,32734.53667
+2014,Trinidad and Tobago,Latin America & the Caribbean,1354493,32848.19614
+2016,Cyprus,Eastern Europe,1170125,32882.21862
+2012,New Zealand,Oceania,4408100,32986.03121
+2014,Malta,Western Europe,434558,33178.38625
+2011,Cyprus,Eastern Europe,1124835,33192.59298
+2009,Japan,East Asia,128047000,33192.67977
+2010,Cyprus,Eastern Europe,1112607,33263.01583
+2008,Spain,Western Europe,45954106,33463.6541
+2015,Czech Rep.,Eastern Europe,10546059,33468.7265
+2015,Trinidad and Tobago,Latin America & the Caribbean,1360092,33569.41353
+2014,"Korea, South",East Asia,50746659,33587.5834
+2014,Spain,Western Europe,46480882,33709.64924
+2009,Cyprus,Eastern Europe,1098076,33882.09647
+2014,Israel,Middle East & North Africa,8215700,34086.54876
+2013,Israel,Middle East & North Africa,8059500,34128.95648
+2009,Italy,Western Europe,59095365,34507.753
+2009,United Kingdom,Western Europe,62276270,34589.5666
+2009,France,Western Europe,64707044,34678.94158
+2016,Czech Rep.,Eastern Europe,10566332,34749.21236
+2008,Japan,East Asia,128063000,34798.7659
+2015,Spain,Western Europe,46444832,34818.12051
+2008,Cyprus,Eastern Europe,1081563,34823.65424
+2010,Japan,East Asia,128070000,35000.32121
+2010,Italy,Western Europe,59277417,35042.19537
+2008,France,Western Europe,64374989,35095.26023
+2015,"Korea, South",East Asia,51014947,35203.73414
+2008,Italy,Western Europe,58826731,35402.91685
+2015,Malta,Western Europe,445053,35667.78651
+2010,Taiwan,East Asia,23162123,35700
+2011,Japan,East Asia,127833000,35774.69671
+2010,United Kingdom,Western Europe,62766365,35875.45628
+2015,Israel,Middle East & North Africa,8380100,35888.87589
+2010,France,Western Europe,65027507,35935.0262
+2014,Italy,Western Europe,60789140,36070.8056
+2013,Italy,Western Europe,60233948,36131.13211
+2013,New Zealand,Oceania,4442100,36219.57969
+2012,Italy,Western Europe,59539717,36237.11043
+2008,United Kingdom,Western Europe,61806995,36257.51245
+2016,Spain,Western Europe,46484062,36305.22213
+2011,Italy,Western Europe,59379449,36347.34248
+2011,United Kingdom,Western Europe,63258918,36607.98109
+2016,"Korea, South",East Asia,51245707,36629.8646
+2015,Italy,Western Europe,60730582,36640.11558
+2009,Germany,Western Europe,81902307,37035.78003
+2012,Japan,East Asia,127629000,37191.38595
+2016,Israel,Middle East & North Africa,8546000,37258.22359
+2014,New Zealand,Oceania,4509700,37283.10041
+2008,Australia,Oceania,21249200,37409.16307
+2011,France,Western Europe,65342775,37440.64149
+2012,France,Western Europe,65659789,37679.13326
+2012,United Kingdom,Western Europe,63700300,37705.59422
+2016,Malta,Western Europe,455356,37773.94863
+2009,Finland,Western Europe,5338871,37823.22919
+2015,New Zealand,Oceania,4595700,37864.99954
+2009,Belgium,Western Europe,10796493,38001.99092
+2008,Germany,Western Europe,82110097,38028.77214
+2008,Belgium,Western Europe,10709973,38133.50146
+2011,Taiwan,East Asia,23224912,38200
+2016,Italy,Western Europe,60627498,38380.17241
+2010,Iceland,Western Europe,318041,38535.32706
+2010,Finland,Western Europe,5363352,38775.17486
+2009,Canada,North America,33628571,38791.07469
+2013,Japan,East Asia,127445000,38974.07949
+2014,Japan,East Asia,127276000,39179.15561
+2010,Germany,Western Europe,81776930,39225.59999
+2010,Australia,Oceania,22031750,39274.76423
+2013,United Kingdom,Western Europe,64128226,39308.13457
+2012,Taiwan,East Asia,23315822,39400
+2009,Bahrain,Middle East & North Africa,1185029,39412.16741
+2016,New Zealand,Oceania,4693200,39465.11531
+2013,France,Western Europe,65998660,39523.87012
+2013,Taiwan,East Asia,23373517,39600
+2011,Iceland,Western Europe,319014,39621.93566
+2009,Sweden,Western Europe,9298515,39645.656
+2010,Bahrain,Middle East & North Africa,1240862,39749.84938
+2008,Finland,Western Europe,5313399,39969.3876
+2010,Canada,North America,34005274,40027.24021
+2010,Belgium,Western Europe,10895586,40091.00999
+2014,France,Western Europe,66316092,40141.59032
+2011,Bahrain,Middle East & North Africa,1278269,40164.58274
+2009,Australia,Oceania,21691700,40234.41792
+2008,Canada,North America,33245773,40277.61931
+2009,Denmark,Western Europe,5523095,40332.45142
+2008,Bahrain,Middle East & North Africa,1114590,40557.02431
+2015,France,Western Europe,66593366,40564.46071
+2012,Finland,Western Europe,5413971,40620.17607
+2011,Finland,Western Europe,5388272,40683.52758
+2012,Iceland,Western Europe,320716,40696.0378
+2014,United Kingdom,Western Europe,64613160,40707.20099
+2015,Japan,East Asia,127141000,40717.32438
+2009,Austria,Western Europe,8343323,40919.15058
+2009,Iceland,Western Europe,318499,41195.95966
+2011,Belgium,Western Europe,11047744,41248.72534
+2008,Denmark,Western Europe,5493621,41278.32884
+2013,Finland,Western Europe,5438972,41293.51577
+2008,Austria,Western Europe,8321496,41316.22518
+2016,France,Western Europe,66859768,41357.98693
+2014,Finland,Western Europe,5461512,41470.20236
+2011,Canada,North America,34342780,41565.27122
+2015,United Kingdom,Western Europe,65128861,41579.86341
+2009,Ireland,Western Europe,4535375,41613.34419
+2010,Sweden,Western Europe,9378126,41627.97373
+2012,Bahrain,Middle East & North Africa,1300217,41714.84361
+2008,Sweden,Western Europe,9219637,41853.69618
+2011,Australia,Oceania,22340024,41894.17305
+2010,Austria,Western Europe,8363404,42047.03268
+2015,Finland,Western Europe,5479531,42071.19127
+2011,Oman,Middle East & North Africa,3237268,42121.43192
+2012,Canada,North America,34750545,42145.09786
+2016,Japan,East Asia,126994511,42281.18819
+2012,Belgium,Western Europe,11128246,42354.63149
+2015,Oman,Middle East & North Africa,4199810,42459.75058
+2014,Oman,Middle East & North Africa,3960925,42522.41731
+2016,United Kingdom,Western Europe,65595565,42656.2166
+2011,Germany,Western Europe,80274983,42692.51976
+2008,Iceland,Western Europe,317414,42721.16286
+2012,Australia,Oceania,22742475,42733.93625
+2013,Iceland,Western Europe,323764,42821.28504
+2016,Oman,Middle East & North Africa,4424762,43012.8492
+2010,Denmark,Western Europe,5547683,43041.54202
+2008,Oman,Middle East & North Africa,2759014,43170.76341
+2010,Ireland,Western Europe,4560155,43298.69414
+2016,Finland,Western Europe,5495303,43378.14603
+2013,Oman,Middle East & North Africa,3711481,43386.64559
+2013,Belgium,Western Europe,11182817,43519.77792
+2012,Germany,Western Europe,80425823,43564.14802
+2011,Sweden,Western Europe,9449213,43755.06044
+2012,Oman,Middle East & North Africa,3464644,43822.81584
+2009,Hong Kong,East Asia,6972800,43935.65834
+2009,Netherlands,Western Europe,16530388,44037.36411
+2013,Canada,North America,35152370,44101.47145
+2013,Bahrain,Middle East & North Africa,1315411,44168.37795
+2009,Oman,Middle East & North Africa,2882942,44173.29621
+2008,Ireland,Western Europe,4489544,44280.69146
+2011,Denmark,Western Europe,5570572,44403.39415
+2010,Oman,Middle East & North Africa,3041460,44418.77038
+2011,Austria,Western Europe,8391643,44452.73275
+2010,Saudi Arabia,Middle East & North Africa,27425676,44502.41931
+2010,Netherlands,Western Europe,16615394,44542.83655
+2014,Iceland,Western Europe,327386,44546.01045
+2014,Belgium,Western Europe,11209057,44601.36711
+2015,Canada,North America,35832513,44647.36423
+2012,Sweden,Western Europe,9519374,44724.97434
+2008,Hong Kong,East Asia,6957800,44800.17398
+2012,Denmark,Western Europe,5591572,44803.96224
+2016,Canada,North America,36264604,44819.4836
+2011,Ireland,Western Europe,4580084,45147.37624
+2013,Germany,Western Europe,80645605,45232.19785
+2015,Belgium,Western Europe,11274196,45414.8906
+2014,Canada,North America,35535348,45519.79392
+2013,Sweden,Western Europe,9600379,45673.17063
+2013,Australia,Oceania,23145901,45794.40427
+2008,Netherlands,Western Europe,16445593,45843.89223
+2014,Taiwan,East Asia,23433753,45854
+2011,Netherlands,Western Europe,16693074,46066.65241
+2016,Australia,Oceania,24210809,46144.12081
+2014,Bahrain,Middle East & North Africa,1336397,46180.03762
+2015,Australia,Oceania,23850784,46220.25126
+2012,Ireland,Western Europe,4599533,46374.23951
+2016,Belgium,Western Europe,11331422,46416.8542
+2012,Austria,Western Europe,8429991,46457.34578
+2014,Sweden,Western Europe,9696110,46524.18091
+2012,Netherlands,Western Europe,16754962,46707.26971
+2013,Denmark,Western Europe,5614932,46726.85332
+2014,Australia,Oceania,23504138,46742.80265
+2015,Bahrain,Middle East & North Africa,1371855,46775.74033
+2009,United States,North America,306771529,47001.55535
+2016,Bahrain,Middle East & North Africa,1425171,47066.7631
+2014,Germany,Western Europe,80982500,47092.48837
+2010,Hong Kong,East Asia,7024200,47134.55565
+2015,Iceland,Western Europe,330815,47499.62538
+2015,Germany,Western Europe,81686611,47810.83601
+2015,Sweden,Western Europe,9799186,47891.27784
+2014,Denmark,Western Europe,5643475,47901.44758
+2013,Austria,Western Europe,8479823,47922.04912
+2013,Ireland,Western Europe,4623816,48067.12071
+2010,United States,North America,309338421,48375.40695
+2008,United States,North America,304093966,48401.42734
+2015,Taiwan,East Asia,23492074,48500
+2011,Saudi Arabia,Middle East & North Africa,28238020,48524.63249
+2014,Netherlands,Western Europe,16865008,48606.25361
+2013,Netherlands,Western Europe,16804432,48666.31785
+2015,Denmark,Western Europe,5683483,48674.84075
+2014,Austria,Western Europe,8546356,48787.49159
+2016,Sweden,Western Europe,9923085,48904.55437
+2016,Germany,Western Europe,82348669,48943.1018
+2016,Denmark,Western Europe,5728010,49029.01484
+2016,Taiwan,East Asia,23539816,49100
+2015,Netherlands,Western Europe,16939923,49527.66966
+2011,United States,North America,311644280,49793.71352
+2015,Austria,Western Europe,8642699,49883.0413
+2011,Hong Kong,East Asia,7071600,50085.95933
+2016,Austria,Western Europe,8736668,50521.48262
+2016,Netherlands,Western Europe,17030314,50538.60657
+2012,Saudi Arabia,Middle East & North Africa,29086357,50573.39065
+2016,Iceland,Western Europe,335439,50745.68298
+2014,Ireland,Western Europe,4657740,50994.30614
+2013,Saudi Arabia,Middle East & North Africa,29944476,51264.86615
+2012,Hong Kong,East Asia,7150100,51306.33284
+2012,United States,North America,313993272,51450.95911
+2009,Switzerland,Western Europe,7743831,51759.75274
+2008,Switzerland,Western Europe,7647675,52584.73495
+2014,Saudi Arabia,Middle East & North Africa,30776722,52628.25206
+2013,United States,North America,316234505,52782.08651
+2010,Switzerland,Western Europe,7824909,53119.38653
+2013,Hong Kong,East Asia,7178900,53536.25338
+2015,Saudi Arabia,Middle East & North Africa,31557144,54013.87804
+2016,Saudi Arabia,Middle East & North Africa,32275687,54378.69812
+2014,United States,North America,318622525,54696.72617
+2009,Norway,Western Europe,4828726,55427.57687
+2014,Hong Kong,East Asia,7229500,55610.52343
+2010,United Arab Emirates,Middle East & North Africa,8270684,56074.88069
+2011,Switzerland,Western Europe,7912398,56183.83259
+2015,United States,North America,321039839,56443.81724
+2015,Hong Kong,East Asia,7291300,57068.04043
+2016,United States,North America,323405935,57588.53807
+2012,Switzerland,Western Europe,7996861,57849.58399
+2010,Norway,Western Europe,4889252,58022.03349
+2011,United Arab Emirates,Middle East & North Africa,8672475,58363.67822
+2016,Hong Kong,East Asia,7336600,58681.61806
+2016,Norway,Western Europe,5234519,58808.39076
+2009,United Arab Emirates,Middle East & North Africa,7666393,58822.14614
+2013,Switzerland,Western Europe,8089346,60108.51635
+2012,United Arab Emirates,Middle East & North Africa,8900453,60513.61971
+2009,Singapore,South Asia,4987573,61655.75043
+2015,Norway,Western Europe,5190239,61722.23991
+2008,Norway,Western Europe,4768212,61757.24557
+2014,Switzerland,Western Europe,8188649,61902.16241
+2011,Norway,Western Europe,4953088,62145.02615
+2008,Singapore,South Asia,4839396,63447.48174
+2015,Switzerland,Western Europe,8282396,63648.28802
+2013,United Arab Emirates,Middle East & North Africa,9006263,63839.33558
+2016,Switzerland,Western Europe,8373338,63881.67462
+2012,Norway,Western Europe,5018573,65447.49582
+2014,Norway,Western Europe,5137232,66015.4403
+2013,Norway,Western Europe,5079623,67056.11704
+2014,United Arab Emirates,Middle East & North Africa,9070867,67360.34745
+2008,United Arab Emirates,Middle East & North Africa,6894278,68508.70682
+2015,Ireland,Western Europe,4701957,68576.74433
+2010,Singapore,South Asia,5076732,70657.03495
+2015,United Arab Emirates,Middle East & North Africa,9154302,70887.39073
+2016,Ireland,Western Europe,4755335,71388.75968
+2015,Kuwait,Middle East & North Africa,3935794,72918.00376
+2016,United Arab Emirates,Middle East & North Africa,9269612,73017.48001
+2010,Kuwait,Middle East & North Africa,2998083,73682.86838
+2016,Kuwait,Middle East & North Africa,4052584,74263.99863
+2014,Kuwait,Middle East & North Africa,3782450,74617.69197
+2011,Singapore,South Asia,5183688,75113.20453
+2013,Kuwait,Middle East & North Africa,3598385,76667.70633
+2016,Brunei Darussalam,South Asia,423196,77420.61217
+2011,Kuwait,Middle East & North Africa,3191051,77459.53831
+2012,Singapore,South Asia,5312437,77690.78939
+2010,Brunei Darussalam,South Asia,388662,78923.39047
+2012,Kuwait,Middle East & North Africa,3395556,79047.76387
+2009,Kuwait,Middle East & North Africa,2818939,79296.86474
+2015,Brunei Darussalam,South Asia,417542,79439.06245
+2014,Brunei Darussalam,South Asia,411704,80155.54299
+2013,Singapore,South Asia,5399162,81647.58597
+2013,Brunei Darussalam,South Asia,405716,81827.27346
+2009,Luxembourg,Western Europe,497783,82263.43623
+2011,Brunei Darussalam,South Asia,394013,82434.88309
+2012,Brunei Darussalam,South Asia,399748,83504.30252
+2014,Singapore,South Asia,5469724,85227.06733
+2010,Luxembourg,Western Europe,506953,85696.99591
+2008,Luxembourg,Western Europe,488650,86693.89512
+2015,Singapore,South Asia,5535002,87043.18771
+2016,Singapore,South Asia,5607283,89103.15883
+2008,Kuwait,Middle East & North Africa,2652340,90011.78217
+2012,Luxembourg,Western Europe,530946,91622.177420000007
+2011,Luxembourg,Western Europe,518347,92005.01684
+2013,Luxembourg,Western Europe,543360,95590.5387
+2014,Luxembourg,Western Europe,556319,101640.0534
+2016,Luxembourg,Western Europe,582014,102389.4377
+2015,Luxembourg,Western Europe,569604,102517.1382
+2010,Qatar,Middle East & North Africa,1779676,122609.4108
+2013,Qatar,Middle East & North Africa,2250473,126913.0354
+2014,Qatar,Middle East & North Africa,2374419,127318.901
+2016,Qatar,Middle East & North Africa,2569804,127496.9745
+2012,Qatar,Middle East & North Africa,2109568,127610.2088
+2015,Qatar,Middle East & North Africa,2481539,127648.0503
+2011,Qatar,Middle East & North Africa,1952054,129349.9164
