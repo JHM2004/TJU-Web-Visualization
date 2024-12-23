@@ -23,13 +23,27 @@
                 target = '<span class="highlight">移动端</span>';
                 // 缩小标题字体
                 document.querySelector('.title').style.fontSize = '30px';
-                // 立即跳转
-                window.location.href = './mobile-index.html';
             } else {
                 target = '<span class="highlight">PC端</span>';
-                // 立即跳转
-                window.location.href = './pc-index.html';
             }
+
+            // 倒计时
+            let countdown = 10;
+            const countdownElement = document.getElementById('countdown');
+            countdownElement.innerHTML = `根据自动检测，将在 ${countdown} 秒后自动跳转到${target}页面...`;
+            const interval = setInterval(() => {
+                countdown--;
+                countdownElement.innerHTML = `根据自动检测，将在 ${countdown} 秒后自动跳转到${target}页面...`;
+                if (countdown === 0) {
+                    clearInterval(interval);
+                    // 自动跳转
+                    if (target.includes('移动端')) {
+                        window.location.href = './mobile-index.html';
+                    } else {
+                        window.location.href = './pc-index.html';
+                    }
+                }
+            }, 1000);
         }
     </script>
     <style>
@@ -63,10 +77,13 @@
 
 <body>
     <h1 class="title">生物演化史 - EvoViz</h1>
+    <div style="text-align: center; color: #FF0000; font-size: 20px; margin-top: 20px;">
+        如果移动端开启桌面版网页功能，会导致页面格式显示有问题，请关闭桌面版网页功能或使用PC端访问网站。
+    </div>
     <div id="manual-selection" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
         <button onclick="window.location.href='./pc-index.html'">PC端由此进入&nbsp;&nbsp→</button>
         <button onclick="window.location.href='./mobile-index.html'">移动端由此进入&nbsp;→</button>
-        <div id="countdown">如何没有自动跳转，请手动点击进入网站</div>
+        <div id="countdown">根据自动检测，将在 10 秒后自动跳转...</div>
     </div>
 </body>
 
