@@ -10,9 +10,14 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background: #f0f0f0;
+            background: #000;
         }
-        
+        body {
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 100%; /* 由于缩放，增加宽度 */
+            height: 100%; /* 由于缩放，增加高度 */
+        }
         .node circle {
             fill: #fff;
             stroke: #555;
@@ -275,19 +280,18 @@
 <body>
     <div class="header">
         <h1>生物演化史-Tree-2D</h1>
-        <a href="./biological-evolution-tree-2D.html" class="nav-link">Tidy Tree</a>         
+        <a href="./4-screen-biological-evolution-tree-2D.html" class="nav-link">Tidy Tree</a>         
     </div>
     <div class="control-buttons">
-        <button class="control-button" id="fullscreenBtn">全屏显示</button>
-        <button class="control-button" onclick="window.location.href='./biological-classification-sunburst-2D.html'">生物分类-太阳爆发图-2D</button>
-        <button class="control-button" onclick="window.location.href='./biological-evolution-force-2D.html'">生物演化史-力导向-2D</button>
-        <button class="control-button active" onclick="window.location.href='./biological-evolution-tree-2D.html'">生物演化史-Tree-2D</button>
-        <button class="control-button" onclick="window.location.href='./biological-evolution-dna-3D.html'">生物演化史-DNA双螺旋-3D</button>
-        <button class="control-button" onclick="window.location.href='./biological-evolution-star-3D.html'">生物演化史-星空图-3D</button>
-        <button class="control-button" onclick="window.location.href='./biological-evolution-tree-3D.html'">生物演化史-Tree-3D</button>
-        <button class="control-button" onclick="window.location.href='./biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
-        <button class="control-button" onclick="window.location.href='./paleo-geography-3D.html'">地球古地理-3D</button>
-        <button class="control-button" onclick="window.location.href='./pc-index.html'">返回导航页</button>
+        <!-- <button class="control-button" id="fullscreenBtn">全屏显示</button> -->
+        <button class="control-button" onclick="window.location.href='./4-screen-biological-classification-sunburst-2D.html'">生物分类-太阳爆发图-2D</button>
+        <button class="control-button" onclick="window.location.href='./4-screen-biological-evolution-force-2D.html'">生物演化史-力导向-2D</button>
+        <button class="control-button active" onclick="window.location.href='./4-screen-biological-evolution-tree-2D.html'">生物演化史-Tree-2D</button>
+        <button class="control-button" onclick="window.location.href='./4-screen-biological-evolution-dna-3D.html'">生物演化史-DNA双螺旋-3D</button>
+        <button class="control-button" onclick="window.location.href='./4-screen-biological-evolution-star-3D.html'">生物演化史-星空图-3D</button>
+        <button class="control-button" onclick="window.location.href='./4-screen-biological-evolution-tree-3D.html'">生物演化史-Tree-3D</button>
+        <button class="control-button" onclick="window.location.href='./4-screen-biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
+        <button class="control-button" onclick="window.location.href='./4-screen-paleo-geography-3D.html'">地球古地理-3D</button>
     </div>
     <div class="bottom-time-filter">
         <input type="range" id="timeSlider" min="0" max="500000" value="500000">
@@ -520,7 +524,7 @@
         function updateView(threshold) {
             const visibleNodes = new Set();
             
-            // 一遍遍历：找出时间小于阈值的节点(表示更近的时间)
+            // 一遍遍历：找出时间小于阈值的点(表示更近的时间)
             root.descendants().forEach(d => {
                 const time = parseTime(d.data.time);
                 if (time === 0 || time <= threshold) {

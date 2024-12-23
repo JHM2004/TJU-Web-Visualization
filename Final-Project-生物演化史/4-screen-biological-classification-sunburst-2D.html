@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 简 单 的 生 物 分 类 </title>
+    <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="./biological-classification-data.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+         body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            background-color: #000000;
+            user-select: none;
+        }
+        
+        path {
+            stroke: #fff;
+            stroke-width: 1px;
+            fill-opacity: 0.8;
+        }
+
+        path:hover {
+            opacity: 0.9;
+            cursor: pointer;
+        }
+
+        text {
+            font-size: 15px;
+            font-weight: bold;
+            fill: #fff;
+            pointer-events: none;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+
+        .depth-1 text {
+            font-size: 19px;
+        }
+        
+        .depth-2 text {
+            font-size: 17px;
+        }
+        
+        .depth-3 text {
+            font-size: 16px;
+        }
+
+        .center-text {
+            font-size: 22px;
+            font-weight: bold;
+            fill: #ffffff;
+            paint-order: stroke;
+            stroke: #000000;
+            stroke-width: 1px;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+            pointer-events: none; /* 防止文字影响鼠标事件 */
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+
+        .center-text {
+            paint-order: stroke;
+            stroke: #000000;
+            stroke-width: 1px;
+            stroke-linecap: butt;
+            stroke-linejoin: miter;
+        }
+
+        .circle-text {
+            cursor: default;
+        }
+
+        #background-container {
+            display: none;
+        }
+
+        svg {
+            width: 200%;
+            max-width: 1000px;
+            height: 200%;
+            min-width: 300px;
+            aspect-ratio: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            transition: transform 0.1s linear;
+        }
+
+        svg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(240, 240, 240, 0.3);
+        }
+
+        /* 按钮容器样式 */
+        .control-buttons {
+            position: fixed;
+            top: 20px;
+            right: 5px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* 按钮样式 */
+        .control-btn {
+            background: rgba(0, 128, 0, 0.7);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            width: 125px;
+            text-align: center;
+        }
+
+        /* 激活状态的按钮样式 */
+        .control-btn.active {
+            background: #2196f3;
+            transform: scale(1.05);
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 100, 0, 0.9);
+            transform: scale(1.05);
+        }
+
+        .control-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* 添加内容容器样式 */
+        .content-container {
+            display: flex;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+            max-width: 1800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        /* 修改右侧信息面板样式 */
+        .info-panel {
+            flex: 1;
+            min-width: 300px;
+            max-width: 600px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .info-panel.fixed {
+            position: fixed;
+            right: 0px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .info-image.fixed {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .info-panel img {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+        }
+
+        .info-panel .description {
+            padding: 25px;
+            line-height: 1.8;
+            max-height: 300px;
+            overflow-y: auto;
+            font-size: 16px;
+        }
+
+        .control-tips {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: #ff4444;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.5;
+            z-index: 1000;
+            text-shadow: 0 0 2px rgba(255, 255, 255, 0.8); /* 添加白色文字阴影提高可读性 */
+        }
+
+        .search-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            width: 300px;
+        }
+
+        #searchInput {
+            width: 90%;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .search-result-item:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background: rgba(255, 255, 0, 0.3);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .search-history-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 15px;
+            background: #f5f5f5;
+            margin-bottom: 5px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .search-result-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        /* 添加清空历史按钮的样式 */
+        .clear-history {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 5px;
+            font-size: 12px;
+            margin-left: auto; /* 确保按钮在右侧 */
+        }
+
+        .clear-history:hover {
+            color: #ff4444;
+        }
+
+        /* 更新放大镜样式 */
+        #magnifier {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 250px;
+            height: 250px;
+            border: 3px solid rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            overflow: hidden;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            pointer-events: none; /* 防止放大镜阻挡鼠标事件 */
+        }
+
+        #magnifierCanvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        body {
+            transform: scale(0.49);
+            transform-origin: top left;
+            width: 100%; /* 由于缩放，增加宽度 */
+            height: 100%; /* 由于缩放，增加高度 */
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="control-tips">
+        按住 Q 键逆时针旋转<br>
+        按住 E 键顺时针旋转<br>
+        W键/↑键 同层逆时针移动<br>
+        S键/↓键 同层顺时针移动<br>
+        A键/←键 向圆心移动<br>
+        D键/→键 向外圈移动
+    </div>
+    <div class="content-container">
+        <svg width="1000" height="1000"></svg>
+        <div class="info-panel">
+            <img id="species-image" src="" alt="Species Image" style="display: none;">
+            <div id="species-description" class="description">
+                <h1 style="font-size: 3em; text-align: center; margin-top: 50px;"> 简 单 的 生 物 分 类 </h1>
+            </div>
+        </div>
+    </div>
+    <div class="control-buttons">
+        <button id="enterFullscreen" class="control-btn">
+            <span>进入全屏</span>
+        </button>
+        <button id="exitFullscreen" class="control-btn" style="display: none;">
+            <span>退出全屏</span>
+        </button>
+        <button class="control-btn active" onclick="window.location.href='./4-screen-biological-classification-sunburst-2D.html'">
+            <span>生物分类-太阳爆发图-2D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-biological-evolution-force-2D.html'"> 
+            <span>生物演化史-力导向-2D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-biological-evolution-tree-2D.html'">
+            <span>生物演化史-Tree-2D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-biological-evolution-dna-3D.html'">
+            <span>生物演化史-DNA双螺旋-3D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-biological-evolution-star-3D.html'">
+            <span>生物演化史-星空图-3D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-biological-evolution-tree-3D.html'">
+            <span>生物演化史-Tree-3D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-biological-evolution-visualization-3D.html'">
+            <span>生物演化史-可视化大屏-3D</span>
+        </button>
+        <button class="control-btn" onclick="window.location.href='./4-screen-paleo-geography-3D.html'">
+            <span>地球古地理-3D</span>
+        </button>
+        <!-- <button class="control-btn" onclick="window.location.href='./pc-index.html'">返回导航页</button> -->
+    </div>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="搜索生物名称...">
+        <div id="searchResults" class="search-results"></div>
+    </div>
+
+    <div id="magnifier">
+        <canvas id="magnifierCanvas"></canvas>
+    </div>
+
+    <script>
+
+    // 1. 定义常量
+    const width = 1000;
+    const height = 1000;
+    const radius = Math.min(width, height) / 2.0;
+    let currentRotation = 0;
+    let dragStartRotation = 0;
+    let dragStartAngle = 0;
+    let isDragging = false;
+    let rotationSpeed = 2;    // 每次旋转的角度
+    let isRotating = false;   // 是否正在旋转
+    let rotationInterval;     // 存储轮转定时器
+    let rotationIntervalQ;    // Q键的旋转定时器
+    let rotationIntervalE;    // E键的旋转定时器
+
+    // 2. 创建颜色生成函数
+    const color = d => {
+        // 检查节点所属分支
+        let node = d;
+        while (node.parent) {
+            // 检查动物界 - 修改为橙色系
+            if (node.data.name === "动物界") {
+                return d3.scaleLinear()
+                    .domain([0, 5]) 
+                    .range(["#FFA500", "#FF8C00"])(d.depth); // 使用不同深浅的橙色
+            }
+            // 其他分支保持原来的颜色
+            if (node.data.name === "古菌界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#4169E1", "#191970"])(d.depth);
+            }
+            if (node.data.name === "细菌界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#A9A9A9", "#404040"])(d.depth);
+            }
+            if (node.data.name === "植物界") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#90EE90", "#006400"])(d.depth);
+            }
+            if (node.data.name === "原生生物") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#DEB887", "#8B4513"])(d.depth);
+            }
+            if (node.data.name === "真核生物") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#9932CC", "#4B0082"])(d.depth);
+            }
+            if (node.data.name === "原核生物") {
+                return d3.scaleLinear()
+                    .domain([0, 5])
+                    .range(["#BA55D3", "#800080"])(d.depth);
+            }
+            node = node.parent;
+        }
+        // 其他节点的默认颜色
+        return d3.scaleLinear()
+            .domain([0, 5])
+            .range(["#FF8C00", "#FF4500"])(d.depth);
+    };
+
+    // 3. 创建SVG元素
+    const svg = d3.select("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width/2},${height/2})`);
+
+    // 4. 创建分区布局
+    const partition = data => {
+        const root = d3.hierarchy(data)
+            .sum(d => 1)
+            .sort((a, b) => b.value - a.value);
+        return d3.partition()
+            .size([2 * Math.PI, radius])
+            .padding(0.005)
+            (root);
+    };
+
+    // 5. 创建弧生成器
+    const arc = d3.arc()
+        .startAngle(d => d.x0)
+        .endAngle(d => d.x1)
+        .padAngle(0.005)
+        .padRadius(radius / 2)
+        .innerRadius(d => d.y0)
+        .outerRadius(d => d.y1 - 1);
+
+    // 6. 处理数据
+    const root = partition(data);
+    root.each(d => d.current = d);
+
+    // 7. 创建路径
+    const path = svg.append("g")
+        .selectAll("path")
+        .data(root.descendants().slice(1))
+        .join("path")
+        .attr("fill", d => color(d))
+        .attr("fill-opacity", 0.8)
+        .attr("d", d => arc(d.current))
+        .attr("class", "node")
+        .attr("data-name", d => d.data.name)
+        .attr("stroke", "#fff")
+        .attr("stroke-width", "1px");
+
+    // 8. 创建文本标签
+    const text = svg.append("g")
+        .attr("pointer-events", "none")
+        .selectAll("text")
+        .data(root.descendants().slice(1))
+        .join("text")
+        .attr("class", d => `depth-${d.depth}`)
+        .attr("transform", function(d) {
+            const x = (d.x0 + d.x1) / 2 * 180 / Math.PI;
+            const y = (d.y0 + d.y1) / 2;
+            return `rotate(${x - 90}) translate(${y},0) rotate(${x < 180 ? 0 : 180})`;
+        })
+        .attr("dy", ".35em")
+        .attr("text-anchor", "middle")
+        .text(d => d.data.name);
+
+    // 确文在最上层
+    text.raise();
+
+    // 确保先创建中心圆
+    const centerCircle = svg.append("circle")
+        .attr("r", 45)
+        .attr("fill", "#000000")
+        .attr("stroke", "#ffffff")
+        .attr("stroke-width", "1px");
+
+    // 然后在圆上方创建文字，并确保文字在最上层
+    const centerText = svg.append("text")
+        .attr("class", "center-text")
+        .attr("text-anchor", "middle")
+        .attr("dominant-baseline", "middle") // 添加垂直齐
+        .attr("x", 0)  // 确保位置在中心
+        .attr("y", 0)  // 确保位置在中心
+        .attr("fill", "#ffffff")
+        .style("font-size", "20px")
+        .style("font-weight", "bold")
+        .text("生物分类");
+
+    // 确保文字在最上层
+    centerText.raise();
+
+    // 10. 添加拖拽功能
+    d3.select("body")
+        .style("cursor", "move")
+        .on("mousedown", dragstarted)
+        .on("mousemove", dragged);
+
+    // 将mouseup事件监听器添加到window象
+    d3.select(window)
+        .on("mouseup", dragended)
+        .on("mouseleave", dragended);  // 添加mouseleave事件处理
+
+    function dragstarted(event) {
+        isDragging = true;
+        dragStartAngle = Math.atan2(event.pageY - height/2, event.pageX - width/2) * 180 / Math.PI;
+        dragStartRotation = currentRotation;
+    }
+
+    function dragged(event) {
+        if (!isDragging) return;
+        const currentAngle = Math.atan2(event.pageY - height/2, event.pageX - width/2) * 180 / Math.PI;
+        const deltaAngle = currentAngle - dragStartAngle;
+        currentRotation = dragStartRotation + deltaAngle;
+        svg.attr("transform", `translate(${width/2},${height/2}) rotate(${currentRotation})`);
+    }
+
+    function dragended() {
+        isDragging = false;
+    }
+
+    // 11. 修改鼠标悬停效
+    path.on("mouseover", function(event, d) {
+        // 更新右侧信息面板
+        const infoPanel = d3.select(".info-panel");
+        
+        // 显示图片
+        d3.select("#species-image")
+            .attr("src", d.data.src || "")
+            .style("display", d.data.src ? "block" : "none");
+        
+        // 清除初始标题
+        d3.select("#species-description")
+            .style("text-align", "center")
+            .html(`
+                <strong style="font-size: 1.5em; margin-bottom: 15px; display: block;">${d.data.name}</strong>
+                <div style="margin: 12px 0; font-size: 1.1em;">
+                    <strong>时期:</strong> ${d.data.time}
+                </div>
+                <div style="margin: 12px 0; font-size: 1.1em;">
+                    <strong>简要描述:</strong> ${d.data.description}
+                </div>
+                ${d.data.description_more ? `
+                    <div style="margin: 12px 0; font-size: 1.1em;">
+                        <strong>详细描述:</strong> ${d.data.description_more}
+                    </div>
+                ` : ''}
+            `);
+
+        // 显示信息面板
+        infoPanel
+            .style("opacity", "1")
+            .style("visibility", "visible");
+    })
+    .on("mouseout", function() {
+        if (!isFixed) {
+            // 恢复初始显示状态
+            d3.select("#species-image").style("display", "none");
+            d3.select("#species-description")
+                .html('<h1 style="font-size: 3em; text-align: center; margin-top: 50px;"> 生 物 分 类 </h1>');
+        }
+    });
+
+    // 12. 添加平滑过渡效果
+    svg.style("transition", "transform 0.1s");
+
+    // 在脚本开始处添加预加载数
+    function preloadImages(data) {
+        function traverse(node) {
+            if (node.src) {
+                const img = new Image();
+                img.src = node.src;
+            }
+            if (node.children) {
+                node.children.forEach(traverse);
+            }
+        }
+        traverse(data);
+    }
+
+    // 数据加载后调用
+    preloadImages(data);
+
+    // 在脚本末尾添加全屏控制代码
+    const enterFullscreenBtn = document.getElementById('enterFullscreen');
+    const exitFullscreenBtn = document.getElementById('exitFullscreen');
+
+    // 进入全屏
+    enterFullscreenBtn.addEventListener('click', function() {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
+        }
+    });
+
+    // 退出全屏
+    exitFullscreenBtn.addEventListener('click', function() {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    });
+
+    // 监听全屏状态变化
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+    document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+    document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+
+    function handleFullscreenChange() {
+        if (document.fullscreenElement || 
+            document.webkitFullscreenElement || 
+            document.mozFullScreenElement ||
+            document.msFullscreenElement) {
+            // 进入全屏
+            enterFullscreenBtn.style.display = 'none';
+            exitFullscreenBtn.style.display = 'block';
+        } else {
+            // 退出全屏
+            enterFullscreenBtn.style.display = 'block';
+            exitFullscreenBtn.style.display = 'none';
+        }
+        // 更新 SVG 尺寸
+        updateDimensions();
+    }
+
+    // 确保按钮在初始状态下正示
+    if (document.fullscreenElement) {
+        enterFullscreenBtn.style.display = 'none';
+        exitFullscreenBtn.style.display = 'block';
+    } else {
+        enterFullscreenBtn.style.display = 'block';
+        exitFullscreenBtn.style.display = 'none';
+    }
+
+    let isFixed = false;
+
+    function handleNodeClick(event, d) {
+        // 阻止事件冒泡
+        event.stopPropagation();
+        
+        const infoPanel = document.querySelector('.info-panel');
+        const infoImage = document.querySelector('.info-image');
+        
+        if (!isFixed) {
+            // 固定面板
+            infoPanel.classList.add('fixed');
+            infoImage.classList.add('fixed');
+            isFixed = true;
+        } else {
+            // 取消固定
+            infoPanel.classList.remove('fixed');
+            infoImage.classList.remove('fixed');
+            isFixed = false;
+        }
+
+        // 更新信息面内容
+        updateInfoPanel(d);
+    }
+
+    // 添加点击空白处取消固定的功能
+    document.addEventListener('click', (event) => {
+        const infoPanel = document.querySelector('.info-panel');
+        const infoImage = document.querySelector('.info-image');
+        
+        // 如果点击的不是节点也不是信息面板，则取消固定
+        if (isFixed && !event.target.closest('.node') && !event.target.closest('.info-panel')) {
+            infoPanel.classList.remove('fixed');
+            infoImage.classList.remove('fixed');
+            isFixed = false;
+        }
+    });
+
+    // 添加键盘事件监听
+    document.addEventListener('keydown', function(event) {
+        switch(event.key.toLowerCase()) {
+            case 'q':
+                if (!rotationIntervalQ) {
+                    rotationIntervalQ = setInterval(() => {
+                        currentRotation -= rotationSpeed;
+                        updateRotation();
+                    }, 16);
+                }
+                break;
+            case 'e':
+                if (!rotationIntervalE) {
+                    rotationIntervalE = setInterval(() => {
+                        currentRotation += rotationSpeed;
+                        updateRotation();
+                    }, 16);
+                }
+                break;
+            
+            // 添加方向键和WASD的控制逻辑
+            case 'w':
+            case 'arrowup':
+                event.preventDefault();
+                navigateNodes('ccw'); // 逆时针
+                break;
+            case 's':
+            case 'arrowdown':
+                event.preventDefault();
+                navigateNodes('cw');  // 顺时针
+                break;
+            case 'a':
+            case 'arrowleft':
+                event.preventDefault();
+                navigateNodes('in');  // 向内
+                break;
+            case 'd':
+            case 'arrowright':
+                event.preventDefault();
+                navigateNodes('out'); // 向外
+                break;
+        }
+    });
+
+    // 监听按键释放
+    document.addEventListener('keyup', function(event) {
+        switch(event.key.toLowerCase()) {
+            case 'q':
+                if (rotationIntervalQ) {
+                    clearInterval(rotationIntervalQ);
+                    rotationIntervalQ = null;
+                }
+                break;
+            case 'e':
+                if (rotationIntervalE) {
+                    clearInterval(rotationIntervalE);
+                    rotationIntervalE = null;
+                }
+                break;
+        }
+    });
+
+    // 更转角度
+    function updateRotation() {
+        const svg = document.querySelector('svg');
+        if (svg) {
+            svg.style.transform = `rotate(${currentRotation}deg)`;
+        }
+    }
+
+    // 修改原有的SVG建代码，确保svg变量可被访问
+    const svg2 = d3.select('#tree-container')
+        .append('svg')
+        .attr('viewBox', `${-width / 2} ${-height / 2} ${width} ${height}`)
+        .style('transform-origin', 'center'); // 添加旋转中心点
+
+    // 添加当前选中节点的追踪
+    let currentSelectedNode = null;
+    let currentSelectedIndex = -1;
+
+    // 修改提示文字
+    document.querySelector('.control-tips').innerHTML = `
+        按住 Q 键逆时针旋转<br>
+        按住 E 键顺时针旋转<br>
+        W键/↑键 同层逆时针移动<br>
+        S键/↓键 同层顺时针移动<br>
+        A键/←键 向圆心移动<br>
+        D键/→键 向外圈移动
+    `;
+
+    // 添加节点导航函数
+    function navigateNodes(direction) {
+        const nodes = root.descendants().slice(1);
+        
+        // 如果没有选中节点，选择最外圈的第一个节点
+        if (currentSelectedIndex === -1) {
+            currentSelectedIndex = 0;
+            currentSelectedNode = nodes[0];
+        } else {
+            const currentDepth = currentSelectedNode.depth;
+            
+            switch(direction) {
+                case 'in': // A键 - 向内圈移动
+                    const innerNodes = nodes.filter(n => 
+                        n.depth < currentSelectedNode.depth && 
+                        n.x0 <= currentSelectedNode.x1 && 
+                        n.x1 >= currentSelectedNode.x0
+                    );
+                    if (innerNodes.length > 0) {
+                        currentSelectedNode = innerNodes.reduce((prev, curr) => 
+                            (curr.depth > prev.depth) ? curr : prev
+                        );
+                    }
+                    break;
+                    
+                case 'out': // D键 - 向外圈移动
+                    const outerNodes = nodes.filter(n => 
+                        n.depth > currentSelectedNode.depth && 
+                        n.x0 <= currentSelectedNode.x1 && 
+                        n.x1 >= currentSelectedNode.x0
+                    );
+                    if (outerNodes.length > 0) {
+                        currentSelectedNode = outerNodes.reduce((prev, curr) => 
+                            (curr.depth < prev.depth) ? curr : prev
+                        );
+                    }
+                    break;
+                    
+                case 'ccw': // W键 - 同层逆时针移动
+                    const sameDepthNodesCCW = nodes.filter(n => n.depth === currentDepth);
+                    const currentIndex = sameDepthNodesCCW.findIndex(n => n === currentSelectedNode);
+                    currentSelectedNode = sameDepthNodesCCW[(currentIndex - 1 + sameDepthNodesCCW.length) % sameDepthNodesCCW.length];
+                    break;
+                    
+                case 'cw': // S键 - 同层顺时针移动
+                    const sameDepthNodesCW = nodes.filter(n => n.depth === currentDepth);
+                    const currentIndexCW = sameDepthNodesCW.findIndex(n => n === currentSelectedNode);
+                    currentSelectedNode = sameDepthNodesCW[(currentIndexCW + 1) % sameDepthNodesCW.length];
+                    break;
+            }
+        }
+        
+        // 更新当前选中节点的索引
+        currentSelectedIndex = nodes.findIndex(n => n === currentSelectedNode);
+        
+        // 重置所有节点颜色并将当前节点设为黑色
+        path.attr("fill", d => d === currentSelectedNode ? "#000000" : color(d))
+            .attr("fill-opacity", 0.8);
+        
+        // 只更新右侧信息面板
+        updateInfoPanel(currentSelectedNode);
+    }
+
+    // 新增更新右侧信息面板的函数
+    function updateInfoPanel(node) {
+        const infoPanel = d3.select(".info-panel");
+        
+        // 更新片
+        if (node.data.src) {
+            d3.select("#species-image")
+                .attr("src", node.data.src)
+                .style("display", "block");
+        } else {
+            d3.select("#species-image")
+                .style("display", "none");
+        }
+
+        // 更新描述文字
+        if (node.data.description_more) {
+            d3.select("#species-description")
+                .html(node.data.description_more)
+                .style("display", "block");
+        } else {
+            d3.select("#species-description")
+                .html(node.data.description) // 如果没有详细描述，使用基本描述
+                .style("display", "block");
+        }
+
+        // 显示信息面板
+        infoPanel
+            .style("opacity", "1")
+            .style("visibility", "visible");
+    }
+
+    // 添加点击其他区域时重置所有节点颜色的能
+    document.addEventListener('click', (event) => {
+        if (!event.target.closest('.node')) {
+            // 重置所有节点的颜色
+            path.attr("fill", d => color(d))
+                .attr("fill-opacity", 0.8);
+            currentSelectedNode = null;
+            currentSelectedIndex = -1;
+        }
+    });
+
+    // 在 script 标签中添加搜索相关函数
+    function getAllNodes(data) {
+        let nodes = [];
+        
+        function traverse(node, path = []) {
+            const currentPath = [...path, node.name];
+            nodes.push({
+                name: node.name,
+                path: currentPath,
+                data: node
+            });
+            
+            if (node.children) {
+                node.children.forEach(child => traverse(child, currentPath));
+            }
+        }
+        
+        traverse(data);
+        return nodes;
+    }
+
+    // 初始化搜索功能
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    const allNodes = getAllNodes(data);
+
+    let activeHighlight = null;
+
+    // 修改搜索历史相关的代码
+    const MAX_HISTORY_ITEMS = 5; // 最大历史记录数
+    let searchHistory = []; // 存储搜索历史
+
+    // 修改添加搜索历史的函数
+    function addToSearchHistory(item) {
+        // 检查是否已存在相项
+        const existingIndex = searchHistory.findIndex(historyItem => historyItem.name === item.name);
+        
+        if (existingIndex !== -1) {
+            // 如果存在，将其移到开头
+            searchHistory.splice(existingIndex, 1);
+        }
+        
+        // 添新项到开头
+        searchHistory.unshift({
+            name: item.name,
+            path: item.path,
+            data: item.data
+        });
+        
+        // 制历史记录数量
+        if (searchHistory.length > MAX_HISTORY_ITEMS) {
+            searchHistory.pop();
+        }
+
+        // 可以选择将历史记录保存到 localStorage
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    }
+
+    // 修改显示搜索历史的函数
+    function showSearchHistory() {
+        searchResults.innerHTML = '';
+        
+        // 如果有搜索历史则显示
+        if (searchHistory.length > 0) {
+            searchResults.style.display = 'block';
+            
+            // 添加历史记录标题和清空按钮
+            const historyTitle = document.createElement('div');
+            historyTitle.className = 'search-history-title';
+            
+            const titleText = document.createElement('span');
+            titleText.textContent = '搜索历史';
+            
+            const clearButton = document.createElement('button');
+            clearButton.className = 'clear-history';
+            clearButton.textContent = '清空历史';
+            clearButton.onclick = clearSearchHistory;
+            
+            historyTitle.appendChild(titleText);
+            historyTitle.appendChild(clearButton);
+            searchResults.appendChild(historyTitle);
+            
+            // 显示历史记录项
+            searchHistory.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'search-result-item';
+                div.textContent = item.path.join(' > ');
+                
+                div.addEventListener('click', () => {
+                    handleSearchResultClick(item);
+                });
+                
+                searchResults.appendChild(div);
+            });
+        }
+    }
+
+    // 添加清空搜索历史的函数
+    function clearSearchHistory() {
+        searchHistory = [];
+        localStorage.removeItem('searchHistory');
+        searchResults.style.display = 'none';
+        
+        // 阻止事件冒泡，防止触发搜索框的点击事件
+        event.stopPropagation();
+    }
+
+    // 修改搜索结果点击处理函数
+    function handleSearchResultClick(match) {
+        // 查找完整的节点数据
+        const targetNode = root.descendants().find(d => d.data.name === match.name);
+        if (!targetNode) return;
+
+        // 高亮显示找到的节点
+        path.attr("fill", d => {
+            if (d.data.name === match.name) {
+                activeHighlight = d;
+                return "#FFD700"; // 高亮颜色
+            }
+            return color(d);
+        }).attr("fill-opacity", d => d.data.name === match.name ? 1 : 0.8);
+        
+        // 更新信面板
+        updateInfoPanel(targetNode);
+        
+        // 添加到搜索历史
+        addToSearchHistory({
+            name: match.name,
+            path: getNodePath(targetNode),
+            data: targetNode
+        });
+        
+        // 清空搜索框和结果
+        searchInput.value = '';
+        searchResults.style.display = 'none';
+        
+        // 自动旋转到目节点
+        const targetAngle = ((targetNode.x0 + targetNode.x1) / 2 * 180 / Math.PI) - 90;
+        currentRotation = -targetAngle;
+        updateRotation();
+    }
+
+    // 添加获取节点路径的辅助函数
+    function getNodePath(node) {
+        const path = [];
+        let current = node;
+        while (current) {
+            path.unshift(current.data.name);
+            current = current.parent;
+        }
+        return path;
+    }
+
+    // 在页面加载时恢复搜索历史
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedHistory = localStorage.getItem('searchHistory');
+        if (savedHistory) {
+            try {
+                searchHistory = JSON.parse(savedHistory);
+            } catch (e) {
+                console.error('Failed to parse search history:', e);
+                searchHistory = [];
+            }
+        }
+    });
+
+    // 修改搜索输入事件处
+    searchInput.addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        
+        // 清除之前的高亮
+        if (activeHighlight) {
+            path.attr("fill", d => color(d))
+                .attr("fill-opacity", 0.8);
+            activeHighlight = null;
+        }
+        
+        if (searchTerm.length < 1) {
+            showSearchHistory(); // 显示搜索历史
+            return;
+        }
+        
+        // 搜索节点
+        const matches = root.descendants()
+            .filter(node => node.data.name.toLowerCase().includes(searchTerm))
+            .map(node => ({
+                name: node.data.name,
+                path: getNodePath(node),
+                data: node
+            }));
+        
+        searchResults.innerHTML = '';
+        searchResults.style.display = matches.length ? 'block' : 'none';
+        
+        matches.forEach(match => {
+            const div = document.createElement('div');
+            div.className = 'search-result-item';
+            div.textContent = match.path.join(' > ');
+            
+            div.addEventListener('click', () => {
+                handleSearchResultClick(match);
+            });
+            
+            searchResults.appendChild(div);
+        });
+    });
+
+    // 添加搜索框焦点事件
+    searchInput.addEventListener('focus', function() {
+        if (!this.value) {
+            showSearchHistory();
+        }
+    });
+
+    // 修改搜索相关事件监听
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.querySelector('.search-container');
+        const searchResults = document.getElementById('searchResults');
+        
+        // 如果点击的不是搜索框相关的元素，则隐藏搜索结果
+        if (!searchContainer.contains(event.target)) {
+            searchResults.style.display = 'none';
+        }
+    });
+
+    // 防止搜索结果框的点击事件冒泡到document
+    searchResults.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    // 修改搜索框点击事件，阻止冒泡
+    searchInput.addEventListener('click', function(event) {
+        event.stopPropagation();
+        if (!this.value) {
+            showSearchHistory();
+        }
+    });
+
+    // 修改放大镜相关代码
+    const magnifier = document.getElementById('magnifier');
+    const canvas = document.getElementById('magnifierCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // 创建离屏canvas用于双缓冲
+    const offscreenCanvas = document.createElement('canvas');
+    const offscreenCtx = offscreenCanvas.getContext('2d');
+
+    // 设置两个canvas的实际尺寸
+    canvas.width = canvas.height = 250;
+    offscreenCanvas.width = offscreenCanvas.height = 250;
+
+    // 增大放大倍数
+    const ZOOM = 2.5;
+
+    // 防抖函数
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
+    // 更新放大镜内容
+    function updateMagnifier(e) {
+        const svgElement = document.querySelector('svg');
+        if (!svgElement) return;
+
+        // 获取SVG的位置和尺寸
+        const svgRect = svgElement.getBoundingClientRect();
+        const mouseX = e.clientX - svgRect.left;
+        const mouseY = e.clientY - svgRect.top;
+
+        // 清除离屏canvas
+        offscreenCtx.clearRect(0, 0, offscreenCanvas.width, offscreenCanvas.height);
+        
+        // 创建圆形裁剪区域
+        offscreenCtx.save();
+        offscreenCtx.beginPath();
+        offscreenCtx.arc(offscreenCanvas.width / 2, offscreenCanvas.height / 2, offscreenCanvas.width / 2, 0, Math.PI * 2);
+        offscreenCtx.clip();
+
+        // 将SVG转换为图片
+        const svgString = new XMLSerializer().serializeToString(svgElement);
+        const img = new Image();
+        const blob = new Blob([svgString], {type: 'image/svg+xml'});
+        const url = URL.createObjectURL(blob);
+
+        img.onload = () => {
+            // 计算缩放和位置
+            const scale = ZOOM;
+            const dx = offscreenCanvas.width / 2 - mouseX * scale;
+            const dy = offscreenCanvas.height / 2 - mouseY * scale;
+
+            // 在离屏canvas上绘制
+            offscreenCtx.drawImage(img, dx, dy, svgRect.width * scale, svgRect.height * scale);
+            offscreenCtx.restore();
+
+            // 将离屏canvas的内容复制到显示canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(offscreenCanvas, 0, 0);
+
+            URL.revokeObjectURL(url);
+        };
+
+        img.src = url;
+    }
+
+    // 使用防抖处理更新
+    const debouncedUpdate = debounce(updateMagnifier, 16); // 约60fps
+
+    // 控制放大镜的显示和隐藏
+    let magnifierVisible = false;
+    const toggleMagnifier = document.createElement('button');
+    toggleMagnifier.className = 'control-btn';
+    toggleMagnifier.innerHTML = '<span>显示放大镜</span>';
+    toggleMagnifier.onclick = function() {
+        magnifierVisible = !magnifierVisible;
+        magnifier.style.display = magnifierVisible ? 'block' : 'none';
+        this.innerHTML = `<span>${magnifierVisible ? '隐藏' : '显示'}放大镜</span>`;
+    };
+
+    // 将按钮添加到控按钮容器
+    document.querySelector('.control-buttons').appendChild(toggleMagnifier);
+
+    // 初始隐藏放大镜
+    magnifier.style.display = 'none';
+
+    // 优化的鼠标移动事件处理
+    document.addEventListener('mousemove', (e) => {
+        if (magnifierVisible) {
+            requestAnimationFrame(() => debouncedUpdate(e));
+        }
+    });
+</script>
+</body>
+</html>

@@ -7,9 +7,12 @@
     <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
     <style>
         body {
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 100%; /* 由于缩放，增加宽度 */
+            height: 100%; /* 由于缩放，增加高度 */
             margin: 0;
         }
-
         canvas {
             display: block;
         }
@@ -234,16 +237,15 @@
     </div>
     <!-- 在body标签内添加导航按钮组 -->
     <div id="navButtons">
-        <button id="fullscreen-btn" class="navButton">全屏显示</button>
-        <a href="./biological-classification-sunburst-2D.html" class="navButton">生物分类-太阳爆发图-2D</a>
-        <a href="./biological-evolution-force-2D.html" class="navButton">生物演化史-力导向-2D</a>
-        <a href="./biological-evolution-tree-2D.html" class="navButton">生物演化史-Tree-2D</a>
-        <a href="./biological-evolution-dna-3D.html" class="navButton">生物演化史-DNA双螺旋-3D</a>
-        <a href="./biological-evolution-star-3D.html" class="navButton">生物演化史-星空图-3D</a>
-        <a href="./biological-evolution-tree-3D.html" class="navButton">生物演化史-Tree-3D</a>
-        <a href="./biological-evolution-visualization-3D.html" class="navButton">生物演化史-可视化大屏-3D</a>
-        <a href="./paleo-geography-3D.html" class="navButton active">地球古地理-3D</a>
-        <a href="./pc-index.html" class="navButton">返回导航页</a>
+        <!-- <button id="fullscreen-btn" class="navButton">全屏显示</button> -->
+        <a href="./4-screen-biological-classification-sunburst-2D.html" class="navButton">生物分类-太阳爆发图-2D</a>
+        <a href="./4-screen-biological-evolution-force-2D.html" class="navButton">生物演化史-力导向-2D</a>
+        <a href="./4-screen-biological-evolution-tree-2D.html" class="navButton">生物演化史-Tree-2D</a>
+        <a href="./4-screen-biological-evolution-dna-3D.html" class="navButton">生物演化史-DNA双螺旋-3D</a>
+        <a href="./4-screen-biological-evolution-star-3D.html" class="navButton">生物演化史-星空图-3D</a>
+        <a href="./4-screen-biological-evolution-tree-3D.html" class="navButton">生物演化史-Tree-3D</a>
+        <a href="./4-screen-biological-evolution-visualization-3D.html" class="navButton">生物演化史-可视化大屏-3D</a>
+        <a href="./4-screen-paleo-geography-3D.html" class="navButton active">地球古地理-3D</a>
     </div>
 
     <div id="info">地球古地理-大陆漂移</div>

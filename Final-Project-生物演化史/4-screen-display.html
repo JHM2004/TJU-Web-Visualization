@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四象限展示</title>
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            height: 100vh;
+            margin: 0;
+            box-sizing: border-box; /* 包含边框在内的计算 */
+        }
+        .quadrant {
+            width: calc(50% - 2px); /* 减去边框宽度 */
+            height: calc(50% - 2px); /* 减去边框宽度 */
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #ccc; /* 边框样式 */
+            box-sizing: border-box; /* 包含边框在内的计算 */
+            margin: 1px; /* 添加间隔 */
+        }
+        iframe {
+            width: 200%;
+            height: 200%;
+            border: none; /* 去掉 iframe 边框 */
+            transform-origin: top left; /* 设置缩放的原点 */
+        }
+    </style>
+</head>
+<body>
+    <div class="quadrant" id="top-left"></div>
+    <div class="quadrant" id="top-right"></div>
+    <div class="quadrant" id="bottom-left"></div>
+    <div class="quadrant" id="bottom-right"></div>
+
+    <script>
+        // 获取 URL 中的参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const cards = urlParams.get('cards').split(',');
+
+        // 确保有四个选中的卡片
+        if (cards.length === 4) {
+            // 加载每个子页面的内容
+            loadContent('top-left', cards[0]);
+            loadContent('top-right', cards[1]);
+            loadContent('bottom-left', cards[2]);
+            loadContent('bottom-right', cards[3]);
+        } else {
+            // 如果没有四个选中的卡片，显示错误信息
+            document.body.innerHTML = '<h1>错误: 请选择四个选项卡。</h1>';
+        }
+
+        // 加载子页面内容的函数
+        function loadContent(quadrantId, cardName) {
+            const iframe = document.createElement('iframe');
+            // iframe.src = `./4-screen-html/${cardName}.html`; // 设置 iframe 的源
+            iframe.src = `./4-screen-${cardName}.html`; // 设置 iframe 的源
+            iframe.style.transformOrigin = 'top left'; // 设置缩放的原点
+            document.getElementById(quadrantId).appendChild(iframe); // 将 iframe 添加到对应的象限
+        }
+
+        // 添加事件监听器以接收来自 iframe 的消息
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) { // 确保消息来源是同一源
+                const { quadrantId, data } = event.data;
+                // 处理接收到的数据并更新对应的象限
+                updateQuadrant(quadrantId, data);
+            }
+        });
+
+        // 更新象限内容的函数
+        function updateQuadrant(quadrantId, data) {
+            const quadrant = document.getElementById(quadrantId);
+            quadrant.innerHTML = `<h2>选中数据: ${data}</h2>`; // 更新显示内容
+        }
+    </script>
+
+    <!-- 添加返回导航页按钮 -->
+    <div style="text-align: center; margin-top: 2px; width: 100%">
+        <button onclick="goBack()" style="width: 100%; background-color: rgb(32, 168, 32); color: white; font-size: 20px; padding: 10px; border: none; cursor: pointer;"
+            onmouseover="this.style.backgroundColor='green';" onmouseout="this.style.backgroundColor='rgb(32, 168, 32)';">
+            返 回 导 航 页
+        </button>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = './pc-index.html'; // 返回导航页的路径
+        }
+    </script>
+</body>
+</html>

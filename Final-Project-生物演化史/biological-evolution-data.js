@@ -405,6 +405,7 @@ treeData = {
                             "src": "./static-2/生物群落更迭.jpg"
                         }
                     ],
+                    "src": "./static-2/埃迪卡拉纪.jpg"
                 },
 
             ],

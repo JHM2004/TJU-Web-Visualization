@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生物演化史-力导向-2D</title>
+    <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="biological-evolution-data.js"></script>
+    <style>
+
+        body {
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 100%; /* 由于缩放，增加宽度 */
+            height: 100%; /* 由于缩放，增加高度 */
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: black !important;
+        }
+
+        svg {
+            width: 200%;
+            height: 200%;
+        }
+
+        .node circle {
+            fill: #4CAF50;
+            stroke: white;
+            stroke-width: 2px;
+            cursor: pointer;
+            transition: fill 0.3s ease;
+        }
+
+        /* 修改背景容器样式 */
+        .background-image-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background-size: 100% 100% !important;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0;
+            /* 移除透明度过渡效果 */
+            pointer-events: none;
+        }
+
+        .background-image-container.visible {
+            opacity: 1 !important; /* 改为完全不透明 */
+        }
+
+        .node circle:hover {
+            fill: #45a049;
+        }
+
+        .node text {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            fill: #fff;
+        }
+
+        .link {
+            fill: none;
+            stroke: #999;
+            stroke-width: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+            width: 240px; /* 设置容器宽度与按钮一致 */
+        }
+
+        .main-btn {
+            min-width: 120px;
+            width: auto;
+            padding: 8px 16px;
+            background: #FFA500;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .main-btn:hover {
+            background: #FF8C00;
+        }
+
+        .nav-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 0px;
+            width: 100%; /* 确保容器占满父元素宽度 */
+        }
+
+        .nav-buttons button,
+        .main-btn,
+        .controls button:first-child {
+            width: 240px; /* 统一设置固定宽度，以最长的按钮文本为准 */
+            padding: 8px 16px;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .nav-buttons button {
+            background: #4CAF50;
+        }
+
+        .nav-buttons button:hover {
+            background: #45a049;
+        }
+
+        .nav-buttons button.active {
+            background: #2E7D32;
+            font-weight: bold;
+        }
+
+        .main-btn {
+            background: #FFA500;
+        }
+
+        .main-btn:hover {
+            background: #FF8C00;
+        }
+
+        .controls button:first-child {
+            background: #4CAF50;
+        }
+
+        .controls button:first-child:hover {
+            background: #45a049;
+        }
+
+        .help-tips {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+        }
+
+        .help-tips p {
+            margin: 5px 0;
+            color: #333;
+        }
+
+        .node circle {
+            cursor: pointer;
+        }
+
+        /* 修改全屏按钮的样式，添加文字居中 */
+        .controls button:first-child {
+            min-width: 120px;
+            width: 240px; /* 设置与其他按钮相同的宽度 */
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .controls button:first-child:hover {
+            background: #45a049;
+        }
+
+        /* 保持其他导航按钮的样式不变 */
+        .nav-buttons button {
+            min-width: 120px;
+            width: 240px; /* 确保所有按钮宽度一致 */
+            padding: 8px 16px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .nav-buttons button:hover {
+            background: #45a049;
+        }
+
+        .nav-buttons button.active {
+            background: #2E7D32;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="background-container" class="background-image-container"></div>
+    <div class="controls">
+        <!-- <button onclick="toggleFullscreen()" class="nav-buttons button">全屏显示</button> -->
+        <div class="nav-buttons">
+            <button onclick="window.location.href='./4-screen-biological-classification-sunburst-2D.html'">生物分类-太阳爆发图-2D</button>
+            <button onclick="window.location.href='./4-screen-biological-evolution-force-2D.html'" class="active">生物演化史-力导向-2D</button>
+            <button onclick="window.location.href='./4-screen-biological-evolution-tree-2D.html'" >生物演化史-Tree-2D</button>
+            <button onclick="window.location.href='./4-screen-biological-evolution-dna-3D.html'">生物演化史-DNA双螺旋-3D</button>
+            <button onclick="window.location.href='./4-screen-biological-evolution-star-3D.html'">生物演化史-星空图-3D</button>
+            <button onclick="window.location.href='./4-screen-biological-evolution-tree-3D.html'">生物演化史-Tree-3D</button>
+            <button onclick="window.location.href='./4-screen-biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
+            <button onclick="window.location.href='./4-screen-paleo-geography-3D.html'">地球古地理-3D</button>
+        </div>
+        <button onclick="expandAll()" class="main-btn">展开所有</button>
+        <button onclick="collapseAll()" class="main-btn">收起所有</button>
+        <button onclick="resetZoom()" class="main-btn">居中展示</button>
+    </div>
+
+    <div id="container">
+        <div id="graph"></div>
+        <div id="magnifier"></div>
+    </div>
+
+    <script>
+        // 在script标签的开始处添加以下代码
+        document.addEventListener('contextmenu', function(event) {
+            // 阻止默认的右键菜单
+            event.preventDefault();
+        }, false);
+
+        // 设置画布尺寸
+        let width = window.innerWidth;
+        let height = window.innerHeight;
+        const margin = { top: 50, right: 90, bottom: 50, left: 90 };
+
+        // 创建SVG容器
+        const svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        // 添加背景矩形
+        svg.append("rect")
+            .attr("class", "background")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "transparent"); // 透明背景
+
+        // 添加拖拽行为
+        const viewDrag = d3.drag()
+            .on("start", viewDragStarted)
+            .on("drag", viewDragged)
+            .on("end", viewDragEnded);
+
+        // 应用拖拽行为到背景矩形
+        svg.select(".background").call(viewDrag);
+
+        // 视图拖拽处理函数
+        function viewDragStarted(event) {
+            // 只在点击背景时触发拖拽
+            if (event.sourceEvent.target.classList.contains("background")) {
+                d3.select(this).style("cursor", "grabbing");
+            }
+        }
+
+        function viewDragged(event) {
+            // 只在点击背景时进行平移
+            if (event.sourceEvent.target.classList.contains("background")) {
+                currentTranslate.x += event.dx;
+                currentTranslate.y += event.dy;
+
+                // 获取当前缩放比例
+                const transform = d3.zoomTransform(svg.node());
+
+                // 更新视图位置
+                g.attr("transform",
+                    `translate(${width / 2 + currentTranslate.x},${height / 2 + currentTranslate.y}) ` +
+                    `scale(${transform.k}) ` +
+                    `rotate(${currentRotation})`
+                );
+            }
+        }
+
+        function viewDragEnded(event) {
+            if (event.sourceEvent.target.classList.contains("background")) {
+                d3.select(this).style("cursor", "grab");
+            }
+        }
+
+        // 添加样式
+        const style = document.createElement('style');
+        style.textContent = `
+            .background {
+                cursor: grab;
+            }
+            .background:active {
+                cursor: grabbing;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 移除之前的鼠标事件监听器（如果存在的话）
+        svg.on("mousedown", null);
+        svg.on("mousemove", null);
+        svg.on("mouseup", null);
+        svg.on("mouseleave", null);
+
+        // 修改初始旋转角度设置
+        let currentRotation = -30; // 从-15度改为-30度（逆时针）
+
+        // 修改初始化g元素的transform
+        const g = svg.append("g")
+            .attr("transform", `translate(${width / 2},${height / 2}) rotate(${currentRotation})`);
+
+        // 定义树布局
+        const tree = d3.tree()
+            .size([360, Math.min(width, height) / 2]);
+
+        // 在定义变量的地方添加力导向模拟
+        const simulation = d3.forceSimulation()
+            .force("link", d3.forceLink().id(d => d.id).distance(100)) // 弹簧力
+            .force("charge", d3.forceManyBody().strength(-300)) // 节点间的斥力
+            .force("collide", d3.forceCollide().radius(50)) // 防止节点重叠的碰撞
+            .force("center", d3.forceCenter(0, 0).strength(0.1)) // 添加中心力
+            .force("radial", d3.forceRadial(d => d.depth * 180, 0, 0).strength(0.8)); // 修改径向力的中心点
+
+        // 创层次结构并初始化折叠状态
+        let root = d3.hierarchy(treeData);
+
+        // 初始时折叠所有子节点
+        function collapse(d) {
+            if (d.children) {
+                d._children = d.children;
+                d._children.forEach(collapse);
+                d.children = null;
+            }
+        }
+
+        // 初始化时折叠除根节点外的所有节点
+        root.children.forEach(collapse);
+
+        // 初始化计数器
+        let i = 0;
+
+        // 修改点击事件处理函数
+        function click(event, d) {
+            event.stopPropagation();
+            if (d.children) {
+                d._children = d.children;
+                d.children = null;
+            } else {
+                d.children = d._children;
+                d._children = null;
+            }
+            update(d);
+        }
+
+        // 定义颜映射
+        const colorMap = {
+            "生命起源史": "#000000",  // 黑色
+            "冥古宙": "#FF0000",    // 红色
+            "太古宙": "#FFA500",    // 橙色
+            "元古宙": "#FFFF00",    // 黄色
+            "显生宙": "#00FF00",    // 绿色
+            "中生代": "#00FFFF",    // 青色
+            "新生代": "#0000FF",    // 蓝色
+            "第四纪": "#800080"     // 紫色
+        };
+
+        // 修改节点颜色设置逻辑
+        function getNodeColor(d) {
+            // 如果是生命起源节点
+            if (d.data.name === "生命起源史") {
+                return colorMap["生命起源史"];
+            }
+
+            // 检查节点的所有祖先，确定所属时期
+            let current = d;
+            while (current) {
+                if (colorMap[current.data.name]) {
+                    return colorMap[current.data.name];
+                }
+                current = current.parent;
+            }
+
+            // 默认颜色
+            return "#4CAF50";
+        }
+
+        // 修改更新函数
+        function update(source) {
+            if (!source.x0) {
+                // 为根节点设置初始位置
+                root.x0 = 0;
+                root.y0 = 0;
+                root.descendants().forEach(d => {
+                    d.x0 = 0;
+                    d.y0 = 0;
+                });
+            }
+
+            // 计算新的树布局
+            tree(root);
+
+            const nodes = root.descendants();
+            const links = root.links();
+
+            // 更新力导向模拟
+            simulation.nodes(nodes);
+            simulation.force("link").links(links);
+
+            // 重启拟
+            simulation.alpha(1).restart();
+
+            // 修改力导向更新时的处理
+            simulation.on("tick", () => {
+                // 更新节点位置
+                g.selectAll(".node")
+                    .attr("transform", d => {
+                        // 如果节点正在被拖动，使用拖动位置
+                        if (d.isDragging) {
+                            return `translate(${d.x},${d.y})`;
+                        }
+                        // 否则用导向计算的位置
+                        return `translate(${d.x},${d.y})`;
+                    });
+
+                // 更新连接线
+                g.selectAll(".link")
+                    .attr("d", d => {
+                        return `M${d.source.x},${d.source.y}
+                                C${(d.source.x + d.target.x) / 2},${d.source.y}
+                                ${(d.source.x + d.target.x) / 2},${d.target.y}
+                                ${d.target.x},${d.target.y}`;
+                    });
+
+                // 更新文本位置和旋转
+                g.selectAll(".node text")
+                    .attr("transform", d => {
+                        const dx = d.x - width / 2;
+                        const dy = d.y - height / 2;
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        let rotation = angle;
+
+                        // 保持文字水平
+                        if (angle > 90 || angle < -90) {
+                            rotation += 180;
+                        }
+
+                        return `rotate(${rotation})`;
+                    })
+                    .attr("text-anchor", d => {
+                        const dx = d.x - width / 2;
+                        const dy = d.y - height / 2;
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        return (angle > 90 || angle < -90) ? "end" : "start";
+                    })
+                    .attr("x", d => {
+                        const dx = d.x - width / 2;
+                        const dy = d.y - height / 2;
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        return (angle > 90 || angle < -90) ? -15 : 15;
+                    });
+            });
+
+            // 修改节点的更新逻辑
+            const node = g.selectAll(".node")
+                .data(nodes, d => d.id || (d.id = ++i));
+
+            // 新节点的进入动画
+            const nodeEnter = node.enter()
+                .append("g")
+                .attr("class", "node")
+                .attr("transform", d => `translate(${source.x0},${source.y0})`) // 从源节点位置开始
+                .on("click", click)
+                .on("mouseover", showNodeInfo)  // 添加鼠标悬停事件
+                .on("mouseout", hideNodeInfo);  // 添加鼠标移出事件
+
+            // 添加节点圆圈
+            nodeEnter.append("circle")
+                .attr("r", 12)
+                .style("fill", d => getNodeColor(d))
+                .style("cursor", "pointer");  // 添加指针样式
+
+            // 修改文本标的位置逻辑
+            nodeEnter.append("text")
+                .attr("dy", ".31em")
+                .attr("x", d => {
+                    // 计算点相对于中心点的度
+                    const dx = d.x - width / 2;
+                    const dy = d.y - height / 2;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                    // 根据角度决定文本位置
+                    return (angle > 90 || angle < -90) ? -15 : 15;
+                })
+                .attr("text-anchor", d => {
+                    // 计算节点相对于中心点的角度
+                    const dx = d.x - width / 2;
+                    const dy = d.y - height / 2;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                    // 根据角度决定文本对齐方式
+                    return (angle > 90 || angle < -90) ? "end" : "start";
+                })
+                .attr("transform", d => {
+                    // 计算节点相对于中心点的角度
+                    const dx = d.x - width / 2;
+                    const dy = d.y - height / 2;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    let rotation = angle;
+
+                    // 保持文字水平
+                    if (angle > 90 || angle < -90) {
+                        rotation += 180;
+                    }
+
+                    return `rotate(${rotation})`;
+                })
+                .text(d => d.data.name);
+
+            // 所有节点的更新
+            const nodeUpdate = node.merge(nodeEnter);
+
+            // 只对新节点和变化的节点应用动画
+            nodeUpdate.filter(d => {
+                // 检查节点是否是新增的或者位置发生了变化
+                const changed = d.x !== d.x0 || d.y !== d.y0;
+                return !d.x0 || changed;
+            })
+                .transition()
+                .duration(750)
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+
+            // 对未变化的节点直接设置位置，不使用动画
+            nodeUpdate.filter(d => {
+                const changed = d.x !== d.x0 || d.y !== d.y0;
+                return d.x0 && !changed;
+            })
+                .attr("transform", d => `translate(${d.x},${d.y})`);
+
+            // 节点的退出动画
+            const nodeExit = node.exit()
+                .transition()
+                .duration(750)
+                .attr("transform", d => `translate(${source.x},${source.y})`)
+                .remove();
+
+            // 修改连接线的更新逻辑
+            const link = g.selectAll(".link")
+                .data(links, d => d.target.id);
+
+            // 新连接线的进入
+            const linkEnter = link.enter()
+                .insert("path", "g")
+                .attr("class", "link")
+                .attr("d", d => {
+                    const o = { x: source.x0, y: source.y0 };
+                    return diagonal({ source: o, target: o });
+                });
+
+            // 连接线的更新
+            const linkUpdate = link.merge(linkEnter);
+
+            // 只对新连接线和变化的连接线应用动画
+            linkUpdate.filter(d => {
+                const sourceChanged = d.source.x !== d.source.x0 || d.source.y !== d.source.y0;
+                const targetChanged = d.target.x !== d.target.x0 || d.target.y !== d.target.y0;
+                return sourceChanged || targetChanged;
+            })
+                .transition()
+                .duration(750)
+                .attr("d", diagonal);
+
+            // 对未变的连线直接设置路径，不使用动画
+            linkUpdate.filter(d => {
+                const sourceChanged = d.source.x !== d.source.x0 || d.source.y !== d.source.y0;
+                const targetChanged = d.target.x !== d.target.x0 || d.target.y !== d.target.y0;
+                return !sourceChanged && !targetChanged;
+            })
+                .attr("d", diagonal);
+
+            // 连接的退出
+            const linkExit = link.exit()
+                .transition()
+                .duration(750)
+                .attr("d", d => {
+                    const o = { x: source.x, y: source.y };
+                    return diagonal({ source: o, target: o });
+                })
+                .remove();
+
+            // 保存当前节点位置用于后续渡
+            nodes.forEach(d => {
+                d.x0 = d.x;
+                d.y0 = d.y;
+            });
+
+            // 在update函数中更新节点颜色
+            nodeUpdate.select("circle")
+                .style("fill", d => getNodeColor(d));
+
+            // 可选：修改连接线的颜色以匹配节点
+            link.style("stroke", d => getNodeColor(d.target));
+            linkEnter.style("stroke", d => getNodeColor(d.target));
+
+            // 添加拖拽行为
+            const dragHandler = d3.drag()
+                .subject(function (event, d) {
+                    return { x: d.x, y: d.y };
+                })
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended);
+
+            // 确保更新后的节点也有拖拽能
+            const nodeUpdate2 = node.merge(nodeEnter)
+                .call(dragHandler);
+        }
+
+        // 修改缩放相关的代码
+        const zoom = d3.zoom()
+            .scaleExtent([0.1, 3])
+            .on("zoom", (event) => {
+                const transform = event.transform;
+
+                // 只在g元素上应用缩放和旋转，保持中心点固定
+                g.attr("transform", `translate(${width / 2},${height / 2}) scale(${transform.k}) rotate(${currentRotation})`);
+            });
+
+        // 初始化时不需要额外的translate
+        svg.call(zoom)
+            .call(zoom.transform, d3.zoomIdentity);
+
+        // 修改重置视图函数
+        function resetZoom() {
+            currentRotation = -30;
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity);
+        }
+
+        // 修改updateRotation函数
+        function updateRotation() {
+            const transform = d3.zoomTransform(svg.node());
+            g.attr("transform", `translate(${width / 2},${height / 2}) scale(${transform.k}) rotate(${currentRotation})`);
+        }
+
+        // 添加平移功
+        let isDragging = false;
+        let startPoint = { x: 0, y: 0 };
+        let currentTranslate = { x: 0, y: 0 };
+
+        svg.on("mousedown", (event) => {
+            if (event.target === svg.node()) {
+                isDragging = true;
+                startPoint = { x: event.clientX - currentTranslate.x, y: event.clientY - currentTranslate.y };
+            }
+        });
+
+        svg.on("mousemove", (event) => {
+            if (isDragging) {
+                currentTranslate = {
+                    x: event.clientX - startPoint.x,
+                    y: event.clientY - startPoint.y
+                };
+                const transform = d3.zoomTransform(svg.node());
+                g.attr("transform", `translate(${width / 2 + currentTranslate.x},${height / 2 + currentTranslate.y}) scale(${transform.k}) rotate(${currentRotation})`);
+            }
+        });
+
+        svg.on("mouseup", () => {
+            isDragging = false;
+        });
+
+        svg.on("mouseleave", () => {
+            isDragging = false;
+        });
+
+        // 修改窗口大小改变的处理
+        window.addEventListener('resize', debounce(() => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+
+            svg.attr("width", width)
+                .attr("height", height);
+
+            tree.size([360, Math.min(width, height) / 2 - 150]);
+
+            const transform = d3.zoomTransform(svg.node());
+            g.attr("transform", `translate(${width / 2 + currentTranslate.x},${height / 2 + currentTranslate.y}) scale(${transform.k}) rotate(${currentRotation})`);
+
+            update(root);
+        }, 250));
+
+        // 添加防抖函数，避免频繁触发更新
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // 修改展开所有节点的函数
+        function expandAll() {
+            function expand(d) {
+                if (d._children) {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                if (d.children) {
+                    d.children.forEach(expand);
+                }
+            }
+            expand(root);
+            update(root);
+        }
+
+        // 修改收起所有节点函
+        function collapseAll() {
+            function collapse(d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d.children.forEach(collapse);
+                    d.children = null;
+                }
+            }
+            root.children.forEach(collapse);
+            update(root);
+        }
+
+        // 添加坐标换函数
+        function project(x, y) {
+            return [y * Math.sin(x), y * Math.cos(x)];
+        }
+
+        // 添加连接线路径生成函数
+        function diagonal(d) {
+            return `M${project(d.source.x, d.source.y)}
+                    C${project(d.source.x, (d.source.y + d.target.y) / 2)}
+                    ${project(d.target.x, (d.source.y + d.target.y) / 2)}
+                    ${project(d.target.x, d.target.y)}`;
+        }
+
+        // 始化显示
+        update(root);
+
+        simulation.alphaDecay(0.02) // 控制模拟降温度
+        simulation.velocityDecay(0.3) // 控制节点移动速度
+
+        // 添加HTML提示信息
+        const helpText = `
+        <div class="help-tips">
+            <p>操作提示：</p>
+            <p>按住 Q 键：逆时针旋转</p>
+            <p>按住 E 键：顺时针旋转</p>
+            <p>按住 W 键：向上移动</p>
+            <p>按住 S 键: 向下移动</p>
+            <p>按住 A 键：向左移动</p>
+            <p>按住 D 键：向右移动</p>
+            <p>按 F 键：放大画面</p>
+            <p>按 G 键：缩小画面</p>
+            <p>鼠标拖：平移</p>
+            <p>鼠标滚轮：缩放</p>
+        </div>
+        `;
+
+        // 在body开始处添加提示
+        document.body.insertAdjacentHTML('afterbegin', helpText);
+
+        // 在help-tips div后面添加新的图例div
+        const legendHtml = `
+        <div class="timeline-legend">
+            <div class="legend-title">地质年代</div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #FF0000"></span>
+                <span class="era-name">冥古宙</span>
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #FFA500"></span>
+                <span class="era-name">太古宙</span>
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #FFFF00"></span>
+                <span class="era-name">元古宙</span>
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #00FF00"></span>
+                <span class="era-name">显生宙</span>
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #00FFFF"></span>
+                <span class="era-name">中生代</span>
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #0000FF"></span>
+                <span class="era-name">新生代</span>
+            </div>
+            <div class="legend-item">
+                <span class="color-box" style="background: #800080"></span>
+                <span class="era-name">第四纪</span>
+            </div>
+        </div>
+        `;
+
+        document.body.insertAdjacentHTML('afterbegin', legendHtml);
+
+        // 添加相应的CSS样式
+        const legendStyle = document.createElement('style');
+        legendStyle.textContent = `
+            .timeline-legend {
+                position: fixed;
+                top: 20px;
+                left: 250px;  /* 位于help-tips右侧 */
+                background: rgba(255, 255, 255, 0.9);
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 1000;
+            }
+
+            .legend-title {
+                font-weight: bold;
+                margin-bottom: 10px;
+                text-align: center;
+                font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            }
+
+            .legend-item {
+                display: flex;
+                align-items: center;
+                margin: 5px 0;
+                gap: 10px;
+            }
+
+            .color-box {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1px solid rgba(0,0,0,0.1);
+            }
+
+            .era-name {
+                font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+                font-size: 14px;
+            }
+
+            /* 添加悬停效果 */
+            .legend-item:hover {
+                transform: scale(1.05);
+                transition: transform 0.2s ease;
+            }
+
+            .color-box:hover {
+                box-shadow: 0 0 5px rgba(0,0,0,0.3);
+            }
+        `;
+
+        document.head.appendChild(legendStyle);
+
+        let rotationInterval = null;
+        const ROTATION_SPEED = 2; // 每次旋转的角度
+
+        // 键盘事件处理
+        document.addEventListener('keydown', (event) => {
+            if (rotationInterval) return; // 如果已经在旋转则不重复设置
+
+            if (event.key.toLowerCase() === 'q') {
+                // 逆时针旋转
+                rotationInterval = setInterval(() => {
+                    currentRotation -= ROTATION_SPEED;
+                    updateRotation();
+                }, 16); // 约60fps
+            } else if (event.key.toLowerCase() === 'e') {
+                // 顺时针旋转
+                rotationInterval = setInterval(() => {
+                    currentRotation += ROTATION_SPEED;
+                    updateRotation();
+                }, 16);
+            }
+        });
+
+        // 键盘释放事件
+        document.addEventListener('keyup', (event) => {
+            if (event.key.toLowerCase() === 'q' || event.key.toLowerCase() === 'e') {
+                if (rotationInterval) {
+                    clearInterval(rotationInterval);
+                    rotationInterval = null;
+                }
+            }
+        });
+
+        // 修改拖拽处理函数
+        function dragstarted(event, d) {
+            d.isDragging = true;
+            // 记录鼠标相对于节点的初始偏移
+            const transform = d3.zoomTransform(svg.node());
+            const scale = transform.k;
+            const mouseX = (event.x - width / 2 - currentTranslate.x) / scale;
+            const mouseY = (event.y - height / 2 - currentTranslate.y) / scale;
+            d.offsetX = d.x - mouseX;
+            d.offsetY = d.y - mouseY;
+        }
+
+        function dragged(event, d) {
+            if (!d.isDragging) return;
+
+            // 获取当前transform状态
+            const transform = d3.zoomTransform(svg.node());
+            const scale = transform.k;
+
+            // 计算鼠标在实际坐标系中的位置
+            const mouseX = event.sourceEvent.clientX;
+            const mouseY = event.sourceEvent.clientY;
+
+            // 转换为相对于g元素的坐标
+            const point = d3.pointer(event.sourceEvent, g.node());
+            const newX = point[0];
+            const newY = point[1];
+
+            // 更新节点位置
+            d3.select(this)
+                .attr("transform", `translate(${newX},${newY})`);
+
+            // 更新节点的坐标
+            d.x = newX;
+            d.y = newY;
+
+            // 更新与该节点相连的连接线
+            g.selectAll(".link")
+                .filter(link => link.source === d || link.target === d)
+                .attr("d", link => {
+                    const sourceX = link.source === d ? newX : link.source.x;
+                    const sourceY = link.source === d ? newY : link.source.y;
+                    const targetX = link.target === d ? newX : link.target.x;
+                    const targetY = link.target === d ? newY : link.target.y;
+
+                    return `M${sourceX},${sourceY}
+                            C${(sourceX + targetX) / 2},${sourceY}
+                            ${(sourceX + targetX) / 2},${targetY}
+                            ${targetX},${targetY}`;
+                });
+
+            // 更新文本位置
+            d3.select(this).select("text")
+                .attr("transform", () => {
+                    const dx = newX;
+                    const dy = newY;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    let rotation = angle;
+
+                    if (angle > 90 || angle < -90) {
+                        rotation += 180;
+                    }
+
+                    return `rotate(${rotation})`;
+                })
+                .attr("text-anchor", () => {
+                    const dx = newX;
+                    const dy = newY;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    return (angle > 90 || angle < -90) ? "end" : "start";
+                })
+                .attr("x", () => {
+                    const dx = newX;
+                    const dy = newY;
+                    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                    return (angle > 90 || angle < -90) ? -15 : 15;
+                });
+        }
+
+        function dragended(event, d) {
+            d.isDragging = false;
+            d.x0 = d.x;
+            d.y0 = d.y;
+            delete d.offsetX;
+            delete d.offsetY;
+
+            // 拖动结束后重启力导向模拟
+            simulation.alpha(0.3).restart(); // 设置较小的alpha值使过渡更平滑
+        }
+
+        // 确保diagonal函数正确处理坐标
+        function diagonal(d) {
+            return `M${d.source.x},${d.source.y}
+                    C${(d.source.x + d.target.x) / 2},${d.source.y}
+                    ${(d.source.x + d.target.x) / 2},${d.target.y}
+                    ${d.target.x},${d.target.y}`;
+        }
+
+        // 添加持续力导向模拟
+        function keepSimulationAlive() {
+            if (simulation.alpha() < simulation.alphaMin()) {
+                simulation.alpha(0.1).restart();
+            }
+            requestAnimationFrame(keepSimulationAlive);
+        }
+
+        // 启动持续模拟
+        keepSimulationAlive();
+
+        // 调整力导向模拟参数
+        simulation
+            .alphaMin(0.001) // 降低最小alpha值，使模拟持续更长时间
+            .alphaDecay(0.01) // 降低alpha衰减率，使力的作用持续更长
+            .velocityDecay(0.3) // 控制节点移动速度
+            .force("charge", d3.forceManyBody().strength(-300))
+            .force("collide", d3.forceCollide().radius(50).strength(0.5))
+            .force("center", d3.forceCenter(0, 0).strength(0.05))
+            .force("radial", d3.forceRadial(d => d.depth * 180, 0, 0).strength(0.8));
+
+        // 修改键盘移动控制代码
+        const MOVE_SPEED = 15; // 增加移动速度
+
+        // 替换原有的键盘控制代码
+        document.addEventListener('keydown', (event) => {
+            const key = event.key.toLowerCase();
+
+            // 防止按键事件影输入框
+            if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+                return;
+            }
+
+            switch (key) {
+                case 'w':
+                    currentTranslate.y += MOVE_SPEED;
+                    break;
+                case 's':
+                    currentTranslate.y -= MOVE_SPEED;
+                    break;
+                case 'a':
+                    currentTranslate.x += MOVE_SPEED;
+                    break;
+                case 'd':
+                    currentTranslate.x -= MOVE_SPEED;
+                    break;
+                case 'f': // 放大
+                    handleZoom(1.2); // 放大系数1.2
+                    break;
+                case 'g': // 缩小 
+                    handleZoom(0.8); // 缩小系数0.8
+                    break;
+            }
+
+            // 更新视图位置
+            const transform = d3.zoomTransform(svg.node());
+            g.attr("transform",
+                `translate(${width / 2 + currentTranslate.x},${height / 2 + currentTranslate.y}) ` +
+                `scale(${transform.k}) ` +
+                `rotate(${currentRotation})`
+            );
+        });
+
+        // 添加平滑动效果
+        let moveInterval = null;
+        let activeKeys = new Set();
+
+        document.addEventListener('keydown', (event) => {
+            const key = event.key.toLowerCase();
+            if (activeKeys.has(key)) return;
+
+            activeKeys.add(key);
+
+            if (!moveInterval) {
+                moveInterval = setInterval(() => {
+                    let dx = 0, dy = 0;
+
+                    if (activeKeys.has('w')) dy += MOVE_SPEED;
+                    if (activeKeys.has('s')) dy -= MOVE_SPEED;
+                    if (activeKeys.has('a')) dx += MOVE_SPEED;
+                    if (activeKeys.has('d')) dx -= MOVE_SPEED;
+
+                    if (dx !== 0 || dy !== 0) {
+                        currentTranslate.x += dx;
+                        currentTranslate.y += dy;
+
+                        const transform = d3.zoomTransform(svg.node());
+                        g.attr("transform",
+                            `translate(${width / 2 + currentTranslate.x},${height / 2 + currentTranslate.y}) ` +
+                            `scale(${transform.k}) ` +
+                            `rotate(${currentRotation})`
+                        );
+                    }
+                }, 16); // 约60fps
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            const key = event.key.toLowerCase();
+            activeKeys.delete(key);
+
+            if (activeKeys.size === 0) {
+                clearInterval(moveInterval);
+                moveInterval = null;
+            }
+        });
+
+        // 当窗口失去焦点时清除所有状态
+        window.addEventListener('blur', () => {
+            activeKeys.clear();
+            if (moveInterval) {
+                clearInterval(moveInterval);
+                moveInterval = null;
+            }
+        });
+
+        // 添加防按键冲突的处理
+        window.addEventListener('keydown', (event) => {
+            // 防止空格键滚动页面等默认行为
+            if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.code)) {
+                event.preventDefault();
+            }
+        });
+
+        // 添加样式
+        const additionalStyle = document.createElement('style');
+        additionalStyle.textContent = `
+            .help-tips {
+                background: rgba(255, 255, 255, 0.9);
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                max-width: 300px;
+                font-size: 14px;
+                line-height: 1.4;
+            }
+            
+            .help-tips p {
+                margin: 5px 0;
+            }
+        `;
+        document.head.appendChild(additionalStyle);
+
+        // 添加处理缩放的函数
+        function handleZoom(factor) {
+            // 获取当前transform状态
+            const transform = d3.zoomTransform(svg.node());
+
+            // 计算新的缩放值,并确保在允许的范围内
+            const newK = Math.max(0.1, Math.min(3, transform.k * factor));
+
+            // 创建新的transform
+            const newTransform = d3.zoomIdentity
+                .translate(transform.x, transform.y)
+                .scale(newK);
+
+            // 应用新的transform
+            svg.transition()
+                .duration(300) // 添加300ms的过渡动画
+                .call(zoom.transform, newTransform);
+        }
+
+        // 添加信息展示面板的HTML和CSS
+        const infoPanel = `
+        <div class="node-info-panel">
+            <h3>节点信息</h3>
+            <div class="info-content">
+                <p>将鼠标悬停在节点上查看详细信息</p>
+            </div>
+        </div>
+        `;
+
+        document.body.insertAdjacentHTML('afterbegin', infoPanel);
+
+        // 添加样式
+        const infoPanelStyle = document.createElement('style');
+        infoPanelStyle.textContent = `
+            .node-info-panel {
+                position: fixed;
+                left: 20px;
+                bottom: 20px;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 15px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                z-index: 1000;
+                min-width: 250px;
+                max-width: 350px;
+                font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            }
+
+            .node-info-panel h3 {
+                margin: 0 0 10px 0;
+                padding-bottom: 5px;
+                border-bottom: 1px solid #eee;
+                color: #333;
+            }
+
+            .info-content {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .info-content p {
+                margin: 5px 0;
+            }
+
+            .info-label {
+                font-weight: bold;
+                color: #666;
+            }
+        `;
+
+        document.head.appendChild(infoPanelStyle);
+
+        // 添加一个变量来跟踪当前锁定的节点
+        let lockedNode = null;
+
+        // 修改nodeEnter的事件绑定
+        nodeEnter
+            .attr('data-id', d => d.id) // 添加data-id属性以便后续查找
+            .on("mouseover", showNodeInfo)
+            .on("mouseout", (event, d) => {
+                if (!lockedNode || lockedNode === d) {
+                    hideNodeInfo(event, d);
+                }
+            })
+            .on("contextmenu", (event, d) => {
+                event.preventDefault();
+                event.stopPropagation();
+                
+                if (lockedNode === d) {
+                    // 解除锁定
+                    lockedNode = null;
+                    hideNodeInfo(event, d);
+                } else {
+                    // 如果之前有锁定的节点，重置其样式
+                    if (lockedNode) {
+                        d3.select(findNodeElement(lockedNode))
+                            .select('circle')
+                            .transition()
+                            .duration(200)
+                            .attr('r', 12)
+                            .style('filter', null);
+                    }
+                    
+                    // 锁定新节点
+                    lockedNode = d;
+                    // 重新触发显示效果，标记为锁定状态
+                    showNodeInfo(event, d, true);
+                }
+            });
+
+        // 修改showNodeInfo函数，添加一个参数来标识是否是锁定状态
+        function showNodeInfo(event, d, isLocked = false) {
+            console.log('showNodeInfo triggered', d);
+            event.stopPropagation();
+
+            // 如果有锁定的节点且不是当前节点，且不是锁定操作，则不显示新信息
+            if (lockedNode && lockedNode !== d && !isLocked) {
+                return;
+            }
+
+            const infoContent = document.querySelector('.info-content');
+            const backgroundContainer = document.getElementById('background-container');
+
+            let html = '';
+
+            if (d.data.name) {
+                html += `<p><span class="info-label">名称：</span>${d.data.name}</p>`;
+            }
+
+            if (d.data.time) {
+                html += `<p><span class="info-label">时间：</span>${d.data.time}</p>`;
+            }
+
+            if (d.data.description) {
+                html += `<p><span class="info-label">描述：</span>${d.data.description}</p>`;
+            }
+
+            infoContent.innerHTML = html || '<p>该节点没有额外信息</p>';
+
+            if (d.data.src) {
+                const imagePath = d.data.src;
+                backgroundContainer.style.cssText = `
+                    background-image: url('${imagePath}');
+                    background-size: 100% 100% !important;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    z-index: -1;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: 100vw;
+                    height: 100vh;
+                `;
+                requestAnimationFrame(() => {
+                    backgroundContainer.classList.add('visible');
+                });
+            }
+
+            // 高亮当前节点
+            const currentNode = d3.select(event.currentTarget || findNodeElement(d));
+            currentNode
+                .select('circle')
+                .transition()
+                .duration(200)
+                .attr('r', 16)
+                .style('filter', 'drop-shadow(0 0 5px rgba(0,0,0,0.3))');
+        }
+
+        // 添加一个辅助函数来根据数据找到对应的节点元素
+        function findNodeElement(d) {
+            return document.querySelector(`.node[data-id="${d.id}"]`);
+        }
+
+        // 修改hideNodeInfo函数
+        function hideNodeInfo(event, d) {
+            // 如果有锁定的节点，不执行隐藏操作
+            if (lockedNode) {
+                // 如果有锁定节点，保持其显示状态
+                showNodeInfo({ currentTarget: findNodeElement(lockedNode), stopPropagation: () => {} }, lockedNode, true);
+                return;
+            }
+
+            const infoContent = document.querySelector('.info-content');
+            const backgroundContainer = document.getElementById('background-container');
+
+            infoContent.innerHTML = '<p>将鼠标悬停在节点上查看详细信息</p>';
+
+            backgroundContainer.classList.remove('visible');
+            setTimeout(() => {
+                if (!backgroundContainer.classList.contains('visible')) {
+                    backgroundContainer.style.backgroundImage = 'none';
+                }
+            }, 300);
+
+            // 只有在没有锁定节点时才重置节点样式
+            if (!lockedNode) {
+                d3.select(event.currentTarget)
+                    .select('circle')
+                    .transition()
+                    .duration(200)
+                    .attr('r', 12)
+                    .style('filter', null);
+            }
+        }
+
+        // 1. 首先确保背景容器正确创建
+        document.addEventListener('DOMContentLoaded', () => {
+            // 删除可能存在的旧容器
+            const oldContainer = document.querySelector('.background-image-container');
+            if (oldContainer) {
+                oldContainer.remove();
+            }
+
+            // 创建新的背景容器
+            const backgroundContainer = document.createElement('div');
+            backgroundContainer.className = 'background-image-container';
+            document.body.insertBefore(backgroundContainer, document.body.firstChild);
+
+            // 添加或更新样式
+            const style = document.createElement('style');
+            style.textContent = `
+                .background-image-container {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    z-index: -1;
+                    background-size: 100% 100% !important;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    opacity: 0;
+                    /* 移除透明度过渡效果 */
+                    pointer-events: none;
+                }
+
+                .background-image-container.visible {
+                    opacity: 1 !important; /* 改为完全不透明 */
+                }
+
+                /* 修改body样式 */
+                body {
+                    margin: 0;
+                    padding: 0;
+                    width: 100vw;
+                    height: 100vh;
+                    overflow: hidden;
+                    position: relative;
+                    background: black !important;
+                }
+
+                /* 修改SVG容器样式 */
+                svg {
+                    position: relative;
+                    z-index: 1;
+                    background: transparent !important;
+                }
+
+                /* 确保UI元素在最上层 */
+                .controls, .help-tips, .node-info-panel {
+                    position: fixed;
+                    z-index: 2;
+                }
+            `;
+            document.head.appendChild(style);
+        });
+
+        // 添加必要的样式（确保在head中添加）
+        const backgroundStyle = document.createElement('style');
+        backgroundStyle.textContent = `
+            .background-image-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: -1;
+                background-size: 100% 100% !important;
+                background-position: center;
+                background-repeat: no-repeat;
+                opacity: 0;
+                /* 移除透明度过渡效果 */
+                pointer-events: none;
+            }
+
+            .background-image-container.visible {
+                opacity: 1 !important; /* 改为完全不透明 */
+            }
+
+            /* 修改body样式 */
+            body {
+                margin: 0;
+                padding: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                position: relative;
+                background: black !important;
+            }
+
+            /* 修改SVG容器样式 */
+            svg {
+                position: relative;
+                z-index: 1;
+                background: transparent !important;
+            }
+
+            /* 确保UI元素在最上层 */
+            .controls, .help-tips, .node-info-panel {
+                position: fixed;
+                z-index: 2;
+            }
+        `;
+        document.head.appendChild(backgroundStyle);
+
+        // 修改节点文字的样式
+        const nodeTextStyle = document.createElement('style');
+        nodeTextStyle.textContent = `
+            .node text {
+                font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+                font-size: 18px;  /* 增大到18px */
+                font-weight: 700;
+                fill: #000;
+                text-shadow: 
+                    -1px -1px 0 #fff,  
+                    1px -1px 0 #fff,
+                    -1px 1px 0 #fff,
+                    1px 1px 0 #fff;  /* 保持白色描边效果 */
+            }
+
+            /* 悬停效果 */
+            .node:hover text {
+                font-weight: 800;
+                fill: #000;
+            }
+        `;
+        document.head.appendChild(nodeTextStyle);
+
+        // 如果你在update函数中有添加文字的代码，也需要更新：
+        nodeEnter.append("text")
+            .attr("dy", ".31em")
+            .attr("x", d => d._children ? -10 : 10)
+            .attr("text-anchor", d => d._children ? "end" : "start")
+            .text(d => d.data.name)
+            .style("font-weight", "700")  // 直接在元素上设置加粗
+            .style("font-size", "18px");  // 设置字号
+
+        // 添加全屏显示相关函数
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                // 进入全屏
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                }
+                // 更改按钮文字
+                document.querySelector('.controls button:first-child').textContent = '退出全屏';
+            } else {
+                // 退出全屏
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                // 更改按钮文字
+                document.querySelector('.controls button:first-child').textContent = '全屏显示';
+            }
+        }
+
+        // 监听全屏状态变化
+        document.addEventListener('fullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenButtonText);
+        document.addEventListener('msfullscreenchange', updateFullscreenButtonText);
+
+        function updateFullscreenButtonText() {
+            const fullscreenButton = document.querySelector('.controls button:first-child');  // 改为选择第一个按钮
+            if (document.fullscreenElement) {
+                fullscreenButton.textContent = '退出全屏';
+            } else {
+                fullscreenButton.textContent = '全屏显示';
+            }
+        }
+
+        // 添加样式
+        const contextMenuStyle = document.createElement('style');
+        contextMenuStyle.textContent = `
+            .node {
+                user-select: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+            }
+        `;
+        document.head.appendChild(contextMenuStyle);
+    </script>
+</body>
+
+</html>

@@ -6,6 +6,13 @@
     <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
     <style>
         body { margin: 0; overflow: hidden; }
+        body {
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 100%; /* 由于缩放，增加宽度 */
+            height: 100%; /* 由于缩放，增加高度 */
+            overflow: hidden; /* 隐藏溢出部分 */
+        }
         #info {
             position: absolute;
             top: 10px;
@@ -291,20 +298,19 @@
         鼠标点击节点聚焦
     </div>
     <div id="controls-panel">
-        <div class="fullscreen-buttons">
+        <!-- <div class="fullscreen-buttons">
             <button class="fullscreen-button" onclick="toggleFullScreen()">全屏</button>
             <button class="fullscreen-button" onclick="exitFullScreen()">退出全屏</button>
-        </div>
+        </div> -->
         <div class="nav-buttons">
-            <a href="./biological-classification-sunburst-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
-            <a href="./biological-evolution-force-2D.html" class="nav-button">生物演化史-力导向-2D</a>
-            <a href="./biological-evolution-tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
-            <a href="./biological-evolution-dna-3D.html" class="nav-button">生物演化史-DNA双螺旋-3D</a>
-            <a href="./biological-evolution-star-3D.html" class="nav-button">生物演化史-星空图-3D</a>
-            <a href="./biological-evolution-tree-3D.html" class="nav-button active">生物演化史-Tree-3D</a>
-            <a href="./biological-evolution-visualization-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
-            <a href="./paleo-geography-3D.html" class="nav-button">地球古地理-3D</a>
-            <a href="./pc-index.html" class="nav-button">返回导航页</a>
+            <a href="./4-screen-biological-classification-sunburst-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
+            <a href="./4-screen-biological-evolution-force-2D.html" class="nav-button">生物演化史-力导向-2D</a>
+            <a href="./4-screen-biological-evolution-tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
+            <a href="./4-screen-biological-evolution-dna-3D.html" class="nav-button">生物演化史-DNA双螺旋-3D</a>
+            <a href="./4-screen-biological-evolution-star-3D.html" class="nav-button">生物演化史-星空图-3D</a>
+            <a href="./4-screen-biological-evolution-tree-3D.html" class="nav-button active">生物演化史-Tree-3D</a>
+            <a href="./4-screen-biological-evolution-visualization-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
+            <a href="./4-screen-paleo-geography-3D.html" class="nav-button">地球古地理-3D</a>
         </div>
         <div class="control-group">
             <label>高度差</label>
@@ -688,7 +694,7 @@
                 let color;
                 
                 if (level === 1) {
-                    // 第二层节点使用分类颜色
+                    // 第一层节点使用分类颜色
                     color = categoryColors[data.name] || new THREE.Color(0xffffff);
                     // 设置基准角度
                     baseAngle = categoryBaseAngles[data.name];
@@ -721,7 +727,7 @@
                     let startAngle;
                     
                     if (level === 0) {
-                        // 第一层的子节点使用定义的基角度
+                        // 第一层子节点使用定义的基角度
                         angleStep = (Math.PI * 2) / childCount;
                         startAngle = 0;
                     } else if (level === 1) {
@@ -730,7 +736,7 @@
                         startAngle = baseAngle - (angleStep * (childCount - 1) / 2);
                     } else {
                         // 后续层级在父节点角度基础上小范围展开
-                        angleStep = Math.PI / 8; // 更小的扇形范围
+                        angleStep = Math.PI / 8; // 扇形范围
                         startAngle = angle - (angleStep * (childCount - 1) / 2);
                     }
 
@@ -801,14 +807,14 @@
         let highlightRing = null;
 
         function onMouseClick(event) {
-            // 计算鼠标在标准设备坐标中的位置
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-            
-            // 使用射线投射检测节点
+            // 使用正确的鼠标位置计算
+            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1; // 除以2
+            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1; // 除以2
+
+            // 更新射线投射器
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
-            
+
             if (intersects.length > 0) {
                 const clickedNode = intersects[0].object;
                 
@@ -919,8 +925,8 @@
 
         let debounceTimer;
         function onMouseMove(event) {
-            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1; // 除以2
+            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1; // 除以2
             
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
@@ -1023,10 +1029,45 @@
                 // 进入全屏时的处理
                 onWindowResize();
             } else {
-                // 退出全屏时的处理
+                // 退出全屏时处理
                 onWindowResize();
             }
         });
+        // 添加事件监听器以接收来自 iframe 的消息
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) { // 确保消息来源是同一源
+                const { quadrantId, data } = event.data;
+                // 处理接收到的数据并更新页面内容
+                updateContent(data);
+                // 添加联动逻辑
+                handleLinkedData(data); // 新增: 处理联动数据
+            }
+        });
+
+        // 更新页面内容的函数
+        function updateContent(data) {
+            const details = document.getElementById('details');
+            details.style.display = 'block';
+            details.innerHTML = `<h3>选中数据: ${data}</h3>`; // 更新显示内容
+        }
+
+        // 添加点击事件
+        document.querySelectorAll('.data-node').forEach(node => {
+            node.addEventListener('click', () => {
+                const data = node.dataset.value; // 获取节点数据
+                window.parent.postMessage({ quadrantId: 'your-quadrant-id', data }, '*'); // 发送消息到父窗口
+            });
+        });
+
+        // 新增: 处理联动数据的函数
+        function handleLinkedData(data) {
+            // 根据接收到的数据更新网络可视化或其他元素
+            // 例如，您可以根据数据高亮显示特定节点
+            const nodeToHighlight = networkGroup.children.find(child => child.userData.name === data);
+            if (nodeToHighlight) {
+                createHighlightCircle(nodeToHighlight.position, nodeToHighlight); // 高亮显示节点
+            }
+        }
 
         init();
     </script>

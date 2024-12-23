@@ -5,7 +5,13 @@
     <title>生物演化史-DNA双螺旋-3D</title>
     <link rel="icon" href="./static-other/icon/favicon.ico" type="image/x-icon">
     <style>
-        body { margin: 0; overflow: hidden; }
+        body {
+            transform: scale(0.5);
+            transform-origin: top left;
+            width: 100%; /* 由于缩放，增加宽度 */
+            height: 100%; /* 由于缩放，增加高度 */
+            margin: 0;
+        }
         #info {
             position: absolute;
             top: 10px;
@@ -112,15 +118,14 @@
 <body>
     <div id="navigation">
         <button id="fullscreen-btn" class="nav-button">全屏显示</button>
-        <a href="./biological-classification-sunburst-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
-        <a href="./biological-evolution-force-2D.html" class="nav-button">生物演化史-力导向-2D</a>
-        <a href="./biological-evolution-tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
-        <a href="./biological-evolution-dna-3D.html" class="nav-button active">生物演化史-DNA双螺旋-3D</a>
-        <a href="./biological-evolution-star-3D.html" class="nav-button">生物演化史-星空图-3D</a>
-        <a href="./biological-evolution-tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
-        <a href="./biological-evolution-visualization-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
-        <a href="./paleo-geography-3D.html" class="nav-button">地球古地理-3D</a>
-        <a href="./pc-index.html" class="nav-button">返回导航页</a>
+        <a href="./4-screen-biological-classification-sunburst-2D.html" class="nav-button">生物分类-太阳爆发图-2D</a>
+        <a href="./4-screen-biological-evolution-force-2D.html" class="nav-button">生物演化史-力导向-2D</a>
+        <a href="./4-screen-biological-evolution-tree-2D.html" class="nav-button">生物演化史-Tree-2D</a>
+        <a href="./4-screen-biological-evolution-dna-3D.html" class="nav-button active">生物演化史-DNA双螺旋-3D</a>
+        <a href="./4-screen-biological-evolution-star-3D.html" class="nav-button">生物演化史-星空图-3D</a>
+        <a href="./4-screen-biological-evolution-tree-3D.html" class="nav-button">生物演化史-Tree-3D</a>
+        <a href="./4-screen-biological-evolution-visualization-3D.html" class="nav-button">生物演化史-可视化大屏-3D</a>
+        <a href="./4-screen-paleo-geography-3D.html" class="nav-button">地球古地理-3D</a>
     </div>
     <div id="info">生物演化史-DNA双螺旋-3D</div>
     <div id="details"></div>
@@ -810,8 +815,6 @@
         function onMouseMove(event) {
             clearTimeout(debounceTimer);
             debounceTimer = setTimeout(() => {
-                // 修改鼠标坐标计算，考虑页面缩放
-                const scaleFactor = 2; // 假设页面放大了一倍
                 mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1; // 除以2
                 mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1; // 除以2
                 
@@ -884,6 +887,30 @@
             } else {
                 document.exitFullscreen();
             }
+        });
+
+        // 添加事件监听器以接收来自 iframe 的消息
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) { // 确保消息来源是同一源
+                const { quadrantId, data } = event.data;
+                // 处理接收到的数据并更新页面内容
+                updateContent(data);
+            }
+        });
+
+        // 更新页面内容的函数
+        function updateContent(data) {
+            const details = document.getElementById('details');
+            details.style.display = 'block';
+            details.innerHTML = `<h3>选中数据: ${data}</h3>`; // 更新显示内容
+        }
+
+        // 添加点击事件
+        document.querySelectorAll('.data-node').forEach(node => {
+            node.addEventListener('click', () => {
+                const data = node.dataset.value; // 获取节点数据
+                window.parent.postMessage({ quadrantId: 'your-quadrant-id', data }, '*'); // 发送消息到父窗口
+            });
         });
 
         init();

@@ -79,6 +79,52 @@
             overflow: hidden;
         }
 
+        /* 添加选中状态的样式 */
+        .card.selected {
+            border: 4px solid #4CAF50; /* 加粗绿色边框 */
+            background-color: rgba(76, 175, 80, 0.1); /* 轻微的绿色背景 */
+            position: relative; /* 为了使用伪元素 */
+            overflow: hidden; /* 防止伪元素溢出 */
+        }
+
+        /* 动态流动的边框效果 */
+        .card.selected::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 4px solid rgba(76, 175, 80, 0.5); /* 流动边框颜色 */
+            animation: border-flow 1.5s infinite; /* 动画效果 */
+            z-index: -1; /* 确保在卡片后面 */
+        }
+
+        @keyframes border-flow {
+            0% {
+                transform: translate(-100%, -100%);
+            }
+            50% {
+                transform: translate(100%, 100%);
+            }
+            100% {
+                transform: translate(-100%, -100%);
+            }
+        }
+
+        /* 添加选中状态下图片的样式 */
+        .card.selected .card-front img {
+            filter: brightness(0.8); /* 调暗图片 */
+        }
+
+        iframe {
+            width: 100%; /* 设置宽度为100% */
+            height: 100%; /* 设置高度为100% */
+            border: none; /* 去掉 iframe 边框 */
+            transform: scale(0.5); /* 按比例缩小50% */
+            transform-origin: top left; /* 设置缩放的原点 */
+            overflow: hidden; /* 防止溢出 */
+        }
         .title {
             position: fixed;
             top: 5px;
@@ -103,11 +149,12 @@
     </style>
 </head>
 <body>
-    <div>
-        <span class="title">点击卡片进入页面</span>
-    <a class="title-left" href="./4-screen-home-page.html" style="margin-left: 50px; color: white; text-decoration: none; font-size: 20px; background-color: green; padding: 5px 15px; border-radius: 5px;">使用四象限组合页面→</a>
+    <div></div>
+        <span class="title">选择4张卡片进入四象限页面</span>
+    <a class="title-left" href="./home-page.html" style="margin-left: 50px; color: white; text-decoration: none; font-size: 20px; background-color: green; padding: 5px 15px; border-radius: 5px;">使用单页面→</a>
 
     </div>
+
     <div class="container">
         <script>
             const images = [
@@ -121,10 +168,12 @@
                 'paleo-geography-3D'
             ];
 
+            let selectedCards = [];
+
             images.forEach(img => {
                 document.write(`
-                    <div class="card-wrapper">
-                        <a href="./${img}.html">
+                    <div class="card-wrapper" data-img="${img}">
+                        <a href="javascript:void(0);" class="select-card">
                             <div class="card">
                                 <div class="card-face card-front">
                                     <img src="./select-cards/${img}.png" alt="${img}">
@@ -132,16 +181,43 @@
                                 <div class="card-face card-back">
                                     <span>点击查看详情</span>
                                 </div>
+                                <div class="checkmark" style="display: none;">✔</div>
                             </div>
                         </a>
                     </div>
                 `);
             });
+
+            document.querySelectorAll('.select-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const cardWrapper = card.parentElement;
+                    const img = cardWrapper.getAttribute('data-img');
+                    const cardElement = cardWrapper.querySelector('.card');
+
+                    if (selectedCards.includes(img)) {
+                        selectedCards = selectedCards.filter(selected => selected !== img);
+                        cardWrapper.querySelector('.checkmark').style.display = 'none';
+                        cardElement.classList.remove('selected'); // 移除选中样式
+                    } else {
+                        if (selectedCards.length < 4) {
+                            selectedCards.push(img);
+                            cardWrapper.querySelector('.checkmark').style.display = 'block';
+                            cardElement.classList.add('selected'); // 添加选中样式
+                        }
+                    }
+
+                    if (selectedCards.length === 4) {
+                        // 跳转到新的页面
+                        const newPageUrl = `4-screen-display.html?cards=${selectedCards.join(',')}`;
+                        window.location.href = newPageUrl;
+                    }
+                });
+            });
         </script>
     </div>
 
     <script>
-        // 添加鼠标移动时���3D效果
+        // 添加鼠标移动时的3D效果
         document.querySelectorAll('.card-wrapper').forEach(card => {
             card.addEventListener('mousemove', (e) => {
                 const rect = card.getBoundingClientRect();
