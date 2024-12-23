@@ -57,9 +57,14 @@
 
         .node text {
             font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-            font-size: 14px;
+            font-size: 18px;  /* 增大到18px */
             font-weight: 700;
-            fill: #333;
+            fill: #000; 
+            text-shadow: 
+                -1px -1px 0 #fff,  
+                1px -1px 0 #fff,
+                -1px 1px 0 #fff,
+                1px 1px 0 #fff;  /* 白色描边效果 */
         }
 
         .link {
@@ -252,6 +257,7 @@
             <button onclick="window.location.href='./mobile-biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
             <button onclick="window.location.href='./mobile-paleo-geography-3D.html'">地球古地理-3D</button>
             <button onclick="window.location.href='./mobile-index.html'">返回导航页</button>
+            <!-- <button onclick="toggleGravityEngine()" style="background-color: #FF8C00;">开启重力引擎</button> -->
         </div>
         <button onclick="expandAll()" class="main-btn">展开所有</button>
         <button onclick="collapseAll()" class="main-btn">收起所有</button>
@@ -297,7 +303,7 @@
         // 应拖拽行为到背景矩形
         svg.select(".background").call(viewDrag);
 
-        // 视图拖拽处理函数
+        // 视图拖���处理函数
         function viewDragStarted(event) {
             // 只在点击背景时触发拖拽
             if (event.sourceEvent.target.classList.contains("background")) {
@@ -364,7 +370,8 @@
             .force("charge", d3.forceManyBody().strength(-300)) // 节点间的斥力
             .force("collide", d3.forceCollide().radius(50)) // 防止节点重叠的碰撞
             .force("center", d3.forceCenter(0, 0).strength(0.1)) // 添加中心力
-            .force("radial", d3.forceRadial(d => d.depth * 180, 0, 0).strength(0.8)); // 修改径向力的中心点
+            .force("radial", d3.forceRadial(d => d.depth * 180, 0, 0).strength(0.8)) // 修改径向力的中心
+            .force("gravity", d3.forceY(50).strength(0.1)); // 添加向下的重力力
 
         // 创层次结构并初始化折叠状态
         let root = d3.hierarchy(treeData);
@@ -505,7 +512,7 @@
                     });
             });
 
-            // 修改节点的更新逻辑
+            // ��改节点的更新逻辑
             const node = g.selectAll(".node")
                 .data(nodes, d => d.id || (d.id = ++i));
 
@@ -604,7 +611,7 @@
             // 连接线的更新
             const linkUpdate = link.merge(linkEnter);
 
-            // 只对新连接线和变化的连接线应用动画
+            // 只��新连接线和变化的连接线应用动画
             linkUpdate.filter(d => {
                 const sourceChanged = d.source.x !== d.source.x0 || d.source.y !== d.source.y0;
                 const targetChanged = d.target.x !== d.target.x0 || d.target.y !== d.target.y0;
@@ -1326,7 +1333,7 @@
                 }
             });
 
-        // 修改showNodeInfo函数，添加一个参数来标识是否是锁定状态
+        // 修改showNodeInfo函数，添加一个参数来标识是否��锁定状态
         function showNodeInfo(event, d, isLocked = false) {
             console.log('showNodeInfo triggered', d);
             event.stopPropagation();
@@ -1471,7 +1478,7 @@
             document.head.appendChild(style);
         });
 
-        // 添加必要的样式（确保在head中添加）
+        // 添加必要的样式（确保��head中添加）
         const backgroundStyle = document.createElement('style');
         backgroundStyle.textContent = `
             .background-image-container {
@@ -1640,6 +1647,23 @@
         // 添加一个测试函数，可以在控制台手动调用测试
         window.testMessage = function() {
             showMessage('测试消息\n第二行');
+        }
+
+        // 新增变量来跟踪重力引擎状态
+        let gravityEngineEnabled = false;
+
+        // 新增重力引擎切换函数
+        function toggleGravityEngine() {
+            gravityEngineEnabled = !gravityEngineEnabled;
+            if (gravityEngineEnabled) {
+                // 开启重力引擎
+                simulation.alpha(1).restart(); // 重启模拟
+                alert("重力引擎已开启");
+            } else {
+                // 关闭重力引擎
+                simulation.alpha(0); // 停止模拟
+                alert("重力引擎已关闭");
+            }
         }
     </script>
 </body>

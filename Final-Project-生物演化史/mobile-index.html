@@ -325,27 +325,17 @@
             return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         }
 
-        // 直接跳转的逻辑，为示按钮
-        if (!isMobileDevice()) {
-            // 创建跳转按钮
-            const redirectButton = document.createElement('button');
-            redirectButton.className = 'redirect-button';
-            redirectButton.textContent = '点击跳转到生物演化史首页';
-            redirectButton.onclick = function () {
-                window.location.href = "./home-page.html";
-            };
-            document.body.appendChild(redirectButton);
-        } else {
-            // 修改移动端的处理
-            const redirectButton = document.createElement('button');
-            redirectButton.className = 'redirect-button mobile';
-            redirectButton.textContent = '点击跳转到生物演化史首页';
-            redirectButton.onclick = function () {
-                // 直接跳转到移动端页面
-                window.location.href = "./mobile-home-page.html";
-            };
-            document.body.appendChild(redirectButton);
-        }
+
+        // 修改移动端的处理
+        const redirectButton = document.createElement('button');
+        redirectButton.className = 'redirect-button mobile';
+        redirectButton.textContent = '点击跳转到生物演化史首页';
+        redirectButton.onclick = function () {
+            // 直接跳转到移动端页面
+            window.location.href = "./mobile-home-page.html";
+        };
+        document.body.appendChild(redirectButton);
+        
 
         // 移除 else 判断，使得无论是 PC 还是移动端都显示 3D 场景
         document.body.style.overflow = 'hidden';
@@ -1104,15 +1094,11 @@
         });
 
         const commentButton = document.createElement('button');
-        commentButton.textContent = '评论区';
-        commentButton.className = isMobileDevice() ? 'comment-button mobile' : 'comment-button';
+        commentButton.textContent = '评论区/源码/作者';
+        commentButton.className = 'comment-button mobile';
 
         commentButton.onclick = function() {
-            if (!isMobileDevice()) {
-                window.location.href = 'http://www.yangyuxin.cn:2000';
-            } else {
-                window.location.href = './mobile-comment.html';
-            }
+            window.location.href = './mobile-comment.html';
         };
 
         document.body.appendChild(commentButton);
@@ -1120,7 +1106,7 @@
         // 在脚本末尾添加地球模型跳转按钮
         const earthButton = document.createElement('button');
         earthButton.textContent = '切换到地球模型';
-        earthButton.className = isMobileDevice() ? 'earth-button mobile' : 'earth-button';
+        earthButton.className = 'earth-button mobile';
 
         earthButton.onclick = function() {
             window.location.href = './mobile-index-earth.html';

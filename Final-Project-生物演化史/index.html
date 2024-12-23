@@ -19,7 +19,7 @@
 
             // 检测设备类型
             let target = '';
-            if (/Mobi|Android/i.test(navigator.userAgent)) {
+            if (/Mobi|Android/i.test(navigator.userAgent) && !/Windows NT/i.test(navigator.userAgent)) {
                 target = '<span class="highlight">移动端</span>';
                 // 缩小标题字体
                 document.querySelector('.title').style.fontSize = '30px';
