@@ -21,7 +21,21 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: red;
-            font-size: 1em;
+            font-size: 1.5em;
+            text-align: center;
+            padding: 20px;
+            z-index: 1000;
+            white-space: nowrap;
+            letter-spacing: 0.2em;
+        }
+
+        .message2 {
+            position: fixed;
+            top: 10%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: red;
+            font-size: 0.7em;
             text-align: center;
             padding: 20px;
             z-index: 1000;
@@ -160,7 +174,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 1.5em;
+            font-size: 1.2em;
             text-align: center;
             z-index: 1000;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -317,7 +331,10 @@
         }, { passive: false });
     </script>
     <div id="message" class="message">
-        请使用PC端(电脑)访问以获得最佳体验
+        生物演化史 - Evoviz
+    </div>
+    <div id="message2" class="message2">
+        请使用PC端访问以获得最佳体验
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
@@ -1094,7 +1111,7 @@
         });
 
         const commentButton = document.createElement('button');
-        commentButton.textContent = '评论反馈区/源码/作者';
+        commentButton.textContent = '交流反馈区/源码/作者';
         commentButton.className = 'comment-button mobile';
 
         commentButton.onclick = function() {

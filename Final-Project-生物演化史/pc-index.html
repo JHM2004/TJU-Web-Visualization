@@ -306,6 +306,14 @@
         页面格式有问题？点击重新进行设备检测→
         <button onclick="window.location.href='./device-testing.html'" style="margin-left: 5px; padding: 5px 10px; background-color: rgba(0, 123, 255, 0.9); color: white; border: none; border-radius: 5px; cursor: pointer;">设备检测</button>
     </div>
+    <div id="app-download" style="position: fixed; bottom: 50px; left: 10px; color: white; font-size: 1em; z-index: 1000;">
+        安装成手机app？点击下载→
+        <button id="download-button" style="margin-left: 5px; padding: 5px 10px; background-color: rgba(0, 123, 255, 0.9); color: white; border: none; border-radius: 5px; cursor: pointer;">二维码</button>
+    </div>
+    <div id="qr-popup" style="display: none; position: fixed; bottom: 85px; left: 10px; transform: translate(0, 0); background-color: rgba(0, 0, 0, 0.8); color: white; padding: 20px; border-radius: 10px; z-index: 1001;">
+        <p>使用手机浏览器扫码下载</p>
+        <img src="./static-other/QR-code/QR-code.png" alt="二维码" style="width: 200px; height: 200px;">
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
         function isMobileDevice() {
@@ -470,7 +478,7 @@
                 url: './static-other/Skybox_Texture/全景天空盒/new-01/FS011_Sunrise.png'
             },
             {
-                name: '日出场景2',
+                name: '日落场景2',
                 type: 'equirectangular',
                 url: './static-other/Skybox_Texture/全景天空盒/new-01/FS014_Sunrise.png'
             },
@@ -552,7 +560,7 @@
                 ]
             },
             {
-                name: '雪山',
+                name: '山',
                 type: 'cubemap',
                 urls: [
                     './static-other/Skybox_Texture/立方体天空盒/snow_mountain/right.jpg',
@@ -713,7 +721,7 @@
                 url: './static-other/World_Texture/world.jpg'
             },
             {
-                name: '世界地图(0亿年前)',
+                name: '世界地图(0亿��前)',
                 type: 'equirectangular',
                 url: './static-other/World_Texture/0.jpg'
             },
@@ -907,7 +915,7 @@
                     },
                     undefined,
                     function(err) {
-                        loadingDiv.innerHTML = '天空盒资源加载失败，请刷新页面重试';
+                        loadingDiv.innerHTML = '天��盒资源加载失败，请刷新页面重试';
                         console.error('天空加载错误:', err);
                     }
                 );
@@ -1079,7 +1087,7 @@
         });
 
         const commentButton = document.createElement('button');
-        commentButton.textContent = '评论反馈区/源码/作者';
+        commentButton.textContent = '交流反馈区/源码/作者';
         commentButton.className = 'button comment-button';
 
         commentButton.onclick = function() {
@@ -1102,6 +1110,19 @@
         };
 
         document.body.appendChild(earthButton);
+
+        // 处理下载按钮点击事件
+        document.getElementById('download-button').onclick = function() {
+            document.getElementById('qr-popup').style.display = 'block';
+        };
+
+        // 点击页面其他地方时关闭弹窗
+        window.onclick = function(event) {
+            const qrPopup = document.getElementById('qr-popup');
+            if (event.target !== qrPopup && !qrPopup.contains(event.target) && event.target !== document.getElementById('download-button')) {
+                qrPopup.style.display = 'none';
+            }
+        };
     </script>
 </body>
 

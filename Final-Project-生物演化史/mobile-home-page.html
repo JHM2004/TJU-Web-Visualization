@@ -124,6 +124,31 @@
             max-width: 80%;
             line-height: 1.5;
         }
+
+        /* 添加加载指示器的样式 */
+        .loader {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1001; /* 确保在消息上方 */
+            text-align: center; /* 使文本居中 */
+            color: white; /* 设置文字颜色为白色 */
+            border: 2px solid white; /* 添加白色边框 */
+            padding: 10px; /* 添加内边距 */
+            border-radius: 5px; /* 添加圆角 */
+            background-color: rgba(0, 0, 0, 0.8); /* 背景颜色 */
+        }
+
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body>
@@ -166,7 +191,7 @@
                     // 其他卡片保持不变
                     document.write(`
                         <div class="card-wrapper">
-                            <a href="./mobile-${img}.html">
+                            <a href="./mobile-${img}.html" onclick="showLoader()">
                                 <div class="card">
                                     <div class="card-face card-front">
                                         <img src="./select-cards/${img}.png" alt="${img}">
@@ -208,20 +233,54 @@
 
     <script>
         function showPCOnlyMessage() {
-            // 创建消息元素
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message-popup';
-            messageDiv.innerHTML = '在pc端才能访问<br>生物分类-太阳爆发图-2D页面<br>请尝试其他页面~';
-            document.body.appendChild(messageDiv);
+            // 检查是否是第一张卡片
+            if (document.querySelector('.card-wrapper:first-child .card')) {
+                // 直接显示消息，不显示加载指示器
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message-popup';
+                messageDiv.innerHTML = '在pc端才能访问<br>生物分类-太阳爆发图-2D页面<br>请尝试其他页面~';
+                document.body.appendChild(messageDiv);
 
-            // 显示消息
-            messageDiv.style.display = 'block';
+                // 显示消息
+                messageDiv.style.display = 'block';
 
-            // 2.5秒后移除消息
+                // 2.5秒后移除消息
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                    document.body.removeChild(messageDiv);
+                }, 2500);
+            } else {
+                // 移除加载指示器的创建
+                // 创建消息元素
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message-popup';
+                messageDiv.innerHTML = '在pc端才能访问<br>生物分类-太阳爆发图-2D页面<br>请尝试其他页面~';
+                document.body.appendChild(messageDiv);
+
+                // 显示消息
+                messageDiv.style.display = 'block';
+
+                // 2.5秒后移除消息
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                    document.body.removeChild(messageDiv);
+                }, 2500);
+            }
+        }
+    </script>
+
+    <script>
+        function showLoader() {
+            // 创建加载提示元素
+            const loaderDiv = document.createElement('div');
+            loaderDiv.className = 'loader';
+            loaderDiv.innerText = '加载中...'; // 添加加载提示文字
+            document.body.appendChild(loaderDiv);
+
+            // 2秒后跳转到新页面
             setTimeout(() => {
-                messageDiv.style.display = 'none';
-                document.body.removeChild(messageDiv);
-            }, 2500);
+                window.location.href = loaderDiv.parentElement.href; // 跳转到链接
+            }, 2000); // 这里的时间可以根据需要调整
         }
     </script>
 </body>
