@@ -303,7 +303,7 @@
         // 应拖拽行为到背景矩形
         svg.select(".background").call(viewDrag);
 
-        // 视图拖���处理函数
+        // 视图处理函数
         function viewDragStarted(event) {
             // 只在点击背景时触发拖拽
             if (event.sourceEvent.target.classList.contains("background")) {
@@ -512,7 +512,7 @@
                     });
             });
 
-            // ��改节点的更新逻辑
+            // 改节点的更新逻辑
             const node = g.selectAll(".node")
                 .data(nodes, d => d.id || (d.id = ++i));
 
@@ -611,7 +611,7 @@
             // 连接线的更新
             const linkUpdate = link.merge(linkEnter);
 
-            // 只��新连接线和变化的连接线应用动画
+            // 新连接线和变化的连接线应用动画
             linkUpdate.filter(d => {
                 const sourceChanged = d.source.x !== d.source.x0 || d.source.y !== d.source.y0;
                 const targetChanged = d.target.x !== d.target.x0 || d.target.y !== d.target.y0;
@@ -1333,7 +1333,7 @@
                 }
             });
 
-        // 修改showNodeInfo函数，添加一个参数来标识是否��锁定状态
+        // 修改showNodeInfo函数，添加一个参数来标识是否锁定状态
         function showNodeInfo(event, d, isLocked = false) {
             console.log('showNodeInfo triggered', d);
             event.stopPropagation();
@@ -1478,7 +1478,7 @@
             document.head.appendChild(style);
         });
 
-        // 添加必要的样式（确保��head中添加）
+        // 添加必要的样式（确保head中添加）
         const backgroundStyle = document.createElement('style');
         backgroundStyle.textContent = `
             .background-image-container {
