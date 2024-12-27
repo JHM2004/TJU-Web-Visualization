@@ -528,6 +528,26 @@
                     onMouseMove(event);
                 }
             });
+
+            // 添加消息处理
+            window.addEventListener('message', (event) => {
+                if (event.origin === window.location.origin) {
+                    const { nodeId, action, sourceQuadrant } = event.data;
+                    
+                    // 确保不处理来自自己的消息
+                    const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                    if (sourceQuadrant === currentQuadrant) return;
+
+                    if (action === 'click') {
+                        const node = networkGroup.children.find(obj => 
+                            obj instanceof THREE.Mesh && obj.userData.name === nodeId
+                        );
+                        if (node) {
+                            simulateNodeClick(node);
+                        }
+                    }
+                }
+            });
         }
 
         function createStarField() {
@@ -808,8 +828,8 @@
 
         function onMouseClick(event) {
             // 使用正确的鼠标位置计算
-            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1; // 除以2
-            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1; // 除以2
+            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1;
+            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1;
 
             // 更新射线投射器
             raycaster.setFromCamera(mouse, camera);
@@ -817,48 +837,7 @@
 
             if (intersects.length > 0) {
                 const clickedNode = intersects[0].object;
-                
-                // 移除旧的高亮环
-                if (highlightRing) {
-                    scene.remove(highlightRing);
-                }
-                
-                // 创建新的高亮环
-                const ringGeometry = new THREE.RingGeometry(15, 20, 32);
-                const ringMaterial = new THREE.MeshBasicMaterial({
-                    color: 0xffff00,
-                    side: THREE.DoubleSide,
-                    transparent: true,
-                    opacity: 0.8
-                });
-                highlightRing = new THREE.Mesh(ringGeometry, ringMaterial);
-                
-                // 将环放置在节点位置
-                highlightRing.position.copy(clickedNode.position);
-                highlightRing.lookAt(camera.position);
-                scene.add(highlightRing);
-                
-                // 计算相机新位置
-                const nodePosition = clickedNode.position.clone();
-                const directionToRoot = new THREE.Vector3(0, 0, 0).sub(nodePosition).normalize();
-                const distance = 500;
-                const newCameraPosition = nodePosition.clone().add(directionToRoot.multiplyScalar(-distance));
-                
-                // 使用TWEEN进行平滑过渡
-                new TWEEN.Tween(camera.position)
-                    .to(newCameraPosition, 1000)
-                    .easing(TWEEN.Easing.Quadratic.InOut)
-                    .start();
-                    
-                new TWEEN.Tween(controls.target)
-                    .to({x: 0, y: 0, z: 0}, 1000)
-                    .easing(TWEEN.Easing.Quadratic.InOut)
-                    .start();
-                
-                selectedNode = clickedNode;
-                
-                // 显示节点信息
-                showEventDetails(clickedNode.userData);
+                simulateNodeClick(clickedNode);
             }
         }
 
@@ -1022,7 +1001,7 @@
             }
         }
 
-        // 监听全屏变化
+        // 监全屏变
         document.addEventListener('fullscreenchange', () => {
             // 可以在这里添加全屏状态变化时的处理逻
             if (document.fullscreenElement) {
@@ -1062,10 +1041,154 @@
         // 新增: 处理联动数据的函数
         function handleLinkedData(data) {
             // 根据接收到的数据更新网络可视化或其他元素
-            // 例如，您可以根据数据高亮显示特定节点
+            // 例如，可以根据数据高亮显示特定节点
             const nodeToHighlight = networkGroup.children.find(child => child.userData.name === data);
             if (nodeToHighlight) {
                 createHighlightCircle(nodeToHighlight.position, nodeToHighlight); // 高亮显示节点
+            }
+        }
+
+        // 修改节点点击处理
+        function onNodeClick(event) {
+            // 修改鼠标坐标计算
+            mouse.x = (event.clientX / (window.innerWidth * 0.5)) * 2 - 1;
+            mouse.y = -(event.clientY / (window.innerHeight * 0.5)) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
+
+            if (intersects.length > 0) {
+                const selectedObject = intersects[0].object;
+                if (selectedObject.userData && selectedObject.userData.name) {
+                    // 显示节点信息
+                    showEventDetails(selectedObject.userData);
+                    
+                    // 创建高亮效果
+                    createHighlightCircle(selectedObject.position, selectedObject);
+                    
+                    // 更新相机位置
+                    const nodePosition = selectedObject.position;
+                    const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                    targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                    targetLookAt.copy(nodePosition);
+
+                    // 发送消息给父页面
+                    if (window.parent && window.frameElement) {
+                        window.parent.postMessage({
+                            sourceQuadrant: window.frameElement.id.replace('iframe-', ''),
+                            nodeId: selectedObject.userData.name,
+                            action: 'click'
+                        }, window.location.origin);
+                    }
+
+                    isTransitioning = true;
+                    isInfoDisplayed = true;
+                }
+            }
+        }
+
+        // 添加消息处理
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                // 确保不处理来自自己的消息
+                const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                if (sourceQuadrant === currentQuadrant) return;
+
+                if (action === 'click') {
+                    // 查找对应的节点
+                    const node = networkGroup.children.find(obj => 
+                        obj instanceof THREE.Mesh && obj.userData.name === nodeId
+                    );
+                    if (node) {
+                        // 显示节点信息
+                        showEventDetails(node.userData);
+                        
+                        // 创建高亮效果
+                        createHighlightCircle(node.position, node);
+                        
+                        // 更新相机位置
+                        const nodePosition = node.position;
+                        const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                        targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                        targetLookAt.copy(nodePosition);
+
+                        isTransitioning = true;
+                        isInfoDisplayed = true;
+                    }
+                }
+            }
+        });
+
+        // 确保点击事件绑定
+        window.addEventListener('click', onNodeClick);
+
+        // 修改 simulateNodeClick 函数，添加消息发送
+        function simulateNodeClick(node) {
+            // 重置所有节点
+            networkGroup.children.forEach(obj => {
+                if (obj instanceof THREE.Mesh) {
+                    // 不改变节点颜色，只重置缩放
+                    obj.scale.set(1, 1, 1);
+                }
+            });
+
+            // 移除旧的高亮环
+            if (highlightRing) {
+                scene.remove(highlightRing);
+            }
+
+            // 创建新的高亮环，修改内外半径
+            const ringGeometry = new THREE.RingGeometry(18, 20, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffff00,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            highlightRing = new THREE.Mesh(ringGeometry, ringMaterial);
+
+            // 将环放置在节点位置
+            highlightRing.position.copy(node.position);
+            // 让环始终面向相机
+            highlightRing.lookAt(camera.position);
+            scene.add(highlightRing);
+
+            // 稍微放大选中的节点
+            node.scale.set(1.2, 1.2, 1.2);
+
+            // 更新相机位置
+            const position = node.position.clone();
+            new TWEEN.Tween(camera.position)
+                .to({
+                    x: position.x + 50,
+                    y: position.y + 50,
+                    z: position.z + 50
+                }, 1000)
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+
+            // 更新控制器目标
+            new TWEEN.Tween(controls.target)
+                .to({
+                    x: position.x,
+                    y: position.y,
+                    z: position.z
+                }, 1000)
+                .easing(TWEEN.Easing.Quadratic.Out)
+                .start();
+
+            // 更新信息面板
+            showEventDetails(node.userData);
+
+            // 发送消息给父页面
+            if (window.parent && window.frameElement) {
+                window.parent.postMessage({
+                    sourceQuadrant: window.frameElement.id.replace('iframe-', ''),
+                    nodeId: node.userData.name,
+                    action: 'click'
+                }, window.location.origin);
             }
         }
 

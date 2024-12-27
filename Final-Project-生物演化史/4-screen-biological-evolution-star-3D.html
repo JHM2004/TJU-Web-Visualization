@@ -713,7 +713,7 @@
 
         let highlightCircle;
 
-        // 创建圈的函数
+        // 创建圈函数
         function createHighlightCircle(position, selectedObject) {
             if (highlightCircle) {
                 scene.remove(highlightCircle);
@@ -741,9 +741,7 @@
 
         let isInfoDisplayed = false; // 添加标志位
 
-        window.addEventListener('click', onMouseClick);
-
-        function onMouseClick(event) {
+        window.addEventListener('click', (event) => {
             // 修改鼠标坐标计算
             mouse.x = (event.clientX / (window.innerWidth * 0.5)) * 2 - 1;
             mouse.y = -(event.clientY / (window.innerHeight * 0.5)) * 2 + 1;
@@ -753,26 +751,37 @@
 
             if (intersects.length > 0) {
                 const selectedObject = intersects[0].object;
-                const nodePosition = selectedObject.position;
+                if (selectedObject.userData && selectedObject.userData.name) {
+                    // 显示节点信息
+                    showEventDetails(selectedObject.userData);
+                    
+                    // 创建高亮效果
+                    createHighlightCircle(selectedObject.position, selectedObject);
+                    
+                    // 更新相机位置
+                    const nodePosition = selectedObject.position;
+                    const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                    targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                    targetLookAt.copy(nodePosition);
 
-                // 显示新节点的信息
-                const nodeData = selectedObject.userData;
-                showEventDetails(nodeData);
-                
-                const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
-                targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
-                targetLookAt.copy(nodePosition);
-                // 传入选中的对象
-                createHighlightCircle(nodePosition, selectedObject);
+                    // 发送消息给父页面
+                    if (window.parent && window.frameElement) {
+                        window.parent.postMessage({
+                            sourceQuadrant: window.frameElement.id.replace('iframe-', ''),
+                            nodeId: selectedObject.userData.name,
+                            action: 'click'
+                        }, window.location.origin);
+                    }
 
-                isTransitioning = true;
-                isInfoDisplayed = true;
+                    isTransitioning = true;
+                    isInfoDisplayed = true;
+                }
             } else {
                 // 点击空白处时隐藏信息
                 hideEventDetails();
                 isInfoDisplayed = false;
             }
-        }
+        });
 
         function animate() {
             requestAnimationFrame(animate);
@@ -788,8 +797,8 @@
 
             // 平滑过渡相机位置和视角
             if (isTransitioning) {
-                camera.position.lerp(targetPosition, 0.05);
-                controls.target.lerp(targetLookAt, 0.05);
+                camera.position.lerp(targetPosition, 0.15);
+                controls.target.lerp(targetLookAt, 0.15);
                 
                 if (camera.position.distanceTo(targetPosition) < 1) {
                     isTransitioning = false;
@@ -954,7 +963,37 @@
             if(coloredStarField) coloredStarField.visible = showStars;
         }
 
-        
+        // 修改消息处理中的节点高亮逻辑
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                if (sourceQuadrant === window.frameElement?.id.replace('iframe-', '')) return;
+
+                if (action === 'click') {
+                    const node = networkGroup.children.find(obj => 
+                        obj instanceof THREE.Mesh && obj.userData.name === nodeId
+                    );
+                    if (node) {
+                        // 显示节点信息
+                        showEventDetails(node.userData);
+                        
+                        // 创建高亮效果
+                        createHighlightCircle(node.position, node);
+                        
+                        // 更新相机位置
+                        const nodePosition = node.position;
+                        const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                        targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                        targetLookAt.copy(nodePosition);
+
+                        isTransitioning = true;
+                        isInfoDisplayed = true;
+                    }
+                }
+            }
+        });
+
         init();
     </script>
 </body>

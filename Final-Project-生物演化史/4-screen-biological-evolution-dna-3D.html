@@ -889,14 +889,84 @@
             }
         });
 
-        // 添加事件监听器以接收来自 iframe 的消息
+        // 添加消息处理
         window.addEventListener('message', (event) => {
-            if (event.origin === window.location.origin) { // 确保消息来源是同一源
-                const { quadrantId, data } = event.data;
-                // 处理接收到的数据并更新页面内容
-                updateContent(data);
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                // 确保不处理来自自己的消息
+                const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                if (sourceQuadrant === currentQuadrant) return;
+
+                if (action === 'click') {
+                    const event = timelineObjects.children.find(obj => obj.userData.name === nodeId);
+                    if (event) {
+                        highlightEvent(event);
+                    }
+                }
             }
         });
+
+        // 修改事件点击处理
+        function onEventClick(event) {
+            highlightEvent(event);
+            
+            // 发送消息给父页面
+            if (window.parent && window.frameElement) {
+                window.parent.postMessage({
+                    sourceQuadrant: window.frameElement.id.replace('iframe-', ''),
+                    nodeId: event.userData.name,
+                    action: 'click'
+                }, window.location.origin);
+            }
+        }
+
+        let selectedEvent = null; // 新增变量来跟踪当前选中的事件
+
+        // 添加点击事件处理
+        window.addEventListener('click', (event) => {
+            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1; // 除以2
+            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1; // 除以2
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(timelineObjects.children);
+
+            if (intersects.length > 0) {
+                const clickedEvent = intersects[0].object.userData;
+
+                // 如果点击的是同一个事件，则不做处理
+                if (selectedEvent === intersects[0].object) {
+                    return;
+                }
+
+                // 更新选中事件
+                selectedEvent = intersects[0].object;
+                showEventDetails(clickedEvent);
+                
+                // 高亮选中的事件
+                highlightEvent(selectedEvent);
+            } else {
+                hideEventDetails();
+                selectedEvent = null; // 如果没有点击到事件，重置选中状态
+            }
+        });
+
+        // 添加高亮函数
+        function highlightEvent(event) {
+            // 重置所有事件的效果
+            timelineObjects.children.forEach(obj => {
+                if (obj.material) {
+                    obj.material.emissiveIntensity = 0.5; // 重置发光强度
+                    obj.scale.set(1, 1, 1); // 重置缩放
+                }
+            });
+
+            // 高亮选中的事件
+            if (event && event.material) {
+                event.material.emissiveIntensity = 1; // 设置发光强度
+                event.scale.set(1.2, 1.2, 1.2); // 放大选中事件
+            }
+        }
 
         // 更新页面内容的函数
         function updateContent(data) {

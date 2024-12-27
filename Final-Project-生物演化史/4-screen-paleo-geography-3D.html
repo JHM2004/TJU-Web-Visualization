@@ -623,6 +623,32 @@
                 fullscreenBtn.textContent = '全屏显示';
             }
         }
+
+        // 添加消息处理
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                // 确保不处理来自自己的消息
+                const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                if (sourceQuadrant === currentQuadrant) return;
+
+                if (action === 'click') {
+                    // 根据时间信息切换到对应的地理时期
+                    const timeData = findTimeDataByNodeId(nodeId);
+                    if (timeData) {
+                        updateGlobe(timeData);
+                    }
+                }
+            }
+        });
+
+        // 添加时间数据查找函数
+        function findTimeDataByNodeId(nodeId) {
+            // 这里需要实现根据节点ID查找对应时期的逻辑
+            // 可能需要添加一个映射表来关联节点ID和地理时期
+            return timePeriodsMap[nodeId];
+        }
     </script>
 </body>
 

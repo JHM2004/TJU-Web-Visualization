@@ -84,18 +84,7 @@
             border-color: #4CAF50;
         }
 
-        #controlInfo {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            color: white;
-            font-family: Arial;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            line-height: 1.5;
-        }
-
+        
      
 
         .timeButton {
@@ -143,10 +132,24 @@
             overflow: hidden;
             touch-action: none;
         }
+
+        #controlInfo {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: white;
+            font-family: Arial;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            line-height: 1.5;
+        }
+
     </style>
 </head>
 
 <body>
+    
     <!-- 添加加载提示 -->
     <div id="loadingText" style="
         position: fixed;
@@ -196,7 +199,15 @@
         <option value="600">6亿年前(元古宙晚期-震旦纪)</option>
         <option value="750">7.5亿年前(超大陆罗迪尼亚大陆开始分裂)</option>
     </select>
-
+    
+    <div id="controlInfo">
+        操作提示：<br>
+        鼠标滚轮 - 缩放地球<br>
+        鼠标左键拖拽 - 旋转地球<br>
+        按住/长按 A键/左方向键 - 逐个回退到远古地球<br>
+        按住/长按 D键/右方向键 - 逐个前进到现代地球
+    </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script>
@@ -378,7 +389,7 @@
             controls.autoRotate = true;
             controls.autoRotateSpeed = 0.5;
 
-            // 添加以下触摸控制相关配置
+            // 添加以下触摸控���相关配置
             controls.enableZoom = true;        // 启用缩放
             controls.enableRotate = true;      // 启用旋转
             controls.enablePan = false;        // 禁用平移
@@ -436,7 +447,7 @@
                 }
             });
 
-            // 修改触摸事件处理
+            // 修改触摸事件处��
             document.addEventListener('touchstart', function(e) {
                 // 检查触摸目标是否是按钮或选择框
                 if (e.target.tagName === 'BUTTON' || e.target.tagName === 'SELECT') {
@@ -562,6 +573,7 @@
                 fullscreenBtn.textContent = '全屏显示';
             }
         }
+        
     </script>
 </body>
 

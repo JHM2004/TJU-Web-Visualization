@@ -557,6 +557,11 @@
         let controls;
         let selectionCircle;
         let selectedNode;
+        let highlightCircle;
+        let targetPosition = new THREE.Vector3();
+        let targetLookAt = new THREE.Vector3();
+        let isTransitioning = false;
+        let isInfoDisplayed = false;
 
         // 添加地质年代的颜色射
         const eraColors = {
@@ -727,17 +732,16 @@
             nodes.push(node);
 
             if (parent) {
+                // 修改这里，直接存储节点对象而是 ID
                 links.push({
-                    source: parent.id,
-                    target: node.id
+                    source: parent,  // 直接使用节点对象
+                    target: node    // 直接使用节点对象
                 });
             }
 
-            // 在递归之前，为子节点设置父节点引用
             if (data.children) {
                 data.children.forEach(child => {
-                    child.parent = data;  // 设置父节点引用
-                    processData(child, node);
+                    processData(child, node);  // 传递节点对象作为父节点
                 });
             }
         }
@@ -846,6 +850,12 @@
                     link.object.geometry.attributes.position.needsUpdate = true;
                 }
             });
+
+            // 更新高亮圈的位置
+            if (selectionCircle && selectedNode) {
+                selectionCircle.position.copy(selectedNode.object.position);
+                selectionCircle.lookAt(camera.position);
+            }
         }
 
         function addEventListeners() {
@@ -925,7 +935,6 @@
                 currentBgColor.g = parseInt(color.substr(3, 2), 16);
                 currentBgColor.b = parseInt(color.substr(5, 2), 16);
 
-                // 只更新面板背景，不更改天空盒
                 updatePanelBackground();
             });
 
@@ -951,7 +960,7 @@
                     
                     // 设置目标位置为根节点位置
                     const targetPosition = rootNode.object.position.clone();
-                    // 设置相机目标位置(保持当前距离,但对准根节点)
+                    // 设置相机目标位置(保前距离,但对准根节点)
                     const offset = camera.position.clone().sub(controls.target);
                     const targetCameraPosition = targetPosition.clone().add(offset);
 
@@ -1145,7 +1154,7 @@
                         urls = [
                             './static-other/Skybox_Texture/立方体天空盒/dark_nebula/left.png',
                             './static-other/Skybox_Texture/立方体天空盒/dark_nebula/right.png',
-                            './static-other/Skybox_Texture/立方体天空盒/dark_nebula/up.png',
+                            './static-other/Skybox_Texture/立方体天盒/dark_nebula/up.png',
                             './static-other/Skybox_Texture/立方体天空盒/dark_nebula/bottom.png',
                             './static-other/Skybox_Texture/立方体天空盒/dark_nebula/front.png',
                             './static-other/Skybox_Texture/立方体天空盒/dark_nebula/back.png'
@@ -1577,7 +1586,7 @@
             updatePanelBackground();
         });
 
-        // 透明度改变事件
+        // 透度改变事件
         document.getElementById('bgOpacity').addEventListener('input', (e) => {
             currentBgOpacity = parseFloat(e.target.value);
             updatePanelBackground();
@@ -1598,13 +1607,12 @@
         // 初始化时调用一次
         updatePanelBackground();
 
-        // 修改点击事件处理
+        // 修改点击事件处理，确保在点击时发送正确的消息
         renderer.domElement.addEventListener('click', (event) => {
             event.preventDefault();
 
-            // 修改鼠标坐标计算
-            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1; // 除以2
-            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1; // 除以2
+            mouse.x = (event.clientX / (window.innerWidth / 2)) * 2 - 1;
+            mouse.y = -(event.clientY / (window.innerHeight / 2)) * 2 + 1;
 
             raycaster.setFromCamera(mouse, camera);
             const intersects = raycaster.intersectObjects(
@@ -1615,78 +1623,157 @@
             if (intersects.length > 0) {
                 const nodeData = nodes.find(n => n.object === intersects[0].object);
                 if (nodeData) {
-                    selectedNode = nodeData;
-                    updateNodeInfo(nodeData);
-
-                    // 更新中圈
-                    if (selectionCircle) {
-                        scene.remove(selectionCircle);
+                    // 处理本地点击效果
+                    simulateNodeClick(nodeData);
+                    
+                    // 向父页面发送消息
+                    if (window.parent && window.frameElement) {
+                        const quadrantId = window.frameElement.id.replace('iframe-', '');
+                        console.log(`Sending click event from quadrant ${quadrantId} for node: ${nodeData.id}`);
+                        
+                        window.parent.postMessage({
+                            sourceQuadrant: quadrantId,
+                            nodeId: nodeData.id,
+                            action: 'click'
+                        }, window.location.origin);
                     }
-
-                    const circleGeometry = new THREE.RingGeometry(nodeData.size + 2, nodeData.size + 3, 32);
-                    const circleMaterial = new THREE.MeshBasicMaterial({
-                        color: 0xffff00,
-                        side: THREE.DoubleSide,
-                        transparent: true,
-                        opacity: 0.8
-                    });
-                    selectionCircle = new THREE.Mesh(circleGeometry, circleMaterial);
-                    selectionCircle.position.copy(nodeData.object.position);
-                    selectionCircle.lookAt(camera.position);
-                    scene.add(selectionCircle);
-
-                    // 获取节点和根节点位置
-                    const nodePosition = nodeData.object.position.clone();
-                    const rootPosition = new THREE.Vector3(0, 0, 0); // 设根节点在原点
-
-                    // 算从根节点到当前节点的方向
-                    const directionToRoot = new THREE.Vector3();
-                    directionToRoot.subVectors(nodePosition, rootPosition).normalize();
-
-                    // 计算相机目标位置（在节点后方）
-                    const distance = 200; // 相机与节点的距离
-                    const targetPosition = new THREE.Vector3();
-                    targetPosition.copy(nodePosition).add(directionToRoot.multiplyScalar(distance));
-
-                    // 保存起始状态
-                    const startPosition = camera.position.clone();
-                    const startRotation = camera.quaternion.clone();
-
-                    // 计算目标旋转相机朝向根节点）
-                    const targetQuaternion = new THREE.Quaternion();
-                    const tempCamera = camera.clone();
-                    tempCamera.position.copy(targetPosition);
-                    tempCamera.lookAt(rootPosition);
-                    targetQuaternion.copy(tempCamera.quaternion);
-
-                    // 设置动画参数
-                    const duration = 1000;
-                    const startTime = Date.now();
-
-                    // 动画函数
-                    function animateCamera() {
-                        const elapsed = Date.now() - startTime;
-                        const progress = Math.min(elapsed / duration, 1);
-                        const easeProgress = easeInOutQuad(progress);
-
-                        // 更新相机位置和旋转
-                        camera.position.lerpVectors(startPosition, targetPosition, easeProgress);
-                        camera.quaternion.slerpQuaternions(startRotation, targetQuaternion, easeProgress);
-
-                        // 更新控制器目标点为根节点位置
-                        controls.target.lerp(rootPosition, easeProgress);
-
-                        if (progress < 1) {
-                            requestAnimationFrame(animateCamera);
-                        }
-
-                        controls.update();
-                    }
-
-                    animateCamera();
                 }
             }
         });
+
+        // 实现完整的模拟点击函数
+        function simulateNodeClick(nodeData) {
+            // 1. 重置所有节点的颜色和大小
+            nodes.forEach(node => {
+                if (node.object) {
+                    node.object.material.opacity = 0.8; // 只保留透明度的设置
+                    node.object.scale.set(1, 1, 1);
+                }
+            });
+
+            // 2. 高亮选中的节点
+            if (nodeData.object) {
+                nodeData.object.material.opacity = 1; // 只保留透明度的设置
+                nodeData.object.scale.set(1.2, 1.2, 1.2);
+            }
+
+            // 3. 重置所有连接的颜色
+            links.forEach(link => {
+                if (link.object) {
+                    link.object.material.opacity = 0.2; // 只保留透明度的设置
+                }
+            });
+
+            // 4. 高亮与选中节点相关的连接
+            links.forEach(link => {
+                if (link.object && (link.source === nodeData || link.target === nodeData)) {
+                    link.object.material.opacity = 0.8; // 只保留透明度的设置
+                }
+            });
+
+            // 5. 更新节点信息面板
+            selectedNode = nodeData;
+            updateNodeInfo(nodeData);
+
+            // 6. 更新选中圈
+            updateSelectionCircle(nodeData);
+
+            // 7. 相机动画效果
+            animateCameraToNode(nodeData);
+
+            // 8. 强制更新场景
+            renderer.render(scene, camera);
+        }
+
+        // 添加选中圈更新函数
+        function updateSelectionCircle(nodeData) {
+            if (selectionCircle) {
+                scene.remove(selectionCircle);
+            }
+
+            const circleGeometry = new THREE.RingGeometry(nodeData.size + 7, nodeData.size + 10, 32);
+            const circleMaterial = new THREE.MeshBasicMaterial({
+                color: 0xffff00,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            selectionCircle = new THREE.Mesh(circleGeometry, circleMaterial);
+            selectionCircle.position.copy(nodeData.object.position);
+            selectionCircle.lookAt(camera.position);
+            scene.add(selectionCircle);
+        }
+
+        // 修改消息处理函数，添加错误处理
+        window.addEventListener('message', (event) => {
+            try {
+                if (event.origin === window.location.origin) {
+                    const { nodeId, action, sourceQuadrant } = event.data;
+                    
+                    // 确保不处理来自自己的消息
+                    const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                    if (sourceQuadrant === currentQuadrant) {
+                        return;
+                    }
+
+                    if (action === 'click') {
+                        const clickedNode = findNodeById(nodeId);
+                        if (clickedNode) {
+                            console.log(`Processing click event for node: ${nodeId} in iframe: ${currentQuadrant}`);
+                            simulateNodeClick(clickedNode);
+                        } else {
+                            console.warn(`Node with id ${nodeId} not found in iframe: ${currentQuadrant}`);
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error processing message:', error);
+            }
+        });
+
+        // 添加相机动画函数
+        function animateCameraToNode(nodeData) {
+            const nodePosition = nodeData.object.position.clone();
+            const rootPosition = new THREE.Vector3(0, 0, 0);
+            const directionToRoot = new THREE.Vector3().subVectors(nodePosition, rootPosition).normalize();
+            const distance = 200;
+            const targetPosition = new THREE.Vector3().copy(nodePosition).add(directionToRoot.multiplyScalar(distance));
+
+            const startPosition = camera.position.clone();
+            const startRotation = camera.quaternion.clone();
+
+            const targetQuaternion = new THREE.Quaternion();
+            const tempCamera = camera.clone();
+            tempCamera.position.copy(targetPosition);
+            tempCamera.lookAt(rootPosition);
+            targetQuaternion.copy(tempCamera.quaternion);
+
+            animateCamera(startPosition, targetPosition, startRotation, targetQuaternion, rootPosition);
+        }
+
+        // 添加相机动画辅助函数
+        function animateCamera(startPosition, targetPosition, startRotation, targetQuaternion, targetLookAt) {
+            const duration = 1000;
+            const startTime = Date.now();
+
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeProgress = easeInOutQuad(progress);
+
+                camera.position.lerpVectors(startPosition, targetPosition, easeProgress);
+                camera.quaternion.slerpQuaternions(startRotation, targetQuaternion, easeProgress);
+                controls.target.lerp(targetLookAt, easeProgress);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+
+                controls.update();
+            }
+
+            animate();
+        }
 
         // 缓动函数
         function easeInOutQuad(t) {
@@ -2107,6 +2194,129 @@
             overlay.appendChild(closeButton);
             document.body.appendChild(overlay);
         }
+
+        // 在页面加载完成后添加消息监听器
+        window.addEventListener('load', () => {
+            console.log(`Iframe loaded: ${window.frameElement?.id}`);
+            console.log(`Total nodes: ${nodes.length}`);
+            
+            // 验证所有节点都有唯一的 id
+            const nodeIds = nodes.map(node => node.id);
+            const uniqueIds = new Set(nodeIds);
+            console.log(`Unique node ids: ${uniqueIds.size}`);
+            if (nodeIds.length !== uniqueIds.size) {
+                console.warn('Warning: Some nodes have duplicate IDs!');
+            }
+        });
+
+        // 根据节点ID查找节点的函数
+        function findNodeById(nodeId) {
+            return nodes.find(node => node.id === nodeId);
+        }
+
+        // 修改 createHighlightCircle 函数
+        function createHighlightCircle(position, selectedObject) {
+            if (highlightCircle) {
+                scene.remove(highlightCircle);
+            }
+
+            // 获取节点当前的缩放比例
+            const scale = selectedObject.scale.x;
+            // 增大圈的大小
+            const innerRadius = 8 * scale;  // 增大内圈半径
+            const outerRadius = 10 * scale; // 增大外圈半径
+
+            const ringGeometry = new THREE.RingGeometry(innerRadius, outerRadius, 32);
+            const ringMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xffff00, 
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: 0.8
+            });
+            highlightCircle = new THREE.Mesh(ringGeometry, ringMaterial);
+
+            highlightCircle.position.copy(position);
+            highlightCircle.rotation.x = -Math.PI / 2;
+            scene.add(highlightCircle);
+        }
+
+        // 修改点击事件处理中的高亮逻辑
+        window.addEventListener('click', (event) => {
+            // 修改鼠标坐标计算
+            mouse.x = (event.clientX / (window.innerWidth * 0.5)) * 2 - 1;
+            mouse.y = -(event.clientY / (window.innerHeight * 0.5)) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(networkGroup.children.filter(child => child instanceof THREE.Mesh));
+
+            if (intersects.length > 0) {
+                const selectedObject = intersects[0].object;
+                if (selectedObject.userData && selectedObject.userData.name) {
+                    // 显示节点信息
+                    showEventDetails(selectedObject.userData);
+                    
+                    // 创建高亮效果（只添加黄圈，不改变节点颜色）
+                    createHighlightCircle(selectedObject.position, selectedObject);
+                    
+                    // 更新相机位置
+                    const nodePosition = selectedObject.position;
+                    const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                    targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                    targetLookAt.copy(nodePosition);
+
+                    // 发送消息给父页面
+                    if (window.parent && window.frameElement) {
+                        window.parent.postMessage({
+                            sourceQuadrant: window.frameElement.id.replace('iframe-', ''),
+                            nodeId: selectedObject.userData.name,
+                            action: 'click'
+                        }, window.location.origin);
+                    }
+
+                    isTransitioning = true;
+                    isInfoDisplayed = true;
+                }
+            } else {
+                // 点击空白处时隐藏信息
+                hideEventDetails();
+                // 移除高亮圈
+                if (highlightCircle) {
+                    scene.remove(highlightCircle);
+                }
+                isInfoDisplayed = false;
+            }
+        });
+
+        // 修改消息处理中的高亮逻辑
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                if (sourceQuadrant === window.frameElement?.id.replace('iframe-', '')) return;
+
+                if (action === 'click') {
+                    const node = networkGroup.children.find(obj => 
+                        obj instanceof THREE.Mesh && obj.userData.name === nodeId
+                    );
+                    if (node) {
+                        // 显示节点信息
+                        showEventDetails(node.userData);
+                        
+                        // 创建高亮效果（只添加黄圈，不改变节点颜色）
+                        createHighlightCircle(node.position, node);
+                        
+                        // 更新相机位置
+                        const nodePosition = node.position;
+                        const directionToOrigin = new THREE.Vector3().subVectors(new THREE.Vector3(0, 0, 0), nodePosition).normalize();
+                        targetPosition.copy(nodePosition).add(directionToOrigin.multiplyScalar(-30));
+                        targetLookAt.copy(nodePosition);
+
+                        isTransitioning = true;
+                        isInfoDisplayed = true;
+                    }
+                }
+            }
+        });
     </script>
 </body>
 

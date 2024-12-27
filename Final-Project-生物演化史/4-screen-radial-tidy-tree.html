@@ -275,6 +275,24 @@
             top: 50%;
             transform: translateY(-50%);
         }
+
+        .node.highlighted circle {
+            fill: #ffff00 !important;
+            r: 8px;
+        }
+        
+        .link.highlighted {
+            stroke: #ffff00 !important;
+            stroke-width: 3px !important;
+        }
+        
+        .node circle {
+            transition: fill 0.3s ease, r 0.3s ease;
+        }
+        
+        .link {
+            transition: stroke 0.3s ease, stroke-width 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -319,7 +337,7 @@
     <script>
         // 在SVG创建之前添加旋转角度变量
         let currentRotation = 0;
-        const rotationStep = 5; // 每次旋转5度
+        const rotationStep = 5; // 每次旋5度
         
         // 获取窗口尺寸
         const width = window.innerWidth;
@@ -375,9 +393,11 @@
             .data(treeData2.descendants())
             .join("g")
             .attr("class", "node")
-            .attr("transform", d => `
-                translate(${d3.pointRadial(d.x, d.y)})
-            `);
+            .attr("transform", d => `rotate(${d.x * 180 / Math.PI - 90}) translate(${d.y},0)`)
+            .on("click", (event, d) => {
+                onNodeClick(d);
+                event.stopPropagation();
+            });
 
         // 创建一个显示tooltip的函
         const showTooltip = (event, d) => {
@@ -606,7 +626,7 @@
             });
 
             displaySearchResults(results);
-            searchResult.style.display = 'block'; // 始终显示搜索结果面板
+            searchResult.style.display = 'block'; // 始显示搜索结果面板
         }
 
         // 显示搜索结果
@@ -748,6 +768,103 @@
                 // 移除阻止事件冒泡,这样其他元素的显示状态会保持不变
                 event.stopPropagation();
             }
+        }
+
+        // 修改消息处理函数
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                // 确保不处理来自自己的消息
+                const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                if (sourceQuadrant === currentQuadrant) return;
+
+                if (action === 'click') {
+                    // 查找对应的节点
+                    const node = root.descendants().find(n => n.data.name === nodeId);
+                    if (node) {
+                        // 高亮节点和路径
+                        highlightNodeAndPath(node);
+                        // 滚动到节点位置
+                        scrollToNode(node);
+                    }
+                }
+            }
+        });
+
+        // 添加路径高亮函数
+        function highlightNodeAndPath(node) {
+            // 清除之前的高亮
+            svg.selectAll('.node').classed('highlighted', false);
+            svg.selectAll('.link').classed('highlighted', false);
+
+            // 高亮当前节点
+            d3.select(node.element).classed('highlighted', true);
+
+            // 高亮到根节点的路径
+            let current = node;
+            while (current.parent) {
+                d3.select(current.parent.element).classed('highlighted', true);
+                // 高亮连接线
+                svg.selectAll('.link')
+                    .filter(d => d.source === current.parent && d.target === current)
+                    .classed('highlighted', true);
+                current = current.parent;
+            }
+
+            // 更新信息面板
+            updateInfoPanel(node.data);
+        }
+
+        // 添加滚动到节点位置的函数
+        function scrollToNode(node) {
+            // 计算节点的位置
+            const angle = (node.x * 180 / Math.PI - 90);
+            const radius = node.y;
+            
+            // 计算节点在SVG中的坐标
+            const x = radius * Math.cos(node.x - Math.PI / 2);
+            const y = radius * Math.sin(node.x - Math.PI / 2);
+
+            // 使用 d3 transition 实现平滑动画
+            svg.transition()
+                .duration(750)
+                .call(zoom.transform, d3.zoomIdentity
+                    .translate(width / 2, height / 2)
+                    .scale(0.8)
+                    .translate(-x, -y));
+        }
+
+        // 修改节点点击处理
+        function onNodeClick(node) {
+            highlightNode(node);
+            
+            // 发送消息给父页面
+            if (window.parent && window.frameElement) {
+                window.parent.postMessage({
+                    sourceQuadrant: window.frameElement.id.replace('iframe-', ''),
+                    nodeId: node.data.name,
+                    action: 'click'
+                }, window.location.origin);
+            }
+        }
+
+        // 添加高亮函数
+        function highlightNode(node) {
+            // 重置所有节点的样式
+            d3.selectAll('.node')
+                .select('circle')
+                .style('fill', '#999')
+                .attr('r', 3);
+
+            // 高亮选中的节点
+            d3.select(node)
+                .select('circle')
+                .style('fill', '#ffff00')
+                .attr('r', 6);
+
+            // 更新信息面板
+            updateInfoPanel(node.data);
         }
     </script>
 </body>

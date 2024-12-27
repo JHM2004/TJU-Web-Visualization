@@ -150,7 +150,7 @@
 </head>
 <body>
     <div></div>
-        <span class="title">选择4张卡片进入四象限页面</span>
+        <span class="title">选择4张卡片进入四象限页面(5、6、7页面可联动)</span>
     <a class="title-left" href="./home-page.html" style="margin-left: 50px; color: white; text-decoration: none; font-size: 20px; background-color: green; padding: 5px 15px; border-radius: 5px;">使用单页面→</a>
 
     </div>
@@ -209,7 +209,7 @@
                     if (selectedCards.length === 4) {
                         // 跳转到新的页面
                         const newPageUrl = `4-screen-display.html?cards=${selectedCards.join(',')}`;
-                        window.location.href = newPageUrl;
+                        window.open(newPageUrl, '_blank'); // 在新标签页中打开
                     }
                 });
             });
@@ -236,6 +236,30 @@
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
             });
+        });
+    </script>
+
+    <script>
+        // 添加消息转发处理
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { sourceQuadrant, nodeId, action } = event.data;
+                
+                // 获取所有iframe
+                const iframes = document.querySelectorAll('iframe');
+                
+                // 转发消息给其他iframe
+                iframes.forEach(iframe => {
+                    // 不要转发给发送消息的iframe
+                    if (iframe.id !== `iframe-${sourceQuadrant}`) {
+                        iframe.contentWindow.postMessage({
+                            sourceQuadrant,
+                            nodeId,
+                            action
+                        }, window.location.origin);
+                    }
+                });
+            }
         });
     </script>
 </body>

@@ -56,18 +56,31 @@
         // 加载子页面内容的函数
         function loadContent(quadrantId, cardName) {
             const iframe = document.createElement('iframe');
-            // iframe.src = `./4-screen-html/${cardName}.html`; // 设置 iframe 的源
-            iframe.src = `./4-screen-${cardName}.html`; // 设置 iframe 的源
-            iframe.style.transformOrigin = 'top left'; // 设置缩放的原点
-            document.getElementById(quadrantId).appendChild(iframe); // 将 iframe 添加到对应的象限
+            iframe.src = `./4-screen-${cardName}.html`;
+            iframe.style.transformOrigin = 'top left';
+            iframe.id = `iframe-${quadrantId}`;
+            document.getElementById(quadrantId).appendChild(iframe);
         }
 
-        // 添加事件监听器以接收来自 iframe 的消息
+        // 添加消息转发处理
         window.addEventListener('message', (event) => {
-            if (event.origin === window.location.origin) { // 确保消息来源是同一源
-                const { quadrantId, data } = event.data;
-                // 处理接收到的数据并更新对应的象限
-                updateQuadrant(quadrantId, data);
+            if (event.origin === window.location.origin) {
+                const { sourceQuadrant, nodeId, action } = event.data;
+                
+                // 获取所有iframe
+                const iframes = document.querySelectorAll('iframe');
+                
+                // 转发消息给其他iframe
+                iframes.forEach(iframe => {
+                    // 不要转发给发送消息的iframe
+                    if (iframe.id !== `iframe-${sourceQuadrant}`) {
+                        iframe.contentWindow.postMessage({
+                            sourceQuadrant,
+                            nodeId,
+                            action
+                        }, window.location.origin);
+                    }
+                });
             }
         });
 

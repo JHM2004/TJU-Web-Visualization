@@ -280,6 +280,9 @@
         // 添加一个变量来跟踪当前高亮的节点
         let currentHighlightedNode = null;
 
+        // 添加全局变量
+        let root; // 存储树的根节点
+
         // 懒加载图片
         function lazyLoadImages() {
             const images = document.querySelectorAll('image.node-image');
@@ -314,8 +317,8 @@
                 filteredData.children = filteredData.children.filter(d => d.name === filter);
             }
 
-            // 创建层次结构
-            const root = d3.hierarchy(filteredData);
+            // 创建层次结构并保存到全局变量
+            root = d3.hierarchy(filteredData);
             
             // 计算需要的高度
             const nodeCount = root.descendants().length;
@@ -602,6 +605,9 @@
                             // 如果点击了新的搜索结果，更新高亮路径
                             highlightPathToRoot(targetNode);
                             scrollToNode(targetNode);
+                            // 添加搜索功能
+                            searchInput.value = targetNode.data.name; // 设置搜索框的值
+                            searchInput.dispatchEvent(new Event('input')); // 触发输入事件以更新搜索结果
                         }
                     });
                 });
@@ -695,9 +701,40 @@
         // 监听全屏变化事件
         document.addEventListener('fullscreenchange', function() {
             if (!document.fullscreenElement) {
-                fullscreenBtn.textContent = '退出屏';
+                fullscreenBtn.textContent = '退出全屏';
             } else {
                 fullscreenBtn.textContent = '全屏显示';
+            }
+        });
+
+        // 修改消息处理函数
+        window.addEventListener('message', (event) => {
+            if (event.origin === window.location.origin) {
+                const { nodeId, action, sourceQuadrant } = event.data;
+                
+                // 确保不处理来自自己的消息
+                const currentQuadrant = window.frameElement?.id.replace('iframe-', '');
+                if (sourceQuadrant === currentQuadrant) return;
+
+                if (action === 'click') {
+                    // 在所有节点中查找匹配的节点
+                    const targetNode = root.descendants().find(n => n.data.name === nodeId);
+                    if (targetNode) {
+                        // 高亮路径
+                        highlightPathToRoot(targetNode);
+                        
+                        // 滚动到节点位置
+                        scrollToNode(targetNode);
+                        
+                        // 更新搜索框显示
+                        const searchInput = document.querySelector('#search-input');
+                        if (searchInput) {
+                            searchInput.value = nodeId;
+                            // 触发搜索以更新搜索结果显示
+                            searchInput.dispatchEvent(new Event('input'));
+                        }
+                    }
+                }
             }
         });
     </script>
