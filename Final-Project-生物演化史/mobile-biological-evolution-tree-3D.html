@@ -969,12 +969,12 @@
                 html += `<p><span style="color: #00ff88;">时间:</span> ${nodeData.time}</p>`;
             }
             
-            if (nodeData.description) {
-                html += `<p>${nodeData.description}</p>`;
-            }
-            
             if (nodeData.src) {
                 html += `<img src="${nodeData.src}" alt="${nodeData.name}">`;
+            }
+            
+            if (nodeData.description) {
+                html += `<p>${nodeData.description}</p>`;
             }
             
             details.innerHTML = html;

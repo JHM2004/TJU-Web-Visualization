@@ -805,8 +805,8 @@
 
             // 平滑过渡相机位置和视角
             if (isTransitioning) {
-                camera.position.lerp(targetPosition, 0.05);
-                controls.target.lerp(targetLookAt, 0.05);
+                camera.position.lerp(targetPosition, 0.1);
+                controls.target.lerp(targetLookAt, 0.1);
                 
                 if (camera.position.distanceTo(targetPosition) < 1) {
                     isTransitioning = false;
@@ -891,12 +891,12 @@
                 html += `<p><span style="color: #00ff88;">时间:</span> ${nodeData.time}</p>`;
             }
             
-            if (nodeData.description) {
-                html += `<p>${nodeData.description}</p>`;
-            }
-            
             if (nodeData.src) {
                 html += `<img src="${nodeData.src}" alt="${nodeData.name}">`;
+            }
+            
+            if (nodeData.description) {
+                html += `<p>${nodeData.description}</p>`;
             }
             
             details.innerHTML = html;

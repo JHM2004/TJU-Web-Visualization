@@ -68,6 +68,19 @@
             box-shadow: 0 0 10px rgba(0,255,0,0.2);
             user-select: none;
             pointer-events: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        #controls-info .color-legend {
+            flex: 1;
+        }
+        #controls-info .instructions {
+            flex: 1;
+            text-align: left;
+            white-space: normal;
+            overflow: visible;
+            max-width: 400px;
         }
         #controls-panel {
             position: absolute;
@@ -285,10 +298,13 @@
                 <span>第四纪</span>
             </div>
         </div>
-        按 W/S/A/D/ 键进行上下左右移动<br>
-        使用鼠标滚轮缩放<br>
-        使用鼠标左键旋转视角<br>
-        鼠标点击节点聚焦
+        <div class="instructions">
+            <br>操作提示:<br>
+            ① 按 W/S/A/D 键进行上下左右移动<br>
+            ② 使用鼠标滚轮缩放<br>
+            ③ 使用鼠标左键旋转视角<br>
+            ④ 鼠标点击节点聚焦
+        </div>
     </div>
     <div id="controls-panel">
         <div class="fullscreen-buttons">
@@ -970,12 +986,12 @@
                 html += `<p><span style="color: #00ff88;">时间:</span> ${nodeData.time}</p>`;
             }
             
-            if (nodeData.description) {
-                html += `<p>${nodeData.description}</p>`;
-            }
-            
             if (nodeData.src) {
                 html += `<img src="${nodeData.src}" alt="${nodeData.name}">`;
+            }
+            
+            if (nodeData.description) {
+                html += `<p>${nodeData.description}</p>`;
             }
             
             details.innerHTML = html;

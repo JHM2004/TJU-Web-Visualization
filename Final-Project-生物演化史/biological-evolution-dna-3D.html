@@ -845,13 +845,13 @@
                 html += `<p><span style="color: #00ff88;">时间:</span> ${event.time}</p>`;
             }
             
-            if (event.description) {
-                html += `<p>${event.description}</p>`;
-            }
-            
             if (event.src) {
                 html += `<img src="${event.src}" alt="${event.name}" 
                               style="display: block; max-width: 150%; height: auto;">`;
+            }
+            
+            if (event.description) {
+                html += `<p>${event.description}</p>`;
             }
             
             details.innerHTML = html;

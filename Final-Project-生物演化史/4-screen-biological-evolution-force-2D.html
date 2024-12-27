@@ -160,22 +160,7 @@
             background: #45a049;
         }
 
-        .help-tips {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-        }
-
-        .help-tips p {
-            margin: 5px 0;
-            color: #333;
-        }
+       
 
         .node circle {
             cursor: pointer;
@@ -225,6 +210,43 @@
         .nav-buttons button.active {
             background: #2E7D32;
             font-weight: bold;
+        }
+
+        .help-tips {
+            position: fixed;
+            bottom: 20px;
+            /* 距离底部20px */
+            right: 20px;
+            /* 距离右侧20px */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            font-size: 0.5em;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 250px;
+            /* 限制最大宽度 */
+        }
+
+        .timeline-legend {
+            position: fixed;
+            bottom: 20px;
+            /* 距离底部20px */
+            right: 200px;
+            /* 距离右侧20px */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 250px;
+            /* 限制最大宽度 */
+        }
+        /* 添加滚动条样式 */
+        .node-info-panel {
+            max-height: 100vh;
+            overflow-y: auto;
+            /* 添加垂直滚动条 */
         }
     </style>
 </head>
@@ -845,16 +867,6 @@
         // 添加相应的CSS样式
         const legendStyle = document.createElement('style');
         legendStyle.textContent = `
-            .timeline-legend {
-                position: fixed;
-                top: 20px;
-                left: 250px;  /* 位于help-tips右侧 */
-                background: rgba(255, 255, 255, 0.9);
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                z-index: 1000;
-            }
 
             .legend-title {
                 font-weight: bold;

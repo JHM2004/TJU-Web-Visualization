@@ -1781,8 +1781,8 @@
                         ${nodeData.name}
                     </h4>
                     ${nodeData.time ? `<p style="margin: 5px 0;">时期: ${nodeData.time}</p>` : ''}
-                    ${nodeData.description ? `<p style="margin: 5px 0;">描述: ${nodeData.description}</p>` : ''}
                     ${nodeData.src ? `<img src="${nodeData.src}" style="max-width: 100%; margin-top: 10px; cursor: pointer;" onclick="showLargeImage('${nodeData.src}')">` : ''}
+                    ${nodeData.description ? `<p style="margin: 5px 0;">描述: ${nodeData.description}</p>` : ''}
                 </div>
             `;
                 nodeInfo.innerHTML = html;

@@ -49,7 +49,8 @@
         }
 
         .background-image-container.visible {
-            opacity: 1 !important; /* 改为完全不透明 */
+            opacity: 1 !important;
+            /* 改为完全不透明 */
         }
 
         .node circle:hover {
@@ -79,7 +80,8 @@
             flex-direction: column;
             align-items: flex-end;
             gap: 10px;
-            width: 240px; /* 设置容器宽度与按钮一致 */
+            width: 240px;
+            /* 设置容器宽度与按钮一致 */
         }
 
         .main-btn {
@@ -106,13 +108,15 @@
             flex-direction: column;
             gap: 5px;
             margin-top: 0px;
-            width: 100%; /* 确保容器占满父元素宽度 */
+            width: 100%;
+            /* 确保容器占满父元素宽度 */
         }
 
         .nav-buttons button,
         .main-btn,
         .controls button:first-child {
-            width: 240px; /* 统一设置固定宽度，以最长的按钮文本为准 */
+            width: 240px;
+            /* 统一设置固定宽度，以最长的按钮文本为准 */
             padding: 8px 16px;
             color: white;
             border: none;
@@ -153,22 +157,7 @@
             background: #45a049;
         }
 
-        .help-tips {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-        }
 
-        .help-tips p {
-            margin: 5px 0;
-            color: #333;
-        }
 
         .node circle {
             cursor: pointer;
@@ -177,7 +166,8 @@
         /* 修改全屏按钮的样式，添加文字居中 */
         .controls button:first-child {
             min-width: 120px;
-            width: 240px; /* 设置与其他按钮相同的宽度 */
+            width: 240px;
+            /* 设置与其他按钮相同的宽度 */
             padding: 8px 16px;
             background: #4CAF50;
             color: white;
@@ -198,7 +188,8 @@
         /* 保持其他导航按钮的样式不变 */
         .nav-buttons button {
             min-width: 120px;
-            width: 240px; /* 确保所有按钮宽度一致 */
+            width: 240px;
+            /* 确保所有按钮宽度一致 */
             padding: 8px 16px;
             background: #4CAF50;
             color: white;
@@ -219,6 +210,45 @@
             background: #2E7D32;
             font-weight: bold;
         }
+
+        /* 添加新的样式以定位提示和图例 */
+        .help-tips {
+            position: fixed;
+            bottom: 20px;
+            /* 距离底部20px */
+            right: 20px;
+            /* 距离右侧20px */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            font-size: 0.5em;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 250px;
+            /* 限制最大宽度 */
+        }
+
+        .timeline-legend {
+            position: fixed;
+            bottom: 20px;
+            /* 距离底部20px */
+            right: 200px;
+            /* 距离右侧20px */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            max-width: 250px;
+            /* 限制最大宽度 */
+        }
+
+        /* 添加滚动条样式 */
+        .node-info-panel {
+            max-height: 100vh;
+            overflow-y: auto;
+            /* 添加垂直滚动条 */
+        }
     </style>
 </head>
 
@@ -228,12 +258,14 @@
         <button onclick="toggleFullscreen()" class="nav-buttons button">全屏显示</button>
         <div class="nav-buttons">
             <button onclick="window.location.href='./biological-classification-sunburst-2D.html'">生物分类-太阳爆发图-2D</button>
-            <button onclick="window.location.href='./biological-evolution-force-2D.html'" class="active">生物演化史-力导向-2D</button>
-            <button onclick="window.location.href='./biological-evolution-tree-2D.html'" >生物演化史-Tree-2D</button>
+            <button onclick="window.location.href='./biological-evolution-force-2D.html'"
+                class="active">生物演化史-力导向-2D</button>
+            <button onclick="window.location.href='./biological-evolution-tree-2D.html'">生物演化史-Tree-2D</button>
             <button onclick="window.location.href='./biological-evolution-dna-3D.html'">生物演化史-DNA双螺旋-3D</button>
             <button onclick="window.location.href='./biological-evolution-star-3D.html'">生物演化史-星空图-3D</button>
             <button onclick="window.location.href='./biological-evolution-tree-3D.html'">生物演化史-Tree-3D</button>
-            <button onclick="window.location.href='./biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
+            <button
+                onclick="window.location.href='./biological-evolution-visualization-3D.html'">生物演化史-可视化大屏-3D</button>
             <button onclick="window.location.href='./paleo-geography-3D.html'">地球古地理-3D</button>
             <button onclick="window.location.href='./pc-index.html'">返回导航页</button>
         </div>
@@ -249,7 +281,7 @@
 
     <script>
         // 在script标签的开始处添加以下代码
-        document.addEventListener('contextmenu', function(event) {
+        document.addEventListener('contextmenu', function (event) {
             // 阻止默认的右键菜单
             event.preventDefault();
         }, false);
@@ -272,7 +304,7 @@
             .attr("height", "100%")
             .attr("fill", "transparent"); // 透明背景
 
-        // 添加拖拽行为
+        // 添加拖���行为
         const viewDrag = d3.drag()
             .on("start", viewDragStarted)
             .on("drag", viewDragged)
@@ -839,16 +871,6 @@
         // 添加相应的CSS样式
         const legendStyle = document.createElement('style');
         legendStyle.textContent = `
-            .timeline-legend {
-                position: fixed;
-                top: 20px;
-                left: 250px;  /* 位于help-tips右侧 */
-                background: rgba(255, 255, 255, 0.9);
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                z-index: 1000;
-            }
 
             .legend-title {
                 font-weight: bold;
@@ -1146,19 +1168,6 @@
         // 添加样式
         const additionalStyle = document.createElement('style');
         additionalStyle.textContent = `
-            .help-tips {
-                background: rgba(255, 255, 255, 0.9);
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-                max-width: 300px;
-                font-size: 14px;
-                line-height: 1.4;
-            }
-            
-            .help-tips p {
-                margin: 5px 0;
-            }
         `;
         document.head.appendChild(additionalStyle);
 
@@ -1249,7 +1258,7 @@
             .on("contextmenu", (event, d) => {
                 event.preventDefault();
                 event.stopPropagation();
-                
+
                 if (lockedNode === d) {
                     // 解除锁定
                     lockedNode = null;
@@ -1264,7 +1273,7 @@
                             .attr('r', 12)
                             .style('filter', null);
                     }
-                    
+
                     // 锁定新节点
                     lockedNode = d;
                     // 重新触发显示效果，标记为锁定状态
@@ -1342,7 +1351,7 @@
             // 如果有锁定的节点，不执行隐藏操作
             if (lockedNode) {
                 // 如果有锁定节点，保持其显示状态
-                showNodeInfo({ currentTarget: findNodeElement(lockedNode), stopPropagation: () => {} }, lockedNode, true);
+                showNodeInfo({ currentTarget: findNodeElement(lockedNode), stopPropagation: () => { } }, lockedNode, true);
                 return;
             }
 
@@ -1567,6 +1576,33 @@
             }
         `;
         document.head.appendChild(contextMenuStyle);
+
+        let isHoveringNode = false; // 添加标志变量
+
+        // 修改nodeEnter的事件绑定
+        nodeEnter
+            .on("mouseover", () => {
+                isHoveringNode = true; // 鼠标悬停在节点上时设置标志
+            })
+            .on("mouseout", () => {
+                isHoveringNode = false; // 鼠标移出节点时重置标志
+            });
+
+        // 添加键盘事件处理
+        document.addEventListener('keydown', (event) => {
+            const key = event.key.toLowerCase();
+            const infoPanel = document.querySelector('.node-info-panel');
+
+            if (isHoveringNode && infoPanel) { // 仅在鼠标悬停在节点上时控制滚动
+                if (key === 'ArrowUp') {
+                    // 向上滚动
+                    infoPanel.scrollBy(0, -30); // 每次向上滚动30px
+                } else if (key === 'ArrowDown') {
+                    // 向下滚动
+                    infoPanel.scrollBy(0, 30); // 每次向下滚动30px
+                }
+            }
+        });
     </script>
 </body>
 
