@@ -302,7 +302,14 @@
             try {
                 console.log('Fetching comments for nodeId:', nodeId, 'page:', page);
                 
-                const response = await fetch(`http://www.yangyuxin.cn:8081/api/comments/${nodeId}?page=${page}`);
+                const response = await fetch(`http://www.yangyuxin.cn:8081/api/comments/${nodeId}?page=${page}`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -436,7 +443,9 @@
             try {
                 const response = await fetch('http://www.yangyuxin.cn:8081/api/comments', {
                     method: 'POST',
+                    credentials: 'include',
                     headers: {
+                        'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({ nodeId, content })

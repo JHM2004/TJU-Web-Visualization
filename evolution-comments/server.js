@@ -21,7 +21,12 @@ const Comment = mongoose.model('Comment', {
     time: { type: Date, default: Date.now }
 });
 
-app.use(cors());
+// 配置 CORS
+app.use(cors({
+    origin: true, // 允许所有源
+    credentials: true
+}));
+
 app.use(express.json());
 
 // 获取指定节点的评论
@@ -76,6 +81,12 @@ app.post('/api/comments', async (req, res) => {
         console.error('Error adding comment:', err);
         res.status(500).json({ error: err.message });
     }
+});
+
+// 添加额外的错误处理中间件
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).json({ error: 'Internal Server Error' });
 });
 
 app.listen(8081, () => {
