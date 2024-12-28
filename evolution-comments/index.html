@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>生物演化史-文本库</title>
+    <link rel="icon" href="./static-2/icon/favicon.ico" type="image/x-icon">
+    <style>
+        .container {
+            display: flex;
+            height: 100vh;
+            position: relative;
+        }
+
+        .tree-menu {
+            width: 300px;
+            padding: 20px 0px;
+            background-color: #f5f5f5;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+            position: relative;
+        }
+
+        .content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            max-width: 70%;
+        }
+
+        .extra-area {
+            width: 30%;
+            padding: 20px;
+            background-color: #eaeaea;
+        }
+
+        .tree-node {
+            margin-left: 0;
+            padding-left: 20px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+        }
+
+        .tree-node.has-children {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .tree-node.has-children:before {
+            content: '▶';
+            display: inline-block;
+            margin-right: 5px;
+            transition: transform 0.2s;
+        }
+
+        .tree-node.expanded:before {
+            transform: rotate(90deg);
+        }
+
+        .tree-children {
+            margin-left: 0;
+            display: none;
+        }
+
+        .tree-children.show {
+            display: block;
+        }
+
+        .node-details img {
+            width: 50%;
+            height: auto;
+            margin: 10px auto;
+            display: block;
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+
+        .node-details img.zoomed {
+            transform: scale(1.5);
+            z-index: 10;
+        }
+
+        .time {
+            color: #666;
+            font-style: italic;
+            margin: 10px 0;
+        }
+
+        .description {
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .node-details {
+            text-align: center;
+        }
+
+        .node-details h2 {
+            margin: 0;
+        }
+
+        .resizer {
+            width: 2px;
+            cursor: ew-resize;
+            background-color: #949393;
+            top: 0;
+            right: 0px;
+            height: 100%;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .resizer-right {
+            width: 2px;
+            cursor: ew-resize;
+            background-color: #949393;
+            top: 0;
+            right: 32%;
+            height: 100%;
+            position: absolute;
+            z-index: 10;
+        }
+
+        /* 确保树菜单的滚动条在拖动条的左边 */
+        .tree-menu::-webkit-scrollbar {
+            width: 8px; /* 滚动条的宽度 */
+        }
+
+        .tree-menu::-webkit-scrollbar-thumb {
+            background: #ccc; /* 滚动条的颜色 */
+            border-radius: 4px; /* 滚动条的圆角 */
+        }
+
+        .tree-menu::-webkit-scrollbar-track {
+            background: #f5f5f5; /* 滚动条轨道的颜色 */
+        }
+
+        .comment-section {
+            padding: 10px;
+        }
+
+        .comment-input {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 10px;
+            padding: 8px;
+            resize: vertical;
+        }
+
+        .comment-submit {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .comment-list {
+            margin-top: 20px;
+        }
+
+        .comment-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .comment-time {
+            color: #666;
+            font-size: 0.8em;
+        }
+
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+
+        .page-button {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .page-button:hover {
+            background: #f0f0f0;
+        }
+
+        .page-button.active {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .comments-container {
+            min-height: 300px; /* 确保评论区域高度固定，避免分页切换时的跳动 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tree-menu" id="treeMenu">
+            <div class="resizer"></div>
+        </div>
+        <div class="content" id="content"></div>
+        <div class="extra-area">
+            <div class="resizer-right"></div>
+            <h3>评论区</h3>
+            <div class="comment-section">
+                <textarea class="comment-input" placeholder="请输入您的评论..."></textarea>
+                <button class="comment-submit">发表评论</button>
+                <div class="comment-list">
+                    <!-- 评论列表将在这里动态生成 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="biological-evolution-data.js"></script>
+    <script>
+        function createTreeNode(data) {
+            const div = document.createElement('div');
+            div.className = data.children ? 'tree-node has-children' : 'tree-node';
+            
+            const textNode = document.createElement('span');
+            textNode.textContent = data.name;
+            div.appendChild(textNode);
+
+            div.addEventListener('click', (e) => {
+                if (e.target === textNode) {
+                    e.stopPropagation();
+                    showNodeDetails(data);
+                    
+                    if (data.children) {
+                        div.classList.toggle('expanded');
+                        const childrenContainer = div.querySelector('.tree-children');
+                        if (childrenContainer) {
+                            childrenContainer.classList.toggle('show');
+                        }
+                    }
+                }
+            });
+
+            if (data.children) {
+                const childrenContainer = document.createElement('div');
+                childrenContainer.className = 'tree-children';
+                data.children.forEach(child => {
+                    childrenContainer.appendChild(createTreeNode(child));
+                });
+                div.appendChild(childrenContainer);
+            }
+
+            return div;
+        }
+
+        function showNodeDetails(data) {
+            currentNodeId = data._id;
+            const content = document.getElementById('content');
+            content.innerHTML = `
+                <div class="node-details">
+                    <h2>${data.name}</h2>
+                    <p class="time">时间: ${data.time}</p>
+                    ${data.src ? `<img src="${data.src}" alt="${data.name}" onclick="toggleZoom(this)">` : ''}
+                    <p class="description">${data.description || ''}</p>
+                </div>
+            `;
+            
+            // 更新评论区标题
+            const commentTitle = document.querySelector('.extra-area h3');
+            commentTitle.innerHTML = `评论区 - ${data.name}`;
+            
+            // 加载该节点的评论
+            fetchComments(currentNodeId);
+        }
+
+        function toggleZoom(img) {
+            img.classList.toggle('zoomed');
+        }
+
+        let currentNodeId = null;
+
+        // 为数据树中的每个节点生成唯一ID
+        function generateId(data, parentId = '') {
+            if (!data._id) {
+                data._id = parentId + data.name;
+                if (data.children) {
+                    data.children.forEach(child => generateId(child, data._id + '_'));
+                }
+            }
+            return data._id;
+        }
+
+        let currentPage = 1; // 添加当前页码变量
+
+        // 修改获取评论的函数
+        async function fetchComments(nodeId, page = 1) {
+            try {
+                console.log('Fetching comments for nodeId:', nodeId, 'page:', page);
+                
+                const response = await fetch(`http://www.yangyuxin.cn:8081/api/comments/${nodeId}?page=${page}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                console.log('Received comments data:', data);
+                
+                if (!data.comments) {
+                    console.error('No comments array in response');
+                    return;
+                }
+                
+                displayComments(data.comments, data.pagination);
+            } catch (err) {
+                console.error('获取评论失败:', err);
+                // 显示错误信息给用户
+                const commentList = document.querySelector('.comment-list');
+                commentList.innerHTML = '<div class="error">加载评论失败，请稍后重试</div>';
+            }
+        }
+
+        // 修改显示评论的函数
+        function displayComments(comments, pagination) {
+            const commentList = document.querySelector('.comment-list');
+            
+            // 显示评论
+            commentList.innerHTML = `
+                <div class="comments-container">
+                    ${comments.map(comment => `
+                        <div class="comment-item">
+                            <div class="comment-content">${comment.content}</div>
+                            <div class="comment-time">${new Date(comment.time).toLocaleString()}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="pagination">
+                    ${generatePaginationHTML(pagination)}
+                </div>
+            `;
+
+            // 为分页按钮添加事件监听
+            const paginationButtons = commentList.querySelectorAll('.page-button');
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const page = parseInt(button.dataset.page);
+                    currentPage = page;
+                    fetchComments(currentNodeId, page);
+                });
+            });
+        }
+
+        // 生成分页HTML
+        function generatePaginationHTML(pagination) {
+            const { currentPage, totalPages } = pagination;
+            
+            if (totalPages <= 1) return '';
+
+            let pages = [];
+            
+            // 添加上一页按钮
+            if (currentPage > 1) {
+                pages.push(`<button class="page-button" data-page="${currentPage - 1}">上一页</button>`);
+            }
+
+            // 添加页码按钮
+            for (let i = 1; i <= totalPages; i++) {
+                if (
+                    i === 1 || // 第一页
+                    i === totalPages || // 最后一页
+                    (i >= currentPage - 1 && i <= currentPage + 1) // 当前页的前后一页
+                ) {
+                    pages.push(`
+                        <button class="page-button ${i === currentPage ? 'active' : ''}" 
+                                data-page="${i}">
+                            ${i}
+                        </button>
+                    `);
+                } else if (
+                    (i === currentPage - 2 && currentPage > 3) ||
+                    (i === currentPage + 2 && currentPage < totalPages - 2)
+                ) {
+                    pages.push('<span>...</span>');
+                }
+            }
+
+            // 添加下一页按钮
+            if (currentPage < totalPages) {
+                pages.push(`<button class="page-button" data-page="${currentPage + 1}">下一页</button>`);
+            }
+
+            return `<div class="pagination-container">${pages.join('')}</div>`;
+        }
+
+        // 添加分页相关的CSS样式
+        const style = document.createElement('style');
+        style.textContent = `
+            .pagination-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                margin-top: 20px;
+            }
+
+            .page-button {
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                background: white;
+                cursor: pointer;
+                border-radius: 3px;
+            }
+
+            .page-button:hover {
+                background: #f0f0f0;
+            }
+
+            .page-button.active {
+                background: #4CAF50;
+                color: white;
+                border-color: #4CAF50;
+            }
+
+            .comments-container {
+                min-height: 300px; /* 确保评论区域高度固定，避免分页切换时的跳动 */
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 修改添加评论成功后的处理
+        async function addComment(nodeId, content) {
+            try {
+                const response = await fetch('http://www.yangyuxin.cn:8081/api/comments', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nodeId, content })
+                });
+                
+                if (response.ok) {
+                    document.querySelector('.comment-input').value = '';
+                    // 添加评论后返回第一页
+                    currentPage = 1;
+                    fetchComments(nodeId, 1);
+                }
+            } catch (err) {
+                console.error('添加评论失败:', err);
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            generateId(treeData); // 为所有节点生成ID
+            const treeMenu = document.getElementById('treeMenu');
+            treeMenu.appendChild(createTreeNode(treeData));
+            
+            // 添加评论提交事件
+            document.querySelector('.comment-submit').addEventListener('click', () => {
+                const input = document.querySelector('.comment-input');
+                const content = input.value.trim();
+                
+                if (!currentNodeId) {
+                    alert('请先选择一个节点！');
+                    return;
+                }
+                
+                if (!content) {
+                    alert('请输入评论内容！');
+                    return;
+                }
+                
+                addComment(currentNodeId, content);
+            });
+        });
+
+        // 添加拖动功能
+        const resizer = document.querySelector('.resizer');
+        const treeMenu = document.getElementById('treeMenu');
+
+        resizer.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            document.addEventListener('mousemove', handleMouseMove);
+            document.addEventListener('mouseup', handleMouseUp);
+        });
+
+        function handleMouseMove(e) {
+            const newWidth = e.clientX - treeMenu.getBoundingClientRect().left;
+            if (newWidth > 100 && newWidth < window.innerWidth - 50) { // 限制宽度范围
+                treeMenu.style.width = `${newWidth}px`;
+            }
+        }
+
+        function handleMouseUp() {
+            document.removeEventListener('mousemove', handleMouseMoveRight);
+            document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('mousemove', handleMouseMove);
+        }
+
+        // 动态调整拖动条的高度
+        function adjustResizerHeight() {
+            const resizer = document.querySelector('.resizer');
+            const treeMenu = document.getElementById('treeMenu');
+            resizer.style.height = `${treeMenu.clientHeight}px`; // 设置拖动条的高度为树菜单的可见高度
+        }
+
+        // 初始化时调整拖动条高度
+        adjustResizerHeight();
+
+        // 监听窗口大小变化
+        window.addEventListener('resize', adjustResizerHeight);
+
+        // 监听树菜单内容变化
+        const observer = new MutationObserver(adjustResizerHeight);
+        observer.observe(treeMenu, { childList: true, subtree: true });
+
+
+        treeMenu.addEventListener('scroll', () => {
+            resizer.style.top = `${treeMenu.scrollTop}px`; // 设置拖动条的顶部位置
+        });
+
+        // 添加右侧拖动功能
+        const resizerRight = document.querySelector('.resizer-right');
+        const extraArea = document.querySelector('.extra-area');
+
+        let initialMouseX; // 新增变量记录初始鼠标位置
+
+        resizerRight.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            initialMouseX = e.clientX; // 记录初始鼠标位置
+            document.addEventListener('mousemove', handleMouseMoveRight);
+            document.addEventListener('mouseup', handleMouseUp);
+        });
+
+        function handleMouseMoveRight(e) {
+            const newWidth = window.innerWidth - e.clientX - 70; // 计算新的宽度
+            if (newWidth > 200 && newWidth < window.innerWidth - 50) { // 限制宽度范围，确保距离右边至少200px
+                extraArea.style.width = `${newWidth}px`;
+                resizerRight.style.left = `${e.clientX}px`; // 更新拖动条的位置
+            }
+        }
+    </script>
+</body>
+</html> 
