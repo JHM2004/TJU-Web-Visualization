@@ -200,11 +200,48 @@
         .comments-container {
             min-height: 300px; /* 确保评论区域高度固定，避免分页切换时的跳动 */
         }
+
+        /* 添加深色模式的样式 */
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .tree-menu.dark-mode {
+            background-color: #1e1e1e;
+            border-right: 1px solid #444;
+        }
+
+        .content.dark-mode {
+            background-color: #1e1e1e;
+        }
+
+        .extra-area.dark-mode {
+            background-color: #2a2a2a;
+        }
+
+        .comment-submit.dark-mode {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .time {
+            color: #666; /* 浅色模式下的颜色 */
+        }
+
+        .time.dark-mode {
+            color: #aaa; /* 深色模式下的颜色，设置为更浅的颜色 */
+        }
+
+        /* 其他深色模式样式 */
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="tree-menu" id="treeMenu">
+        <div class="tree-menu" id="treeMenu" style="position: relative;">
+            <button id="toggleTheme" style="position: absolute; top: 5px; right: 5px; font-size: 24px; z-index: 1000; background: none; border: none; cursor: pointer;">
+                🌞 <!-- 太阳图标 -->
+            </button>
             <div class="resizer"></div>
         </div>
         <div class="content" id="content"></div>
@@ -264,7 +301,7 @@
             content.innerHTML = `
                 <div class="node-details">
                     <h2>${data.name}</h2>
-                    <p class="time">时间: ${data.time}</p>
+                    <p class="time dark-mode">时间: ${data.time}</p>
                     ${data.src ? `<img src="${data.src}" alt="${data.name}" onclick="toggleZoom(this)">` : ''}
                     <p class="description">${data.description || ''}</p>
                 </div>
@@ -466,8 +503,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             generateId(treeData); // 为所有节点生成ID
             const treeMenu = document.getElementById('treeMenu');
-            treeMenu.appendChild(createTreeNode(treeData));
+            const treeNode = createTreeNode(treeData); // 创建树节点
+            treeMenu.appendChild(treeNode);
             
+            // 模拟点击“生命起源史”节点
+            const originNode = Array.from(treeNode.children).find(node => node.textContent === '生命起源史');
+            if (originNode) {
+                originNode.click(); // 模拟点击
+            }
+
             // 添加评论提交事件
             document.querySelector('.comment-submit').addEventListener('click', () => {
                 const input = document.querySelector('.comment-input');
@@ -485,6 +529,9 @@
                 
                 addComment(currentNodeId, content);
             });
+
+            // 模拟点击切换主题按钮以启用深色模式
+            toggleThemeButton.click(); // 模拟点击
         });
 
         // 添加拖动功能
@@ -552,6 +599,21 @@
                 resizerRight.style.left = `${e.clientX}px`; // 更新拖动条的位置
             }
         }
+
+        // 添加切换主题的功能
+        const toggleThemeButton = document.getElementById('toggleTheme');
+        let isDarkMode = false; // 添加变量来跟踪当前模式
+
+        toggleThemeButton.addEventListener('click', () => {
+            isDarkMode = !isDarkMode; // 切换模式
+            document.body.classList.toggle('dark-mode');
+            document.querySelector('.tree-menu').classList.toggle('dark-mode');
+            document.querySelector('.content').classList.toggle('dark-mode');
+            document.querySelector('.extra-area').classList.toggle('dark-mode');
+
+            // 根据当前模式更改按钮图标
+            toggleThemeButton.innerHTML = isDarkMode ? '🌙' : '🌞'; // 切换图标
+        });
     </script>
 </body>
 </html> 
