@@ -6,6 +6,9 @@
     <title>生物演化史-文本库</title>
     <link rel="icon" href="./static-2/icon/favicon.ico" type="image/x-icon">
     <style>
+        body {
+            font-size: 1.5em; /* 将所有文字放大1.5倍 */
+        }
 
         .container {
             display: flex;
@@ -41,7 +44,7 @@
             cursor: pointer;
             display: block;
             width: 100%;
-            font-size: 17px;
+            font-size: 27px;
         }
 
         .tree-node.has-children {
@@ -103,24 +106,24 @@
         }
 
         .resizer {
-            width: 5px;
+            width: 0px;
             cursor: ew-resize;
-            background-color: #ccc;
-            position: absolute;
+            background-color: #949393;
             top: 0;
-            right: 0;
+            right: 0px;
             height: 100%;
+            position: absolute;
             z-index: 10;
         }
 
         .resizer-right {
-            width: 5px;
+            width: 2px;
             cursor: ew-resize;
-            background-color: #ccc;
-            position: absolute;
+            background-color: #949393;
             top: 0;
-            left: 0%;
+            right: 32%;
             height: 100%;
+            position: absolute;
             z-index: 10;
         }
 
@@ -249,18 +252,17 @@
 
 <body>
     <div class="container">
-        <button id="toggleLeft" style="position: absolute; top: 0px; left: 0px; font-size: 30px; z-index: 1000; background: none; border: none; cursor: pointer;">⬅️</button>
+        <button id="toggleLeft" style="position: absolute; top: 0px; left: 0px; font-size: 38px; z-index: 1000; background: none; border: none; cursor: pointer;">⬅️</button>
         <button id="toggleRight" style="position: absolute; top: 0px; right: 0px; font-size: 38px; z-index: 1000; background: none; border: none; cursor: pointer;">➡️</button>
         <div class="tree-menu" id="treeMenu" style="position: relative;">
-            <div class="resizer"></div>
             <button id="toggleTheme"
                 style="position: absolute; top: 5px; right: 5px; font-size: 24px; z-index: 1000; background: none; border: none; cursor: pointer;">
                 🌞 <!-- 太阳图标 -->
             </button>
+            <div class="resizer"></div>
         </div>
         <div class="content" id="content"></div>
-        <div class="extra-area" style="position: relative;">
-            <div class="resizer-right"></div>
+        <div class="extra-area">
             <h3>评论区</h3>
             <div class="comment-section">
                 <textarea class="comment-input" placeholder="请输入您的评论..."></textarea>
@@ -274,10 +276,6 @@
 
     <script src="biological-evolution-data.js"></script>
     <script>
-        // 检测移动设备并重定向
-        if (/Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent)) {
-            window.location.href = "./mobile-index.html";
-        }
         function createTreeNode(data) {
             const div = document.createElement('div');
             div.className = data.children ? 'tree-node has-children' : 'tree-node';
@@ -570,8 +568,9 @@
         }
 
         function handleMouseUp() {
-            document.removeEventListener('mousemove', handleMouseMove);
+            document.removeEventListener('mousemove', handleMouseMoveRight);
             document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('mousemove', handleMouseMove);
         }
 
         // 动态调整拖动条的高度
@@ -627,34 +626,6 @@
             extraArea.style.display = isRightVisible ? 'block' : 'none'; // 根据可见性设置显示或隐藏
             document.getElementById('toggleRight').innerHTML = isRightVisible ? '➡️' : '⬅️'; // 改变按钮方向
         });
-
-        // 添加右侧拖动条的事件处理
-        const resizerRight = document.querySelector('.resizer-right');
-        const extraArea = document.querySelector('.extra-area');
-
-        resizerRight.addEventListener('mousedown', (e) => {
-            e.preventDefault();
-            document.addEventListener('mousemove', handleMouseMoveRight);
-            document.addEventListener('mouseup', handleMouseUpRight);
-        });
-
-        function handleMouseMoveRight(e) {
-            // 计算新的宽度，使用拖动条的左边界
-            const newWidth = window.innerWidth - e.clientX - 60; 
-            const minWidth = 10; // 设置最小宽度
-            const maxWidth = window.innerWidth; // 设置最大宽度
-
-            if (newWidth > minWidth && newWidth < maxWidth) { // 限制宽度范围
-                extraArea.style.width = `${newWidth}px`;
-            }
-        }
-
-        function handleMouseUpRight() {
-            document.removeEventListener('mousemove', handleMouseMoveRight);
-            document.removeEventListener('mouseup', handleMouseUpRight);
-        }
-
-        
     </script>
 </body>
 
