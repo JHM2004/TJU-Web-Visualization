@@ -162,7 +162,27 @@
             transition: all 0.3s ease;
         }
 
+        .text-knowledge-button {
+            bottom: 20px;
+            right: 20px;
+            padding: 30px 60px;
+            background-color: rgba(0, 123, 255, 0.9);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 2.4em;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+
         .redirect-button:hover {
+            background-color: rgba(0, 98, 204, 0.9);
+            transform: scale(1.05);
+        }
+
+        .text-knowledge-button:hover {
             background-color: rgba(0, 98, 204, 0.9);
             transform: scale(1.05);
         }
@@ -210,6 +230,7 @@
         /* 修改移动端按钮样式 */
         .redirect-button.mobile,
         .comment-button.mobile,
+        .text-knowledge-button.mobile,
         .earth-button.mobile {
             position: fixed;
             right: 0%;
@@ -227,6 +248,10 @@
 
         /* 调整按钮位置 */
         .redirect-button.mobile {
+            bottom: 28.6%;
+        }
+
+        .text-knowledge-button.mobile {
             bottom: 22%;
         }
 
@@ -317,6 +342,7 @@
         /* 统一按钮宽度 */
         .redirect-button,
         .comment-button,
+        .text-knowledge-button,
         .earth-button {
             width: 220px; /* 增加宽度以避免文字溢出 */
         }
@@ -1130,6 +1156,16 @@
         };
 
         document.body.appendChild(earthButton);
+
+        // 在现有的重定向按钮上方添加新按钮
+        const textButton = document.createElement('button');
+        textButton.className = 'text-knowledge-button mobile';
+        textButton.textContent = '点击进入纯文本知识库';
+        textButton.onclick = function () {
+            // 直接在当前页面打开指定链接
+            window.location.href = "http://www.yangyuxin.cn:8071";
+        };
+        document.body.appendChild(textButton); // 添加新按钮到文档中
     </script>
     <div style="margin-bottom: 0px; text-align: center;width:100%; position: fixed; bottom: 0px;z-index: 1000; background-color: #ee2738;">
         <span style="color: white; font-size: 0.7em;">页面格式有问题？点击重新进行设备检测→</span>
