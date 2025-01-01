@@ -35,6 +35,8 @@
             backdrop-filter: blur(5px);
             font-family: Arial, sans-serif;
             box-shadow: 0 0 20px rgba(0,255,0,0.2);
+            max-height: 80vh; /* 设置最大高度为视口高度的80% */
+            overflow: scroll; /* 隐藏超出部分 */
         }
         #details h3 {
             margin: 0 0 10px 0;
@@ -844,17 +846,17 @@
             
             let html = `<h3>${event.name}</h3>`;
             
+            if (event.src) {
+                html += `<img src="${event.src}" alt="${event.name}" 
+                              style="display: block; max-width: 150%; height: auto;">`;
+            }
+            
             if (event.time) {
                 html += `<p><span style="color: #00ff88;">时间:</span> ${event.time}</p>`;
             }
             
             if (event.description) {
                 html += `<p>${event.description}</p>`;
-            }
-            
-            if (event.src) {
-                html += `<img src="${event.src}" alt="${event.name}" 
-                              style="display: block; max-width: 150%; height: auto;">`;
             }
             
             details.innerHTML = html;
